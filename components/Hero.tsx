@@ -1,7 +1,9 @@
+import Section from "./Section";
+
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 bg-black">
-      <div className="max-w-3xl text-center">
+    <Section className="min-h-screen flex items-center bg-black">
+      <div className="w-full text-center">
         <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white">
           <span className="text-lime-400">La conexión real</span>{" "}
           empieza donde termina lo estético.
@@ -21,6 +23,6 @@ export default function Hero() {
           </button>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
