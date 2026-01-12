@@ -18,9 +18,12 @@ export default function Hero() {
             Sí, eso quiero
           </button>
 
-          <button className="px-6 py-3 rounded-md border border-white/30 text-white hover:border-white transition">
-            Ver proyectos
-          </button>
+          <a
+            href="#projects"
+            className="px-6 py-3 rounded-md border border-white/30 text-white hover:border-white transition text-center">
+            Ver proyecto
+          </a>
+
         </div>
       </div>
     </Section>

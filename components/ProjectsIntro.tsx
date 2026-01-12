@@ -2,7 +2,7 @@ import Section from "./Section";
 
 export default function ProjectsIntro() {
   return (
-    <Section className="py-20 bg-black">
+    <Section className="py-20 bg-black" id="projects">
       <div className="flex items-end justify-between gap-8">
         <div>
           <p className="text-white/50 text-sm tracking-widest uppercase">
