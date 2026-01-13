@@ -1,11 +1,11 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Guigolo · UX/UI con intención y corazón",
+  title: "Guigolo · Diseño centrado en usuario y negocio",
   description:
     "Portafolio de Guillermo González López. Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.",
   openGraph: {
-    title: "Guigolo · UX/UI con intención y corazón",
+    title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
       "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
     url: "https://guigolo.vercel.app",
@@ -23,7 +23,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Guigolo · UX/UI con intención y corazón",
+    title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
       "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
     images: ["/og.png"],
