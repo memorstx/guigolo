@@ -1,8 +1,42 @@
+"use client";
+
+import { useState } from "react";
 import Section from "./Section";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro"; 
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === "sending") return;
+
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+
+      if (res.ok) {
+        form.reset();
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <Section className="py-24 bg-neutral-black-900">
       <div
@@ -21,12 +55,8 @@ export default function Contact() {
           Escríbeme y te respondo con claridad: alcance, tiempos y siguientes pasos.
         </p>
 
-        <form
-          action={FORMSPREE_ENDPOINT}
-          method="POST"
-          className="mt-10 grid gap-4 max-w-2xl"
-        >
-          {/* Honeypot field to prevent spam bots */}
+        <form onSubmit={onSubmit} className="mt-10 grid gap-4 max-w-2xl">
+          {/* Honeypot anti-spam (déjalo tal cual) */}
           <input type="text" name="_gotcha" className="hidden" />
 
           <div className="grid gap-2">
@@ -37,7 +67,7 @@ export default function Contact() {
               name="name"
               required
               className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
-              placeholder="Memo del futuro cliente 😌"
+              placeholder="Tu nombre"
             />
           </div>
 
@@ -69,13 +99,27 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="mt-2 inline-flex w-fit items-center justify-center rounded-md bg-accent-lilac px-7 py-3 font-medium text-neutral-white hover:opacity-90 transition"
+            disabled={status === "sending"}
+            className="mt-2 inline-flex w-fit items-center justify-center rounded-md bg-accent-lilac px-7 py-3 font-medium text-neutral-white hover:opacity-90 transition disabled:opacity-60"
           >
-            Enviar mensaje →
+            {status === "sending" ? "Enviando…" : "Enviar mensaje →"}
           </button>
 
+          {/* Mensaje de estado (ya con tu vibe, sin salirte de tu sitio) */}
+          {status === "success" && (
+            <div className="rounded-md border border-neutral-white/10 bg-accent-cyan-10 px-4 py-3 text-neutral-white/80">
+              Recibido ✅ Te leo y te respondo con un plan claro.
+            </div>
+          )}
+
+          {status === "error" && (
+            <div className="rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white/80">
+              Algo falló 😅 Intenta otra vez o escríbeme directo por email.
+            </div>
+          )}
+
           <p className="text-xs text-neutral-white/40">
-            MODULE · CONTACT CHANNEL · Formspree
+            MODULE · CONTACT CHANNEL
           </p>
         </form>
       </div>
