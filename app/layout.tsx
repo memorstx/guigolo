@@ -1,4 +1,17 @@
 import "./globals.css";
+import { Unbounded, Anta } from "next/font/google";
+
+const unbounded = Unbounded({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-unbounded",
+});
+
+const anta = Anta({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-anta",
+});
 
 export const metadata = {
   title: "Guigolo · Diseño centrado en usuario y negocio",
@@ -39,7 +52,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className={`${unbounded.variable} ${anta.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
