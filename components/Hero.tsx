@@ -4,8 +4,8 @@ export default function Hero() {
   return (
     <Section className="min-h-screen flex items-center bg-neutral-black-900">
       <div className="w-full text-center">
-        <h1 className="font-display text-heading-xl uppercase text-white-100">
-          <span className="text-accent-lime">La conexión real</span>{" "}
+        <h1 className="font-display text-heading-xl uppercase text-white-100 font-bold">
+          <span className="text-gradient-anim">LA CONEXIÓN REAL</span>{" "}
           empieza donde termina lo estético.
         </h1>
 

@@ -31,9 +31,9 @@ module.exports = {
       "heading-lg": ["24px", { lineHeight: "28.8px" }],
       "heading-md": ["16px", { lineHeight: "19.2px" }],
 
-      "body-lg": ["12px", { lineHeight: "15px" }],
-      "body-md": ["11px", { lineHeight: "13.75px" }],
-      "body-sm": ["10px", { lineHeight: "12.5px" }],
+      "body-lg": ["14px", { lineHeight: "15px" }],
+      "body-md": ["12px", { lineHeight: "13.75px" }],
+      "body-sm": ["11px", { lineHeight: "12.5px" }],
 
       "label-xl": ["32px", { lineHeight: "38.4px" }],
       "label-sm": ["12px", { lineHeight: "14.4px" }],

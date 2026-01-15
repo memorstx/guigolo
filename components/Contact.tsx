@@ -108,13 +108,13 @@ export default function Contact() {
           {/* Mensaje de estado (ya con tu vibe, sin salirte de tu sitio) */}
           {status === "success" && (
             <div className="rounded-md border border-neutral-white/10 bg-accent-cyan-10 px-4 py-3 text-neutral-white/80">
-              Recibido ✅ Te leo y te respondo con un plan claro.
+              Listo ✅ Ya me llegó tu mensaje. Te escribo pronto 💝
             </div>
           )}
 
           {status === "error" && (
             <div className="rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white/80">
-              Algo falló 😅 Intenta otra vez o escríbeme directo por email.
+              Algo falló 😅 Intenta otra vez o escríbeme directo por email: <a href="mailto:info@guigolo.com">info@guigolo.com</a>
             </div>
           )}
 
