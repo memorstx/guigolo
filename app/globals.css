@@ -10,6 +10,135 @@ body {
     font-family: var(--font-unbounded), sans-serif;
 }
 
+/* ===== ABOUT blueprint ===== */
+:root{
+  /* Chip fondo: AJÚSTALO AQUÍ sin tocar componentes */
+  --about-chip: rgba(105, 0, 234, 0.06); /* morado muy leve */
+  --about-chip-2: rgba(20, 177, 255, 0.06); /* cyan muy leve */
+  --about-ghost: rgba(20, 177, 255, 0.10); /* texto grande faint */
+  --about-glow: rgba(20, 177, 255, 0.18);
+}
+
+.about-blueprint {
+  position: relative;
+}
+
+.about-blueprint::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border: 1px dashed rgba(255, 255, 255, 0.09);
+  pointer-events: none;
+}
+
+.about-side-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+/* GRID layout EXACTO (no simétrico) */
+.about-grid{
+  display: grid;
+  grid-template-columns: 1.12fr 0.76fr 1.12fr;
+  grid-template-rows: 340px 280px 280px;
+  gap: 0;
+}
+
+/* celdas con líneas punteadas internas */
+.about-cell {
+  padding: 22px;
+  position: relative;
+}
+
+.about-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px dashed rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+}
+
+/* ubicaciones (A..H) */
+.about-a { grid-column: 1; grid-row: 1; }
+.about-b { grid-column: 2; grid-row: 1; }
+.about-c { grid-column: 3; grid-row: 1; }
+
+.about-d { grid-column: 1; grid-row: 2; }
+.about-e { grid-column: 2; grid-row: 2; } /* cuadro extra abajo del retrato */
+.about-f { grid-column: 3; grid-row: 2; }
+
+.about-g { grid-column: 1 / span 2; grid-row: 3; } /* 2 columnas */
+.about-h { grid-column: 3 / span 1; grid-row: 3; } /* por defecto 1, lo cambiamos en responsive */
+
+/* bottom row 2+2 en desktop grande */
+@media (min-width: 1024px){
+  .about-grid{
+    grid-template-columns: 1.12fr 0.76fr 1.12fr;
+    grid-template-rows: 340px 280px 320px;
+  }
+
+  /* 2 columnas + 2 columnas (o sea mitad y mitad abajo) */
+  .about-g { grid-column: 1 / span 2; }
+  .about-h { grid-column: 3 / span 1; }
+}
+
+/* Si quieres realmente 2+2 exacto (mitad izquierda y mitad derecha) */
+@media (min-width: 1280px){
+  .about-grid{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 340px 280px 320px;
+  }
+
+  .about-a { grid-column: 1; grid-row: 1; }
+  .about-b { grid-column: 2; grid-row: 1; }
+  .about-c { grid-column: 2; grid-row: 1; } /* se solapa si lo dejamos así */
+
+  /* NOTA: este breakpoint es solo si quieres 2 columnas totales,
+     pero tu figma muestra 3 arriba. Entonces NO lo usamos por defecto. */
+}
+
+/* chip grande de fondo: ahora es “otro color” y casi no se nota */
+.about-chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 520px at 35% 35%, var(--about-chip), rgba(0,0,0,0) 60%),
+    radial-gradient(900px 520px at 70% 55%, var(--about-chip-2), rgba(0,0,0,0) 65%);
+  opacity: 0.85;
+}
+
+/* texto fantasma */
+.about-ghost{
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--about-ghost);
+  opacity: 0.20; /* casi no se nota */
+}
+
+/* suaviza */
+.about-card {
+  backdrop-filter: blur(2px);
+}
+
+/* Responsive (mobile): todo en 1 columna, sin drama */
+@media (max-width: 1023px){
+  .about-grid{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .about-a,.about-b,.about-c,.about-d,.about-e,.about-f,.about-g,.about-h{
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -23,4 +152,53 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+@keyframes floatSoftA {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0, -5px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes floatSoftB {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(-3px, -6px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes floatSoftC {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0px, -8px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+  
+}
+
+@keyframes floatSoftD {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0px, -1px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.float-slow-1 {
+  animation: floatSoftA 8.5s ease-in-out infinite;
+}
+
+.float-slow-2 {
+  animation: floatSoftB 10.5s ease-in-out infinite;
+}
+
+.float-slow-3 {
+  animation: floatSoftC 15s ease-in-out infinite;
+}
+
+.float-slow-4 {
+  animation: floatSoftD 9.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-slow-1,
+  .float-slow-2,
+  .float-slow-3,
+  .float-slow-4 {
+    animation: none !important;
+  }
 }

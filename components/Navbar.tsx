@@ -84,7 +84,7 @@ export default function Navbar() {
               style={{ maxWidth: LEFT_W + RIGHT_W + 1200 }}
             >
               <Link href="#home" className="flex items-center gap-3">
-                <Image src="/brand/logo.svg" alt="Guigolo" width={144} height={24} />
+                <Image src="/brand/logo.svg" alt="Guigolo" width={144} height={24} className="h-auto w-[120px] md:w-[130px] lg:w-[140px] xl:w-[160px] 2xl:w-[170px]"/>
               </Link>
 
               <nav className="flex items-center gap-6">
@@ -92,7 +92,7 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group flex items-center gap-2 text-xs tracking-widest text-neutral-white/70 hover:text-accent-lime transition"
+                    className="group flex items-center gap-2 text-xs tracking-widest text-neutral-white/70 hover:text-accent-lime transition md:text-[clamp(0.75rem,1vw,.8rem)] leading-relaxed xl:text-[clamp(.85rem,1vw,.9rem)] xl:leading-relaxed 2xl:text-[clamp(.9rem,1vw,1rem)]"
                   >
                     {(() => {
                       const Icon = item.Icon;
@@ -129,7 +129,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 text-2xl tracking-widest text-neutral-white/70 hover:text-accent-lime transition"
+                  className="flex items-center gap-3 text-2xl tracking-widest text-neutral-white/70 hover:text-accent-lime transition text-[clamp(.9rem,1vw,.1rem)] sm:text-[clamp(1rem,1vw,.1.15rem)] "
                 >
                   {(() => {
                     const Icon = item.Icon;
