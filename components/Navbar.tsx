@@ -92,7 +92,7 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group flex items-center gap-2 text-xs tracking-widest text-neutral-white/70 hover:text-accent-lime transition md:text-[clamp(0.75rem,1vw,.8rem)] leading-relaxed xl:text-[clamp(.85rem,1vw,.9rem)] xl:leading-relaxed 2xl:text-[clamp(.9rem,1vw,1rem)]"
+                    className="group flex items-center gap-2 text-xs tracking-widest text-neutral-white/70 hover:text-accent-lime transition md:text-[clamp(0.7rem,1vw,.75rem)] leading-relaxed xl:text-[clamp(.75rem,1vw,.8rem)] xl:leading-relaxed 2xl:text-[clamp(.8rem,1vw,.85rem)] 3xl:text-[clamp(.85rem,1vw,.9rem)] 4xl:text-[clamp(1rem,1vw,1.15rem)]"
                   >
                     {(() => {
                       const Icon = item.Icon;
