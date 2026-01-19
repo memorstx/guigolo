@@ -56,6 +56,10 @@ export default function RootLayout({
   const isProd = process.env.VERCEL_ENV === "production";
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
+  const HJ_ID = process.env.NEXT_PUBLIC_HJ_ID;
+  const HJ_SV = process.env.NEXT_PUBLIC_HJ_SV || "6";
+
+
   return (
     <html lang="es">
       <body className={`${unbounded.variable} ${anta.variable}`}>
@@ -82,6 +86,27 @@ export default function RootLayout({
             />
           </>
         ) : null}
+
+        {/* Hotjar — SOLO producción */}
+        {isProd && HJ_ID ? (
+          <Script
+            id="hotjar-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(h,o,t,j,a,r){
+                  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                  h._hjSettings={hjid:${HJ_ID},hjsv:${HJ_SV}};
+                  a=o.getElementsByTagName('head')[0];
+                  r=o.createElement('script');r.async=1;
+                  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                  a.appendChild(r);
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+              `,
+            }}
+          />
+        ) : null}
+
 
         <Analytics />
         
