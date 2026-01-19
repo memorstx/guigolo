@@ -1,5 +1,7 @@
 import "./globals.css";
 import { Unbounded, Anta } from "next/font/google";
+import Script from "next/script";
+
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -43,18 +45,42 @@ export const metadata = {
   },
 };
 
-
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const isProd = process.env.VERCEL_ENV === "production";
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="es">
       <body className={`${unbounded.variable} ${anta.variable}`}>
         {children}
+
+        {/* Google Analytics — SOLO producción */}
+        {isProd && GA_ID ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="ga-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_ID}');
+                `,
+              }}
+            />
+          </>
+        ) : null}
       </body>
     </html>
   );
 }
+
