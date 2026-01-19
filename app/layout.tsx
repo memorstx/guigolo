@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Unbounded, Anta } from "next/font/google";
 import Script from "next/script";
-
+import { Analytics } from "@vercel/analytics/next"
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -58,27 +58,8 @@ export default function RootLayout({
       <body className={`${unbounded.variable} ${anta.variable}`}>
         {children}
 
-        {/* Google Analytics — SOLO producción */}
-        {isProd && GA_ID ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script
-              id="ga-init"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${GA_ID}');
-                `,
-              }}
-            />
-          </>
-        ) : null}
+        <Analytics />
+        
       </body>
     </html>
   );
