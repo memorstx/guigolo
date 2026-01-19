@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Guigolo — Diseño UX/UI con intención humana
 
-## Getting Started
+Portafolio personal de **Guillermo González López**.  
+Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.
 
-First, run the development server:
+> La conexión real empieza donde termina lo estético.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🖤 Preview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![Guigolo — Hero Preview](./public/og.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Portafolio en producción:  
+👉 https://guigolo.com
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧠 ¿Qué es este proyecto?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Guigolo** es mi portafolio personal como diseñador UX/UI.  
+No es un template, no es un experimento aislado y no es un sitio genérico.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Es una **landing viva**, diseñada para comunicar:
+- quién soy,
+- cómo pienso,
+- cómo diseño,
+- y por qué mi trabajo conecta emoción con negocio.
 
-## Deploy on Vercel
+Está pensada tanto para **reclutadores**, **clientes**, como para **personas curiosas por el diseño bien hecho**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Objetivo
+
+Crear un portafolio que:
+
+- Priorice **claridad, intención y emoción**
+- Explique mi proceso sin abrumar
+- Se sienta humano, no corporativo
+- Sea técnicamente sólido y escalable
+- Destaque entre el 99% de portafolios genéricos
+
+Este proyecto no busca impresionar con ruido, sino **convencer con criterio**.
+
+---
+
+## 🧬 Filosofía de diseño
+
+- UX consciente, no decorativo  
+- Diseño emocional sin caer en lo cursi  
+- Cyberpunk suave: tecnología sensible, no agresiva  
+- Micro-detalles que acompañan, no estorban  
+- Decisiones visuales alineadas a intención y negocio  
+
+Diseñar bien no es solo verse bonito.  
+Es **hacer que algo se sienta correcto**.
+
+---
+
+## ⚙️ Tecnologías usadas
+
+- **Next.js (App Router)** — Framework principal
+- **React** — Arquitectura por componentes
+- **Tailwind CSS** — Styling con tokens y control fino por breakpoints
+- **SVGs optimizados** — Íconos y elementos blueprint escalables
+- **Vercel** — Hosting, deploy continuo y performance
+- **Formspree** — Manejo de formularios sin backend
+
+---
+
+## ✨ Features clave
+
+- Hero con degradado animado sutil
+- Navbar blueprint por capas (SVG)
+- Layout responsive pensado desde mobile
+- Componentes reutilizables
+- Sistema de chips, cards y módulos
+- SEO y Open Graph configurados
+- Animaciones suaves y performantes
+- Formularios funcionales y claros
+
+---
+
+## 🗂️ Estructura del proyecto
+
+```txt
+/app
+  ├─ layout.tsx
+  ├─ page.tsx
+/components
+  ├─ Navbar
+  ├─ Hero
+  ├─ About
+  ├─ Projects
+  └─ UI components
+/public
+  └─ brand
+     ├─ icons
+     ├─ nav
+     └─ hero
+/styles
+  └─ globals.css

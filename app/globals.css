@@ -85,20 +85,7 @@ body {
   .about-h { grid-column: 3 / span 1; }
 }
 
-/* Si quieres realmente 2+2 exacto (mitad izquierda y mitad derecha) */
-@media (min-width: 1280px){
-  .about-grid{
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 340px 280px 320px;
-  }
 
-  .about-a { grid-column: 1; grid-row: 1; }
-  .about-b { grid-column: 2; grid-row: 1; }
-  .about-c { grid-column: 2; grid-row: 1; } /* se solapa si lo dejamos así */
-
-  /* NOTA: este breakpoint es solo si quieres 2 columnas totales,
-     pero tu figma muestra 3 arriba. Entonces NO lo usamos por defecto. */
-}
 
 /* chip grande de fondo: ahora es “otro color” y casi no se nota */
 .about-chip::before {
