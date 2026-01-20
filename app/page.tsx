@@ -7,7 +7,7 @@ import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SectionAbout from "@/components/SectionAbout";
-
+import ServicesAccordion from "@/components/ServicesAccordion";
 
 export default function Home() {
   return (
@@ -15,6 +15,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <SectionAbout />
+      <ServicesAccordion />
       <ProjectsIntro />
       <ProjectsList />
       <Process />

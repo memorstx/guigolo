@@ -103,8 +103,7 @@ export default function SectionAbout() {
   return (
     <section id="about" className="relative">
       {/* padding lateral 96px */}
-      <div className="
-        mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]
+      <div className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]
         ">
         {/* Header */}
         <div className="text-center">

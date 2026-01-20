@@ -1,0 +1,355 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { SERVICES } from "./services/servicesData";
+
+type Props = {
+  autoMs?: number;
+  pauseMs?: number;
+};
+
+export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Props) {
+  const items = useMemo(() => SERVICES, []);
+  const [active, setActive] = useState(0);
+
+  const intervalRef = useRef<number | null>(null);
+  const pauseTimeoutRef = useRef<number | null>(null);
+
+  const measureRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const railRef = useRef<HTMLDivElement | null>(null);
+
+  const [desktopRailH, setDesktopRailH] = useState<number | null>(null);
+  const [railW, setRailW] = useState<number>(0);
+
+  const clearTimers = () => {
+    if (intervalRef.current) window.clearInterval(intervalRef.current);
+    if (pauseTimeoutRef.current) window.clearTimeout(pauseTimeoutRef.current);
+    intervalRef.current = null;
+    pauseTimeoutRef.current = null;
+  };
+
+  const startAutoplay = () => {
+    clearTimers();
+    intervalRef.current = window.setInterval(() => {
+      setActive((prev) => (prev + 1) % items.length);
+    }, autoMs);
+  };
+
+  useEffect(() => {
+    startAutoplay();
+    return () => clearTimers();
+  }, [autoMs, items.length]);
+
+  const onSelect = (idx: number) => {
+    setActive(idx);
+    clearTimers();
+    pauseTimeoutRef.current = window.setTimeout(() => {
+      startAutoplay();
+    }, pauseMs);
+  };
+
+  const ACTIVE_FLEX = 7;
+  const INACTIVE_FLEX = 2;
+
+  const activeShare =
+    items.length <= 1
+      ? 1
+      : ACTIVE_FLEX / (ACTIVE_FLEX + (items.length - 1) * INACTIVE_FLEX);
+
+  const measureWidthPx = railW > 0 ? Math.max(320, Math.floor(railW * activeShare)) : 0;
+
+  useEffect(() => {
+    const calc = () => {
+      const hs = measureRefs.current
+        .map((el) => (el ? el.getBoundingClientRect().height : 0))
+        .filter((n) => n > 0);
+      if (!hs.length) return;
+      setDesktopRailH(Math.ceil(Math.max(...hs)));
+    };
+
+    const ro = new ResizeObserver(() => {
+      const w = railRef.current?.getBoundingClientRect().width ?? 0;
+      setRailW(Math.floor(w));
+      requestAnimationFrame(calc);
+    });
+
+    if (railRef.current) ro.observe(railRef.current);
+    measureRefs.current.forEach((el) => {
+      if (el) ro.observe(el);
+    });
+
+    const onResize = () => {
+      const w = railRef.current?.getBoundingClientRect().width ?? 0;
+      setRailW(Math.floor(w));
+      requestAnimationFrame(calc);
+    };
+
+    window.addEventListener("resize", onResize);
+    requestAnimationFrame(onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      ro.disconnect();
+    };
+  }, [items.length]);
+
+  return (
+    <section id="services" className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]">
+      <div className="w-full mx-auto">
+        <p className="text-[11px] tracking-[0.96px] text-neutral-white/70 uppercase text-center">
+          Servicios
+        </p>
+
+        <h2 className="mt-3 text-heading-xl tracking-heading-lg text-center uppercase">
+          Valor que impulsa, conecta y acompaña tu visión
+        </h2>
+
+        <div className="mt-10">
+          <div className="flex flex-col gap-3 md:hidden">
+            {items.map((item, idx) => {
+              const isActive = idx === active;
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => onSelect(idx)}
+                  className={[
+                    "relative overflow-hidden text-left rounded-2xl border border-neutral-gray-600/40",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime/60",
+                    "transition-[max-height,background-color,box-shadow,border-color] duration-500 ease-out",
+                    "w-full",
+                    isActive
+                      ? "max-h-[60rem] bg-neutral-black-800 border-neutral-white/10 shadow-[0_0_3.75rem_rgba(0,0,0,0.65)]"
+                      : "max-h-[5.75rem] bg-neutral-black-800/60 hover:border-neutral-white/10",
+                  ].join(" ")}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-b from-neutral-black-800/30 via-neutral-black-900/60 to-neutral-black-900" />
+
+                  <div className="relative z-10 p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] tracking-[0.96px] text-neutral-white/60 uppercase">
+                          {item.iconLabel}
+                        </p>
+                        <h3 className="mt-2 text-heading-lg uppercase">
+                          {item.title}
+                        </h3>
+                      </div>
+
+                      <div
+                        className={[
+                          "shrink-0 rounded-full border border-neutral-white/15",
+                          "w-10 h-10 flex items-center justify-center",
+                          isActive ? "bg-accent-cyan-10" : "bg-neutral-black-900/30",
+                        ].join(" ")}
+                        aria-hidden="true"
+                      >
+                        <span className="text-neutral-white/70 text-xs">✦</span>
+                      </div>
+                    </div>
+
+                    <div
+                      className={[
+                        "transition-opacity duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+                        isActive ? "opacity-100 delay-100" : "opacity-0 delay-0",
+                      ].join(" ")}
+                      style={{ willChange: "opacity" }}
+                    >
+                      <div className="mt-6 flex items-center justify-center">
+                        <div className="relative" style={{ width: "clamp(14rem, 60vw, 24rem)" }}>
+                          <div className="relative aspect-square">
+                            <Image src={item.imageSrc} alt={item.title} fill className="object-contain" sizes="100vw" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <p className="mt-6 text-body-lg text-neutral-white/80 leading-[1.45] max-w-[36rem]">
+                        {item.description}
+                      </p>
+
+                      <p className="mt-6 text-body-sm text-neutral-white/55">
+                        Autoplay activo (pausa al interactuar)
+                      </p>
+                    </div>
+
+                    
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="hidden md:block">
+            <div className="absolute -left-[99999px] -top-[99999px] opacity-0 pointer-events-none">
+              <div className="flex gap-0">
+                {items.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    ref={(el) => {
+                      measureRefs.current[idx] = el;
+                    }}
+                    style={{ width: measureWidthPx ? `${measureWidthPx}px` : "40vw" }}
+                    className="rounded-2xl border border-neutral-white/10 bg-neutral-black-800"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-[10px] tracking-[0.96px] text-neutral-white/60 uppercase">{item.iconLabel}</p>
+                          <h3 className="mt-2 text-heading-lg uppercase">{item.title}</h3>
+                        </div>
+                        <div className="shrink-0 rounded-full border border-neutral-white/15 w-10 h-10" />
+                      </div>
+                    </div>
+
+                    <div className="px-6 pb-6">
+                      <div className="mt-2 flex items-center justify-center">
+                        <div className="relative" style={{ width: "clamp(12rem, 18vw, 20rem)" }}>
+                          <div className="aspect-square" />
+                        </div>
+                      </div>
+
+                      <p className="mt-6 text-body-lg text-neutral-white/80 leading-[1.45] max-w-[36rem]">{item.description}</p>
+                      
+                    </div>
+
+                    
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="w-full mx-auto py-24">
+              <div
+                ref={railRef}
+                className="flex items-stretch w-full"
+                style={{
+                  height: desktopRailH ?? undefined,
+                  minHeight: "clamp(22rem,32vw,30rem)",
+                }}
+              >
+                {items.map((item, idx) => {
+                  const isActive = idx === active;
+
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => onSelect(idx)}
+                      className={[
+                        "relative overflow-hidden text-left rounded-2xl border min-w-0",
+                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime/60",
+                        "transition-[flex,box-shadow,border-color,background-color] duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+                        "flex flex-col h-full",
+                        isActive
+                          ? "bg-neutral-black-800 border-neutral-white/10 shadow-[0_0_3.75rem_rgba(0,0,0,0.65)]"
+                          : "bg-neutral-black-800/60 border-neutral-gray-600/40 hover:border-neutral-white/10",
+                      ].join(" ")}
+                      style={{
+                        flex: isActive ? `${ACTIVE_FLEX} 1 0%` : `${INACTIVE_FLEX} 1 0%`,
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-b from-neutral-black-800/30 via-neutral-black-900/60 to-neutral-black-900" />
+
+                      <div
+                        className={[
+                          "absolute inset-0 transition-opacity duration-500",
+                          isActive ? "opacity-0" : "opacity-100",
+                        ].join(" ")}
+                      >
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="relative" style={{ width: "clamp(12rem, 18vw, 20rem)" }}>
+                            <div className="relative aspect-square">
+                              <Image
+                                src={item.imageSrc}
+                                alt=""
+                                fill
+                                className="object-contain grayscale opacity-35"
+                                sizes="300px"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 bg-neutral-black-900/75" />
+                      </div>
+
+                      <div className="relative z-10 p-6">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="text-[10px] tracking-[0.96px] text-neutral-white/60 uppercase">
+                              {item.iconLabel}
+                            </p>
+                            <h3 className="mt-2 text-heading-lg uppercase">
+                              {item.title}
+                            </h3>
+                          </div>
+
+                          <div
+                            className={[
+                              "shrink-0 rounded-full border border-neutral-white/15",
+                              "w-10 h-10 flex items-center justify-center",
+                              isActive ? "bg-accent-cyan-10" : "bg-neutral-black-900/30",
+                            ].join(" ")}
+                            aria-hidden="true"
+                          >
+                            <span className="text-neutral-white/70 text-xs">✦</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="relative z-10 px-6 pb-6 flex-1 flex flex-col min-w-0">
+                        <div className="mt-2 flex items-center justify-center">
+                          <div
+                            className={[
+                              "relative transition-opacity duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+                              isActive ? "opacity-100 delay-100" : "opacity-0 delay-0",
+                            ].join(" ")}
+                            style={{ width: "clamp(12rem, 18vw, 20rem)", willChange: "opacity" }}
+                          >
+                            <div className="relative aspect-square">
+                              <Image src={item.imageSrc} alt={item.title} fill className="object-contain" sizes="320px" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={[
+                            "mt-6 transition-opacity duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+                            isActive ? "opacity-100 delay-100" : "opacity-0 delay-0 pointer-events-none select-none",
+                          ].join(" ")}
+                          style={{ willChange: "opacity" }}
+                        >
+                          <p className="text-body-lg text-neutral-white/80 leading-[1.45] max-w-[36rem]">
+                            {item.description}
+                          </p>
+
+                          <p className="mt-6 text-body-sm text-neutral-white/55">
+                            Autoplay activo (pausa al interactuar)
+                          </p>
+                        </div>
+
+                        <div className="mt-auto">
+                          <p
+                            className={[
+                              "text-body-sm text-neutral-white/55 transition-opacity duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+                              isActive ? "opacity-0" : "opacity-100",
+                            ].join(" ")}
+                            style={{ willChange: "opacity" }}
+                          >
+                            Toca para abrir
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
