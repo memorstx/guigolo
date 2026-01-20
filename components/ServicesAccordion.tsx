@@ -169,9 +169,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                         {item.description}
                       </p>
 
-                      <p className="mt-6 text-body-sm text-neutral-white/55">
-                        Autoplay activo (pausa al interactuar)
-                      </p>
+                      
                     </div>
 
                     
