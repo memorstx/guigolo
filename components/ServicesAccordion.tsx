@@ -324,22 +324,9 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                             {item.description}
                           </p>
 
-                          <p className="mt-6 text-body-sm text-neutral-white/55">
-                            Autoplay activo (pausa al interactuar)
-                          </p>
+                          
                         </div>
 
-                        <div className="mt-auto">
-                          <p
-                            className={[
-                              "text-body-sm text-neutral-white/55 transition-opacity duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
-                              isActive ? "opacity-0" : "opacity-100",
-                            ].join(" ")}
-                            style={{ willChange: "opacity" }}
-                          >
-                            Toca para abrir
-                          </p>
-                        </div>
                       </div>
                     </button>
                   );
