@@ -48,7 +48,7 @@ function SmallCard({
         </div>
       )}
 
-      <div className="flex flex-col">
+      <div className="flex flex-col align-items-self-end">
         {/* chip */}
         <div
           className={[
@@ -72,7 +72,7 @@ function SmallCard({
 
         <h3
           className={[
-            "mt-7 font-semibold tracking-widest text-neutral-white/80 text-[clamp(1.35rem,1vw,1.75rem)]",
+            "mt-7 heading-h3",
             titleClassName ?? "",
           ].join(" ")}
         >
@@ -168,9 +168,9 @@ export default function SectionAbout() {
             desc="Soy curioso, sensible, empático, entregado, intuitivo, agradecido, detallista, creativo y auténtico."
             //mascotSrc="/brand/about/mascot-orange.svg"
             watermark="FEELING NODE"
-            className="lg:mt-10"
+            className="lg:mt-10 text-left lg:text-right"
             watermarkClassName="opacity-20"
-            titleClassName="text-[1.6rem]"
+
           />
           </div>
 
@@ -197,6 +197,7 @@ export default function SectionAbout() {
               desc="Soy coherente, directo, minimalista, expresivo, emocional, ingenioso, observador y propositivo."
               //mascotSrc="/brand/about/mascot-banana.svg"
               watermark="VISUAL FLOW UNIT"
+              className="lg:mt-10"
             />
           </div>
 
@@ -208,6 +209,7 @@ export default function SectionAbout() {
             desc="El café, el chocolate, los gatos, los videojuegos, lo romántico y las ideas que nacen en silencio."
             //mascotSrc="/brand/about/mascot-paper.svg"
             watermark="HUMAN INPUT FILTER"
+            className="lg:mt-10 text-left lg:text-right"
           />
            
           <SmallCard
@@ -216,6 +218,7 @@ export default function SectionAbout() {
             desc="Conectar con las emociones de los demás y convertirlas en experiencias únicas."
             //mascotSrc="/brand/about/mascot-purple.svg"
             watermark="CORE SIGNAL SYNC"
+            className="border md:text-center border-dashed lg:border-none"
           />
 
           <SmallCard
@@ -223,28 +226,27 @@ export default function SectionAbout() {
             title="MI MENTALIDAD"
             desc="Consciente, reflexivo, equilibrado, responsable, soñador, perseverante, en construcción constante."
             watermark="SENSE-LAYER v4.2"
+            className="lg:mt-10"
           />
         </div>
 
         {/* Fila final 50/50 (misma sección, otro grid) */}
         <div className="grid grid-cols-1 lg:grid-cols-3">
           {/* MI PROPUESTA DE VALOR */}
-          <div className="relative overflow-hidden  border border-neutral-white/10 bg-neutral-black-900/35 px-10 py-10 lg:col-span-1 order-2 md:order-1">
-            <div className="inline-flex border-2 border-[#ededed1a] px-4 py-2 text-[11px] tracking-widest text-neutral-white/70">
+          <div className="relative flex flex-col overflow-hidden justify-center lg:mt-10 lg:text-right border border-neutral-white/10 bg-neutral-black-900/35 px-10 py-10 lg:col-span-1 order-2 md:order-1">
+            <div className="inline-flex border-2 self-center border-[#ededed1a] px-4 py-2 text-[11px] tracking-widest text-neutral-white/70 w-fit align-self-center">
               VALUE UNIQUE
             </div>
 
-            <div className="absolute right-8 top-8 opacity-70">
-              <Image src="/brand/about/icon-blueprint.svg" alt="" width={26} height={26} />
-            </div>
 
-            <h3 className="mt-7 font-semibold tracking-widest text-neutral text-[clamp(1.35rem,1vw,1.75rem)] ">
+            <h3 className="mt-7 heading-h3 md:text-center">
               MI PROPUESTA DE VALOR
             </h3>
 
             <p className="
             mt-4 
-            max-w-[520px]
+            text-left
+            md:text-center
             text-[clamp(0.95rem,1.15vw,1.125rem)] 
             leading-relaxed 
             xl:text-[clamp(1.05rem,.95vw,1.2rem)] 
@@ -263,7 +265,11 @@ export default function SectionAbout() {
               </a>
 
               { /* íconos sociales simples */ }
-              <div className="flex items-center gap-6 text-neutral-white/70">
+             
+              <div>
+                {/*
+                
+                 <div className="flex items-center gap-6 text-neutral-white/70">
                 <a href="#contacto" aria-label="Email" className="hover:text-neutral-white">
                   ✉
                 </a>
@@ -274,6 +280,10 @@ export default function SectionAbout() {
                   in
                 </a>
               </div>
+                
+                */}
+              </div>
+
             </div>
 
             

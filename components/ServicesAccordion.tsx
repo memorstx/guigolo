@@ -9,7 +9,7 @@ type Props = {
   pauseMs?: number;
 };
 
-export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Props) {
+export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000 }: Props) {
   const items = useMemo(() => SERVICES, []);
   const [active, setActive] = useState(0);
 
@@ -96,14 +96,37 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
 
   return (
     <section id="services" className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]">
-      <div className="w-full mx-auto">
-        <p className="text-[11px] tracking-[0.96px] text-neutral-white/70 uppercase text-center">
-          Servicios
+      <div className="w-full mx-auto text-center">
+        
+        <p className="text-[12px] tracking-widest text-accent-lime/80">
+          SERVICIOS
         </p>
 
-        <h2 className="mt-3 text-heading-xl tracking-heading-lg text-center uppercase">
-          Valor que impulsa, conecta y acompaña tu visión
+        <h2 className="
+            mt-3 
+            font-semibold 
+            tracking-thig 
+            leading-[125%] 
+            text-neutral-white 
+            text-center sm:text-center 
+            text-[clamp(1.25rem,3.75vw,2.25rem)] 
+            md:text-[clamp(1.25rem,3.25vw,3.75rem)] 
+            md:text-center 
+            lg:text-[clamp(1.5rem,2.75vw,3rem)] 
+            lg:text-center 
+            xl:text-[clamp(2rem,1vw,3.5rem)] 
+            xl:text-center 
+            2xl:text-[clamp(2.25rem,1vw,3.75rem)] 
+            2xl:text-center
+            3xl:text-[clamp(2.5rem,1vw,4rem)] 
+            3xl:text-center
+            4xl:text-[clamp(2.5rem,1vw,4.5rem)]
+            4xl:text-center
+          ">
+          
+          VALOR QUE IMPULSA , CONECTA Y ACOMPAÑA TU VISIÓN
         </h2>
+
 
         <div className="mt-10">
           <div className="flex flex-col gap-3 md:hidden">
@@ -116,7 +139,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                   type="button"
                   onClick={() => onSelect(idx)}
                   className={[
-                    "relative overflow-hidden text-left rounded-2xl border border-neutral-gray-600/40",
+                    "relative overflow-hidden text-left border border-neutral-gray-600/40",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime/60",
                     "transition-[max-height,background-color,box-shadow,border-color] duration-500 ease-out",
                     "w-full",
@@ -140,7 +163,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
 
                       <div
                         className={[
-                          "shrink-0 rounded-full border border-neutral-white/15",
+                          "shrink-0 border border-neutral-white/15",
                           "w-10 h-10 flex items-center justify-center",
                           isActive ? "bg-accent-cyan-10" : "bg-neutral-black-900/30",
                         ].join(" ")}
@@ -189,7 +212,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                       measureRefs.current[idx] = el;
                     }}
                     style={{ width: measureWidthPx ? `${measureWidthPx}px` : "40vw" }}
-                    className="rounded-2xl border border-neutral-white/10 bg-neutral-black-800"
+                    className="border border-neutral-white/10 bg-neutral-black-800"
                   >
                     <div className="p-6">
                       <div className="flex items-start justify-between gap-3">
@@ -197,13 +220,13 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                           <p className="text-[10px] tracking-[0.96px] text-neutral-white/60 uppercase">{item.iconLabel}</p>
                           <h3 className="mt-2 text-heading-lg uppercase">{item.title}</h3>
                         </div>
-                        <div className="shrink-0 rounded-full border border-neutral-white/15 w-10 h-10" />
+                        <div className="shrink-0 border border-neutral-white/15 w-10 h-10" />
                       </div>
                     </div>
 
                     <div className="px-6 pb-6">
                       <div className="mt-2 flex items-center justify-center">
-                        <div className="relative" style={{ width: "clamp(12rem, 18vw, 20rem)" }}>
+                        <div className="relative" style={{ width: "clamp(12rem, 20vw, 20rem)" }}>
                           <div className="aspect-square" />
                         </div>
                       </div>
@@ -224,7 +247,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                 className="flex items-stretch w-full"
                 style={{
                   height: desktopRailH ?? undefined,
-                  minHeight: "clamp(22rem,32vw,30rem)",
+                  minHeight: "clamp(22rem,32vw,36rem)",
                 }}
               >
                 {items.map((item, idx) => {
@@ -236,13 +259,13 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                       type="button"
                       onClick={() => onSelect(idx)}
                       className={[
-                        "relative overflow-hidden text-left rounded-2xl border min-w-0",
+                        "relative overflow-hidden text-left border min-w-0",
                         "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime/60",
                         "transition-[flex,box-shadow,border-color,background-color] duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
-                        "flex flex-col h-full",
+                        "flex flex-col h-[110%] xl:h-[120%] 2xl:h-[130%]",
                         isActive
-                          ? "bg-neutral-black-800 border-neutral-white/10 shadow-[0_0_3.75rem_rgba(0,0,0,0.65)]"
-                          : "bg-neutral-black-800/60 border-neutral-gray-600/40 hover:border-neutral-white/10",
+                          ? "bg-[radial-gradient(50%_75%_at_50%_57.28%,#0082ff26_0%,#000000_100%)] border-dashed border-2 shadow-[0_0_2rem_rgba(0,0,0,0.25)] border-neutral-white/50"
+                          : "bg-neutral-black-800/40 border-dashed border-2 border-neutral-gray-600/40 hover:border-neutral-white/10",
                       ].join(" ")}
                       style={{
                         flex: isActive ? `${ACTIVE_FLEX} 1 0%` : `${INACTIVE_FLEX} 1 0%`,
@@ -257,7 +280,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                         ].join(" ")}
                       >
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="relative" style={{ width: "clamp(12rem, 18vw, 20rem)" }}>
+                          <div className="relative" style={{ width: "clamp(12rem, 20vw, 22rem)" }}>
                             <div className="relative aspect-square">
                               <Image
                                 src={item.imageSrc}
@@ -285,7 +308,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
 
                           <div
                             className={[
-                              "shrink-0 rounded-full border border-neutral-white/15",
+                              "shrink-0 border border-neutral-white/15",
                               "w-10 h-10 flex items-center justify-center",
                               isActive ? "bg-accent-cyan-10" : "bg-neutral-black-900/30",
                             ].join(" ")}
@@ -296,14 +319,14 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                         </div>
                       </div>
 
-                      <div className="relative z-10 px-6 pb-6 flex-1 flex flex-col min-w-0">
+                      <div className="relative z-10 px-6 pb-6 flex-1 flex flex-col min-w-0 justify-center items-center text-center">
                         <div className="mt-2 flex items-center justify-center">
                           <div
                             className={[
                               "relative transition-opacity duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
                               isActive ? "opacity-100 delay-100" : "opacity-0 delay-0",
                             ].join(" ")}
-                            style={{ width: "clamp(12rem, 18vw, 20rem)", willChange: "opacity" }}
+                            style={{ width: "clamp(12rem, 18vw, 28rem)", willChange: "opacity" }}
                           >
                             <div className="relative aspect-square">
                               <Image src={item.imageSrc} alt={item.title} fill className="object-contain" sizes="320px" />
@@ -318,7 +341,7 @@ export default function ServicesAccordion({ autoMs = 5000, pauseMs = 4500 }: Pro
                           ].join(" ")}
                           style={{ willChange: "opacity" }}
                         >
-                          <p className="text-body-lg text-neutral-white/80 leading-[1.45] max-w-[36rem]">
+                          <p className="text-[clamp(0.95rem,1.15vw,1.125rem)] leading-relaxed xl:text-[clamp(1.05rem,.95vw,1.2rem)] xl:leading-relaxed 2xl:text-[clamp(1.25rem,1.2vw,1.5rem)] text-neutral-white/70 max-w-[768px] xl:max-w-[1024px] 2xl:max-w-[1256px] text-center sm:text-center md:text-center">
                             {item.description}
                           </p>
 
