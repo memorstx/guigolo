@@ -1,3 +1,11 @@
+export type ProcessCard = {
+  id: string;
+  phase: string;      // ej: "PHASE_01"
+  title: string;      // ej: "CONTEXTO"
+  body: string;       // párrafo principal
+  output?: string;    // ej: "Output: ..."
+};
+
 export const PROCESS_STACK: ProcessCard[] = [
   {
     id: "phase-01",
