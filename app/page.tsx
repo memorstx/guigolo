@@ -10,6 +10,8 @@ import ServicesAccordion from "@/components/ServicesAccordion";
 import ProjectsSection from "@/components/ProjectsSection";
 import { projects } from "@/components/projects/project.data";
 import Process from "@/components/Process"; 
+import FAQSection from "@/components/Faq";
+import { FAQS } from "@/components/faq/faq.data";
 
 export default function Home() {
   return (
@@ -26,6 +28,7 @@ export default function Home() {
       }
       <ProjectsSection items={projects} />
       <Process />
+      <FAQSection items={FAQS} />
       <ContactCTA />
       <Contact />
       <Footer />
