@@ -12,24 +12,24 @@ export const PROCESS_STACK: ProcessCard[] = [
     phase: "PHASE_01",
     title: "CONTEXTO",
     body:
-      "Primero te escucho. Quiero entender tu idea, qué buscas lograr y para quién es. Aquí vemos si hacemos buen equipo y dejamos claro qué sí y qué no desde el inicio.",
-    output: "Output: claridad total y expectativas alineadas.",
+      "Te escucho para entender tu idea, qué quieres lograr y para quién es. Aquí definimos si hacemos buen equipo y dejamos claras las expectativas desde el inicio.",
+    output: "Output: claridad y punto de partida definido.",
   },
   {
     id: "phase-02",
     phase: "PHASE_02",
     title: "CONEXIÓN",
     body:
-      "Hago las preguntas necesarias para bajar tu idea a algo concreto. Traducimos lo que necesitas en objetivos claros y prioridades reales.",
-    output: "Output: objetivos definidos y próximos pasos claros.",
+      "Tomo todo lo que me compartiste y lo traduzco en objetivos claros. Aterrizamos el problema real que vamos a resolver.",
+    output: "Output: objetivos claros y problema bien definido.",
   },
   {
     id: "phase-03",
     phase: "PHASE_03",
     title: "ESTRATEGIA",
     body:
-      "Con la información clara, armo un plan. Definimos qué se va a hacer, cómo, en cuánto tiempo y con qué entregables. Sin sorpresas después.",
-    output: "Output: roadmap claro y propuesta bien definida.",
+      "Con el problema claro, defino el camino. Decidimos qué se va a hacer, qué no, y cómo vamos a llegar al resultado.",
+    output: "Output: plan claro y decisiones bien tomadas.",
   },
   {
     id: "phase-04",
@@ -44,7 +44,7 @@ export const PROCESS_STACK: ProcessCard[] = [
     phase: "PHASE_05",
     title: "ENTREGA",
     body:
-      "Antes de entregar, reviso cada detalle. Te dejo todo listo para usar: archivos, documentación y soporte inicial si lo necesitas.",
+      "Reviso cada detalle antes de entregar. Te dejo todo listo para usar, con archivos, documentación y soporte inicial.",
     output: "Output: producto listo para usarse y crecer.",
   },
 ];
