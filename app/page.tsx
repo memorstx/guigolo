@@ -28,8 +28,8 @@ export default function Home() {
       }
       <ProjectsSection items={projects} />
       <Process />
-      <FAQSection items={FAQS} />
       <ContactCTA />
+      <FAQSection items={FAQS} />
       <Contact />
       <Footer />
     </main>

@@ -19,15 +19,15 @@ export default function FAQSection({ items, defaultOpenId }: Props) {
   };
 
   return (
-    <section id="faq" className="relative w-full bg-neutral-black-900">
-      <div className="mx-auto max-w-[1280px] px-6 md:px-12 lg:px-24 py-20">
+    <section id="faq" className="relative w-full bg-neutral-black-900 xl:px-32">
+      <div className="mx-auto max-w-[1280px] py-44">
         {/* Title */}
-        <h2 className="text-center text-neutral-white/90 tracking-[0.18em] font-semibold text-[clamp(1.25rem,2vw,2rem)]">
+        <h2 className="heading-h2 tracking-tight">
           PREGUNTAS FRECUENTES
         </h2>
 
         {/* List */}
-        <div className="mx-auto mt-14 max-w-[980px]">
+        <div className="mx-auto mt-14 max-w-[1280px]">
           <ul className="divide-y divide-dashed divide-neutral-white/15">
             {items.map((it) => {
               const isOpen = openId === it.id;

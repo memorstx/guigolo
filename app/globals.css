@@ -26,13 +26,13 @@ body {
 
   @screen lg {
     .heading-h2 {
-      @apply text-[clamp(1.5rem,2.75vw,3rem)];
+      @apply text-[clamp(1.4rem,2.75vw,2.75rem)];
     }
   }
 
   @screen 2xl {
     .heading-h2 {
-      @apply text-[clamp(2.25rem,1.2vw,4.5rem)];
+      @apply text-[clamp(2rem,1.2vw,3.5rem)];
     }
   }
 

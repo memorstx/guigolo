@@ -106,7 +106,7 @@ export default function ProcessStackScroll({
 
   const jitter = useMemo(() => {
     const angles = [1, -1, 2, -2];
-    const xs = [-10, -6, -3, 0, 3, 6, 10];
+    const xs = [-8, -4, -2, 0, 2, 4, 8];
     const ys = [0, 2, 4, 6, 8];
     return items.map((it) => {
       const r1 = hash01(it.id + "_a");
@@ -122,7 +122,7 @@ export default function ProcessStackScroll({
 
   // antes: stackTop dependía de titleH + 24
   // ahora: stack va DENTRO del mismo sticky wrapper, así que solo usamos separaciones normales
-  const stackGap = 24;
+  const stackGap = 14;
 
   return (
     <section
@@ -141,26 +141,28 @@ export default function ProcessStackScroll({
         <div
           ref={titleRef}
           className={[
-            "pt-16 md:pt-[150px]",
-            "pb-6 md:pb-8",
+            "pt-16"
           ].join(" ")}
         >
-          <div className="mx-auto w-full max-w-[1400px] px-4 md:px-[48px] lg:px-[96px]">
-            <h2 className="text-neutral-white font-semibold tracking-[0.14em] uppercase text-center text-[clamp(1.1rem,3.2vw,3rem)] leading-[1.15]">
+          <div className="mx-auto max-w-[1280px] px-6 md:px-12 lg:px-24 pt-24 2xl:pt-32 md:pt-8 text-center">
+            <div className="text-[12px] tracking-[0.35em] text-accent-lime/80">
+              MI PROCESO
+            </div>
+            <h2 className="mt-4 heading-h2 tracking-tight">
               {title}
             </h2>
           </div>
         </div>
 
-        {/* STACK ZONE (ya NO es sticky; vive dentro del sticky wrapper) */}
+        {/* stack zone */}
         <div
           className="z-20"
           style={{
             paddingTop: stackGap,
-            height: Math.round(vh * 0.78) + stackGap,
+            height: Math.round(vh * 0.72) + stackGap,
           }}
         >
-          <div className="mx-auto w-full max-w-[1400px] px-4 md:px-[48px] lg:px-[96px]">
+          <div className="mx-auto w-full px-4 xl:px-[128px] ">
             <div className="relative mx-auto w-full">
               {items.map((card, i) => {
                 const rel = i - progress;
@@ -187,14 +189,14 @@ export default function ProcessStackScroll({
                 const scale = 1 - depth * 0.03;
                 const opacity = 1 - depth * 0.14;
 
-                const riseFrom = 640; 
+                const riseFrom = 768; 
                 const incomingY = lerp(riseFrom, 0, incomingEase);
 
                 const rotControlled = rel <= 0 ? lerp(base.rot, 0, t * 0.05) : base.rot;
 
                 const zIndex = 1000 - (rel > 0 ? 0 : Math.floor(depth) * 10);
 
-                const cardW = "w-full max-w-[760px] md:max-w-[820px] lg:max-w-[920px]";
+                const cardW = "w-full max-w-[464px] md:max-w-[512px] lg:max-w-[640px]";
                 const cardBase =
                   "border border-neutral-white/10 bg-[radial-gradient(56.49%_59.99%_at_58.01%_57.28%,#313133_0%,#0C0C0C_100%)]";
 
@@ -202,7 +204,7 @@ export default function ProcessStackScroll({
                   <article
                     key={card.id}
                     className={[
-                      "absolute left-1/2 top-32",
+                      "absolute left-1/2 top-10 2xl:top-24",
                       "origin-center",
                       "rounded-none",
                       "shadow-[0_0_0_1px_rgba(255,255,255,0.08)]",
@@ -216,10 +218,10 @@ export default function ProcessStackScroll({
                       willChange: "transform, opacity",
                     }}
                   >
-                    <div className="relative p-6 md:p-8">
+                    <div className="relative py-8 px-16 md:py-14 md:px-16">
                       <div className="absolute inset-0 pointer-events-none border border-neutral-white/10" />
 
-                      <div className="text-neutral-white/20 font-semibold tracking-[0.12em] uppercase text-[clamp(1.25rem,4vw,2.2rem)] leading-none select-none">
+                      <div className="text-neutral-white/10 font-semibold tracking-[0.12em] uppercase text-[clamp(1.25rem,4vw,2.2rem)] leading-none select-none">
                         {card.phase}
                       </div>
 
@@ -227,12 +229,12 @@ export default function ProcessStackScroll({
                         {card.title}
                       </h3>
 
-                      <p className="mt-4 text-neutral-white/70 text-[clamp(0.95rem,1.2vw,1.05rem)] leading-relaxed max-w-[62ch]">
+                      <p className="mt-4 text-body-premium">
                         {card.body}
                       </p>
 
                       {card.output ? (
-                        <p className="mt-4 text-neutral-white/60 text-[clamp(0.95rem,1.2vw,1.05rem)] leading-relaxed">
+                        <p className="mt-4 text-body-premium text-weight-100 text-neutral-white/60">
                           {card.output}
                         </p>
                       ) : null}
