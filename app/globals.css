@@ -21,40 +21,54 @@ body {
 
 @layer components {
   .heading-h2 {
-    @apply font-semibold leading-[125%] text-neutral-white text-center text-[clamp(1.25rem,3.75vw,2.25rem)] md:text-[clamp(1.25rem,3.25vw,3.75rem)] lg:text-[clamp(1.5rem,2.75vw,3rem)] xl:text-[clamp(2rem,1vw,3.5rem)] 2xl:text-[clamp(2.25rem,1vw,3.75rem)] 3xl:text-[clamp(2.5rem,1vw,4rem)] 4xl:text-[clamp(2.5rem,1vw,4.5rem)];
+    @apply font-semibold leading-[125%] text-neutral-white text-center text-[clamp(1.25rem,3.75vw,2.25rem)];
   }
-}
 
+  @screen lg {
+    .heading-h2 {
+      @apply text-[clamp(1.5rem,2.75vw,3rem)];
+    }
+  }
 
-@layer components {
+  @screen 2xl {
+    .heading-h2 {
+      @apply text-[clamp(2.25rem,1.2vw,4.5rem)];
+    }
+  }
+
   .heading-h3 {
-    @apply 
-      text-[clamp(1.05rem,2.5vw,1.35rem)]
-      md:text-[clamp(1.1rem,2.25vw,1.45rem)]
-      lg:text-[clamp(1.15rem,2vw,1.5rem)]
-      xl:text-[clamp(1.2rem,1vw,1.55rem)]
-      2xl:text-[clamp(1.25rem,1vw,1.6rem)]
-      3xl:text-[clamp(1.3rem,1vw,1.65rem)]
-      4xl:text-[clamp(1.35rem,1vw,1.75rem)]
-      font-semibold
-      tracking-widest
+    @apply font-semibold tracking-widest text-[clamp(1.05rem,2.5vw,1.5rem)];
+  }
+
+  @screen lg {
+    .heading-h3 {
+      @apply text-[clamp(1.15rem,2vw,1.6rem)];
+    }
+  }
+
+  @screen 2xl {
+    .heading-h3 {
+      @apply text-[clamp(1.25rem,1.2vw,1.75rem)];
+    }
+  }
+
+  .heading-h4 {
+    @apply font-semibold tracking-widest text-[clamp(1rem,1.9vw,1.25rem)];
+  }
+
+  @screen lg {
+    .heading-h4 {
+      @apply text-[clamp(1.1rem,1.6vw,1.35rem)];
+    }
+  }
+
+  @screen 2xl {
+    .heading-h4 {
+      @apply text-[clamp(1.2rem,1.1vw,1.5rem)];
+    }
   }
 }
 
-@layer components{
-  .heading-h4 {
-    @apply 
-      text-[clamp(1.05rem,2vw,1.25rem)]
-      md:text-[clamp(1.1rem,1.85vw,1.25rem)]
-      lg:text-[clamp(1.15rem,1.7vw,1.3rem)]
-      xl:text-[clamp(1.20rem,0.9vw,1.35rem)]
-      2xl:text-[clamp(1.25rem,0.9vw,1.4rem)]
-      3xl:text-[clamp(1.30rem,0.9vw,1.45rem)]
-      4xl:text-[clamp(1.35rem,0.9vw,1.5rem)]
-      font-semibold
-      tracking-widest
-  }
-}
 
 .about-blueprint {
   position: relative;
