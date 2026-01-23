@@ -1,87 +1,254 @@
-import Section from "./Section";
+"use client";
 
-const steps = [
-  {
-    code: "PHASE_01",
-    title: "Contexto",
-    desc: "Entiendo tu idea, objetivos y usuarios antes de diseñar cualquier pantalla.",
-    output: "OUTPUT · enfoque y dirección",
-  },
-  {
-    code: "PHASE_02",
-    title: "Conexión",
-    desc: "Alineamos visión, prioridades y expectativas para avanzar sin sorpresas.",
-    output: "OUTPUT · objetivos claros",
-  },
-  {
-    code: "PHASE_03",
-    title: "Estrategia",
-    desc: "Defino alcance, ritmo y entregables para diseñar con claridad y control.",
-    output: "OUTPUT · roadmap de diseño",
-  },
-  {
-    code: "PHASE_04",
-    title: "Construcción",
-    desc: "Diseño, itero y documento decisiones manteniendo comunicación constante.",
-    output: "OUTPUT · diseño funcional",
-  },
-  {
-    code: "PHASE_05",
-    title: "Entrega",
-    desc: "Dejo todo listo para producción: handoff, documentación y siguientes pasos.",
-    output: "OUTPUT · listo para desarrollar",
-  },
-];
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import type { ProcessCard } from "./process/processStack.data";
+import { PROCESS_STACK } from "./process/processStack.data";
 
-export default function Process() {
+type Props = {
+  items?: ProcessCard[];
+  title?: string;
+  className?: string;
+};
+
+const clamp = (n: number, a: number, b: number) => Math.min(b, Math.max(a, n));
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+function hash01(str: string) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return ((h >>> 0) % 10000) / 10000;
+}
+
+function pick<T>(arr: T[], t01: number) {
+  return arr[Math.floor(t01 * arr.length) % arr.length];
+}
+
+function easeOutExpo(t: number) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
+export default function ProcessStackScroll({
+  items = PROCESS_STACK,
+  title = "ASÍ CONVIERTO UNA IDEA EN UNA EXPERIENCIA REAL",
+  className = "",
+}: Props) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
+  const stickyWrapRef = useRef<HTMLDivElement | null>(null);
+
+  const [vh, setVh] = useState(800);
+  const [titleH, setTitleH] = useState(120);
+  const [stickyH, setStickyH] = useState(600);
+  const [scrollY, setScrollY] = useState(0);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      setVh(window.innerHeight || 800);
+
+      const th = titleRef.current?.getBoundingClientRect().height ?? 120;
+      setTitleH(Math.ceil(th));
+
+      const sh = stickyWrapRef.current?.getBoundingClientRect().height ?? 600;
+      setStickyH(Math.ceil(sh));
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (titleRef.current) ro.observe(titleRef.current);
+    if (stickyWrapRef.current) ro.observe(stickyWrapRef.current);
+
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setScrollY(window.scrollY || 0));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  const stepPx = useMemo(() => Math.round(vh * 0.92), [vh]);
+  const totalSteps = Math.max(0, items.length - 1);
+
+  // ✅ Track = altura del sticky wrapper + (pasos) + aire final
+  const trackH = useMemo(() => {
+    const exitPad = Math.round(vh * 0.2);
+    return stickyH + totalSteps * stepPx + exitPad;
+  }, [stickyH, totalSteps, stepPx, vh]);
+
+  const progress = useMemo(() => {
+    const el = sectionRef.current;
+    if (!el) return 0;
+
+    const rect = el.getBoundingClientRect();
+    const sectionTop = (window.scrollY || 0) + rect.top;
+
+    // ✅ La animación corre mientras el sticky wrapper está “pegado”
+    const start = sectionTop;
+    const p = (scrollY - start) / stepPx;
+
+    return clamp(p, 0, totalSteps);
+  }, [scrollY, stepPx, totalSteps]);
+
+  const jitter = useMemo(() => {
+    const angles = [1, -1, 2, -2];
+    const xs = [-10, -6, -3, 0, 3, 6, 10];
+    const ys = [0, 2, 4, 6, 8];
+    return items.map((it) => {
+      const r1 = hash01(it.id + "_a");
+      const r2 = hash01(it.id + "_x");
+      const r3 = hash01(it.id + "_y");
+      return {
+        rot: pick(angles, r1),
+        x: pick(xs, r2),
+        y: pick(ys, r3),
+      };
+    });
+  }, [items]);
+
+  // antes: stackTop dependía de titleH + 24
+  // ahora: stack va DENTRO del mismo sticky wrapper, así que solo usamos separaciones normales
+  const stackGap = 24;
+
   return (
-    <Section className="py-24 bg-black">
-      <div className="flex items-end justify-between gap-8">
-        <div>
-          <p className="text-white/50 text-sm tracking-widest uppercase">
-            Workflow
-          </p>
+    <section
+      ref={sectionRef}
+      className={["relative w-full", className].join(" ")}
+      style={{ minHeight: trackH }}
+    >
+      <div className="absolute inset-0 -z-10 bg-neutral-black-900" />
 
-          <h2 className="mt-3 text-3xl md:text-4xl font-semibold text-white">
-            Así convierto una idea en una experiencia real
-          </h2>
-
-          <p className="mt-4 text-white/70 max-w-2xl">
-            Un proceso claro, humano y estructurado para evitar fricción desde el primer día.
-          </p>
+      {/* ✅ UN SOLO STICKY WRAPPER: título + stack */}
+      <div
+        ref={stickyWrapRef}
+        className="sticky top-0 z-30 bg-neutral-black-900/85 backdrop-blur-[2px]"
+      >
+        {/* TÍTULO (ya NO es sticky) */}
+        <div
+          ref={titleRef}
+          className={[
+            "pt-16 md:pt-[150px]",
+            "pb-6 md:pb-8",
+          ].join(" ")}
+        >
+          <div className="mx-auto w-full max-w-[1400px] px-4 md:px-[48px] lg:px-[96px]">
+            <h2 className="text-neutral-white font-semibold tracking-[0.14em] uppercase text-center text-[clamp(1.1rem,3.2vw,3rem)] leading-[1.15]">
+              {title}
+            </h2>
+          </div>
         </div>
 
-        <div className="hidden md:block text-white/30 text-xs">
-          MODULE · WORKFLOW PROTOCOL
-        </div>
-      </div>
+        {/* STACK ZONE (ya NO es sticky; vive dentro del sticky wrapper) */}
+        <div
+          className="z-20"
+          style={{
+            paddingTop: stackGap,
+            height: Math.round(vh * 0.78) + stackGap,
+          }}
+        >
+          <div className="mx-auto w-full max-w-[1400px] px-4 md:px-[48px] lg:px-[96px]">
+            <div className="relative mx-auto w-full">
+              {items.map((card, i) => {
+                const rel = i - progress;
 
-      <div className="mt-10 h-px w-full bg-white/10" />
+                const depthBehind = Math.max(0, Math.floor(-rel));
+                const isIncoming = rel > 0 && rel < 1.25;
+                const isVisible = rel <= 0.15 && depthBehind <= 4;
+                const shouldRender = isVisible || isIncoming;
+                if (!shouldRender) return null;
 
-      <div className="mt-10 grid gap-4">
-        {steps.map((s) => (
-          <div
-            key={s.code}
-            className="rounded-xl border border-white/10 bg-white/5 p-6"
-          >
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-              <div>
-                <p className="text-[10px] tracking-widest uppercase text-white/40">
-                  {s.code}
-                </p>
-                <h3 className="mt-2 text-xl font-semibold text-white">
-                  {s.title}
-                </h3>
-                <p className="mt-3 text-white/70">{s.desc}</p>
-              </div>
+                const local = clamp(progress - Math.floor(progress), 0, 1);
+                const t = easeOutExpo(local);
 
-              <div className="md:text-right">
-                <p className="text-xs text-white/40">{s.output}</p>
-              </div>
+                const base = jitter[i];
+
+                const incomingT = clamp(1 - rel, 0, 1);
+                const incomingEase = easeOutExpo(incomingT);
+
+                const depth = rel <= 0 ? clamp(-rel, 0, 4) : 0;
+
+                const stackY = depth * 10 + base.y;
+                const stackX = depth * 2 + base.x;
+
+                const scale = 1 - depth * 0.03;
+                const opacity = 1 - depth * 0.14;
+
+                const riseFrom = 640; 
+                const incomingY = lerp(riseFrom, 0, incomingEase);
+
+                const rotControlled = rel <= 0 ? lerp(base.rot, 0, t * 0.05) : base.rot;
+
+                const zIndex = 1000 - (rel > 0 ? 0 : Math.floor(depth) * 10);
+
+                const cardW = "w-full max-w-[760px] md:max-w-[820px] lg:max-w-[920px]";
+                const cardBase =
+                  "border border-neutral-white/10 bg-[radial-gradient(56.49%_59.99%_at_58.01%_57.28%,#313133_0%,#0C0C0C_100%)]";
+
+                return (
+                  <article
+                    key={card.id}
+                    className={[
+                      "absolute left-1/2 top-32",
+                      "origin-center",
+                      "rounded-none",
+                      "shadow-[0_0_0_1px_rgba(255,255,255,0.08)]",
+                      cardBase,
+                      cardW,
+                    ].join(" ")}
+                    style={{
+                      transform: `translate3d(-50%, ${isIncoming ? incomingY : stackY}px, 0) translate3d(${stackX}px, 0, 0) rotate(${rotControlled}deg) scale(${scale})`,
+                      opacity: isIncoming ? 1 : opacity,
+                      zIndex,
+                      willChange: "transform, opacity",
+                    }}
+                  >
+                    <div className="relative p-6 md:p-8">
+                      <div className="absolute inset-0 pointer-events-none border border-neutral-white/10" />
+
+                      <div className="text-neutral-white/20 font-semibold tracking-[0.12em] uppercase text-[clamp(1.25rem,4vw,2.2rem)] leading-none select-none">
+                        {card.phase}
+                      </div>
+
+                      <h3 className="mt-4 text-neutral-white font-semibold tracking-[0.14em] uppercase text-[clamp(1.05rem,2.4vw,1.45rem)]">
+                        {card.title}
+                      </h3>
+
+                      <p className="mt-4 text-neutral-white/70 text-[clamp(0.95rem,1.2vw,1.05rem)] leading-relaxed max-w-[62ch]">
+                        {card.body}
+                      </p>
+
+                      {card.output ? (
+                        <p className="mt-4 text-neutral-white/60 text-[clamp(0.95rem,1.2vw,1.05rem)] leading-relaxed">
+                          {card.output}
+                        </p>
+                      ) : null}
+                    </div>
+                  </article>
+                );
+              })}
+
+              <div className="invisible select-none pointer-events-none h-[clamp(18rem,34vw,26rem)]" />
             </div>
           </div>
-        ))}
+        </div>
       </div>
-    </Section>
+
+      {/* aire final */}
+      <div style={{ height: Math.round(vh * 0.2) }} />
+    </section>
   );
 }

@@ -102,27 +102,7 @@ export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000 }: P
           SERVICIOS
         </p>
 
-        <h2 className="
-            mt-3 
-            font-semibold 
-            tracking-thig 
-            leading-[125%] 
-            text-neutral-white 
-            text-center sm:text-center 
-            text-[clamp(1.25rem,3.75vw,2.25rem)] 
-            md:text-[clamp(1.25rem,3.25vw,3.75rem)] 
-            md:text-center 
-            lg:text-[clamp(1.5rem,2.75vw,3rem)] 
-            lg:text-center 
-            xl:text-[clamp(2rem,1vw,3.5rem)] 
-            xl:text-center 
-            2xl:text-[clamp(2.25rem,1vw,3.75rem)] 
-            2xl:text-center
-            3xl:text-[clamp(2.5rem,1vw,4rem)] 
-            3xl:text-center
-            4xl:text-[clamp(2.5rem,1vw,4.5rem)]
-            4xl:text-center
-          ">
+        <h2 className="mt-3 heading-h2 tracking-tight">
           
           VALOR QUE IMPULSA , CONECTA Y ACOMPAÑA TU VISIÓN
         </h2>

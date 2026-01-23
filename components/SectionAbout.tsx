@@ -111,27 +111,7 @@ export default function SectionAbout() {
             FRAMEWORK DE HABILIDADES
           </div>
 
-          <h2 className="
-            mt-3 
-            font-semibold 
-            tracking-thig 
-            leading-[125%] 
-            text-neutral-white 
-            text-center sm:text-center 
-            text-[clamp(1.25rem,3.75vw,2.25rem)] 
-            md:text-[clamp(1.25rem,3.25vw,3.75rem)] 
-            md:text-center 
-            lg:text-[clamp(1.5rem,2.75vw,3rem)] 
-            lg:text-center 
-            xl:text-[clamp(2rem,1vw,3.5rem)] 
-            xl:text-center 
-            2xl:text-[clamp(2.25rem,1vw,3.75rem)] 
-            2xl:text-center
-            3xl:text-[clamp(2.5rem,1vw,4rem)] 
-            3xl:text-center
-            4xl:text-[clamp(2.5rem,1vw,4.5rem)]
-            4xl:text-center
-          ">
+          <h2 className="mt-3 heading-h2 tracking-tight">
             
             EL NÚCLEO QUE DEFINE MI MANERA DE DISEÑAR
           </h2>
@@ -233,20 +213,20 @@ export default function SectionAbout() {
         {/* Fila final 50/50 (misma sección, otro grid) */}
         <div className="grid grid-cols-1 lg:grid-cols-3">
           {/* MI PROPUESTA DE VALOR */}
-          <div className="relative flex flex-col overflow-hidden justify-center lg:mt-10 lg:text-right border border-neutral-white/10 bg-neutral-black-900/35 px-10 py-10 lg:col-span-1 order-2 md:order-1">
-            <div className="inline-flex border-2 self-center border-[#ededed1a] px-4 py-2 text-[11px] tracking-widest text-neutral-white/70 w-fit align-self-center">
+          <div className="relative flex flex-col overflow-hidden justify-start sm:justify-center lg:mt-10 lg:text-right border border-neutral-white/10 bg-neutral-black-900/35 px-10 py-10 lg:col-span-1 order-2 md:order-1">
+            <div className="inline-flex border-2 sm:self-center border-[#ededed1a] px-4 py-2 text-[11px] tracking-widest text-neutral-white/70 w-fit align-self-center">
               VALUE UNIQUE
             </div>
 
 
-            <h3 className="mt-7 heading-h3 md:text-center">
+            <h3 className="mt-7 heading-h3 sm:text-center">
               MI PROPUESTA DE VALOR
             </h3>
 
             <p className="
             mt-4 
             text-left
-            md:text-center
+            sm:text-center
             text-[clamp(0.95rem,1.15vw,1.125rem)] 
             leading-relaxed 
             xl:text-[clamp(1.05rem,.95vw,1.2rem)] 
@@ -256,10 +236,10 @@ export default function SectionAbout() {
             </p>
 
             {/* CTA */}
-            <div className="mt-8 flex flex-col items-center gap-4">
+            <div className="mt-8 flex flex-col items-baseline sm:items-center gap-4">
               <a
                 href="#contacto"
-                className="inline-flex items-center justify-center rounded-md bg-accent-lime px-10 py-3 text-[12px] font-semibold tracking-widest text-black shadow-[0_0_0_2px_rgba(0,0,0,0.25)]"
+                className="inline-flex justify-start items-start sm:items-center sm:justify-center rounded-md bg-accent-lime px-10 py-3 text-[12px] font-semibold tracking-widest text-black shadow-[0_0_0_2px_rgba(0,0,0,0.25)]"
               >
                 CONTACTAR <span className="ml-2">↗</span>
               </a>

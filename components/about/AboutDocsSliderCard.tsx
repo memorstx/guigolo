@@ -52,7 +52,7 @@ export default function AboutDocsSliderCard() {
                   <div className="text-[neutral-white] heading-h3 text-center">
                     {s.title}
                   </div>
-                  <div className="mt-2 line-clamp-2 text-[13px] text-center leading-relaxed text-neutral-white/65">
+                  <div className="mt-2 text-[clamp(0.95rem,1.15vw,1.125rem)] leading-relaxed xl:text-[clamp(1.05rem,.95vw,1.2rem)] xl:leading-relaxed 2xl:text-[clamp(1.25rem,1.2vw,1.5rem)] text-neutral-white/70 text-center">
                     {s.desc}
                   </div>
 

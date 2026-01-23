@@ -2,12 +2,14 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProjectsIntro from "@/components/ProjectsIntro";
 import ProjectsList from "@/components/ProjectList";
-import Process from "@/components/Process"; 
 import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SectionAbout from "@/components/SectionAbout";
 import ServicesAccordion from "@/components/ServicesAccordion";
+import ProjectsSection from "@/components/ProjectsSection";
+import { projects } from "@/components/projects/project.data";
+import Process from "@/components/Process"; 
 
 export default function Home() {
   return (
@@ -16,8 +18,13 @@ export default function Home() {
       <Hero />
       <SectionAbout />
       <ServicesAccordion />
-      <ProjectsIntro />
-      <ProjectsList />
+      {
+        /*
+        <ProjectsIntro />
+        <ProjectsList />
+        */
+      }
+      <ProjectsSection items={projects} />
       <Process />
       <ContactCTA />
       <Contact />

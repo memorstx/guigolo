@@ -20,6 +20,13 @@ body {
 }
 
 @layer components {
+  .heading-h2 {
+    @apply font-semibold leading-[125%] text-neutral-white text-center text-[clamp(1.25rem,3.75vw,2.25rem)] md:text-[clamp(1.25rem,3.25vw,3.75rem)] lg:text-[clamp(1.5rem,2.75vw,3rem)] xl:text-[clamp(2rem,1vw,3.5rem)] 2xl:text-[clamp(2.25rem,1vw,3.75rem)] 3xl:text-[clamp(2.5rem,1vw,4rem)] 4xl:text-[clamp(2.5rem,1vw,4.5rem)];
+  }
+}
+
+
+@layer components {
   .heading-h3 {
     @apply 
       text-[clamp(1.05rem,2.5vw,1.35rem)]
