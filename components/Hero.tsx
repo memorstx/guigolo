@@ -76,6 +76,7 @@ export default function Hero() {
                 <img
                   src="/brand/hero/scene.svg"
                   alt=""
+                  aria-hidden="true"
                   draggable={false}
                   className="absolute inset-0 h-full w-full object-contain select-none"
                 />
