@@ -28,6 +28,11 @@ const nextConfig: NextConfig = {
       destination: '/?utm_source=instagram&utm_medium=bio&utm_campaign=portfolio_navigation',
       permanent: false,
     },
+    {
+      source: '/go/steam',
+      destination: '/?utm_source=steam&utm_medium=bio&utm_campaign=entertainment_navigation',
+      permanent: false,
+    },
   ]
 }
 };
