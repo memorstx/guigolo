@@ -16,18 +16,28 @@ const anta = Anta({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://www.guigolo.com"),
   title: "Guigolo · Diseño centrado en usuario y negocio",
   description:
     "Portafolio de Guillermo González López. Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+    },
+  },
   openGraph: {
     title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
       "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
-    url: "https://guigolo.vercel.app",
+    url: "https://guigolo.com",
     siteName: "Guigolo",
     images: [
       {
-        url: "/og.png",
+        url: "/og/cover-social.png",
         width: 1200,
         height: 630,
         alt: "Guigolo · Portafolio UX/UI",
@@ -41,8 +51,10 @@ export const metadata = {
     title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
       "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
-    images: ["/og.png"],
+    images: ["/og/og.png"],
   },
+  
+
 };
 
 
