@@ -38,7 +38,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "./public/hero/scene.svg",
+        source: "/hero/scene.svg",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, noimageindex" },
         ],
