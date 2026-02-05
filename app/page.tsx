@@ -18,7 +18,6 @@ export default function Home() {
     <main className="bg-neutral-black-900">
       <Navbar />
       <Hero />
-      <SectionAbout />
       <ServicesAccordion />
       {
         /*
@@ -28,6 +27,7 @@ export default function Home() {
       }
       <ProjectsSection items={projects} />
       <Process />
+      <SectionAbout />
       <ContactCTA />
       <FAQSection items={FAQS} />
       <Contact />

@@ -10,11 +10,11 @@ import IconProjects from "./icons/IconProjects";
 import IconServices from "./icons/IconServices";
 
 const navItems = [
-  { href: "#home", label: "HOME", Icon: IconHome },
-  { href: "#about", label: "ABOUT ME", Icon: IconAbout },
-  { href: "#projects", label: "PROJECTS", Icon: IconProjects },
-  { href: "#services", label: "SERVICES", Icon: IconServices },
-  { href: "#contacto", label: "CONTACT", Icon: IconContact },
+  { href: "#home", label: "INICIO", Icon: IconHome },
+  { href: "#services", label: "SERVICIOS", Icon: IconServices },
+  { href: "#projects", label: "PROYECTOS", Icon: IconProjects },
+  { href: "#about", label: "SOBRE MI", Icon: IconAbout },
+  { href: "#contacto", label: "CONTACTO", Icon: IconContact },
 ];
 
 
