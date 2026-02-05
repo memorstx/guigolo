@@ -13,7 +13,7 @@ export const SERVICES: ServiceItem[] = [
     title: "DISEÑO",
     iconLabel: "DISEÑO",
     description:
-      "Transformo ideas en interfaces claras y sensibles que conectan rápido y funcionan sin fricción emocional.",
+      "Cuando necesitas que algo se vea bien, pero sobre todo se entienda mejor.",
     imageSrc: "/services/design.webp",
   },
   {
@@ -21,7 +21,7 @@ export const SERVICES: ServiceItem[] = [
     title: "EXPERIENCIA",
     iconLabel: "EXPERIENCIA",
     description:
-      "Creo flujos humanos y memorables que guían al usuario con claridad, emoción y control, sin confusión.",
+      "Cuando las personas se pierden, dudan o no saben qué hacer en tu producto.",
     imageSrc: "/services/experience.webp",
   },
   {
@@ -29,7 +29,7 @@ export const SERVICES: ServiceItem[] = [
     title: "IDENTIDAD",
     iconLabel: "IDENTIDAD",
     description:
-      "Construyo identidad visual con intención: coherente, reconocible y lista para crecer con tu producto.",
+      "Cuando tu marca no se siente coherente o no transmite confianza real.",
     imageSrc: "/services/identity.webp",
   },
   {
@@ -37,9 +37,10 @@ export const SERVICES: ServiceItem[] = [
     title: "INTERACCIÓN",
     iconLabel: "INTERACCIÓN",
     description:
-      "Diseño microinteracciones con precisión para que cada gesto se sienta natural, útil y hasta adorable.",
+      "Cuando el diseño necesita cobrar vida y funcionar en el mundo real.",
     imageSrc: "/services/interaction.webp",
   },
+  /*
   {
     id: "conversion",
     title: "CONVERSIÓN",
@@ -56,4 +57,5 @@ export const SERVICES: ServiceItem[] = [
       "Diseño experiencias que conectan: cercanas, coherentes y con personalidad para que la gente vuelva.",
     imageSrc: "/services/connection.webp",
   },
+  */
 ];
