@@ -117,7 +117,68 @@ const nextConfig: NextConfig = {
         source: '/go/sketchfab',
         destination: '/?utm_source=sketchfab&utm_medium=bio&utm_campaign=3d_navigation',
         permanent: false,
-      }
+      },
+      {
+        source: '/go/whatsapp',
+        destination: '/?utm_source=whatsapp&utm_medium=bio&utm_campaign=communication_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/google',
+        destination: '/?utm_source=google&utm_medium=bio&utm_campaign=search_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/spotify',
+        destination: '/?utm_source=spotify&utm_medium=bio&utm_campaign=entertainment_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/apple',
+        destination: '/?utm_source=apple&utm_medium=bio&utm_campaign=technology_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/microsoft',
+        destination: '/?utm_source=microsoft&utm_medium=bio&utm_campaign=technology_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/personal-website',
+        destination: '/?utm_source=personal-website&utm_medium=bio&utm_campaign=personal_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/stackoverflow',
+        destination: '/?utm_source=stackoverflow&utm_medium=bio&utm_campaign=development_navigation', 
+        permanent: false,
+      },
+      {
+        source: '/go/atlassian',
+        destination: '/?utm_source=atlassian&utm_medium=bio&utm_campaign=productivity_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/trello',
+        destination: '/?utm_source=trello&utm_medium=bio&utm_campaign=productivity_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/slack',
+        destination: '/?utm_source=slack&utm_medium=bio&utm_campaign=communication_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/notion',
+        destination: '/?utm_source=notion&utm_medium=bio&utm_campaign=productivity_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/airtable',
+        destination: '/?utm_source=airtable&utm_medium=bio&utm_campaign=productivity_navigation', 
+        permanent: false,
+      },
+      
     ]
   },
   async headers() {
