@@ -134,6 +134,11 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        source: '/go/twitch',
+        destination: '/?utm_source=twitch&utm_medium=bio&utm_campaign=entertainment_navigation',
+        permanent: false,
+      },
+      {
         source: '/go/apple',
         destination: '/?utm_source=apple&utm_medium=bio&utm_campaign=technology_navigation',
         permanent: false,
