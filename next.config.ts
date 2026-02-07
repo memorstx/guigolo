@@ -92,7 +92,28 @@ const nextConfig: NextConfig = {
         source: '/go/platzi',
         destination: '/?utm_source=platzi&utm_medium=bio&utm_campaign=education_navigation',
         permanent: false,
-      }
+      },
+      {
+        source: '/go/codepen',
+        destination: '/?utm_source=codepen&utm_medium=bio&utm_campaign=development_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/medium',
+        destination: '/?utm_source=medium&utm_medium=bio&utm_campaign=content_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/wakatime',
+        destination: '/?utm_source=wakatime&utm_medium=bio&utm_campaign=productivity_navigation',
+        permanent: false,
+      },
+      {
+        source: '/go/discord',
+        destination: '/?utm_source=discord&utm_medium=bio&utm_campaign=social_navigation',
+        permanent: false,
+      },
+      
     ]
   },
   async headers() {
