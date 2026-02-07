@@ -108,8 +108,8 @@ export default function ProjectsSection({ items }: Props) {
           PROJECTS
         </div>
 
-        <h2 className="mt-4 heading-h2 tracking-tight">
-          PROYECTOS DONDE LA EMOCIÓN SE CONVIERTE EN ESTRUCTURA FUNCIONAL
+        <h2 className="mt-4 heading-h2 tracking-tight uppercase">
+          Proyectos reales que convierten ideas en producto
         </h2>
       </div>
 
@@ -155,6 +155,38 @@ export default function ProjectsSection({ items }: Props) {
           </div>
         </div>
 
+        {/* CTA final proyectos */}
+        <div className="mx-auto px-6 md:px-12 lg:px-24 pb-12">
+          <div className="mx-auto max-w-[56rem] border border-neutral-white/10 bg-neutral-black-800/40 p-6 md:p-8 text-center">
+            <p className="text-neutral-white/70 text-[clamp(0.95rem,1.05vw,1.125rem)]">
+              ¿Quieres ver más o entender cómo trabajo?
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-4 justify-center">
+              {
+                /*
+                
+              <Link
+                href="/projects"
+                className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
+              >
+                Ver todos los proyectos
+              </Link>
+                */
+
+              }
+
+              <Link
+                href="#contacto"
+                className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
+              >
+                Hablemos de tu proyecto
+              </Link>
+            </div>
+          </div>
+        </div>
+
+
         {/* Banda repetida (decor) */}
         <div className="pointer-events-none select-none overflow-hidden py-3">
           <div className="whitespace-nowrap text-[12px] tracking-[0.45em] text-neutral-white/10">
@@ -167,6 +199,7 @@ export default function ProjectsSection({ items }: Props) {
 }
 
 function ProjectSlide({ item }: { item: ProjectItem }) {
+  const isExternal = item.linkUrl.startsWith("http");
   return (
     <div className="w-full">
       <div
@@ -227,10 +260,12 @@ function ProjectSlide({ item }: { item: ProjectItem }) {
 
               <SpecLabel>LINK</SpecLabel>
               <SpecValue>
+                
+                
                 <Link
                   href={item.linkUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noreferrer" : undefined}
                   className="hover:text-neutral-white transition underline decoration-neutral-white/20 hover:decoration-neutral-white/50"
                 >
                   {item.linkLabel}

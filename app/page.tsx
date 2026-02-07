@@ -13,6 +13,13 @@ import Process from "@/components/Process";
 import FAQSection from "@/components/Faq";
 import { FAQS } from "@/components/faq/faq.data";
 
+
+const featuredIds = new Set([
+  "academia-platform-project",
+  "mironline-platform-project",
+  "latiendita-puntodeventa-project",
+]);
+
 export default function Home() {
   return (
     <main className="bg-neutral-black-900">
@@ -25,7 +32,7 @@ export default function Home() {
         <ProjectsList />
         */
       }
-      <ProjectsSection items={projects} />
+      <ProjectsSection items={projects.filter((p) => featuredIds.has(p.id))} />
       <Process />
       <SectionAbout />
       <ContactCTA />

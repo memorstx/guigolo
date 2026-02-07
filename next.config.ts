@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
         destination: '/?utm_source=steam&utm_medium=bio&utm_campaign=entertainment_navigation',
         permanent: false,
       },
+      {
+        source: '/go/indeed',
+        destination: '/?utm_source=indeed&utm_medium=bio&utm_campaign=job_search_navigation',
+        permanent: false,
+      },
     ]
   },
   async headers() {
