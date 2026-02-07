@@ -29,8 +29,8 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
-        source: '/go/instagram',
-        destination: '/?utm_source=instagram&utm_medium=bio&utm_campaign=portfolio_navigation',
+        source: '/go/instagram-memorstx',
+        destination: '/?utm_source=instagram_memorstx&utm_medium=bio&utm_campaign=portfolio_navigation',
         permanent: false,
       },
       {
