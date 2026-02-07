@@ -3,21 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      // Forzar www -> no-www
-       {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.guigolo.com" }],
-        destination: "https://guigolo.com/:path*",
-        permanent: true,
-      },
-
-      // Forzar http -> https
-      {
-        source: "/:path*",
-        has: [{ type: "header", key: "x-forwarded-proto", value: "http" }],
-        destination: "https://guigolo.com/:path*",
-        permanent: true,
-      },
       {
         source: '/go/figma',
         destination: '/?utm_source=figma&utm_medium=profile&utm_campaign=profile_referral',

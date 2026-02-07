@@ -1,7 +1,8 @@
 import "./globals.css";
 import { Unbounded, Anta } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import type { Metadata } from "next";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -15,11 +16,24 @@ const anta = Anta({
   variable: "--font-anta",
 });
 
-export const metadata = {
-  metadataBase: new URL("https://www.guigolo.com"),
-  title: "Guigolo · Diseño centrado en usuario y negocio",
+export const metadata: Metadata = {
+  // ✅ Canónico sin www (coincide con tu configuración final en Vercel)
+  metadataBase: new URL("https://guigolo.com"),
+
+  // ✅ Escalable para futuras páginas
+  title: {
+    default: "Guigolo · Diseño centrado en usuario y negocio",
+    template: "%s | Guigolo",
+  },
+
   description:
     "Portafolio de Guillermo González López. Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.",
+
+  // ✅ Canonical explícito
+  alternates: {
+    canonical: "https://guigolo.com",
+  },
+
   robots: {
     index: true,
     follow: true,
@@ -29,6 +43,7 @@ export const metadata = {
       "max-image-preview": "large",
     },
   },
+
   openGraph: {
     title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
@@ -46,21 +61,18 @@ export const metadata = {
     locale: "es_MX",
     type: "website",
   },
+
+  // ✅ Twitter consistente con OG (misma imagen)
   twitter: {
     card: "summary_large_image",
     title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
       "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
-    images: ["/og/og.png"],
+    images: ["/og/cover-social.png"],
   },
-  
-
 };
 
-
-
 export default function RootLayout({
-
   children,
 }: {
   children: React.ReactNode;
@@ -71,9 +83,8 @@ export default function RootLayout({
   const HJ_ID = process.env.NEXT_PUBLIC_HJ_ID;
   const HJ_SV = process.env.NEXT_PUBLIC_HJ_SV || "6";
 
-
   return (
-    <html lang="es">
+    <html lang="es-MX">
       <body className={`${unbounded.variable} ${anta.variable}`}>
         {children}
 
@@ -119,11 +130,8 @@ export default function RootLayout({
           />
         ) : null}
 
-
         <Analytics />
-        
       </body>
     </html>
   );
 }
-
