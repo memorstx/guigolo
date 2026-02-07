@@ -19,8 +19,13 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
-        source: '/go/linkedin',
-        destination: '/?utm_source=linkedin&utm_medium=profile&utm_campaign=profile_referral',
+        source: '/go/linkedin-memorstx',
+        destination: '/?utm_source=linkedin_memorstx&utm_medium=profile&utm_campaign=profile_referral',
+        permanent: false,
+      },
+      {
+        source: '/go/linkedin-guigolo',
+        destination: '/?utm_source=linkedin_guigolo&utm_medium=profile&utm_campaign=profile_referral',
         permanent: false,
       },
       {
