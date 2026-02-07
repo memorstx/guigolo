@@ -3,6 +3,7 @@ import { Unbounded, Anta } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
+import { SeoJsonLd } from "../components/SeoJsonLd";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -86,6 +87,7 @@ export default function RootLayout({
   return (
     <html lang="es-MX">
       <body className={`${unbounded.variable} ${anta.variable}`}>
+        <SeoJsonLd />
         {children}
 
         {/* Google Analytics — SOLO producción */}
