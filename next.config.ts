@@ -113,7 +113,11 @@ const nextConfig: NextConfig = {
         destination: '/?utm_source=discord&utm_medium=bio&utm_campaign=social_navigation',
         permanent: false,
       },
-      
+      {
+        source: '/go/sketchfab',
+        destination: '/?utm_source=sketchfab&utm_medium=bio&utm_campaign=3d_navigation',
+        permanent: false,
+      }
     ]
   },
   async headers() {
