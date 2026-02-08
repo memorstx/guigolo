@@ -6,6 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ProjectItem } from "@/components/projects/project.data";
+import ContactLink from "./ui/ContactLink";
 
 type Props = {
   items: ProjectItem[];
@@ -159,7 +160,7 @@ export default function ProjectsSection({ items }: Props) {
         <div className="mx-auto px-6 md:px-12 lg:px-24 pb-12">
           <div className="mx-auto max-w-[56rem] border border-neutral-white/10 bg-neutral-black-800/40 p-6 md:p-8 text-center">
             <p className="text-neutral-white/70 text-[clamp(0.95rem,1.05vw,1.125rem)]">
-              ¿Quieres ver más o entender cómo trabajo?
+              Ok, tu turno. ¿Qué quieres construir?
             </p>
 
             <div className="mt-5 flex flex-wrap gap-4 justify-center">
@@ -176,12 +177,12 @@ export default function ProjectsSection({ items }: Props) {
 
               }
 
-              <Link
-                href="#contacto"
+              <ContactLink
+                ctaId="projects-contact"
                 className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
                 Hablemos de tu proyecto
-              </Link>
+              </ContactLink>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import ContactLink from "./ui/ContactLink";
 
 export default function FinalCTA() {
   return (
@@ -66,8 +67,8 @@ export default function FinalCTA() {
 
             <div className="mt-7 flex flex-wrap items-center justify-center md:justify-start gap-4">
               {/* Botón */}
-              <Link
-                href="#contacto"
+              <ContactLink
+                ctaId="cta-ready-to-build"
                 className="
                   group inline-flex items-center gap-3
                   rounded-md bg-accent-lime
@@ -86,7 +87,8 @@ export default function FinalCTA() {
                 >
                   ↗
                 </span>
-              </Link>
+              </ContactLink>
+
 
               {/* Micro CTA secundario */}
               <span className="text-[12px] tracking-[0.18em] text-neutral-white/45">
