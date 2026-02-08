@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Section from "./Section";
+import { readContactOrigin, clearContactOrigin, type ContactOrigin } from "@/components/ui/contactOrigin";
+
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro"; 
 
@@ -9,6 +11,12 @@ type Status = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
+  const [origin, setOrigin] = useState<ContactOrigin | null>(null);
+
+  useEffect(() => {
+    setOrigin(readContactOrigin());
+  }, []);
+
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -41,8 +49,9 @@ export default function Contact() {
     <Section className="py-24 bg-neutral-black-900">
       <div
         id="contacto"
-        className="rounded-2xl border border-neutral-white/10 bg-neutral-black-800/40 p-10"
+        className="scroll-mt-28 rounded-2xl border border-neutral-white/10 bg-neutral-black-800/40 p-10"
       >
+
         <p className="text-neutral-white/50 text-sm tracking-widest uppercase">
           Contact
         </p>
@@ -58,6 +67,11 @@ export default function Contact() {
         <form onSubmit={onSubmit} className="mt-10 grid gap-4 max-w-2xl">
           {/* Honeypot anti-spam (déjalo tal cual) */}
           <input type="text" name="_gotcha" className="hidden" />
+          
+          <input type="hidden" name="origin_path" value={origin?.fromPath ?? ""} />
+          <input type="hidden" name="origin_hash" value={origin?.fromHash ?? ""} />
+          <input type="hidden" name="origin_scrollY" value={origin ? String(origin.fromScrollY) : ""} />
+          <input type="hidden" name="origin_cta" value={origin?.ctaId ?? ""} />
 
           <div className="grid gap-2">
             <label className="text-label-sm uppercase text-neutral-white/60">
@@ -108,9 +122,42 @@ export default function Contact() {
           {/* Mensaje de estado (ya con tu vibe, sin salirte de tu sitio) */}
           {status === "success" && (
             <div className="rounded-md border border-neutral-white/10 bg-accent-cyan-10 px-4 py-3 text-neutral-white/80">
-              Listo ✅ Ya me llegó tu mensaje. Te escribo pronto 💝
+              <div>Listo ✅ Ya me llegó tu mensaje. Te escribo pronto 💝</div>
+
+              <div className="mt-4 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const o = readContactOrigin();
+                    if (!o) return;
+
+                    // Regresar a página + hash si existe, o a scroll exacto si no
+                    const url = `${o.fromPath}${o.fromHash || ""}`;
+                    window.location.href = url;
+
+                    sessionStorage.setItem("restore_scroll_once_v1", "1");
+                    window.location.href = url;
+
+                  }}
+                  className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
+                >
+                  Volver a donde estaba
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    clearContactOrigin();
+                    window.location.href = "/#projects";
+                  }}
+                  className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
+                >
+                  Seguir explorando
+                </button>
+              </div>
             </div>
           )}
+
 
           {status === "error" && (
             <div className="rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white/80">

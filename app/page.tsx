@@ -12,7 +12,7 @@ import { projects } from "@/components/projects/project.data";
 import Process from "@/components/Process"; 
 import FAQSection from "@/components/Faq";
 import { FAQS } from "@/components/faq/faq.data";
-
+import RestoreScroll from "@/components/ui/RestoreScroll";
 
 const featuredIds = new Set([
   "academia-platform-project",
@@ -23,6 +23,7 @@ const featuredIds = new Set([
 export default function Home() {
   return (
     <main className="bg-neutral-black-900">
+      <RestoreScroll />
       <Navbar />
       <Hero />
       <ServicesAccordion />
