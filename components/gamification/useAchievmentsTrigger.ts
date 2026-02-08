@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { hasAchievement, unlockAchievement } from "./achievmentsStore";
+import { hasAchievement, unlockAchievement } from "./achievementsStore";
 
 type TriggersConfig = {
   servicesId?: string; // default: "services"

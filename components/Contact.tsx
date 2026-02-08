@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Section from "./Section";
 import {
   readContactOrigin,
   clearContactOrigin,
   type ContactOrigin,
 } from "@/components/ui/contactOrigin";
+import { unlockAchievement } from "./gamification/achievementsStore";
+
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro";
 
@@ -23,6 +25,37 @@ export default function Contact() {
     const sent = sessionStorage.getItem("contact_sent_v1");
     if (sent === "1") setStatus("success");
   }, []);
+
+  useEffect(() => {
+  const el = document.getElementById("contacto");
+  if (!el) return;
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      const isVisible = entries.some((e) => e.isIntersecting);
+      if (!isVisible) return;
+
+      if (almostUnlockedRef.current) return;
+
+      // Solo cuenta si llegó por CTA (contact_origin_v1 existe)
+      const o = readContactOrigin();
+      if (!o?.ctaId) return;
+
+      almostUnlockedRef.current = true;
+      unlockAchievement("almost_talked");
+    },
+    { threshold: 0.6 } // 60% visible: intención real
+  );
+
+  io.observe(el);
+  return () => io.disconnect();
+}, []);
+
+
+const formRef = useRef<HTMLFormElement | null>(null);
+const courageUnlockedRef = useRef(false);
+const almostUnlockedRef = useRef(false);
+
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -41,6 +74,8 @@ export default function Contact() {
       });
 
       if (res.ok) {
+        unlockAchievement("first_contact");
+
         form.reset();
         sessionStorage.setItem("contact_sent_v1", "1");
         setStatus("success");
@@ -51,6 +86,12 @@ export default function Contact() {
       setStatus("error");
     }
   }
+
+  const markCourage = () => {
+    if (courageUnlockedRef.current) return;
+    courageUnlockedRef.current = true;
+    unlockAchievement("took_courage");
+  };
 
   const goBackToOrigin = () => {
     const o = readContactOrigin();
@@ -105,12 +146,17 @@ export default function Contact() {
               <button
                 type="button"
                 onClick={() => {
-                  window.location.href = "/#about";
+                  
+                  setStatus("idle");
+
+                  formRef.current?.reset();
+                  sessionStorage.removeItem("contact_sent_v1");
                 }}
                 className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
               >
-                Sobre mí
+                Enviar otro mensaje
               </button>
+
             </div>
 
           </div>
@@ -159,7 +205,8 @@ export default function Contact() {
 
         {/* ✅ FORM: se muestra solo si NO estamos en success */}
         {status !== "success" && (
-          <form onSubmit={onSubmit} className="mt-10 grid gap-4 max-w-2xl">
+          <form ref={formRef} onSubmit={onSubmit} className="mt-10 grid gap-4 max-w-2xl">
+
             {/* Honeypot anti-spam (déjalo tal cual) */}
             <input type="text" name="_gotcha" className="hidden" />
 
@@ -183,6 +230,7 @@ export default function Contact() {
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
                 placeholder="Tu nombre"
               />
+
             </div>
 
             <div className="grid gap-2">
@@ -205,6 +253,8 @@ export default function Contact() {
               <textarea
                 name="message"
                 required
+                onFocus={markCourage}
+                onInput={markCourage}
                 rows={5}
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
                 placeholder="Qué estás construyendo y qué necesitas de mí…"

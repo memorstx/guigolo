@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { trackVisit, unlockAchievement } from "./achievmentsStore";
+import { trackVisit, unlockAchievement } from "./achievementsStore";
 
 export default function GamificationBoot() {
   useEffect(() => {

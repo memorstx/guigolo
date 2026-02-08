@@ -1,0 +1,66 @@
+
+import type { AchievementId } from "./achievementsStore";
+
+export type AchievementMeta = {
+  id: AchievementId;
+  title: string;
+  description: string;
+  image?: string; // ruta en /public
+  totalWeight?: number; // por si luego haces scoring
+};
+
+export const ACHIEVEMENTS: AchievementMeta[] = [
+  {
+    id: "first_step",
+    title: "Primer paso",
+    description: "Entraste al universo Guigolo.",
+    image: "/achievements/first_step.png",
+  },
+  {
+    id: "visual_match",
+    title: "Match visual",
+    description: "Volviste otro día. Eso se aprecia 💛",
+    image: "/achievements/visual_match.png",
+  },
+  {
+    id: "explorer",
+    title: "Explorador",
+    description: "Te aventaste un buen recorrido del sitio.",
+    image: "/achievements/explorer.png",
+  },
+  {
+    id: "services_decoded",
+    title: "Servicios descifrados",
+    description: "Le diste click para entender cómo puedo ayudarte.",
+    image: "/achievements/services_decoded.png",
+  },
+  {
+    id: "projects_gallery",
+    title: "Galería viva",
+    description: "Navegaste proyectos con intención (no por autoplay).",
+    image: "/achievements/projects_gallery.png",
+  },
+  {
+    id: "almost_talked",
+    title: "Casi hablamos",
+    description: "Llegaste al formulario. Ya casi 👀",
+    image: "/achievements/almost_talked.png",
+  },
+  {
+    id: "took_courage",
+    title: "Tomaste valor",
+    description: "Empezaste a escribir. Respeto 🫡",
+    image: "/achievements/took_courage.png",
+  },
+  {
+    id: "first_contact",
+    title: "Primer contacto",
+    description: "Me mandaste mensaje. Ya estamos del mismo lado 💚",
+    image: "/achievements/first_contact.png",
+  },
+];
+
+// lookup rápido
+export const ACH_BY_ID = Object.fromEntries(
+  ACHIEVEMENTS.map((a) => [a.id, a])
+) as Record<AchievementId, AchievementMeta>;

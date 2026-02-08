@@ -1,7 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import ProjectsIntro from "@/components/ProjectsIntro";
-import ProjectsList from "@/components/ProjectList";
 import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -15,6 +13,8 @@ import { FAQS } from "@/components/faq/faq.data";
 import RestoreScroll from "@/components/ui/RestoreScroll";
 import GamificationBoot from "@/components/gamification/Boot";
 import TriggersBoot from "@/components/gamification/TriggersBoot";
+import AchievementsUI from "@/components/gamification/AchievementsUI";
+
 
 const featuredIds = new Set([
   "academia-platform-project",
@@ -27,6 +27,7 @@ export default function Home() {
     <main className="bg-neutral-black-900">
       <GamificationBoot />
       <TriggersBoot />
+      <AchievementsUI />
       <RestoreScroll />
       <Navbar />
       <Hero />
