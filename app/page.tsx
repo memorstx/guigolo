@@ -13,6 +13,8 @@ import Process from "@/components/Process";
 import FAQSection from "@/components/Faq";
 import { FAQS } from "@/components/faq/faq.data";
 import RestoreScroll from "@/components/ui/RestoreScroll";
+import GamificationBoot from "@/components/gamification/Boot";
+import TriggersBoot from "@/components/gamification/TriggersBoot";
 
 const featuredIds = new Set([
   "academia-platform-project",
@@ -23,6 +25,8 @@ const featuredIds = new Set([
 export default function Home() {
   return (
     <main className="bg-neutral-black-900">
+      <GamificationBoot />
+      <TriggersBoot />
       <RestoreScroll />
       <Navbar />
       <Hero />
