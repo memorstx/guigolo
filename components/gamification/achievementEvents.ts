@@ -1,28 +1,29 @@
-// /components/gamification/achievementEvents.ts
 "use client";
 
 import type { AchievementId } from "./achievementsStore";
 
-export type AchievementUnlockedEvent = {
+export type AchievementUnlockedPayload = {
   id: AchievementId;
   at: number;
 };
 
-const EVENT_NAME = "guigolo:achievement_unlocked_v1";
+const EVENT_NAME = "guigolo:achievement_unlocked";
 
-export function emitAchievementUnlocked(e: AchievementUnlockedEvent) {
-  window.dispatchEvent(new CustomEvent(EVENT_NAME, { detail: e }));
+export function emitAchievementUnlocked(payload: AchievementUnlockedPayload) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent(EVENT_NAME, { detail: payload }));
 }
 
 export function onAchievementUnlocked(
-  handler: (e: AchievementUnlockedEvent) => void
+  cb: (payload: AchievementUnlockedPayload) => void
 ) {
-  const listener = (ev: Event) => {
-    const ce = ev as CustomEvent<AchievementUnlockedEvent>;
-    if (!ce.detail?.id) return;
-    handler(ce.detail);
+  if (typeof window === "undefined") return () => {};
+
+  const handler = (e: Event) => {
+    const ce = e as CustomEvent<AchievementUnlockedPayload>;
+    cb(ce.detail);
   };
 
-  window.addEventListener(EVENT_NAME, listener as any);
-  return () => window.removeEventListener(EVENT_NAME, listener as any);
+  window.addEventListener(EVENT_NAME, handler);
+  return () => window.removeEventListener(EVENT_NAME, handler);
 }

@@ -1,4 +1,6 @@
 import Section from "./Section";
+import AchievementsCounter from "@/components/gamification/AchievementsCounter";
+
 
 export default function Footer() {
   return (
@@ -14,6 +16,7 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-4">
+          <AchievementsCounter />
           <a href="#projects" className="text-sm text-white/60 hover:text-white transition">
             Proyectos
           </a>

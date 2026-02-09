@@ -53,7 +53,6 @@ export default function Contact() {
 
 
 const formRef = useRef<HTMLFormElement | null>(null);
-const courageUnlockedRef = useRef(false);
 const almostUnlockedRef = useRef(false);
 
 
@@ -87,11 +86,15 @@ const almostUnlockedRef = useRef(false);
     }
   }
 
+  const COURAGE_MIN_CHARS = 50;
+  const courageUnlockedRef = useRef(false);
+
   const markCourage = () => {
     if (courageUnlockedRef.current) return;
     courageUnlockedRef.current = true;
     unlockAchievement("took_courage");
   };
+
 
   const goBackToOrigin = () => {
     const o = readContactOrigin();
@@ -253,11 +256,14 @@ const almostUnlockedRef = useRef(false);
               <textarea
                 name="message"
                 required
-                onFocus={markCourage}
-                onInput={markCourage}
                 rows={5}
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
                 placeholder="Qué estás construyendo y qué necesitas de mí…"
+                onChange={(e) => {
+                  if (e.target.value.trim().length >= COURAGE_MIN_CHARS) {
+                    markCourage();
+                  }
+                }}
               />
               <p className="text-xs text-neutral-white/45">
                 No tiene que estar perfecto. Escríbelo como lo tengas en la cabeza.

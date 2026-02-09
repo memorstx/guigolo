@@ -102,7 +102,11 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
       if (txt === "PREVIOUS" || txt === "NEXT") {
         didUserInteractProjectsRef.current = true;
         if (!hasAchievement("projects_gallery")) {
-          unlockAchievement("projects_gallery");
+          const k = "projects_interactions_v1";
+          const n = Number(sessionStorage.getItem(k) ?? "0") + 1;
+          sessionStorage.setItem(k, String(n));
+
+          if (n >= 3) unlockAchievement("projects_gallery");
         }
       }
     };
@@ -111,7 +115,11 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
     const onPointerDown = () => {
       didUserInteractProjectsRef.current = true;
       if (!hasAchievement("projects_gallery")) {
-        unlockAchievement("projects_gallery");
+        const k = "projects_interactions_v1";
+        const n = Number(sessionStorage.getItem(k) ?? "0") + 1;
+        sessionStorage.setItem(k, String(n));
+
+        if (n >= 3) unlockAchievement("projects_gallery");
       }
     };
 
