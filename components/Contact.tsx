@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/contactOrigin";
 import { unlockAchievement } from "./gamification/achievementsStore";
 
-
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -17,6 +16,23 @@ type Status = "idle" | "sending" | "success" | "error";
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [origin, setOrigin] = useState<ContactOrigin | null>(null);
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  // --- almost_talked (anti-autoscroll + “se quedó”) ---
+  const almostUnlockedRef = useRef(false);
+  const humanIntentRef = useRef(false);
+  const dwellTimerRef = useRef<number | null>(null);
+
+  // --- took_courage ---
+  const COURAGE_MIN_CHARS = 50;
+  const courageUnlockedRef = useRef(false);
+
+  const markCourage = () => {
+    if (courageUnlockedRef.current) return;
+    courageUnlockedRef.current = true;
+    unlockAchievement("took_courage");
+  };
 
   useEffect(() => {
     setOrigin(readContactOrigin());
@@ -26,35 +42,81 @@ export default function Contact() {
     if (sent === "1") setStatus("success");
   }, []);
 
+  // ✅ almost_talked: visible + intención humana + dwell
   useEffect(() => {
-  const el = document.getElementById("contacto");
-  if (!el) return;
+    const el = document.getElementById("contacto");
+    if (!el) return;
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      const isVisible = entries.some((e) => e.isIntersecting);
-      if (!isVisible) return;
+    const clearDwell = () => {
+      if (dwellTimerRef.current) window.clearTimeout(dwellTimerRef.current);
+      dwellTimerRef.current = null;
+    };
 
-      if (almostUnlockedRef.current) return;
+    const resetIntent = () => {
+      humanIntentRef.current = false;
+    };
 
-      // Solo cuenta si llegó por CTA (contact_origin_v1 existe)
-      const o = readContactOrigin();
-      if (!o?.ctaId) return;
+    const markIntent = () => {
+      humanIntentRef.current = true;
+    };
 
-      almostUnlockedRef.current = true;
-      unlockAchievement("almost_talked");
-    },
-    { threshold: 0.6 } // 60% visible: intención real
-  );
+    // Solo cuenta intención dentro de la sección
+    const addIntentListeners = () => {
+      el.addEventListener("wheel", markIntent, { passive: true });
+      el.addEventListener("touchmove", markIntent, { passive: true });
+      el.addEventListener("pointerdown", markIntent, { passive: true });
+      el.addEventListener("keydown", markIntent);
+    };
 
-  io.observe(el);
-  return () => io.disconnect();
-}, []);
+    const removeIntentListeners = () => {
+      el.removeEventListener("wheel", markIntent as any);
+      el.removeEventListener("touchmove", markIntent as any);
+      el.removeEventListener("pointerdown", markIntent as any);
+      el.removeEventListener("keydown", markIntent as any);
+    };
 
+    addIntentListeners();
 
-const formRef = useRef<HTMLFormElement | null>(null);
-const almostUnlockedRef = useRef(false);
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const visible = !!entry?.isIntersecting;
 
+        // Si sale, limpiamos timers para que no “robe” unlock después
+        if (!visible) {
+          clearDwell();
+          resetIntent();
+          return;
+        }
+
+        if (almostUnlockedRef.current) return;
+
+        // Al entrar visible, reiniciamos intención y arrancamos dwell
+        resetIntent();
+        clearDwell();
+
+        // ⏱️ Tiene que quedarse un ratito (lectura real, no “pasé volando”)
+        dwellTimerRef.current = window.setTimeout(() => {
+          if (almostUnlockedRef.current) return;
+
+          // ✅ condición clave: hubo intención humana dentro de contacto
+          if (!humanIntentRef.current) return;
+
+          almostUnlockedRef.current = true;
+          unlockAchievement("almost_talked");
+        }, 1400); // ajusta: 1200–1800ms
+      },
+      { threshold: 0.6 }
+    );
+
+    io.observe(el);
+
+    return () => {
+      clearDwell();
+      removeIntentListeners();
+      io.disconnect();
+    };
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -86,16 +148,6 @@ const almostUnlockedRef = useRef(false);
     }
   }
 
-  const COURAGE_MIN_CHARS = 50;
-  const courageUnlockedRef = useRef(false);
-
-  const markCourage = () => {
-    if (courageUnlockedRef.current) return;
-    courageUnlockedRef.current = true;
-    unlockAchievement("took_courage");
-  };
-
-
   const goBackToOrigin = () => {
     const o = readContactOrigin();
     if (!o) return;
@@ -123,7 +175,7 @@ const almostUnlockedRef = useRef(false);
           Escríbeme y te respondo con claridad: alcance, tiempos y siguientes pasos.
         </p>
 
-        {/* ✅ SUCCESS: ocultamos el form y mostramos tarjeta */}
+        {/* ✅ SUCCESS */}
         {status === "success" && (
           <div className="mt-10 max-w-2xl rounded-md border border-neutral-white/10 bg-accent-cyan-10 px-4 py-4 text-neutral-white/80">
             <div className="text-neutral-white/90">
@@ -149,9 +201,7 @@ const almostUnlockedRef = useRef(false);
               <button
                 type="button"
                 onClick={() => {
-                  
                   setStatus("idle");
-
                   formRef.current?.reset();
                   sessionStorage.removeItem("contact_sent_v1");
                 }}
@@ -159,13 +209,11 @@ const almostUnlockedRef = useRef(false);
               >
                 Enviar otro mensaje
               </button>
-
             </div>
-
           </div>
         )}
 
-        {/* ✅ ERROR: mostramos form (para reintentar) + botones de salida */}
+        {/* ✅ ERROR */}
         {status === "error" && (
           <div className="mt-10 max-w-2xl rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-4 text-neutral-white/80">
             <div>
@@ -189,7 +237,7 @@ const almostUnlockedRef = useRef(false);
 
               <button
                 type="button"
-                onClick={() => window.location.href = "/#projects"}
+                onClick={() => (window.location.href = "/#projects")}
                 className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
                 Seguir explorando
@@ -206,14 +254,15 @@ const almostUnlockedRef = useRef(false);
           </div>
         )}
 
-        {/* ✅ FORM: se muestra solo si NO estamos en success */}
+        {/* ✅ FORM */}
         {status !== "success" && (
-          <form ref={formRef} onSubmit={onSubmit} className="mt-10 grid gap-4 max-w-2xl">
-
-            {/* Honeypot anti-spam (déjalo tal cual) */}
+          <form
+            ref={formRef}
+            onSubmit={onSubmit}
+            className="mt-10 grid gap-4 max-w-2xl"
+          >
             <input type="text" name="_gotcha" className="hidden" />
 
-            {/* Origen para Formspree */}
             <input type="hidden" name="origin_path" value={origin?.fromPath ?? ""} />
             <input type="hidden" name="origin_hash" value={origin?.fromHash ?? ""} />
             <input
@@ -233,7 +282,6 @@ const almostUnlockedRef = useRef(false);
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
                 placeholder="Tu nombre"
               />
-
             </div>
 
             <div className="grid gap-2">
