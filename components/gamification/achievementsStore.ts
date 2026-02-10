@@ -123,13 +123,26 @@ export function hasAchievement(id: AchievementId): boolean {
 }
 
 export function unlockAchievement(
+  
   id: AchievementId,
   opts?: { accumulative?: boolean }
 ): { unlockedNow: boolean; state: AchievementsStateV1; entry: UnlockedEntry } {
   const st = getAchievementsState();
+  const COOLDOWN_MS = 2500;
+  const COOLDOWN_KEY = "guigolo_achievements_cooldown_v1";
   const now = Date.now();
-
   const existing = st.unlocked?.[id];
+  // ✅ anti-rafaga (especialmente móvil)
+  try {
+    const last = Number(sessionStorage.getItem(COOLDOWN_KEY) ?? "0");
+    if (now - last < COOLDOWN_MS) {
+      // no bloquea el submit real, solo evita spam de logros “menores”
+      if (id !== "first_contact") return { unlockedNow: false, state: st, entry: { at: now, count: 1 } };
+    }
+    sessionStorage.setItem(COOLDOWN_KEY, String(now));
+  } catch {}
+
+
 
   // Si ya existe:
   if (existing) {

@@ -44,6 +44,11 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        source: '/go/occ',
+        destination: '/?utm_source=occ&utm_medium=bio&utm_campaign=job_search_navigation',
+        permanent: false,
+      },
+      {
         source: '/go/x',
         destination: '/?utm_source=twitter&utm_medium=bio&utm_campaign=social_navigation',
         permanent: false,

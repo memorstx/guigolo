@@ -60,7 +60,13 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
 
     // 3) Scroll handler: solo cuenta si hubo input humano RECIENTE
     const onScroll = () => {
-      const now = Date.now();
+    const now = Date.now();
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const THRESHOLD = isMobile ? 0.55 : 0.35; // móvil pide más
+      if (!hasAchievement("explorer") && maxScrollRatioRef.current >= THRESHOLD) {
+        unlockAchievement("explorer");
+      }
+
 
       // si está en ventana bloqueada (hash/cta jump), ignorar
       if (now < ignoreScrollUntilRef.current) return;

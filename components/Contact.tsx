@@ -81,6 +81,9 @@ export default function Contact() {
       (entries) => {
         const entry = entries[0];
         const visible = !!entry?.isIntersecting;
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const DWELL_MS = isMobile ? 2400 : 1400;
+
 
         // Si sale, limpiamos timers para que no “robe” unlock después
         if (!visible) {
@@ -104,7 +107,7 @@ export default function Contact() {
 
           almostUnlockedRef.current = true;
           unlockAchievement("almost_talked");
-        }, 1400); // ajusta: 1200–1800ms
+        }, DWELL_MS); 
       },
       { threshold: 0.6 }
     );
