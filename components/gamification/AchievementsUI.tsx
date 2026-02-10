@@ -47,11 +47,11 @@ export default function AchievementsUI() {
         icon: meta?.icon,
       });
 
-      // ⏱️ Toast dura ~6.5s
+      // ⏱️ Toast duración: 10s (reiniciable)
       hideTimerRef.current = window.setTimeout(() => {
         setToast(null);
         hideTimerRef.current = null;
-      }, 90500);
+      }, 9500);
     });
 
     return () => {
