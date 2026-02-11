@@ -12,7 +12,7 @@ Diseño interfaces claras, sensibles y estratégicas para productos digitales re
 ![Guigolo — Hero Preview](./public/og/og.png)
 
 > Portafolio en producción:  
-👉 https://guigolo.com
+👉 https://guigolo.com/go/github
 
 ---
 
