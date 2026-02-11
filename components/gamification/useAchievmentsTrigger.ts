@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { hasAchievement, unlockAchievement } from "./achievementsStore";
+import { completeMission, hasMission } from "./missionsStore";
 
 type TriggersConfig = {
   servicesId?: string; // default: "services"
@@ -17,6 +18,19 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
   const maxScrollRatioRef = useRef(0);
   const ignoreScrollUntilRef = useRef(0);
   const explorerTimerRef = useRef<number | null>(null);
+
+  const checkMissionRoute = () => {
+    if (hasMission("mission_route")) return;
+
+    if (
+      hasAchievement("explorer") &&
+      hasAchievement("services_decoded") &&
+      hasAchievement("projects_gallery")
+    ) {
+      completeMission("mission_route");
+    }
+  };
+
 
   useEffect(() => {
     const markHuman = () => {
@@ -65,6 +79,7 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
     const THRESHOLD = isMobile ? 0.55 : 0.35; // móvil pide más
       if (!hasAchievement("explorer") && maxScrollRatioRef.current >= THRESHOLD) {
         unlockAchievement("explorer");
+        checkMissionRoute();
       }
 
 
@@ -101,6 +116,7 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
         if (now2 - lastHumanInputAtRef.current > 2500) return;
 
         unlockAchievement("explorer");
+        checkMissionRoute();
       }, 2800);
     };
 
@@ -179,6 +195,7 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
       // umbral: 2 interacciones reales
       if (servicesClicksRef.current >= 2) {
         unlockAchievement("services_decoded");
+        checkMissionRoute();
       }
     };
 
@@ -252,6 +269,7 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
       // ✅ condición: visitó suficientes slides únicos
       if (seenSlidesRef.current.size >= required()) {
         unlockAchievement("projects_gallery");
+        checkMissionRoute();
       }
     };
 
@@ -311,4 +329,109 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
     };
   }, [projectsId]);
 
+    // ---- 4) MISSION: ATTENTION REAL (tiempo visible en Projects/About) ----
+  const projectsMsRef = useRef(0);
+  const aboutMsRef = useRef(0);
+
+  const projectsInViewRef = useRef(false);
+  const aboutInViewRef = useRef(false);
+
+  const anyHumanInteractionRef = useRef(false);
+
+  useEffect(() => {
+    const markHuman = () => (anyHumanInteractionRef.current = true);
+    window.addEventListener("wheel", markHuman, { passive: true });
+    window.addEventListener("touchmove", markHuman, { passive: true });
+    window.addEventListener("pointerdown", markHuman, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", markHuman);
+      window.removeEventListener("touchmove", markHuman);
+      window.removeEventListener("pointerdown", markHuman as any);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hasMission("mission_attention")) return;
+
+    const projectsEl = document.getElementById(projectsId);
+    const aboutEl = document.getElementById("about"); // tu id confirmado
+    if (!projectsEl || !aboutEl) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.target === projectsEl) projectsInViewRef.current = e.isIntersecting;
+          if (e.target === aboutEl) aboutInViewRef.current = e.isIntersecting;
+        }
+      },
+      { threshold: 0.6 }
+    );
+
+    io.observe(projectsEl);
+    io.observe(aboutEl);
+
+    let last = Date.now();
+
+    const timer = window.setInterval(() => {
+      if (hasMission("mission_attention")) return;
+
+      const now = Date.now();
+      const dt = now - last;
+      last = now;
+
+      // anti-trampa: solo cuenta si hubo interacción humana real alguna vez
+      if (!anyHumanInteractionRef.current) return;
+
+      if (projectsInViewRef.current) projectsMsRef.current += dt;
+      if (aboutInViewRef.current) aboutMsRef.current += dt;
+
+      const okProjects = projectsMsRef.current >= 20000; // 20s
+      const okAbout = aboutMsRef.current >= 15000;       // 15s
+
+      if (okProjects && okAbout) {
+        completeMission("mission_attention");
+      }
+    }, 250);
+
+    return () => {
+      window.clearInterval(timer);
+      io.disconnect();
+    };
+  }, [projectsId]);
+
+    // ---- 5) MISSION: EASTER (teclas "GUIGOLO") ----
+  useEffect(() => {
+    if (hasMission("mission_easter")) return;
+
+    const seq = ["G","U","I","G","O","L","O"];
+    let idx = 0;
+    let lastAt = 0;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (hasMission("mission_easter")) return;
+
+      const key = (e.key || "").toUpperCase();
+      const now = Date.now();
+
+      // si tarda mucho entre teclas, resetea
+      if (lastAt && now - lastAt > 1600) idx = 0;
+      lastAt = now;
+
+      if (key === seq[idx]) {
+        idx += 1;
+        if (idx >= seq.length) {
+          completeMission("mission_easter");
+          idx = 0;
+        }
+      } else {
+        idx = key === "G" ? 1 : 0;
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  
 }

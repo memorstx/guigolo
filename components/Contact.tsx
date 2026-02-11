@@ -8,6 +8,8 @@ import {
   type ContactOrigin,
 } from "@/components/ui/contactOrigin";
 import { unlockAchievement } from "./gamification/achievementsStore";
+import { completeMission } from "./gamification/missionsStore";
+
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro";
 
@@ -139,10 +141,11 @@ export default function Contact() {
 
       if (res.ok) {
         unlockAchievement("first_contact");
-
+        completeMission("mission_contact");
         form.reset();
         sessionStorage.setItem("contact_sent_v1", "1");
         setStatus("success");
+
       } else {
         setStatus("error");
       }
