@@ -25,7 +25,7 @@ export default function WhatIsGuigoloPage() {
     <SiteShell>
       <main className="text-neutral-white">
         <PageFrame variant="prose" className="py-24">
-          <article className="mx-auto max-w-[820px] px-6 md:px-12 lg:px-0 py-24 space-y-16 leading-relaxed">
+          <article className="leading-relaxed">
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-sm text-neutral-white/50 hover:text-neutral-white transition group"
