@@ -16,7 +16,7 @@ export default function AchievementsCounter() {
   }, []);
 
   return (
-    <div className="rounded-full border border-neutral-white/10 bg-neutral-black-900/40 px-4 py-2 text-[11px] tracking-[0.22em] text-neutral-white/60">
+    <div className="whitespace-nowrap rounded-full border border-neutral-white/10 bg-neutral-black-900/40 px-4 py-2 text-[11px] tracking-[0.22em] text-neutral-white/60">
       LOGROS: {count ?? "—"}/{total}
     </div>
   );

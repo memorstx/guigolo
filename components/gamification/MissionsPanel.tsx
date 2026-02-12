@@ -33,7 +33,8 @@ export default function MissionsPanel({ open, onClose }: Props) {
   }, [onClose]);
 
   const contactUnlocked = hasMission("mission_contact");
-
+  const isOwner = typeof window !== "undefined" && localStorage.getItem("guigolo_owner") === "1";
+  
   if (!open) return null;
 
   return (
@@ -129,16 +130,22 @@ export default function MissionsPanel({ open, onClose }: Props) {
                 MATCH-03
               </div>
 
-              <div className="mt-5 text-neutral-white font-semibold">
-                Checklist privada
-              </div>
-              <ul className="mt-2 space-y-2 text-sm text-neutral-white/70 list-disc pl-5">
-                <li>¿Qué acción quieres que la gente complete en 5 segundos?</li>
-                <li>¿Qué duda principal tiene el usuario al llegar?</li>
-                <li>¿Qué prueba de confianza ve antes del CTA?</li>
-                <li>¿Qué fricción existe (texto confuso, demasiado scroll, links rotos)?</li>
-                <li>¿Qué métrica define “sí funcionó” (contactos, leads, tiempo, clicks)?</li>
-              </ul>
+                {isOwner ? (
+                <>
+                    <div className="mt-5 text-neutral-white font-semibold">
+                        Checklist privada
+                    </div>
+                    <ul className="mt-2 space-y-2 text-sm text-neutral-white/70 list-disc pl-5">
+                        <li>¿Qué acción quieres que la gente complete en 5 segundos?</li>
+                        <li>¿Qué duda principal tiene el usuario al llegar?</li>
+                        <li>¿Qué prueba de confianza ve antes del CTA?</li>
+                        <li>¿Qué fricción existe (texto confuso, demasiado scroll, links rotos)?</li>
+                        <li>¿Qué métrica define “sí funcionó” (contactos, leads, tiempo, clicks)?</li>
+                    </ul>
+                </>
+                ) : null}
+
+              
             </>
           )}
         </div>

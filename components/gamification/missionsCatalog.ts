@@ -9,27 +9,27 @@ export type MissionMeta = {
 export const MISSIONS: MissionMeta[] = [
   {
     id: "mission_route",
-    title: "Recorrido consciente",
+    title: "Ruta completa",
     description:
-      "Se completa cuando desbloqueas: Explorador + Servicios descifrados + Galería viva.",
+      "Explora el sitio con calma: revisa servicios y navega varios proyectos.",
   },
   {
     id: "mission_attention",
-    title: "Atención real",
+    title: "Me quedé a ver",
     description:
-      "Se completa si te quedas viendo Projects (~20s) y About (~15s) con intención (no autoplay).",
+      "Quédate un rato en Proyectos y luego en Sobre mí. Sin prisa, como quien sí quiere entender.",
   },
   {
     id: "mission_contact",
-    title: "Intención de contacto",
+    title: "Hablemos en serio",
     description:
-      "Se completa si llegas al formulario, empiezas a escribir y envías un mensaje.",
+      "Abre el formulario, escribe un mensaje y envíalo.",
   },
   {
     id: "mission_easter",
-    title: "Curiosidad avanzada",
+    title: "Curioso de corazón",
     description:
-      'Se completa con un easter egg: escribe la secuencia de teclas "GUIGOLO".',
+      'Easter egg: escribe "GUIGOLO" con tu teclado en cualquier parte del sitio.',
   },
 ];
 

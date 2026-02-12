@@ -40,13 +40,13 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-start md:justify-end gap-3">
           <AchievementsCounter />
 
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="rounded-full border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-2 text-[11px] tracking-[0.22em] text-neutral-white/70 hover:border-neutral-white/25 transition"
+            className="whitespace-nowrap rounded-full border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-2 text-[11px] tracking-[0.22em] text-neutral-white/70 hover:border-neutral-white/25 transition"
           >
             MISIONES: {missionsDone}/{totalMissions} · VER
           </button>

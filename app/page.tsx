@@ -14,6 +14,7 @@ import RestoreScroll from "@/components/ui/RestoreScroll";
 import GamificationBoot from "@/components/gamification/Boot";
 import TriggersBoot from "@/components/gamification/TriggersBoot";
 import AchievementsUI from "@/components/gamification/AchievementsUI";
+import MissionsBoot from "@/components/gamification/MissionsBoot";
 
 
 const featuredIds = new Set([
@@ -27,6 +28,7 @@ export default function Home() {
     <main className="bg-neutral-black-900">
       <GamificationBoot />
       <TriggersBoot />
+      <MissionsBoot />
       <AchievementsUI />
       <RestoreScroll />
       <Navbar />
