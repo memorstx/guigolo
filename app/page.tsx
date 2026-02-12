@@ -1,8 +1,7 @@
-import Navbar from "@/components/Navbar";
+import SiteShell from "@/components/SiteShell";
 import Hero from "@/components/Hero";
 import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
 import SectionAbout from "@/components/SectionAbout";
 import ServicesAccordion from "@/components/ServicesAccordion";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -25,28 +24,28 @@ const featuredIds = new Set([
 
 export default function Home() {
   return (
-    <main className="bg-neutral-black-900">
-      <GamificationBoot />
-      <TriggersBoot />
-      <MissionsBoot />
-      <AchievementsUI />
-      <RestoreScroll />
-      <Navbar />
-      <Hero />
-      <ServicesAccordion />
-      {
-        /*
-        <ProjectsIntro />
-        <ProjectsList />
-        */
-      }
-      <ProjectsSection items={projects.filter((p) => featuredIds.has(p.id))} />
-      <Process />
-      <SectionAbout />
-      <ContactCTA />
-      <FAQSection items={FAQS} />
-      <Contact />
-      <Footer />
-    </main>
+    <SiteShell>
+      <main>
+        <GamificationBoot />
+        <TriggersBoot />
+        <MissionsBoot />
+        <AchievementsUI />
+        <RestoreScroll />
+        <Hero />
+        <ServicesAccordion />
+        {
+          /*
+          <ProjectsIntro />
+          <ProjectsList />
+          */
+        }
+        <ProjectsSection items={projects.filter((p) => featuredIds.has(p.id))} />
+        <Process />
+        <SectionAbout />
+        <ContactCTA />
+        <FAQSection items={FAQS} />
+        <Contact />
+      </main>
+    </SiteShell>
   );
 }

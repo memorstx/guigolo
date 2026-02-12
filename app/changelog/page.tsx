@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SiteShell from "@/components/SiteShell";
+import Link from "next/dist/client/link";
 
 export const metadata: Metadata = {
   title: "Changelog",
@@ -9,7 +10,17 @@ export const metadata: Metadata = {
 export default function ChangelogPage() {
   return (
     <SiteShell>
+    
       <div className="max-w-4xl mx-auto px-6 py-20 space-y-16">
+        <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-neutral-white/50 hover:text-neutral-white transition group"
+        >
+            <span className="transition-transform group-hover:-translate-x-1">
+            ←
+            </span>
+            Volver al inicio
+        </Link>
         <section className="space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">Changelog</h1>
           <p className="text-neutral-400">
