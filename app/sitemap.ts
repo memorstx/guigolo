@@ -8,5 +8,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 1,
     },
+    {
+      url: "https://guigolo.com/what-is-guigolo",
+      lastModified: new Date(),
+    }
   ];
 }

@@ -8,6 +8,7 @@ import IconAbout from "./icons/IconAbout";
 import IconContact from "./icons/IconContact";
 import IconProjects from "./icons/IconProjects";
 import IconServices from "./icons/IconServices";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "#home", label: "INICIO", Icon: IconHome },
@@ -19,6 +20,8 @@ const navItems = [
 
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const toHomeAnchor = (hash: string) => (pathname === "/" ? hash : `/${hash}`);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Bloquear scroll cuando el overlay está abierto
@@ -83,15 +86,15 @@ export default function Navbar() {
               className="mx-auto flex h-full items-center justify-between px-20"
               style={{ maxWidth: LEFT_W + RIGHT_W + 1200 }}
             >
-              <Link href="#home" className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-3">
                 <Image src="/brand/logo.svg" alt="Guigolo" width={144} height={24} className="h-auto w-[120px] md:w-[130px] lg:w-[140px] xl:w-[160px] 2xl:w-[170px]"/>
               </Link>
 
               <nav className="flex items-center gap-6">
                 {navItems.map((item) => (
                   <Link
-                    key={item.href}
-                    href={item.href}
+                    key={item.href} 
+                    href={toHomeAnchor(item.href)} 
                     className="group flex items-center gap-2 text-xs tracking-widest text-neutral-white/70 hover:text-accent-lime transition md:text-[clamp(0.7rem,1vw,.75rem)] leading-relaxed xl:text-[clamp(.75rem,1vw,.8rem)] xl:leading-relaxed 2xl:text-[clamp(.8rem,1vw,.85rem)] 3xl:text-[clamp(.85rem,1vw,.9rem)] 4xl:text-[clamp(1rem,1vw,1.15rem)]"
                   >
                     {(() => {
@@ -126,8 +129,8 @@ export default function Navbar() {
             <nav className="flex flex-col items-center gap-6">
               {navItems.map((item) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={item.href} 
+                  href={toHomeAnchor(item.href)}
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-3 text-2xl tracking-widest text-neutral-white/70 hover:text-accent-lime transition text-[clamp(.9rem,1vw,.1rem)] sm:text-[clamp(1rem,1vw,.1.15rem)] "
                 >

@@ -3,10 +3,15 @@ import SiteShell from "@/components/SiteShell";
 import Link from "next/dist/client/link";
 import PageFrame from "@/components/layout/PageFrame";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Changelog",
-  description: "Official version history and evolution log of the Guigolo platform.",
+  description: "Version history of the Guigolo platform.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
+
 
 export default function ChangelogPage() {
   return (
