@@ -1,6 +1,14 @@
 import Link from "next/link";
 import SiteShell from "@/components/SiteShell";
 import PageFrame from "@/components/layout/PageFrame";
+import Image from "next/image";
+
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (
@@ -11,12 +19,17 @@ export default function NotFound() {
             {/* Ilustración (slot) */}
             <div className="border border-neutral-white/10 rounded-2xl p-8">
               <div className="flex items-center justify-center min-h-[220px]">
-                {/* TODO: Inserta aquí tu SVG */}
-                {/* Ejemplo:
-                    <My404Illustration className="w-full max-w-sm opacity-90" />
-                */}
+               
                 <div className="text-neutral-500 text-sm">
-                  [SVG Illustration Placeholder]
+                  <Image
+                    src="/brand/errors/404-illustration.svg"
+                    alt="Ilustración de página no encontrada"
+                    width={420}
+                    height={220}
+                    className="h-auto w-full max-w-[320px] opacity-90"
+                    priority
+                    />
+
                 </div>
               </div>
             </div>
