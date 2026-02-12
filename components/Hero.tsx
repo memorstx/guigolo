@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import ContactLink from "@/components/ui/ContactLink";
-
+import Image from "next/image";
 
 type Layer = {
   src: string;
@@ -81,10 +81,13 @@ export default function Hero() {
             <div className="relative w-full  mx-auto lg:my-0">
               <div className="relative w-full aspect-[1/1.05] md:aspect-[1/1] lg:aspect-[1/1.1]">
 
-                <img
+                <Image
                   src="/brand/hero/scene.svg"
                   alt=""
-                  aria-hidden="true"
+                  width={1200}
+                  height={800}
+                  priority
+                  fetchPriority="high"
                   draggable={false}
                   className="absolute inset-0 h-full w-full object-contain select-none"
                 />

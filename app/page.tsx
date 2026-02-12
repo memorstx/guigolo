@@ -26,12 +26,12 @@ export default function Home() {
   return (
     <SiteShell>
       <main>
+        <RestoreScroll />
+        <Hero />
         <GamificationBoot />
         <TriggersBoot />
         <MissionsBoot />
         <AchievementsUI />
-        <RestoreScroll />
-        <Hero />
         <ServicesAccordion />
         {
           /*

@@ -116,7 +116,7 @@ export default function RootLayout({
         {isProd && HJ_ID ? (
           <Script
             id="hotjar-init"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
                 (function(h,o,t,j,a,r){

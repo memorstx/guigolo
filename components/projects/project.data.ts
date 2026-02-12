@@ -15,14 +15,14 @@ export type ProjectItem = {
 export const projects: ProjectItem[] = [
   {
     id: "academia-platform-project",
-    companyLogo: "/brand/projects/academia-global/logo-ag.png",
+    companyLogo: "/brand/projects/academia-global/logo-ag.webp",
     title: "ACADEMIA GLOBAL",
     sector: "EdTech · Rediseño de plataforma educativa",
     description: [
       "Rediseño un campus para que aprender se sienta claro, medible y motivador.",
       "Sistema visual e interacción enfocados en progreso, jerarquía de información y decisiones rápidas.",
     ],
-    image: "/brand/projects/academia-global/cover_plataforma_educativa.png",
+    image: "/brand/projects/academia-global/cover_plataforma_educativa.webp",
     stack: "Figma, HTML5, CSS, JavaScript",
     role: "UI Designer & Web development",
     linkLabel: "Ver caso",
@@ -32,14 +32,14 @@ export const projects: ProjectItem[] = [
 
   {
     id: "academia-administrator-project",
-    companyLogo: "/brand/projects/academia-global/logo-ag.png",
+    companyLogo: "/brand/projects/academia-global/logo-ag.webp",
     title: "ACADEMIA GLOBAL",
     sector: "EdTech · Rediseño de Control Escolar",
     description: [
       "Rediseño un sistema académico complejo para hacerlo claro, usable y fácil de operar.",
       "Priorizo jerarquía de datos y reducción de carga cognitiva en tareas administrativas críticas.",
     ],
-    image: "/brand/projects/academia-global/cover_administrador.png",
+    image: "/brand/projects/academia-global/cover_administrador.webp",
     stack: "Figma, HTML5, CSS, JavaScript",
     role: "UI Designer & Web development",
     linkLabel: "Ver caso",
@@ -49,14 +49,14 @@ export const projects: ProjectItem[] = [
 
   {
     id: "molcajete-landing-mcts-project",
-    companyLogo: "/brand/projects/molcajete/logo-molcajete.png",
+    companyLogo: "/brand/projects/molcajete/logo-molcajete.webp",
     title: "MOLCAJETE",
     sector: "Salud · Rediseño de landing",
     description: [
       "Diseño una experiencia clara y empática para decisiones importantes sobre salud femenina.",
       "Estructura enfocada en confianza, accesibilidad y guía suave sin frialdad médica.",
     ],
-    image: "/brand/projects/molcajete/cover_mcts.png",
+    image: "/brand/projects/molcajete/cover_mcts.webp",
     stack: "Figma, Astro, Tailwind CSS, JavaScript",
     role: "UI Designer & Web development",
     linkLabel: "Ver caso",
@@ -66,14 +66,14 @@ export const projects: ProjectItem[] = [
 
   {
     id: "molcajete-landing-ideasid-project",
-    companyLogo: "/brand/projects/molcajete/logo-molcajete.png",
+    companyLogo: "/brand/projects/molcajete/logo-molcajete.webp",
     title: "MOLCAJETE",
     sector: "E-commerce · Diseño de landing",
     description: [
       "Interfaz pensada para comunicar valor rápido y guiar la decisión sin fricción.",
       "Jerarquía, ritmo y CTAs claros: claridad primero, estética después.",
     ],
-    image: "/brand/projects/molcajete/cover_ideasid.png",
+    image: "/brand/projects/molcajete/cover_ideasid.webp",
     stack: "Figma, Astro, Tailwind CSS, JavaScript",
     role: "UI Designer & Web development",
     linkLabel: "Ver caso",
@@ -83,14 +83,14 @@ export const projects: ProjectItem[] = [
 
   {
     id: "brosvalley-tsf-application-project",
-    companyLogo: "/brand/projects/brosvalley/logo-brosvalley.png",
+    companyLogo: "/brand/projects/brosvalley/logo-brosvalley.webp",
     title: "TU STREAMER FAVORITO",
     sector: "Gaming · Diseño de app móvil (concepto)",
     description: [
       "Exploración de app gamificada para conectar entretenimiento, juego y comunidad.",
       "Proyecto conceptual para experimentar con interacción, sistema visual y engagement.",
     ],
-    image: "/brand/projects/brosvalley/cover_tsf.png",
+    image: "/brand/projects/brosvalley/cover_tsf.webp",
     stack: "Figma, Adobe Illustrator",
     role: "UX/UI Designer",
     linkLabel: "Ver caso",
@@ -100,14 +100,14 @@ export const projects: ProjectItem[] = [
 
   {
     id: "latiendita-puntodeventa-project",
-    companyLogo: "/brand/projects/tiendita/logo-tiendita.png",
+    companyLogo: "/brand/projects/tiendita/logo-tiendita.webp",
     title: "PUNTO DE VENTA",
     sector: "Retail · Diseño de sistema POS",
     description: [
       "Un sistema diseñado para simplificar ventas, reducir errores y dar control al negocio.",
       "UX para usuarios no técnicos: rapidez, legibilidad y prevención de fallos en contexto real.",
     ],
-    image: "/brand/projects/tiendita/cover_puntodeventa.png",
+    image: "/brand/projects/tiendita/cover_puntodeventa.webp",
     stack: "Figma, HTML5, CSS, JavaScript, PHP, MySQL",
     role: "UX/UI Designer & Web development",
     linkLabel: "Ver caso",
@@ -117,14 +117,14 @@ export const projects: ProjectItem[] = [
 
   {
     id: "mironline-platform-project",
-    companyLogo: "/brand/projects/mironline/logo-mironline.png",
+    companyLogo: "/brand/projects/mironline/logo-mironline.webp",
     title: "MIRONLINE",
     sector: "EdTech · Plataforma para práctica de inglés",
     description: [
       "Plataforma de práctica de inglés con actividades por niveles y enfoque en progreso.",
       "Diseño interactivo pensado para mantener claridad, motivación y continuidad.",
     ],
-    image: "/brand/projects/mironline/cover-mironline.png",
+    image: "/brand/projects/mironline/cover-mironline.webp",
     stack: "Figma, HTML5, CSS, JavaScript, PHP, MySQL, Blender",
     role: "Web development & UI/3D Designer",
     linkLabel: "Sitio público",
