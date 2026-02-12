@@ -14,10 +14,10 @@ export default function NotFound() {
   return (
     <SiteShell>
       <main className="text-neutral-white">
-        <PageFrame variant="prose" className="py-24">
-          <section className="space-y-10">
+        <PageFrame variant="prose" className="py-8">
+          <section className="space-y-5">
             {/* Ilustración (slot) */}
-            <div className="border border-neutral-white/10 rounded-2xl p-8">
+            <div>
               <div className="flex items-center justify-center min-h-[220px]">
                
                 <div className="text-neutral-500 text-sm">
@@ -26,7 +26,7 @@ export default function NotFound() {
                     alt="Ilustración de página no encontrada"
                     width={420}
                     height={220}
-                    className="h-auto w-full max-w-[320px] opacity-90"
+                    className="h-auto w-full max-w-[260px] opacity-90"
                     priority
                     />
 
@@ -36,9 +36,9 @@ export default function NotFound() {
 
             {/* Copy */}
             <header className="space-y-4">
-              <p className="text-neutral-400 text-sm tracking-wide uppercase">
-                Error 404
-              </p>
+              <div className="text-[12px] tracking-[0.35em] text-accent-lime/80">
+              ERROR 404
+            </div>
 
               <h1 className="text-4xl font-bold tracking-tight">
                 Esta página no existe
@@ -55,8 +55,7 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/"
-                className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium
-                           bg-neutral-white text-neutral-black-900 hover:opacity-90 transition"
+                className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full md:w-auto lg:w-auto xl:w-auto 2xl:w-auto 3xl:w-auto 4xl:w-auto text-center"
               >
                 Volver al inicio
               </Link>
