@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/que-es-guigolo",
+        destination: "/what-is-guigolo",
+        permanent: true,
+      },
+      {
         source: '/go/figma',
         destination: '/?utm_source=figma&utm_medium=profile&utm_campaign=profile_referral',
         permanent: false,
