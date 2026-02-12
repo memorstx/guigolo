@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import FeedbackButtons from "@/components/FeedbackButtons";
-import Navbar from "@/components/Navbar";
+import SiteShell from "@/components/SiteShell";
 
 
 export const metadata: Metadata = {
@@ -20,8 +20,7 @@ export const metadata: Metadata = {
 
 export default function WhatIsGuigoloPage() {
   return (
-    <>
-    <Navbar />
+    <SiteShell>
     <main className="bg-neutral-black-900 text-neutral-white">
       <article className="mx-auto max-w-[820px] px-6 md:px-12 lg:px-0 py-24 space-y-16 leading-relaxed">
         <Link
@@ -205,6 +204,6 @@ export default function WhatIsGuigoloPage() {
         </section>
       </article>
     </main>
-    </>
+    </SiteShell>
   );
 }
