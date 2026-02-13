@@ -31,7 +31,7 @@ export default async function Home({
   const dict = getDict(locale);
 
   return (
-    <SiteShell>
+    <SiteShell locale={locale as "es" | "en"}>
       <main>
         <RestoreScroll />
         <Hero copy={dict.hero}/>

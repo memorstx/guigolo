@@ -1,4 +1,12 @@
 export const es = {
+  nav: {
+    services: "Servicios",
+    projects: "Proyectos",
+    process: "Proceso",
+    about: "Sobre mí",
+    faq: "FAQ",
+    contact: "Contacto",
+  },
   hero: {
     titleAccent: "Diseñador UX/UI",
     titleRest: "que convierte ideas en productos claros",

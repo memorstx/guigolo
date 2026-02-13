@@ -13,16 +13,18 @@ import { usePathname } from "next/navigation";
 
 
 
-const navItems = [
-  { href: "#home", label: "INICIO", Icon: IconHome },
-  { href: "#services", label: "SERVICIOS", Icon: IconServices },
-  { href: "#projects", label: "PROYECTOS", Icon: IconProjects },
-  { href: "#about", label: "SOBRE MI", Icon: IconAbout },
-  { href: "#contacto", label: "CONTACTO", Icon: IconContact },
-];
 
 
-export default function Navbar() {
+export default function Navbar({ dict }: { dict: any }) {
+  
+  const navItems = [
+    { href: "#home", label: dict.nav.home, Icon: IconHome },
+    { href: "#services", label: dict.nav.services, Icon: IconServices },
+    { href: "#projects", label: dict.nav.projects, Icon: IconProjects },
+    { href: "#about", label: dict.nav.about, Icon: IconAbout },
+    { href: "#contacto", label: dict.nav.contact, Icon: IconContact },
+  ];
+  
   const pathname = usePathname();
   const locale = pathname.startsWith("/en") ? "en" : "es";
   const toAnchor = (hash: string) => `/${locale}${hash}`;
