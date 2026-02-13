@@ -32,8 +32,16 @@ const layers: Layer[] = [
     float: "float-slow-4",
   },
 ];
+export type HeroCopy = {
+  titleAccent: string;
+  titleRest: string;
+  body: string;
+  ctaContact: string;
+  ctaProjects: string;
+};
 
-export default function Hero() {
+export default function Hero({ copy }: { copy: HeroCopy }) {
+
   return (
     <section id="home" className="relative">
       <div className="mx-auto pt-24 sm:pt-18 md:pt-8 lg:pt-8 xl:pt-4 2xl:pt-3 3xl:pt-2 4xl:pt-2 px-6 md:pl-[48px] md:pr-[48px] lg:pl-[96px] xl:pl-[128px] 2xl:pl-[144px] 3xl:pl-[244px] 4xl:pl-[320px] pb-12 ">
@@ -49,12 +57,12 @@ export default function Hero() {
               */
             }
             <h1 className="font-semibold tracking-tight leading-[125%] text-neutral-white text-[clamp(1.5rem,3.75vw,3rem)] md:text-[clamp(1.25rem,3.25vw,3.75rem)] lg:text-[clamp(1.5rem,2.75vw,3rem)] xl:text-[clamp(2rem,2.25vw,3.5rem)] 2xl:text-[clamp(3rem,2vw,4.75rem)] text-center sm:text-center md:text-center lg:text-left xl:text-left 2xl:text-left 3xl:text-left 4xl:text-left uppercase">
-              <span className="text-gradient-anim">Diseñador UX/UI</span>{" "}
-              que convierte ideas en productos claros
+              <span className="text-gradient-anim">{copy.titleAccent}</span>{" "}
+              {copy.titleRest}
             </h1>
 
             <p className="mt-5 text-[clamp(0.95rem,1.15vw,1.125rem)] leading-relaxed xl:text-[clamp(1.05rem,.95vw,1.2rem)] xl:leading-relaxed 2xl:text-[clamp(1.25rem,1.2vw,1.5rem)] text-neutral-white/70 max-w-[768px] xl:max-w-[1024px] 2xl:max-w-[1256px] text-center sm:text-center md:text-center lg:text-left xl:text-left 2xl:text-left 3xl:text-left 4xl:text-left">
-              Ayudo a startups y emprendedores a diseñar (y si lo necesitas, construir) experiencias rápidas, claras y listas para convertir.
+              {copy.body}
             </p>
 
 
@@ -63,7 +71,7 @@ export default function Hero() {
                 ctaId="hero-contact"
                 className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full md:w-auto lg:w-auto xl:w-auto 2xl:w-auto 3xl:w-auto 4xl:w-auto text-center"
               >
-                Contactar
+                {copy.ctaContact}
               </ContactLink>
 
 
@@ -71,7 +79,7 @@ export default function Hero() {
                 href="#projects"
                 className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full md:w-auto lg:w-auto xl:w-auto 2xl:w-auto 3xl:w-auto 4xl:w-auto text-center"
               >
-                Ver proyectos
+                {copy.ctaProjects}
               </Link>
             </div>
           </div>

@@ -14,7 +14,7 @@ import GamificationBoot from "@/components/gamification/Boot";
 import TriggersBoot from "@/components/gamification/TriggersBoot";
 import AchievementsUI from "@/components/gamification/AchievementsUI";
 import MissionsBoot from "@/components/gamification/MissionsBoot";
-
+import { getDict } from "@/lib/i18n/getDict";
 
 const featuredIds = new Set([
   "academia-platform-project",
@@ -22,12 +22,20 @@ const featuredIds = new Set([
   "latiendita-puntodeventa-project",
 ]);
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const dict = getDict(locale);
+
   return (
     <SiteShell>
       <main>
         <RestoreScroll />
-        <Hero />
+        <Hero copy={dict.hero}/>
+        
         <GamificationBoot />
         <TriggersBoot />
         <MissionsBoot />

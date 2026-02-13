@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const locales = ["es", "en"] as const;
 
+
 function hasLocale(pathname: string) {
   return locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`));
 }
@@ -13,6 +14,8 @@ function isPublicFile(pathname: string) {
 const LATAM = new Set([
   "MX","AR","BO","BR","CL","CO","CR","CU","DO","EC","SV","GT","HN","NI","PA","PY","PE","PR","UY","VE",
 ]);
+
+
 
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
@@ -32,9 +35,11 @@ export function middleware(req: NextRequest) {
 
   // 2) Detectar por país (Vercel suele mandar este header)
   const country = (req.headers.get("x-vercel-ip-country") || "").toUpperCase();
-
-  const detected = LATAM.has(country) ? "es" : "en";
-
+  const accept = (req.headers.get("accept-language") || "").toLowerCase();
+  const prefersSpanish = accept.startsWith("es");
+  const detected = country
+  ? (LATAM.has(country) ? "es" : "en")
+  : "es";
   return NextResponse.redirect(new URL(`/${detected}${pathname}${search}`, req.url));
 }
 
