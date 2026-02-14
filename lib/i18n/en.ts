@@ -91,6 +91,43 @@ export const en = {
         linkLabel: "View case"
       }
     }
-  }
+  },
+  process: {
+    kicker: "MY PROCESS",
+    title: "HOW I TURN AN IDEA INTO A REAL EXPERIENCE",
+    items: {
+      "phase-01": {
+        title: "CONTEXT",
+        body:
+          "I listen to understand your idea, what you want to achieve, and who it’s for. We confirm we’re a good match and set expectations from day one.",
+        output: "Output: clarity and a defined starting point.",
+      },
+      "phase-02": {
+        title: "ALIGNMENT",
+        body:
+          "I translate everything you shared into clear goals. We land on the real problem we’re solving.",
+        output: "Output: clear goals and a well-defined problem.",
+      },
+      "phase-03": {
+        title: "STRATEGY",
+        body:
+          "With the problem clear, I define the path. We decide what we will do, what we won’t, and how we’ll reach the result.",
+        output: "Output: a clear plan and solid decisions.",
+      },
+      "phase-04": {
+        title: "BUILD",
+        body:
+          "I design, test, and refine each part of the project. I keep you in the loop so you always know what’s being done and why.",
+        output: "Output: functional design, tested and thoughtfully crafted.",
+      },
+      "phase-05": {
+        title: "DELIVERY",
+        body:
+          "I review every detail before delivery. You get everything ready to use—files, documentation, and initial support.",
+        output: "Output: a product ready to launch and grow.",
+      },
+    },
+  },
+
 
 };

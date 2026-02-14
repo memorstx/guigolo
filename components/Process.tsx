@@ -1,14 +1,23 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { ProcessCard } from "./process/processStack.data";
-import { PROCESS_STACK } from "./process/processStack.data";
+
+import { PROCESS_STACK_BASE } from "./process/processStack.data";
+
+type ProcessCopy = {
+  kicker: string;
+  title: string;
+  items: Record<
+    string,
+    { title: string; body: string; output?: string }
+  >;
+};
 
 type Props = {
-  items?: ProcessCard[];
-  title?: string;
   className?: string;
+  copy: ProcessCopy;
 };
+
 
 const clamp = (n: number, a: number, b: number) => Math.min(b, Math.max(a, n));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -30,14 +39,23 @@ function easeOutExpo(t: number) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
-export default function ProcessStackScroll({
-  items = PROCESS_STACK,
-  title = "ASÍ CONVIERTO UNA IDEA EN UNA EXPERIENCIA REAL",
-  className = "",
-}: Props) {
+export default function ProcessStackScroll({ copy, className = "" }: Props) {
+
   const sectionRef = useRef<HTMLElement | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
   const stickyWrapRef = useRef<HTMLDivElement | null>(null);
+  const items = useMemo(() => {
+  return PROCESS_STACK_BASE.map((base) => {
+    const t = copy.items[base.id];
+    return {
+      id: base.id,
+      phase: base.phase,
+      title: t?.title ?? base.id,
+      body: t?.body ?? "",
+      output: t?.output,
+    };
+  });
+}, [copy]);
 
   const [vh, setVh] = useState(800);
   const [titleH, setTitleH] = useState(120);
@@ -120,8 +138,7 @@ export default function ProcessStackScroll({
     });
   }, [items]);
 
-  // antes: stackTop dependía de titleH + 24
-  // ahora: stack va DENTRO del mismo sticky wrapper, así que solo usamos separaciones normales
+  
   const stackGap = 14;
 
   return (
@@ -149,7 +166,7 @@ export default function ProcessStackScroll({
               MI PROCESO
             </div>
             <h2 className="mt-4 heading-h2 tracking-tight">
-              {title}
+              {copy.title}
             </h2>
           </div>
         </div>
