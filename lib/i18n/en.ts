@@ -17,7 +17,27 @@ export const en = {
   services: {
     kicker: "How I can help",
     headline: "Services built for clarity, great experiences, and real results.",
+    items: {
+      design: {
+        title: "DESIGN",
+        iconLabel: "DESIGN",
+        description: "When you need it to look good...",
+      },
+      experiencia: {
+        title: "UX",
+        iconLabel: "UX",
+        description: "When people get lost...",
+      },
+      identidad: {
+        title: "BRAND",
+        iconLabel: "BRAND",
+        description: "When your brand doesn't feel consistent...",
+      },
+      interaccion: {
+        title: "INTERACTION",
+        iconLabel: "INTERACTION",
+        description: "When design needs to come alive...",
+      },
+    },
   },
-
-
 };

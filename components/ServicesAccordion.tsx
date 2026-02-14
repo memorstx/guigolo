@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { SERVICES } from "./services/servicesData";
+import { SERVICES_BASE } from "./services/servicesData";
 import Link from "next/link";
 import ContactLink from "@/components/ui/ContactLink";
 
@@ -15,7 +15,15 @@ type Props = {
 };
 
 export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000, copy }: Props & { copy: any }) {
-  const items = useMemo(() => SERVICES, []);
+  const items = useMemo(() => {
+    return SERVICES_BASE.map((base) => ({
+      id: base.id,
+      imageSrc: base.imageSrc,
+      title: copy.items[base.id].title,
+      iconLabel: copy.items[base.id].iconLabel,
+      description: copy.items[base.id].description,
+    }));
+  }, [copy]);
   const [active, setActive] = useState(0);
 
   const intervalRef = useRef<number | null>(null);

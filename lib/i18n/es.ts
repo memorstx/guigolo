@@ -17,5 +17,27 @@ export const es = {
   services: {
     kicker: "Cómo puedo ayudarte",
     headline: "Servicios enfocados en claridad, experiencia y resultados reales.",
+    items: {
+      design: {
+        title: "DISEÑO",
+        iconLabel: "DISEÑO",
+        description: "Cuando necesitas que algo se vea bien...",
+      },
+      experiencia: {
+        title: "EXPERIENCIA",
+        iconLabel: "EXPERIENCIA",
+        description: "Cuando las personas se pierden...",
+      },
+      identidad: {
+        title: "IDENTIDAD",
+        iconLabel: "IDENTIDAD",
+        description: "Cuando tu marca no se siente coherente...",
+      },
+      interaccion: {
+        title: "INTERACCIÓN",
+        iconLabel: "INTERACCIÓN",
+        description: "Cuando el diseño necesita cobrar vida...",
+      },
+    },
   },
-};
+}
