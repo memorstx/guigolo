@@ -351,7 +351,7 @@ export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000, cop
         {/* CTA final servicios */}
         <div className="mt-12 lg:mt-28 flex flex-col items-center gap-4">
            <p className="text-neutral-white/70 text-[clamp(0.95rem,1.05vw,1.125rem)] max-w-[56rem] text-center">
-            ¿No sabes exactamente qué necesitas? No pasa nada: lo aterrizamos juntos.
+            {copy.cta.description}
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center">
@@ -359,14 +359,14 @@ export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000, cop
               ctaId="services-primary-contact"
               className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
             >
-              Ayúdame a definirlo
+              {copy.cta.primaryButton}
             </ContactLink>
 
             <ContactLink
               ctaId="services-secondary-contact"
               className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
             >
-              No sé, pero quiero ayuda 😅
+              {copy.cta.secondaryButton}
             </ContactLink>
           </div>
         </div>

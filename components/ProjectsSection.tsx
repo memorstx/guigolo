@@ -5,24 +5,35 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ProjectItem } from "@/components/projects/project.data";
 import ContactLink from "./ui/ContactLink";
 
-type Props = {
-  items: ProjectItem[];
+type ProjectsCopy = {
+  band: string;
+  kicker: string;
+  headline: string;
+  prev: string;
+  next: string;
+  ctaBody: string;
+  ctaButton: string;
 };
 
-export default function ProjectsSection({ items }: Props) {
+type Props = {
+  items: any[];
+  copy: any;
+};
+
+
+export default function ProjectsSection({ items, copy }: Props) {
   // Timings (decididos para “scan + lectura”)
-  const AUTOPLAY_MS = 7500; // cambia solo cada 7.5s
-  const PAUSE_AFTER_ACTION_MS = 12000; // si el usuario da click, le damos 12s para leer
+  const AUTOPLAY_MS = 7500;
+  const PAUSE_AFTER_ACTION_MS = 12000;
 
   const autoplay = useMemo(
     () =>
       Autoplay({
         delay: AUTOPLAY_MS,
-        stopOnInteraction: false, // no se apaga para siempre
-        stopOnMouseEnter: true,   // hover pausa (desktop)
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
       }),
     []
   );
@@ -66,8 +77,6 @@ export default function ProjectsSection({ items }: Props) {
 
     onSelect();
     emblaApi.on("select", onSelect);
-
-    // Si el usuario swipes/drag: también pausamos un ratito para que lea
     emblaApi.on("pointerUp", pauseAfterUserAction);
 
     return () => {
@@ -99,30 +108,27 @@ export default function ProjectsSection({ items }: Props) {
       {/* Banda repetida (decor) */}
       <div className="pointer-events-none select-none overflow-hidden py-3">
         <div className="whitespace-nowrap text-[12px] tracking-[0.45em] text-neutral-white/10">
-          {"PROJECTS · ".repeat(40)}
+          {`${copy.band} · `.repeat(40)}
         </div>
       </div>
 
       {/* Header centrado */}
       <div className="mx-auto max-w-[1280px] px-6 md:px-12 lg:px-24 pt-12 pb-10 text-center">
         <div className="text-[12px] tracking-[0.35em] text-accent-lime/80">
-          PROJECTS
+          {copy.kicker}
         </div>
 
         <h2 className="mt-4 heading-h2 tracking-tight uppercase">
-          Proyectos reales que convierten ideas en producto
+          {copy.headline}
         </h2>
       </div>
 
-      {/* Carrusel FULL-BLEED (sin padding externo) */}
+      {/* Carrusel */}
       <div className="w-full">
         <div ref={emblaRef} className="overflow-hidden">
           <div className="flex">
             {items.map((p) => (
-              <div
-                key={p.id}
-                className="min-w-0 flex-[0_0_100%]"
-              >
+              <div key={p.id} className="min-w-0 flex-[0_0_100%]">
                 <ProjectSlide item={p} />
               </div>
             ))}
@@ -142,7 +148,7 @@ export default function ProjectsSection({ items }: Props) {
                 onClick={goPrev}
                 className="hover:text-neutral-white transition"
               >
-                PREVIOUS
+                {copy.prev}
               </button>
 
               <button
@@ -150,7 +156,7 @@ export default function ProjectsSection({ items }: Props) {
                 onClick={goNext}
                 className="hover:text-neutral-white transition"
               >
-                NEXT
+                {copy.next}
               </button>
             </div>
           </div>
@@ -160,38 +166,24 @@ export default function ProjectsSection({ items }: Props) {
         <div className="mx-auto px-6 md:px-12 lg:px-24 pb-12">
           <div className="mx-auto max-w-[56rem] border border-neutral-white/10 bg-neutral-black-800/40 p-6 md:p-8 text-center">
             <p className="text-neutral-white/70 text-[clamp(0.95rem,1.05vw,1.125rem)]">
-              Ok, tu turno. ¿Qué quieres construir?
+              {copy.ctaBody}
             </p>
 
             <div className="mt-5 flex flex-wrap gap-4 justify-center">
-              {
-                /*
-                
-              <Link
-                href="/projects"
-                className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
-              >
-                Ver todos los proyectos
-              </Link>
-                */
-
-              }
-
               <ContactLink
                 ctaId="projects-contact"
                 className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
-                Hablemos de tu proyecto
+                {copy.ctaButton}
               </ContactLink>
             </div>
           </div>
         </div>
 
-
         {/* Banda repetida (decor) */}
         <div className="pointer-events-none select-none overflow-hidden py-3">
           <div className="whitespace-nowrap text-[12px] tracking-[0.45em] text-neutral-white/10">
-            {"PROJECTS · ".repeat(40)}
+            {`${copy.band} · `.repeat(40)}
           </div>
         </div>
       </div>
@@ -199,20 +191,20 @@ export default function ProjectsSection({ items }: Props) {
   );
 }
 
-function ProjectSlide({ item }: { item: ProjectItem }) {
+function ProjectSlide({ item }: { item: any }) {
+
   const isExternal = item.linkUrl.startsWith("http");
+
   return (
     <div className="w-full">
       <div
         className="
           grid grid-cols-1
-          
-          
           2xl:grid-cols-[1fr_minmax(420px,620px)]
           gap-0
         "
       >
-        {/* ✅ PANEL INFO (en móvil arriba) */}
+        {/* PANEL INFO */}
         <div
           className="
             order-1 2xl:order-2
@@ -246,7 +238,7 @@ function ProjectSlide({ item }: { item: ProjectItem }) {
 
             {/* descripción */}
             <div className="mt-6 space-y-4 text-neutral-white/70 text-[14px] leading-relaxed">
-              {item.description.map((t, idx) => (
+              {item.description.map((t: string, idx: number) => (
                 <p key={idx}>{t}</p>
               ))}
             </div>
@@ -261,8 +253,6 @@ function ProjectSlide({ item }: { item: ProjectItem }) {
 
               <SpecLabel>LINK</SpecLabel>
               <SpecValue>
-                
-                
                 <Link
                   href={item.linkUrl}
                   target={isExternal ? "_blank" : undefined}
@@ -281,7 +271,7 @@ function ProjectSlide({ item }: { item: ProjectItem }) {
           </div>
         </div>
 
-        {/* ✅ IMAGEN (en móvil abajo) */}
+        {/* IMAGEN */}
         <div className="order-2 2xl:order-1 relative w-full">
           <div className="relative w-full aspect-video overflow-hidden bg-neutral-black-900/40">
             <Image
@@ -290,7 +280,6 @@ function ProjectSlide({ item }: { item: ProjectItem }) {
               fill
               className="object-cover select-none"
               draggable={false}
-              // sizes realistas: en desktop la imagen es grande, en móvil ocupa ancho completo
               sizes="(min-width: 1024px) calc(100vw - 520px), 100vw"
             />
           </div>
@@ -299,7 +288,6 @@ function ProjectSlide({ item }: { item: ProjectItem }) {
     </div>
   );
 }
-
 
 function SpecLabel({ children }: { children: React.ReactNode }) {
   return (

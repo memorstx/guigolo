@@ -4,8 +4,7 @@ import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
 import SectionAbout from "@/components/SectionAbout";
 import ServicesAccordion from "@/components/ServicesAccordion";
-import ProjectsSection from "@/components/ProjectsSection";
-import { projects } from "@/components/projects/project.data";
+
 import Process from "@/components/Process"; 
 import FAQSection from "@/components/Faq";
 import { FAQS } from "@/components/faq/faq.data";
@@ -15,6 +14,8 @@ import TriggersBoot from "@/components/gamification/TriggersBoot";
 import AchievementsUI from "@/components/gamification/AchievementsUI";
 import MissionsBoot from "@/components/gamification/MissionsBoot";
 import { getDict } from "@/lib/i18n/getDict";
+import ProjectsSection from "@/components/ProjectsSection";
+import { FEATURED_PROJECTS_BASE } from "@/components/projects/project.data";
 
 const featuredIds = new Set([
   "academia-platform-project",
@@ -29,6 +30,17 @@ export default async function Home({
 }) {
   const { locale } = await params;
   const dict = getDict(locale);
+
+  const featuredProjects = FEATURED_PROJECTS_BASE
+  .filter((p: any) => featuredIds.has(p.id))
+  .map((p: any) => {
+
+    const t = (dict.projects.items as Record<string, any>)[p.id];
+    if (!t) return p;
+    return { ...p, ...t };
+  });
+
+
 
   return (
     <SiteShell locale={locale as "es" | "en"}>
@@ -48,7 +60,9 @@ export default async function Home({
           <ProjectsList />
           */
         }
-        <ProjectsSection items={projects.filter((p) => featuredIds.has(p.id))} />
+        <ProjectsSection items={featuredProjects} copy={dict.projects} />
+
+
         <Process />
         <SectionAbout />
         <ContactCTA />
