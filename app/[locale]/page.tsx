@@ -40,7 +40,8 @@ export default async function Home({
         <TriggersBoot />
         <MissionsBoot />
         <AchievementsUI />
-        <ServicesAccordion />
+        <ServicesAccordion copy={dict.services} />
+
         {
           /*
           <ProjectsIntro />

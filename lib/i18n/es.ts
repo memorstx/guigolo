@@ -14,4 +14,8 @@ export const es = {
     ctaContact: "Contactar",
     ctaProjects: "Ver proyectos",
   },
+  services: {
+    kicker: "Cómo puedo ayudarte",
+    headline: "Servicios enfocados en claridad, experiencia y resultados reales.",
+  },
 };

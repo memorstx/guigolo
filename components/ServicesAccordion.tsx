@@ -14,7 +14,7 @@ type Props = {
   pauseMs?: number;
 };
 
-export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000 }: Props) {
+export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000, copy }: Props & { copy: any }) {
   const items = useMemo(() => SERVICES, []);
   const [active, setActive] = useState(0);
 
@@ -104,11 +104,11 @@ export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000 }: P
       <div className="w-full mx-auto text-center">
         
         <p className="text-[12px] tracking-widest text-accent-lime/80">
-          Cómo puedo ayudarte
+          {copy.kicker}
         </p>
 
         <h2 className="mt-3 heading-h2 tracking-tight uppercase">
-          Servicios enfocados en claridad, experiencia y resultados reales.
+          {copy.headline}
         </h2>
 
 

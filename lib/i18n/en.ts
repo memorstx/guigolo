@@ -14,4 +14,10 @@ export const en = {
     ctaContact: "Let’s talk",
     ctaProjects: "See projects",
   },
+  services: {
+    kicker: "How I can help",
+    headline: "Services built for clarity, great experiences, and real results.",
+  },
+
+
 };
