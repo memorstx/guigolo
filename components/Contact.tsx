@@ -10,12 +10,49 @@ import {
 import { unlockAchievement } from "./gamification/achievementsStore";
 import { completeMission } from "./gamification/missionsStore";
 
-
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro";
 
 type Status = "idle" | "sending" | "success" | "error";
 
-export default function Contact() {
+type ContactCopy = {
+  kicker: string;
+  headline: string;
+  body: string;
+
+  success: {
+    title: string;
+    body: string;
+    primaryBtn: string;
+    secondaryBtn: string;
+  };
+
+  error: {
+    titlePrefix: string;
+    backBtn: string;
+    exploreBtn: string;
+    retryBtn: string;
+  };
+
+  form: {
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    helper: string;
+    sending: string;
+    submit: string;
+    footer: string;
+  };
+};
+
+type Props = {
+  copy: ContactCopy;
+  locale: "es" | "en";
+};
+
+export default function Contact({ copy, locale }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [origin, setOrigin] = useState<ContactOrigin | null>(null);
 
@@ -36,10 +73,12 @@ export default function Contact() {
     unlockAchievement("took_courage");
   };
 
+  // ✅ helper: arma rutas correctas con locale (/es#..., /en#...)
+  const homeHash = (hash: string) => `/${locale}${hash}`;
+
   useEffect(() => {
     setOrigin(readContactOrigin());
 
-    // ✅ Si en esta sesión ya envió, mostramos success y ocultamos form
     const sent = sessionStorage.getItem("contact_sent_v1");
     if (sent === "1") setStatus("success");
   }, []);
@@ -62,7 +101,6 @@ export default function Contact() {
       humanIntentRef.current = true;
     };
 
-    // Solo cuenta intención dentro de la sección
     const addIntentListeners = () => {
       el.addEventListener("wheel", markIntent, { passive: true });
       el.addEventListener("touchmove", markIntent, { passive: true });
@@ -86,8 +124,6 @@ export default function Contact() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
         const DWELL_MS = isMobile ? 2400 : 1400;
 
-
-        // Si sale, limpiamos timers para que no “robe” unlock después
         if (!visible) {
           clearDwell();
           resetIntent();
@@ -96,20 +132,16 @@ export default function Contact() {
 
         if (almostUnlockedRef.current) return;
 
-        // Al entrar visible, reiniciamos intención y arrancamos dwell
         resetIntent();
         clearDwell();
 
-        // ⏱️ Tiene que quedarse un ratito (lectura real, no “pasé volando”)
         dwellTimerRef.current = window.setTimeout(() => {
           if (almostUnlockedRef.current) return;
-
-          // ✅ condición clave: hubo intención humana dentro de contacto
           if (!humanIntentRef.current) return;
 
           almostUnlockedRef.current = true;
           unlockAchievement("almost_talked");
-        }, DWELL_MS); 
+        }, DWELL_MS);
       },
       { threshold: 0.6 }
     );
@@ -145,7 +177,6 @@ export default function Contact() {
         form.reset();
         sessionStorage.setItem("contact_sent_v1", "1");
         setStatus("success");
-
       } else {
         setStatus("error");
       }
@@ -170,26 +201,26 @@ export default function Contact() {
         className="scroll-mt-28 rounded-2xl border border-neutral-white/10 bg-neutral-black-800/40 p-10"
       >
         <p className="text-neutral-white/50 text-sm tracking-widest uppercase">
-          Contact
+          {copy.kicker}
         </p>
 
         <h2 className="mt-4 text-heading-lg font-display uppercase text-neutral-white">
-          Hagamos match: tú traes la idea, yo la convierto en experiencia.
+          {copy.headline}
         </h2>
 
         <p className="mt-5 text-body-md text-neutral-white/70 max-w-2xl">
-          Escríbeme y te respondo con claridad: alcance, tiempos y siguientes pasos.
+          {copy.body}
         </p>
 
         {/* ✅ SUCCESS */}
         {status === "success" && (
           <div className="mt-10 max-w-2xl rounded-md border border-neutral-white/10 bg-accent-cyan-10 px-4 py-4 text-neutral-white/80">
             <div className="text-neutral-white/90">
-              Listo ✅ Ya me llegó tu mensaje. Te escribo pronto 💝
+              {copy.success.title}
             </div>
 
             <div className="mt-2 text-sm text-neutral-white/70">
-              Si quieres, puedes seguir explorando o enviar otro mensaje.
+              {copy.success.body}
             </div>
 
             <div className="mt-4 flex flex-wrap gap-3">
@@ -197,11 +228,11 @@ export default function Contact() {
                 type="button"
                 onClick={() => {
                   clearContactOrigin();
-                  window.location.href = "/#projects";
+                  window.location.href = homeHash("#projects");
                 }}
                 className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
-                Seguir explorando
+                {copy.success.primaryBtn}
               </button>
 
               <button
@@ -213,7 +244,7 @@ export default function Contact() {
                 }}
                 className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
               >
-                Enviar otro mensaje
+                {copy.success.secondaryBtn}
               </button>
             </div>
           </div>
@@ -223,7 +254,7 @@ export default function Contact() {
         {status === "error" && (
           <div className="mt-10 max-w-2xl rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-4 text-neutral-white/80">
             <div>
-              Algo falló 😅 Intenta otra vez o escríbeme directo por email:{" "}
+              {copy.error.titlePrefix}{" "}
               <a
                 className="underline decoration-neutral-white/20 hover:decoration-neutral-white/50"
                 href="mailto:info@guigolo.com"
@@ -238,15 +269,15 @@ export default function Contact() {
                 onClick={goBackToOrigin}
                 className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
               >
-                Volver a donde estaba
+                {copy.error.backBtn}
               </button>
 
               <button
                 type="button"
-                onClick={() => (window.location.href = "/#projects")}
+                onClick={() => (window.location.href = homeHash("#projects"))}
                 className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
-                Seguir explorando
+                {copy.error.exploreBtn}
               </button>
 
               <button
@@ -254,7 +285,7 @@ export default function Contact() {
                 onClick={() => setStatus("idle")}
                 className="rounded-md border border-neutral-white/20 px-6 py-3 text-neutral-white/90 hover:border-neutral-white/40 transition w-full sm:w-auto text-center"
               >
-                Reintentar aquí
+                {copy.error.retryBtn}
               </button>
             </div>
           </div>
@@ -280,47 +311,47 @@ export default function Contact() {
 
             <div className="grid gap-2">
               <label className="text-label-sm uppercase text-neutral-white/60">
-                Tu nombre
+                {copy.form.nameLabel}
               </label>
               <input
                 name="name"
                 required
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
-                placeholder="Tu nombre"
+                placeholder={copy.form.namePlaceholder}
               />
             </div>
 
             <div className="grid gap-2">
               <label className="text-label-sm uppercase text-neutral-white/60">
-                Tu correo
+                {copy.form.emailLabel}
               </label>
               <input
                 type="email"
                 name="email"
                 required
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
-                placeholder="tu@email.com"
+                placeholder={copy.form.emailPlaceholder}
               />
             </div>
 
             <div className="grid gap-2">
               <label className="text-label-sm uppercase text-neutral-white/60">
-                Mensaje
+                {copy.form.messageLabel}
               </label>
               <textarea
                 name="message"
                 required
                 rows={5}
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
-                placeholder="Qué estás construyendo y qué necesitas de mí…"
+                placeholder={copy.form.messagePlaceholder}
                 onChange={(e) => {
-                  if (e.target.value.trim().length >= COURAGE_MIN_CHARS) {
+                  if (e.target.value.trim().length >= 50) {
                     markCourage();
                   }
                 }}
               />
               <p className="text-xs text-neutral-white/45">
-                No tiene que estar perfecto. Escríbelo como lo tengas en la cabeza.
+                {copy.form.helper}
               </p>
             </div>
 
@@ -329,10 +360,10 @@ export default function Contact() {
               disabled={status === "sending"}
               className="mt-2 inline-flex w-fit items-center justify-center rounded-md bg-accent-lilac px-7 py-3 font-medium text-neutral-white hover:opacity-90 transition disabled:opacity-60"
             >
-              {status === "sending" ? "Enviando…" : "Enviar mensaje →"}
+              {status === "sending" ? copy.form.sending : copy.form.submit}
             </button>
 
-            <p className="text-xs text-neutral-white/40">MODULE · CONTACT CHANNEL</p>
+            <p className="text-xs text-neutral-white/40">{copy.form.footer}</p>
           </form>
         )}
       </div>

@@ -76,7 +76,7 @@ const featuredIds = new Set([
         <SectionAbout copy={dict.about}  />
         <ContactCTA  copy={dict.cta} />
         <FAQSection items={faqItems} copy={dict.faq} />
-        <Contact />
+        <Contact copy={dict.contact} locale={locale as "es" | "en"}  />
       </main>
     </SiteShell>
   );

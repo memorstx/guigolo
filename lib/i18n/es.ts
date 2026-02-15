@@ -245,6 +245,39 @@ export const es = {
       },
     },
   },
+  contact: {
+    kicker: "CONTACTO",
+    headline: "Hagamos match: tú traes la idea, yo la convierto en experiencia.",
+    body: "Escríbeme y te respondo con claridad: alcance, tiempos y siguientes pasos.",
+
+    success: {
+      title: "Listo ✅ Ya me llegó tu mensaje. Te escribo pronto 💝",
+      body: "Si quieres, puedes seguir explorando o enviar otro mensaje.",
+      primaryBtn: "Seguir explorando",
+      secondaryBtn: "Enviar otro mensaje",
+    },
+
+    error: {
+      titlePrefix: "Algo falló 😅 Intenta otra vez o escríbeme directo por email:",
+      backBtn: "Volver a donde estaba",
+      exploreBtn: "Seguir explorando",
+      retryBtn: "Reintentar aquí",
+    },
+
+    form: {
+      nameLabel: "Tu nombre",
+      namePlaceholder: "Tu nombre",
+      emailLabel: "Tu correo",
+      emailPlaceholder: "tu@email.com",
+      messageLabel: "Mensaje",
+      messagePlaceholder: "Qué estás construyendo y qué necesitas de mí…",
+      helper: "No tiene que estar perfecto. Escríbelo como lo tengas en la cabeza.",
+      sending: "Enviando…",
+      submit: "Enviar mensaje →",
+      footer: "MODULE · CONTACT CHANNEL",
+    },
+  },
+
 
 
 };

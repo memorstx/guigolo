@@ -242,6 +242,38 @@ export const en = {
       },
     },
   },
+  contact: {
+    kicker: "CONTACT",
+    headline: "Let’s match: you bring the idea, I turn it into an experience.",
+    body: "Message me and I’ll reply clearly: scope, timing, and next steps.",
+
+    success: {
+      title: "Done ✅ I got your message. I’ll reply soon 💝",
+      body: "You can keep exploring or send another message.",
+      primaryBtn: "Keep exploring",
+      secondaryBtn: "Send another message",
+    },
+
+    error: {
+      titlePrefix: "Something failed 😅 Try again or email me directly:",
+      backBtn: "Go back to where I was",
+      exploreBtn: "Keep exploring",
+      retryBtn: "Try again here",
+    },
+
+    form: {
+      nameLabel: "Your name",
+      namePlaceholder: "Your name",
+      emailLabel: "Your email",
+      emailPlaceholder: "you@email.com",
+      messageLabel: "Message",
+      messagePlaceholder: "What are you building and what do you need from me…",
+      helper: "It doesn’t have to be perfect. Write it as it is in your head.",
+      sending: "Sending…",
+      submit: "Send message →",
+      footer: "MODULE · CONTACT CHANNEL",
+    },
+  },
 
 
 };
