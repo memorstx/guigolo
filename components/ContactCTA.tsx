@@ -1,10 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import ContactLink from "./ui/ContactLink";
 
-export default function FinalCTA() {
+type CtaCopy = {
+  chip: string;
+  headline: string;
+  subcopy: string;
+  button: string;
+  micro: string;
+};
+
+export default function FinalCTA({ copy }: { copy: CtaCopy }) {
   return (
     <section id="cta" className="relative w-full bg-neutral-black-900 overflow-hidden">
       {/* Fondo: glow + grid (sin assets) */}
@@ -49,12 +56,12 @@ export default function FinalCTA() {
           <div className="text-center md:text-left">
             {/* Chip */}
             <div className="inline-flex items-center gap-2 rounded-md border border-neutral-white/10 bg-neutral-black-900/30 px-4 py-2 text-[11px] tracking-[0.35em] text-neutral-white/70">
-              LISTO PARA CONSTRUIR
+              {copy.chip}
               <span className="h-1 w-1 rounded-full bg-accent-lime/80" />
             </div>
 
             <h2 className="mt-5 heading-h2 tracking-tight text-left text-neutral-white">
-              ¿TE GUSTARÍA QUE TRABAJÁRAMOS JUNTOS?
+              {copy.headline}
             </h2>
 
             {/* Línea blueprint */}
@@ -62,11 +69,10 @@ export default function FinalCTA() {
 
             {/* Subcopy */}
             <p className="mt-5 text-neutral-white/70 text-[14px] md:text-[15px] leading-relaxed max-w-[560px] mx-auto md:mx-0">
-              Si tu negocio fuera un rompecabezas, yo sería la pieza que lo completa.
+              {copy.subcopy}
             </p>
 
             <div className="mt-7 flex flex-wrap items-center justify-center md:justify-start gap-4">
-              {/* Botón */}
               <ContactLink
                 ctaId="cta-ready-to-build"
                 className="
@@ -80,7 +86,7 @@ export default function FinalCTA() {
                   transition
                 "
               >
-                CONTACTAR
+                {copy.button}
                 <span
                   aria-hidden
                   className="text-[16px] leading-none transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -89,10 +95,9 @@ export default function FinalCTA() {
                 </span>
               </ContactLink>
 
-
               {/* Micro CTA secundario */}
               <span className="text-[12px] tracking-[0.18em] text-neutral-white/45">
-                RESPUESTA EN 24–48H
+                {copy.micro}
               </span>
             </div>
           </div>

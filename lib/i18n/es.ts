@@ -213,5 +213,12 @@ export const es = {
       },
     },
   },
+  cta: {
+    chip: "LISTO PARA CONSTRUIR",
+    headline: "¿TE GUSTARÍA QUE TRABAJÁRAMOS JUNTOS?",
+    subcopy: "Si tu negocio fuera un rompecabezas, yo sería la pieza que lo completa.",
+    button: "CONTACTAR",
+    micro: "RESPUESTA EN 24–48H",
+  },
 
 };

@@ -210,5 +210,12 @@ export const en = {
       },
     },
   },
+  cta: {
+    chip: "READY TO BUILD",
+    headline: "WANT TO WORK TOGETHER?",
+    subcopy: "If your business were a puzzle, I’d be the piece that completes it.",
+    button: "CONTACT",
+    micro: "REPLY IN 24–48H",
+  },
 
 };

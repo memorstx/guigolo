@@ -20,8 +20,9 @@ export default function ContactLink({
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     saveContactOrigin(ctaId);
 
-    // Si estamos en Home y existe #contacto, hacemos scroll suave SIEMPRE
-    const isHome = window.location.pathname === "/";
+    const path = window.location.pathname;
+    const isHome = path === "/" || path === "/es" || path === "/en";
+
     const el = document.getElementById("contacto");
 
     if (isHome && el) {
