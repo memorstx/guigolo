@@ -42,7 +42,7 @@ export async function generateMetadata({
 export default async function WhatIsGuigoloPage({
   params,
 }: {
-  params: Params;
+  params: Promise<{ locale: "es" | "en" }>;
 }) {
   const { locale } = await params;
   const dict = getDict(locale);
