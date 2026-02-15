@@ -1,14 +1,24 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { FAQItem } from "./faq/faq.data.ts";
+import { useState } from "react";
+
+type FAQItem = {
+  id: string;
+  q: string;
+  a: string;
+};
+
+type FAQCopy = {
+  title: string;
+};
 
 type Props = {
   items: FAQItem[];
+  copy: FAQCopy;
   defaultOpenId?: string;
 };
 
-export default function FAQSection({ items, defaultOpenId }: Props) {
+export default function FAQSection({ items, copy, defaultOpenId }: Props) {
   const firstId = items[0]?.id;
   const initial = defaultOpenId ?? firstId ?? null;
 
@@ -23,7 +33,7 @@ export default function FAQSection({ items, defaultOpenId }: Props) {
       <div className="mx-auto max-w-[1280px] py-44">
         {/* Title */}
         <h2 className="heading-h2 tracking-tight">
-          PREGUNTAS FRECUENTES
+          {copy.title}
         </h2>
 
         {/* List */}
@@ -46,7 +56,6 @@ export default function FAQSection({ items, defaultOpenId }: Props) {
                         {it.q}
                       </div>
 
-                      {/* Answer (solo visible cuando open) */}
                       <div
                         id={`faq-panel-${it.id}`}
                         className={[
@@ -62,7 +71,6 @@ export default function FAQSection({ items, defaultOpenId }: Props) {
                       </div>
                     </div>
 
-                    {/* Icon */}
                     <Chevron
                       className={[
                         "mt-1 shrink-0 transition-transform duration-300",
@@ -82,7 +90,6 @@ export default function FAQSection({ items, defaultOpenId }: Props) {
 }
 
 function Chevron({ className = "" }: { className?: string }) {
-  // triangulito tipo el mock (chevron play)
   return (
     <svg
       viewBox="0 0 24 24"
@@ -92,10 +99,7 @@ function Chevron({ className = "" }: { className?: string }) {
       fill="none"
       aria-hidden="true"
     >
-      <path
-        d="M8 5l11 7-11 7V5z"
-        fill="currentColor"
-      />
+      <path d="M8 5l11 7-11 7V5z" fill="currentColor" />
     </svg>
   );
 }

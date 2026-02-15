@@ -7,7 +7,7 @@ import ServicesAccordion from "@/components/ServicesAccordion";
 
 import Process from "@/components/Process"; 
 import FAQSection from "@/components/Faq";
-import { FAQS } from "@/components/faq/faq.data";
+import { FAQS_BASE } from "@/components/faq/faq.data";
 import RestoreScroll from "@/components/ui/RestoreScroll";
 import GamificationBoot from "@/components/gamification/Boot";
 import TriggersBoot from "@/components/gamification/TriggersBoot";
@@ -23,14 +23,15 @@ const featuredIds = new Set([
   "latiendita-puntodeventa-project",
 ]);
 
-export default async function Home({
+  export default async function Home({
   params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const dict = getDict(locale);
+  }: {
+    params: Promise<{ locale: string }>;
+  }) {
+    const { locale } = await params;
+    const dict = getDict(locale);
 
+  
   const featuredProjects = FEATURED_PROJECTS_BASE
   .filter((p: any) => featuredIds.has(p.id))
   .map((p: any) => {
@@ -40,6 +41,14 @@ export default async function Home({
     return { ...p, ...t };
   });
 
+  const faqItems = FAQS_BASE.map((b) => {
+    const t = (dict.faq.items as Record<string, any>)[b.id];
+    return {
+      id: b.id,
+      q: t?.q ?? "",
+      a: t?.a ?? "",
+    };
+  });
 
 
   return (
@@ -66,7 +75,7 @@ export default async function Home({
         <Process copy={dict.process} />
         <SectionAbout copy={dict.about}  />
         <ContactCTA  copy={dict.cta} />
-        <FAQSection items={FAQS} />
+        <FAQSection items={faqItems} copy={dict.faq} />
         <Contact />
       </main>
     </SiteShell>

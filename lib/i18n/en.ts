@@ -217,5 +217,31 @@ export const en = {
     button: "CONTACT",
     micro: "REPLY IN 24–48H",
   },
+  faq: {
+    title: "FREQUENTLY ASKED QUESTIONS",
+    items: {
+      servicios: {
+        q: "WHAT DO YOU ACTUALLY DO?",
+        a: "I design websites and apps so people understand them, use them without frustration, and want to stay. It’s not just about looking good — it should feel clear. If you need it, I can also help bring that design into something that works in the real world.",
+      },
+      empresas: {
+        q: "WHO DO YOU WORK WITH?",
+        a: "I work with people and teams who have an idea, a product, or a business and want to bring more clarity and structure to it. It can be a solo project, a startup, or a team inside a company. Size doesn’t matter — real intent does.",
+      },
+      costo: {
+        q: "HOW MUCH DOES IT COST?",
+        a: "It depends on what you need and the size of the project. First we talk through goals and scope. Then I give you a clear range. If it’s not the right moment or it doesn’t make sense for you, I’ll tell you directly.",
+      },
+      pago: {
+        q: "HOW DOES PAYMENT WORK?",
+        a: "Usually we start with a deposit and the rest is paid as we move forward. For bigger projects, we split it by stages, so you always see progress before continuing.",
+      },
+      tiempo: {
+        q: "HOW LONG DOES A PROJECT TAKE?",
+        a: "It depends on the scope and how quickly we can review progress together. Some work can take 1–2 weeks; more complete projects usually take 3–6 weeks. We agree on timing from the start.",
+      },
+    },
+  },
+
 
 };
