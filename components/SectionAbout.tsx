@@ -2,6 +2,32 @@
 
 import Image from "next/image";
 import AboutDocsSliderCard from "./about/AboutDocsSliderCard";
+import { ABOUT_DOC_SLIDES_BASE } from "./about/AboutDocsSliderCard.data";
+
+type AboutCopy = {
+  header: {
+    kicker: string;
+    headline: string;
+    body: string;
+  };
+  cards: {
+    personality: { chip: string; title: string; desc: string; watermark: string };
+    style: { chip: string; title: string; desc: string; watermark: string };
+    likes: { chip: string; title: string; desc: string; watermark: string };
+    purpose: { chip: string; title: string; desc: string; watermark: string };
+    mindset: { chip: string; title: string; desc: string; watermark: string };
+  };
+  value: {
+    chip: string;
+    title: string;
+    body: string;
+    cta: string;
+  };
+  docsSlides: Record<
+    string,
+    { title: string; desc: string; tags: string[] }
+  >;
+};
 
 type SmallCardProps = {
   chip: string;
@@ -70,12 +96,7 @@ function SmallCard({
           />
         </div>
 
-        <h3
-          className={[
-            "mt-7 heading-h3",
-            titleClassName ?? "",
-          ].join(" ")}
-        >
+        <h3 className={["mt-7 heading-h3", titleClassName ?? ""].join(" ")}>
           {title}
         </h3>
 
@@ -99,66 +120,67 @@ function SmallCard({
   );
 }
 
-export default function SectionAbout() {
+export default function SectionAbout({ copy }: { copy: AboutCopy }) {
+  const slides = ABOUT_DOC_SLIDES_BASE.map((b) => {
+    const t = copy.docsSlides[b.id];
+    return {
+      id: b.id,
+      image: b.image,
+      title: t?.title ?? "",
+      desc: t?.desc ?? "",
+      tags: t?.tags ?? [],
+    };
+  });
+
   return (
     <section id="about" className="relative">
-      {/* padding lateral 96px */}
-      <div className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]
-        ">
+      <div className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]">
         {/* Header */}
         <div className="text-center">
           <div className="text-[12px] tracking-widest text-accent-lime/80">
-            FRAMEWORK DE HABILIDADES
+            {copy.header.kicker}
           </div>
 
           <h2 className="mt-3 heading-h2 tracking-tight">
-            
-            EL NÚCLEO QUE DEFINE MI MANERA DE DISEÑAR
+            {copy.header.headline}
           </h2>
 
-          <p className="
-            max-w-[680px] 
-            xl:max-w-[768px] 
-            2xl:max-w-[980px]
-            3xl:max-w-[1024px]
-            4xl:max-w-[1256px] 
-            mx-auto 
-            mt-3 
-            text-neutral-white/65 
-            text-[clamp(0.95rem,1.15vw,1.125rem)] 
-            text-center 
-            leading-relaxed 
-            xl:text-[clamp(1.05rem,.95vw,1.2rem)] 
-            xl:leading-relaxed 
-            2xl:text-[clamp(1.25rem,1.2vw,1.5rem)] 
-            ">
-            Soy diseñador UX/UI y transformo sensibilidad y estrategia en interfaces suaves,
-            claras y sencillas para el usuario.
+          <p
+            className="
+              max-w-[680px]
+              xl:max-w-[768px]
+              2xl:max-w-[980px]
+              3xl:max-w-[1024px]
+              4xl:max-w-[1256px]
+              mx-auto
+              mt-3
+              text-neutral-white/65
+              text-[clamp(0.95rem,1.15vw,1.125rem)]
+              text-center
+              leading-relaxed
+              xl:text-[clamp(1.05rem,.95vw,1.2rem)]
+              xl:leading-relaxed
+              2xl:text-[clamp(1.25rem,1.2vw,1.5rem)]
+            "
+          >
+            {copy.header.body}
           </p>
         </div>
 
-        {/* Grid principal 3 columnas (2 filas) */}
+        {/* Grid principal */}
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-
-          {/* Row 1 */}
           <div className="mt-0 lg:mt-8 xl:mt-8 2xl:mt-10 3xl:mt-[6rem] 4xl:mt-[12rem]">
             <SmallCard
-            chip="FEELING NODE"
-            title="MI PERSONALIDAD"
-            desc="Soy curioso, sensible, empático, entregado, intuitivo, agradecido, detallista, creativo y auténtico."
-            //mascotSrc="/brand/about/mascot-orange.svg"
-            watermark="FEELING NODE"
-            className="lg:mt-10 text-left lg:text-right"
-            watermarkClassName="opacity-20"
-
-          />
+              chip={copy.cards.personality.chip}
+              title={copy.cards.personality.title}
+              desc={copy.cards.personality.desc}
+              watermark={copy.cards.personality.watermark}
+              className="lg:mt-10 text-left lg:text-right"
+              watermarkClassName="opacity-20"
+            />
           </div>
 
-          {/* Foto (columna centro, fila 1) */}
-          <div className=" bg-neutral-black-900/35
-                 ">
-
-            {/* tu imagen, cámbiala a tu ruta real si ya la tienes */}
+          <div className=" bg-neutral-black-900/35">
             <Image
               src="/brand/about/about-photo-guigolo.png"
               alt="Guigolo"
@@ -172,105 +194,65 @@ export default function SectionAbout() {
 
           <div className="mt-0 lg:mt-8 xl:mt-8 2xl:mt-10 3xl:mt-[6rem] 4xl:mt-[12rem]">
             <SmallCard
-              chip="VISUAL FLOW UNIT"
-              title="MI ESTILO"
-              desc="Soy coherente, directo, minimalista, expresivo, emocional, ingenioso, observador y propositivo."
-              //mascotSrc="/brand/about/mascot-banana.svg"
-              watermark="VISUAL FLOW UNIT"
+              chip={copy.cards.style.chip}
+              title={copy.cards.style.title}
+              desc={copy.cards.style.desc}
+              watermark={copy.cards.style.watermark}
               className="lg:mt-10"
             />
           </div>
 
-          {/* Row 2 */}
-          
           <SmallCard
-            chip="HUMAN INPUT FILTER"
-            title="MIS GUSTOS"
-            desc="El café, el chocolate, los gatos, los videojuegos, lo romántico y las ideas que nacen en silencio."
-            //mascotSrc="/brand/about/mascot-paper.svg"
-            watermark="HUMAN INPUT FILTER"
+            chip={copy.cards.likes.chip}
+            title={copy.cards.likes.title}
+            desc={copy.cards.likes.desc}
+            watermark={copy.cards.likes.watermark}
             className="lg:mt-10 text-left lg:text-right"
           />
-           
+
           <SmallCard
-            chip="CORE SIGNAL SYNC"
-            title="MI PROPÓSITO"
-            desc="Conectar con las emociones de los demás y convertirlas en experiencias únicas."
-            //mascotSrc="/brand/about/mascot-purple.svg"
-            watermark="CORE SIGNAL SYNC"
+            chip={copy.cards.purpose.chip}
+            title={copy.cards.purpose.title}
+            desc={copy.cards.purpose.desc}
+            watermark={copy.cards.purpose.watermark}
             className="border md:text-center border-dashed lg:border-none"
           />
 
           <SmallCard
-            chip="SENSE-LAYER v4.2"
-            title="MI MENTALIDAD"
-            desc="Consciente, reflexivo, equilibrado, responsable, soñador, perseverante, en construcción constante."
-            watermark="SENSE-LAYER v4.2"
+            chip={copy.cards.mindset.chip}
+            title={copy.cards.mindset.title}
+            desc={copy.cards.mindset.desc}
+            watermark={copy.cards.mindset.watermark}
             className="lg:mt-10"
           />
         </div>
 
-        {/* Fila final 50/50 (misma sección, otro grid) */}
+        {/* Fila final */}
         <div className="grid grid-cols-1 lg:grid-cols-3">
-          {/* MI PROPUESTA DE VALOR */}
           <div className="relative flex flex-col overflow-hidden justify-start sm:justify-center lg:mt-10 lg:text-right border border-neutral-white/10 bg-neutral-black-900/35 px-10 py-10 lg:col-span-1 order-2 md:order-1">
             <div className="inline-flex border-2 sm:self-center border-[#ededed1a] px-4 py-2 text-[11px] tracking-widest text-neutral-white/70 w-fit align-self-center">
-              VALUE UNIQUE
+              {copy.value.chip}
             </div>
 
-
             <h3 className="mt-7 heading-h3 sm:text-center">
-              MI PROPUESTA DE VALOR
+              {copy.value.title}
             </h3>
 
-            <p className="
-            mt-4 
-            text-left
-            sm:text-center
-            text-[clamp(0.95rem,1.15vw,1.125rem)] 
-            leading-relaxed 
-            xl:text-[clamp(1.05rem,.95vw,1.2rem)] 
-            xl:leading-relaxed 
-            2xl:text-[clamp(1.25rem,1.2vw,1.5rem)]  text-neutral-white/70">
-              Me enfoco en crear productos útiles y estratégicos que impulsen tus resultados desde el primer clic.
+            <p className="mt-4 text-left sm:text-center text-[clamp(0.95rem,1.15vw,1.125rem)] leading-relaxed xl:text-[clamp(1.05rem,.95vw,1.2rem)] xl:leading-relaxed 2xl:text-[clamp(1.25rem,1.2vw,1.5rem)] text-neutral-white/70">
+              {copy.value.body}
             </p>
 
-            {/* CTA */}
             <div className="mt-8 flex flex-col items-baseline sm:items-center gap-4">
               <a
                 href="#contacto"
                 className="inline-flex justify-start items-start sm:items-center sm:justify-center rounded-md bg-accent-lime px-10 py-3 text-[12px] font-semibold tracking-widest text-black shadow-[0_0_0_2px_rgba(0,0,0,0.25)]"
               >
-                CONTACTAR <span className="ml-2">↗</span>
+                {copy.value.cta} <span className="ml-2">↗</span>
               </a>
-
-              { /* íconos sociales simples */ }
-             
-              <div>
-                {/*
-                
-                 <div className="flex items-center gap-6 text-neutral-white/70">
-                <a href="#contacto" aria-label="Email" className="hover:text-neutral-white">
-                  ✉
-                </a>
-                <a href="#" aria-label="GitHub" className="hover:text-neutral-white">
-                  ⌂
-                </a>
-                <a href="#" aria-label="LinkedIn" className="hover:text-neutral-white">
-                  in
-                </a>
-              </div>
-                
-                */}
-              </div>
-
             </div>
-
-            
           </div>
 
-          {/* DOCUMENTACIÓN COMPLETA (carousel) */}
-          <AboutDocsSliderCard />
+          <AboutDocsSliderCard slides={slides} />
         </div>
       </div>
     </section>

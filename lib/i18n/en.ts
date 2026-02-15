@@ -1,11 +1,12 @@
 export const en = {
   nav: {
-    services: "Services",
-    projects: "Projects",
-    process: "Process",
-    about: "About",
+    home: "What",
+    services: "Why",
+    projects: "Work",
+    process: "How",
+    about: "Who",
     faq: "FAQ",
-    contact: "Contact",
+    contact: "Wow",
   },
   hero: {
     titleAccent: "UX/UI Designer",
@@ -128,6 +129,86 @@ export const en = {
       },
     },
   },
+  about: {
+    header: {
+      kicker: "SKILL FRAMEWORK",
+      headline: "THE CORE THAT SHAPES HOW I DESIGN",
+      body:
+        "I’m a UX/UI designer. I turn sensitivity and strategy into smooth, clear, simple interfaces people actually enjoy using.",
+    },
 
+    cards: {
+      personality: {
+        chip: "FEELING NODE",
+        watermark: "FEELING NODE",
+        title: "MY PERSONALITY",
+        desc:
+          "Curious, sensitive, empathetic, committed, intuitive, grateful, detail-driven, creative, and authentic.",
+      },
+      style: {
+        chip: "VISUAL FLOW UNIT",
+        watermark: "VISUAL FLOW UNIT",
+        title: "MY STYLE",
+        desc:
+          "Consistent, direct, minimalist, expressive, emotional, witty, observant, and proactive.",
+      },
+      likes: {
+        chip: "HUMAN INPUT FILTER",
+        watermark: "HUMAN INPUT FILTER",
+        title: "WHAT I LIKE",
+        desc:
+          "Coffee, chocolate, cats, videogames, romantic vibes, and ideas that start quietly.",
+      },
+      purpose: {
+        chip: "CORE SIGNAL SYNC",
+        watermark: "CORE SIGNAL SYNC",
+        title: "MY PURPOSE",
+        desc:
+          "To connect with people’s emotions and turn them into unique experiences.",
+      },
+      mindset: {
+        chip: "SENSE-LAYER v4.2",
+        watermark: "SENSE-LAYER v4.2",
+        title: "MY MINDSET",
+        desc:
+          "Aware, reflective, balanced, responsible, dreamy, persistent—always evolving.",
+      },
+    },
+
+    value: {
+      chip: "VALUE UNIQUE",
+      title: "MY VALUE PROPOSITION",
+      body:
+        "I build useful, strategic products that move your results from the very first click.",
+      cta: "CONTACT",
+    },
+
+    docsSlides: {
+      "slide-1": {
+        title: "UI KIT + TOKENS",
+        desc:
+          "Type, color, and scales ready to implement—without losing the vibe.",
+        tags: ["Tokens", "UI Kit", "Scales"],
+      },
+      "slide-2": {
+        title: "RHYTHM, CLARITY & FLOW",
+        desc:
+          "Structure and visual consistency so everything feels intentional.",
+        tags: ["Grid", "Hierarchy", "Consistency"],
+      },
+      "slide-3": {
+        title: "DESIGN MADE TO FIT",
+        desc:
+          "Screens and components built for business + users—no filler.",
+        tags: ["UX", "UI", "Product"],
+      },
+      "slide-4": {
+        title: "PERFORMANCE + A11Y",
+        desc:
+          "Best practices so your site loads fast and feels better to use.",
+        tags: ["A11y", "HTML", "Optimization"],
+      },
+    },
+  },
 
 };

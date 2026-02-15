@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { SeoJsonLd } from "../components/SeoJsonLd";
+import { HtmlLangSync } from "../components/HtmlLangSync";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -18,23 +19,13 @@ const anta = Anta({
 });
 
 export const metadata: Metadata = {
-  // ✅ Canónico sin www (coincide con tu configuración final en Vercel)
   metadataBase: new URL("https://guigolo.com"),
-
-  // ✅ Escalable para futuras páginas
   title: {
     default: "Guigolo · Diseño centrado en usuario y negocio",
     template: "%s | Guigolo",
   },
-
   description:
     "Portafolio de Guillermo González López. Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.",
-
-  // ✅ Canonical explícito
-  alternates: {
-    canonical: "https://guigolo.com",
-  },
-
   robots: {
     index: true,
     follow: true,
@@ -44,7 +35,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-
   openGraph: {
     title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
@@ -59,11 +49,10 @@ export const metadata: Metadata = {
         alt: "Guigolo · Portafolio UX/UI",
       },
     ],
+    // OJO: esto es global. El locale real por idioma lo definimos en app/[locale]/layout.tsx
     locale: "es_MX",
     type: "website",
   },
-
-  // ✅ Twitter consistente con OG (misma imagen)
   twitter: {
     card: "summary_large_image",
     title: "Guigolo · Diseño centrado en usuario y negocio",
@@ -73,11 +62,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const isProd = process.env.VERCEL_ENV === "production";
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -85,8 +70,9 @@ export default function RootLayout({
   const HJ_SV = process.env.NEXT_PUBLIC_HJ_SV || "6";
 
   return (
-    <html lang="es-MX">
+    <html lang="es" suppressHydrationWarning>
       <body className={`${unbounded.variable} ${anta.variable}`}>
+        <HtmlLangSync />
         <SeoJsonLd />
         {children}
 

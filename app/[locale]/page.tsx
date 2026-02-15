@@ -64,7 +64,7 @@ export default async function Home({
 
 
         <Process copy={dict.process} />
-        <SectionAbout />
+        <SectionAbout copy={dict.about}  />
         <ContactCTA />
         <FAQSection items={FAQS} />
         <Contact />

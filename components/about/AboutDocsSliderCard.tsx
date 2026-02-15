@@ -4,9 +4,16 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useMemo, useState } from "react";
-import { slides } from "./AboutDocsSliderCard.data";
 
-export default function AboutDocsSliderCard() {
+type Slide = {
+  id: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  image: string;
+};
+
+export default function AboutDocsSliderCard({ slides }: { slides: Slide[] }) {
   const autoplay = useMemo(
     () =>
       Autoplay({
@@ -36,22 +43,17 @@ export default function AboutDocsSliderCard() {
 
   return (
     <div className="relative overflow-hidden lg:mt-10 border border-neutral-white/10 bg-neutral-black-900/35 px-10 py-10 cursor-grab active:cursor-grabbing order-2 sm:order-1 lg:col-span-2 select-none">
-     
       {/* Carousel */}
       <div className="mt-8">
         <div ref={emblaRef} className="overflow-hidden">
           <div className="flex">
             {slides.map((s) => (
-              <div
-                key={s.title}
-                className="min-w-0 flex-[0_0_100%] pr-6 "
-              >
-                
-
+              <div key={s.id} className="min-w-0 flex-[0_0_100%] pr-6 ">
                 <div className="mt-4 flex flex-col items-center">
                   <div className="text-[neutral-white] heading-h3 text-center">
                     {s.title}
                   </div>
+
                   <div className="mt-2 text-[clamp(0.95rem,1.15vw,1.125rem)] leading-relaxed xl:text-[clamp(1.05rem,.95vw,1.2rem)] xl:leading-relaxed 2xl:text-[clamp(1.25rem,1.2vw,1.5rem)] text-neutral-white/70 text-center">
                     {s.desc}
                   </div>

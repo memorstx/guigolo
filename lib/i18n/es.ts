@@ -2,6 +2,7 @@ import { title } from "process";
 
 export const es = {
   nav: {
+    home: "Inicio",
     services: "Servicios",
     projects: "Proyectos",
     process: "Proceso",
@@ -131,6 +132,86 @@ export const es = {
       },
     },
   },
+  about: {
+    header: {
+      kicker: "FRAMEWORK DE HABILIDADES",
+      headline: "EL NÚCLEO QUE DEFINE MI MANERA DE DISEÑAR",
+      body:
+        "Soy diseñador UX/UI y transformo sensibilidad y estrategia en interfaces suaves, claras y sencillas para el usuario.",
+    },
 
+    cards: {
+      personality: {
+        chip: "FEELING NODE",
+        watermark: "FEELING NODE",
+        title: "MI PERSONALIDAD",
+        desc:
+          "Soy curioso, sensible, empático, entregado, intuitivo, agradecido, detallista, creativo y auténtico.",
+      },
+      style: {
+        chip: "VISUAL FLOW UNIT",
+        watermark: "VISUAL FLOW UNIT",
+        title: "MI ESTILO",
+        desc:
+          "Soy coherente, directo, minimalista, expresivo, emocional, ingenioso, observador y propositivo.",
+      },
+      likes: {
+        chip: "HUMAN INPUT FILTER",
+        watermark: "HUMAN INPUT FILTER",
+        title: "MIS GUSTOS",
+        desc:
+          "El café, el chocolate, los gatos, los videojuegos, lo romántico y las ideas que nacen en silencio.",
+      },
+      purpose: {
+        chip: "CORE SIGNAL SYNC",
+        watermark: "CORE SIGNAL SYNC",
+        title: "MI PROPÓSITO",
+        desc:
+          "Conectar con las emociones de los demás y convertirlas en experiencias únicas.",
+      },
+      mindset: {
+        chip: "SENSE-LAYER v4.2",
+        watermark: "SENSE-LAYER v4.2",
+        title: "MI MENTALIDAD",
+        desc:
+          "Consciente, reflexivo, equilibrado, responsable, soñador, perseverante, en construcción constante.",
+      },
+    },
+
+    value: {
+      chip: "VALUE UNIQUE",
+      title: "MI PROPUESTA DE VALOR",
+      body:
+        "Me enfoco en crear productos útiles y estratégicos que impulsen tus resultados desde el primer clic.",
+      cta: "CONTACTAR",
+    },
+
+    docsSlides: {
+      "slide-1": {
+        title: "UI KIT + TOKENS",
+        desc:
+          "Tipografía, colores y escalas listas para implementarse sin perder el vibe.",
+        tags: ["Tokens", "UI Kit", "Escalas"],
+      },
+      "slide-2": {
+        title: "RITMO, CLARIDAD Y FLUIDEZ",
+        desc:
+          "Estructura y consistencia visual para que todo se sienta intencional.",
+        tags: ["Grid", "Jerarquía", "Consistencia"],
+      },
+      "slide-3": {
+        title: "DISEÑO HECHO A LA MEDIDA",
+        desc:
+          "Pantallas y componentes pensados para negocio + usuario, sin relleno.",
+        tags: ["UX", "UI", "Producto"],
+      },
+      "slide-4": {
+        title: "PERFORMANCE + A11Y",
+        desc:
+          "Buenas prácticas listas para que tu sitio cargue bien y se use mejor.",
+        tags: ["A11y", "HTML", "Optimización"],
+      },
+    },
+  },
 
 };

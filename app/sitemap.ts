@@ -1,16 +1,21 @@
-import type { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+
+const baseUrl = "https://guigolo.com";
+
+const locales = ["es", "en"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://guigolo.com',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: "https://guigolo.com/what-is-guigolo",
-      lastModified: new Date(),
-    }
+  const routes = [
+    "",
+    "/what-is-guigolo",
   ];
+
+  return locales.flatMap((locale) =>
+    routes.map((route) => ({
+      url: `${baseUrl}/${locale}${route}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: route === "" ? 1 : 0.8,
+    }))
+  );
 }

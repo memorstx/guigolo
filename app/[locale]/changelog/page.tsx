@@ -15,7 +15,7 @@ export const metadata = {
 
 export default function ChangelogPage() {
   return (
-    <SiteShell>
+    <SiteShell >
         <main className="text-neutral-white">
             <PageFrame variant="prose" className="py-24">
                 <div className="space-y-16"></div>
