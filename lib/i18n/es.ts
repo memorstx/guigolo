@@ -289,5 +289,73 @@ export const es = {
     },
     copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
   },
+  whatIsGuigolo: {
+    meta: {
+      title: "¿Qué es Guigolo? | Marca, significado y origen",
+      description:
+        "Guigolo no es gigoló. Es la marca personal de Guillermo González López. Descubre el origen del nombre, por qué no lleva acento y qué representa.",
+      ogTitle: "¿Qué es Guigolo?",
+      ogDescription:
+        "Guigolo no es gigoló. Es una marca personal nacida de un nombre propio.",
+    },
+
+    backToHome: "Volver al inicio",
+
+    heroTitle: "Guigolo no es gigoló.",
+    heroSubtitle:
+      "Es una marca personal. Es una firma. Es un nombre que parece otra cosa… hasta que lo entiendes.",
+
+    intro: [
+      "Lo voy a decir primero, sin rodeos: Guigolo no es gigoló. No es una provocación sexual, no es un chiste interno, no es una estrategia polémica. Es mi nombre convertido en identidad.",
+      "Mi nombre es Guillermo González López. Tres palabras largas. Tres sonidos fuertes. Tres sílabas que, sin planearlo demasiado, empezaron a unirse: Gui – Go – Lo. Y de pronto, ahí estaba. Guigolo.",
+      "No nació en una agencia. No fue resultado de un focus group. Fue una síntesis natural. Una firma escondida dentro del propio nombre.",
+    ],
+
+    confusionTitle: "La confusión (inevitable)",
+    confusion: [
+      "“Gigoló” viene del francés y en español lleva acento en la última sílaba. Es un término cultural con significado propio. Guigolo no es eso. Tiene una letra más. Tiene otra raíz. Tiene otra intención.",
+      "Donde uno es un sustantivo heredado, el otro es una palabra creada. Una cosa es un término. La otra es una identidad.",
+    ],
+
+    accentTitle: "El acento que decidí quitar",
+    accent: [
+      "Mi apellido es López. Con acento. Correctamente escrito. Y lo respeto así.",
+      "Pero cuando construí el dominio, entendí algo práctico: los navegadores no manejan bien los acentos en URLs. Se transforman en caracteres extraños, se escriben mal, se olvidan.",
+      "Así que tomé una decisión consciente: Guigolo no llevaría acento. No por ignorancia lingüística, sino por claridad digital.",
+      "En branding, a veces la pureza tipográfica cede ante la usabilidad. En internet, la simplicidad gana.",
+    ],
+
+    reclaimTitle: "De fricción a identidad",
+    reclaim: [
+      "Pude haber cambiado el nombre para evitar la duda. Pero las marcas interesantes no nacen perfectas. Nacen con conversación.",
+      "Si alguien duda, lo explico. Si alguien pregunta, cuento la historia. Y en ese pequeño momento incómodo, la palabra deja de ser ruido y se convierte en narrativa.",
+      "Eso también es diseño.",
+    ],
+
+    systemTitle: "Más que un nombre",
+    system: [
+      "Guigolo no es solo una combinación de sílabas. Es un sistema. Tipografía. Ritmo. Espacio. Contraste. Intención.",
+      "Si te interesa ver cómo se construye esa identidad visual, puedes explorarlo aquí:",
+    ],
+    brandbookHref: "/brandbook",
+    brandbookCta: "Ver brandbook →",
+
+    human: [
+      "Y detrás del nombre hay alguien. Alguien que ajusta interlineados como si fueran notas musicales. Que cree que una interfaz puede ser clara sin dejar de ser cálida.",
+      "Si quieres conocer esa parte más personal:",
+    ],
+    aboutCta: "Ver sobre mí →",
+
+    summaryTitle: "Entonces, ¿qué es Guigolo?",
+    summaryBullets: [
+      "No es gigoló.",
+      "Viene de Guillermo González López.",
+      "No lleva acento por claridad digital.",
+      "Es una marca personal de diseño.",
+    ],
+
+    feedbackTitle: "¿Qué sentiste la primera vez que leíste “Guigolo”?",
+  },
+
 
 };

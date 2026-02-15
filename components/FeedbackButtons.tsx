@@ -13,7 +13,7 @@ type OptionId = (typeof OPTIONS)[number]["id"];
 
 const STORAGE_KEY = "guigolo_micro_feedback_v1";
 
-export default function FeedbackButtons() {
+export default function FeedbackButtons({ pageId }: { pageId: string }) {
   const [selected, setSelected] = useState<OptionId | null>(null);
 
   useEffect(() => {
@@ -28,13 +28,12 @@ export default function FeedbackButtons() {
     if (typeof window !== "undefined" && (window as any).gtag) {
       (window as any).gtag("event", "guigolo_micro_feedback", {
         feeling: value,
-        page: "what-is-guigolo",
+        page: pageId,
       });
     }
   };
 
   const handleClick = (value: OptionId) => {
-    // Si ya eligió, NO registramos otra vez
     if (selected) return;
 
     setSelected(value);
@@ -56,7 +55,7 @@ export default function FeedbackButtons() {
               key={opt.id}
               type="button"
               onClick={() => handleClick(opt.id)}
-              disabled={isLocked || isSelected} // bloquea los demás y también evita re-click del mismo
+              disabled={isLocked || isSelected}
               aria-pressed={isSelected}
               className={[
                 "group inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm transition select-none",
@@ -77,13 +76,9 @@ export default function FeedbackButtons() {
       </div>
 
       {selected ? (
-        <p className="text-neutral-white/60 text-sm">
-          Gracias por tu reacción ✨
-        </p>
+        <p className="text-neutral-white/60 text-sm">Gracias por tu reacción ✨</p>
       ) : (
-        <p className="text-neutral-white/50 text-sm">
-          
-        </p>
+        <p className="text-neutral-white/50 text-sm"></p>
       )}
     </div>
   );

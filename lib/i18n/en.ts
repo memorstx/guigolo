@@ -286,6 +286,73 @@ export const en = {
     },
     copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
   },
+  whatIsGuigolo: {
+    meta: {
+      title: "What is Guigolo? | Brand, meaning and origin",
+      description:
+        "Guigolo isn’t gigolo. It’s Guillermo González López’s personal brand. Learn where the name comes from, why it has no accent, and what it stands for.",
+      ogTitle: "What is Guigolo?",
+      ogDescription:
+        "Guigolo isn’t gigolo. It’s a personal brand born from a real name.",
+    },
+
+    backToHome: "Back to home",
+
+    heroTitle: "Guigolo isn’t gigolo.",
+    heroSubtitle:
+      "It’s a personal brand. A signature. A name that looks like something else… until you get it.",
+
+    intro: [
+      "Let me say it first, no fluff: Guigolo isn’t gigolo. It’s not a sexual provocation, not an inside joke, not a controversy play. It’s my name turned into identity.",
+      "My name is Guillermo González López. Three long words. Strong sounds. Three syllables that—without overthinking—started to merge: Gui – Go – Lo. And suddenly, it was there. Guigolo.",
+      "It didn’t come from an agency. It wasn’t a focus group result. It was a natural synthesis. A signature hidden inside the name itself.",
+    ],
+
+    confusionTitle: "The confusion (inevitable)",
+    confusion: [
+      "“Gigolo” comes from French. It’s a cultural word with its own meaning. Guigolo is not that. It has an extra letter. A different root. A different intent.",
+      "One is an inherited noun. The other is a created word. One is a term. The other is an identity.",
+    ],
+
+    accentTitle: "The accent I chose to remove",
+    accent: [
+      "My last name is López—with an accent. Correctly written. And I respect it that way.",
+      "But when I built the domain, I learned something practical: accents in URLs don’t play nicely. They turn into weird characters, get mistyped, and are easy to forget.",
+      "So I made a conscious call: Guigolo would have no accent. Not out of ignorance—but out of digital clarity.",
+      "In branding, typographic purity sometimes yields to usability. On the internet, simplicity wins.",
+    ],
+
+    reclaimTitle: "From friction to identity",
+    reclaim: [
+      "I could’ve changed the name to avoid the doubt. But interesting brands aren’t born perfect. They’re born with conversation.",
+      "If someone doubts it, I explain it. If someone asks, I tell the story. In that small awkward moment, the word stops being noise and becomes narrative.",
+      "That’s design too.",
+    ],
+
+    systemTitle: "More than a name",
+    system: [
+      "Guigolo isn’t just syllables. It’s a system. Typography. Rhythm. Space. Contrast. Intent.",
+      "If you want to see how that visual identity is built, explore it here:",
+    ],
+    brandbookHref: "/brandbook",
+    brandbookCta: "See brandbook →",
+
+    human: [
+      "And behind the name, there’s a person. Someone who tweaks line-height like it’s music. Someone who believes an interface can be clear without losing warmth.",
+      "If you want the more personal side:",
+    ],
+    aboutCta: "About me →",
+
+    summaryTitle: "So… what is Guigolo?",
+    summaryBullets: [
+      "It’s not gigolo.",
+      "It comes from Guillermo González López.",
+      "No accent for digital clarity.",
+      "It’s a personal design brand.",
+    ],
+
+    feedbackTitle: "What did you feel the first time you read “Guigolo”?",
+  },
 
 
 };
