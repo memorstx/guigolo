@@ -12,7 +12,25 @@ import { onMissionUnlocked } from "@/components/gamification/missionsEvents";
 
 const totalMissions = MISSIONS.length;
 
-export default function Footer() {
+type FooterCopy = {
+  brand: string;
+  tagline: string;
+  missionsLabel: string;
+  missionsCta: string;
+  nav: {
+    projects: string;
+    contact: string;
+    top: string;
+  };
+  copyrightSuffix: string;
+};
+
+type Props = {
+  copy: FooterCopy;
+  locale: "es" | "en";
+};
+
+export default function Footer({ copy, locale }: Props) {
   const [open, setOpen] = useState(false);
   const [missionsDone, setMissionsDone] = useState<number>(0);
 
@@ -26,6 +44,8 @@ export default function Footer() {
     return () => off();
   }, []);
 
+  const homeHash = (hash: string) => `/${locale}${hash}`;
+
   return (
     <Section className="py-14 bg-black">
       <MissionsPanel open={open} onClose={() => setOpen(false)} />
@@ -34,9 +54,9 @@ export default function Footer() {
 
       <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-          <p className="text-white font-semibold tracking-wide">GUIGOLO</p>
+          <p className="text-white font-semibold tracking-wide">{copy.brand}</p>
           <p className="mt-2 text-white/60 max-w-xl">
-            Diseño con intención. Sistema con claridad. Experiencias que se sienten.
+            {copy.tagline}
           </p>
         </div>
 
@@ -48,23 +68,34 @@ export default function Footer() {
             onClick={() => setOpen(true)}
             className="whitespace-nowrap rounded-full border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-2 text-[11px] tracking-[0.22em] text-neutral-white/70 hover:border-neutral-white/25 transition"
           >
-            MISIONES: {missionsDone}/{totalMissions} · VER
+            {copy.missionsLabel}: {missionsDone}/{totalMissions} · {copy.missionsCta}
           </button>
 
-          <a href="#projects" className="text-sm text-white/60 hover:text-white transition">
-            Proyectos
+          <a
+            href={homeHash("#projects")}
+            className="text-sm text-white/60 hover:text-white transition"
+          >
+            {copy.nav.projects}
           </a>
-          <a href="#contacto" className="text-sm text-white/60 hover:text-white transition">
-            Contacto
+
+          <a
+            href={homeHash("#contacto")}
+            className="text-sm text-white/60 hover:text-white transition"
+          >
+            {copy.nav.contact}
           </a>
-          <a href="#" className="text-sm text-white/60 hover:text-white transition">
-            Arriba
+
+          <a
+            href={homeHash("#home")}
+            className="text-sm text-white/60 hover:text-white transition"
+          >
+            {copy.nav.top}
           </a>
         </div>
       </div>
 
       <p className="mt-10 text-xs text-white/40">
-        © {new Date().getFullYear()} GUIGOLO · MODULE · FOOTER SIGNAL
+        © {new Date().getFullYear()} {copy.copyrightSuffix}
       </p>
     </Section>
   );

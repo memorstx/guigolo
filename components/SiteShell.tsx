@@ -21,7 +21,8 @@ const dict = getDict(locale);
     <main className="bg-neutral-black-900 min-h-screen">
       <Navbar dict={dict} />
       {children}
-      {showFooter ? <Footer /> : null}
+      {showFooter ? <Footer copy={dict.footer} locale={locale as "es" | "en"} />
+ : null}
     </main>
   );
 }

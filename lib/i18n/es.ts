@@ -277,7 +277,17 @@ export const es = {
       footer: "MODULE · CONTACT CHANNEL",
     },
   },
-
-
+  footer: {
+    brand: "GUIGOLO",
+    tagline: "Diseño con intención. Sistema con claridad. Experiencias que se sienten.",
+    missionsLabel: "MISIONES",
+    missionsCta: "VER",
+    nav: {
+      projects: "Proyectos",
+      contact: "Contacto",
+      top: "Arriba",
+    },
+    copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
+  },
 
 };
