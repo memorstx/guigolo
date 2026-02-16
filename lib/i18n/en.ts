@@ -276,16 +276,22 @@ export const en = {
   },
   footer: {
     brand: "GUIGOLO",
-    tagline: "Design with intent. Systems with clarity. Experiences you can feel.",
+    tagline: "Design with intention. Systems with clarity. Experiences you can feel.",
     missionsLabel: "MISSIONS",
     missionsCta: "VIEW",
+    navTitle: "Navigation",
     nav: {
+      home: "Home",
+      services: "Services",
       projects: "Projects",
+      about: "About",
+      faq: "FAQ",
       contact: "Contact",
-      top: "Top",
+      whatIsGuigolo: "What is Guigolo?",
     },
     copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
   },
+
   whatIsGuigolo: {
     meta: {
       title: "What is Guigolo? | Brand, meaning and origin",

@@ -282,13 +282,19 @@ export const es = {
     tagline: "Diseño con intención. Sistema con claridad. Experiencias que se sienten.",
     missionsLabel: "MISIONES",
     missionsCta: "VER",
+    navTitle: "Navegación",
     nav: {
+      home: "Inicio",
+      services: "Servicios",
       projects: "Proyectos",
+      about: "Sobre mí",
+      faq: "FAQ",
       contact: "Contacto",
-      top: "Arriba",
+      whatIsGuigolo: "¿Qué es Guigolo?",
     },
     copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
   },
+
   whatIsGuigolo: {
     meta: {
       title: "¿Qué es Guigolo? | Marca, significado y origen",

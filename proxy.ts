@@ -3,17 +3,41 @@ import { NextRequest, NextResponse } from "next/server";
 const SUPPORTED = ["es", "en"] as const;
 type Locale = (typeof SUPPORTED)[number];
 
-function detectLocale(req: NextRequest): Locale {
-  const al = req.headers.get("accept-language") || "";
-  const lower = al.toLowerCase();
+function pickLocaleFromAcceptLanguage(al: string | null): Locale {
+  const header = (al || "").toLowerCase();
 
-  // Si el navegador prefiere inglés → en, si no → es (por defecto)
-  if (lower.startsWith("en") || lower.includes("en-")) return "en";
-  return "es";
+  // Parse simple y suficiente: "es-MX,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  const parts = header
+    .split(",")
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const candidates: { locale: Locale; q: number; order: number }[] = [];
+
+  parts.forEach((part, idx) => {
+    const [langRaw, ...params] = part.split(";").map((s) => s.trim());
+    const qParam = params.find((p) => p.startsWith("q="));
+    const q = qParam ? Number(qParam.replace("q=", "")) : 1;
+
+    const lang = (langRaw || "").toLowerCase();
+
+    // Normaliza a "es" o "en" si empieza con eso
+    let locale: Locale | null = null;
+    if (lang.startsWith("es")) locale = "es";
+    if (lang.startsWith("en")) locale = "en";
+
+    if (locale) candidates.push({ locale, q: Number.isFinite(q) ? q : 1, order: idx });
+  });
+
+  if (!candidates.length) return "es";
+
+  // Mayor q gana. Si empatan, el que aparece primero gana.
+  candidates.sort((a, b) => (b.q - a.q) || (a.order - b.order));
+
+  return candidates[0]!.locale;
 }
 
 function isPublicFile(pathname: string) {
-  // Archivos y rutas que NO queremos redirigir
   return (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -42,25 +66,21 @@ export function proxy(req: NextRequest) {
   const url = req.nextUrl;
   const { pathname, search } = url;
 
-  // No tocar assets / api / _next
   if (isPublicFile(pathname)) return NextResponse.next();
 
   // Ya trae locale
   if (pathname === "/es" || pathname.startsWith("/es/")) return NextResponse.next();
   if (pathname === "/en" || pathname.startsWith("/en/")) return NextResponse.next();
 
-  // Root "/" → manda a /es o /en según navegador
-  const locale = detectLocale(req);
+  const locale = pickLocaleFromAcceptLanguage(req.headers.get("accept-language"));
 
+  // Root "/" → /es o /en
   if (pathname === "/") {
-    const dest = new URL(`/${locale}${search}`, req.url);
-    return NextResponse.redirect(dest);
+    return NextResponse.redirect(new URL(`/${locale}${search}`, req.url));
   }
 
-  // Cualquier ruta sin prefijo → la empujamos a /{locale}/...
-  const dest = new URL(`/${locale}${pathname}${search}`, req.url);
-  return NextResponse.redirect(dest);
+  // Cualquier ruta sin prefijo → /{locale}/...
+  return NextResponse.redirect(new URL(`/${locale}${pathname}${search}`, req.url));
 }
 
-// También vale export default (por si acaso)
 export default proxy;
