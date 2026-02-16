@@ -5,9 +5,20 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/que-es-guigolo",
-        destination: "/what-is-guigolo",
+        destination: "/es/what-is-guigolo",
         permanent: true,
       },
+      {
+        source: "/what-is-guigolo",
+        destination: "/en/what-is-guigolo",
+        permanent: true,
+      },
+      {
+        source: "/es/que-es-guigolo",
+        destination: "/es/what-is-guigolo",
+        permanent: true,
+      },
+
       {
         source: '/go/figma',
         destination: '/?utm_source=figma&utm_medium=profile&utm_campaign=profile_referral',

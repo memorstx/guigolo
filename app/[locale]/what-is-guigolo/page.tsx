@@ -56,6 +56,7 @@ export default async function WhatIsGuigoloPage({
       <main className="text-neutral-white">
         <PageFrame variant="prose" className="py-24">
           <article className="leading-relaxed">
+            {/* Back */}
             <Link
               href={homeHref}
               className="inline-flex items-center gap-2 text-sm text-neutral-white/50 hover:text-neutral-white transition group"
@@ -67,74 +68,96 @@ export default async function WhatIsGuigoloPage({
             </Link>
 
             {/* HERO */}
-            <header className="space-y-6">
+            <header className="mt-10 space-y-5">
               <h1 className="heading-h2">{copy.heroTitle}</h1>
               <p className="text-neutral-white/70 text-lg">{copy.heroSubtitle}</p>
             </header>
 
-            {/* SECCIONES */}
-            <section className="space-y-6 text-neutral-white/75 text-[16px] font-light">
+            {/* INTRO */}
+            <section className="mt-12 space-y-6 text-neutral-white/75 text-[16px] font-light">
               {copy.intro.map((p: string, i: number) => (
                 <p key={i}>{p}</p>
               ))}
             </section>
 
-            <section className="space-y-6 text-neutral-white/75 font-light">
-              <h2 className="text-xl font-semibold tracking-tight">
+            {/* CONFUSION */}
+            <section className="mt-12 text-neutral-white/75 font-light">
+              <h2 className="text-xl font-semibold tracking-tight mb-5">
                 {copy.confusionTitle}
               </h2>
-              {copy.confusion.map((p: string, i: number) => (
-                <p key={i}>{p}</p>
-              ))}
+              <div className="space-y-6">
+                {copy.confusion.map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
             </section>
 
-            <section className="space-y-6 text-neutral-white/75 font-light">
-              <h2 className="text-xl font-semibold tracking-tight">
+            {/* ACCENT */}
+            <section className="mt-12 text-neutral-white/75 font-light">
+              <h2 className="text-xl font-semibold tracking-tight mb-5">
                 {copy.accentTitle}
               </h2>
-              {copy.accent.map((p: string, i: number) => (
-                <p key={i}>{p}</p>
-              ))}
+              <div className="space-y-6">
+                {copy.accent.map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
             </section>
 
-            <section className="space-y-6 text-neutral-white/75 font-light">
-              <h2 className="text-xl font-semibold tracking-tight">
+            {/* RECLAIM */}
+            <section className="mt-12 text-neutral-white/75 font-light">
+              <h2 className="text-xl font-semibold tracking-tight mb-5">
                 {copy.reclaimTitle}
               </h2>
-              {copy.reclaim.map((p: string, i: number) => (
-                <p key={i}>{p}</p>
-              ))}
+              <div className="space-y-6">
+                {copy.reclaim.map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
             </section>
 
-            <section className="space-y-6 text-neutral-white/75 font-light">
-              <h2 className="text-xl font-semibold tracking-tight">
+            {/* SYSTEM */}
+            <section className="mt-12 text-neutral-white/75 font-light">
+              <h2 className="text-xl font-semibold tracking-tight mb-5">
                 {copy.systemTitle}
               </h2>
-              {copy.system.map((p: string, i: number) => (
-                <p key={i}>{p}</p>
-              ))}
+              <div className="space-y-6">
+                {copy.system.map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))}
 
-              <p>
-                <Link href={copy.brandbookHref} className="text-accent-lime hover:underline">
-                  {copy.brandbookCta}
-                </Link>
-              </p>
+                <p>
+                  <Link
+                    href={copy.brandbookHref}
+                    className="text-accent-lime hover:underline"
+                  >
+                    {copy.brandbookCta}
+                  </Link>
+                </p>
+              </div>
             </section>
 
-            <section className="space-y-6 text-neutral-white/75 font-light">
-              {copy.human.map((p: string, i: number) => (
-                <p key={i}>{p}</p>
-              ))}
+            {/* HUMAN */}
+            <section className="mt-12 text-neutral-white/75 font-light">
+              <div className="space-y-6">
+                {copy.human.map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))}
 
-              <p>
-                <Link href={aboutHref} className="text-accent-lime hover:underline">
-                  {copy.aboutCta}
-                </Link>
-              </p>
+                <p>
+                  <Link
+                    href={aboutHref}
+                    className="text-accent-lime hover:underline"
+                  >
+                    {copy.aboutCta}
+                  </Link>
+                </p>
+              </div>
             </section>
 
-            <section className="space-y-4 text-neutral-white/70 border-t border-neutral-white/10 pt-12 font-bold">
-              <p>{copy.summaryTitle}</p>
+            {/* SUMMARY */}
+            <section className="mt-14 space-y-4 text-neutral-white/70 border-t border-neutral-white/10 pt-12">
+              <p className="font-semibold">{copy.summaryTitle}</p>
               <ul className="list-disc list-inside space-y-2 font-light">
                 {copy.summaryBullets.map((li: string, i: number) => (
                   <li key={i}>{li}</li>
@@ -142,19 +165,17 @@ export default async function WhatIsGuigoloPage({
               </ul>
             </section>
 
-            <section className="space-y-6 pt-12 border-t border-neutral-white/10 font-light">
+            {/* FEEDBACK */}
+            <section className="mt-12 space-y-6 pt-12 border-t border-neutral-white/10 font-light">
               <h2 className="text-lg font-semibold">
                 {copy.feedback.question}
               </h2>
 
-
-             <FeedbackButtons
+              <FeedbackButtons
                 pageId="what-is-guigolo"
                 options={copy.feedback.options as any}
                 thanksText={copy.feedback.thanks}
               />
-
-
             </section>
           </article>
         </PageFrame>
