@@ -2,29 +2,35 @@
 
 import { useEffect, useState } from "react";
 
-const OPTIONS = [
-  { id: "confused", label: "Me confundió", emoji: "😵‍💫" },
-  { id: "intrigued", label: "Me intrigó", emoji: "👀" },
-  { id: "smiled", label: "Me hizo sonreír", emoji: "😄" },
-  { id: "clear", label: "Lo entendí rápido", emoji: "⚡️" },
-] as const;
+export type OptionId = "confused" | "intrigued" | "smiled" | "clear";
 
-type OptionId = (typeof OPTIONS)[number]["id"];
+export type Option = {
+  id: OptionId;
+  label: string;
+  emoji: string;
+};
+
+type Props = {
+  pageId: string;
+  options: Option[];
+  thanksText?: string;
+};
 
 const STORAGE_KEY = "guigolo_micro_feedback_v1";
 
-export default function FeedbackButtons({ pageId }: { pageId: string }) {
-  const [selected, setSelected] = useState<OptionId | null>(null);
+export default function FeedbackButtons({ pageId, options, thanksText = "Gracias por tu reacción ✨" }: Props) {
+  const [selected, setSelected] = useState<Option["id"] | null>(null);
 
   useEffect(() => {
     const saved =
       typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
-    if (saved && OPTIONS.some((o) => o.id === saved)) {
-      setSelected(saved as OptionId);
-    }
-  }, []);
 
-  const fireGA = (value: OptionId) => {
+    if (saved && options.some((o) => o.id === saved)) {
+      setSelected(saved as Option["id"]);
+    }
+  }, [options]);
+
+  const fireGA = (value: Option["id"]) => {
     if (typeof window !== "undefined" && (window as any).gtag) {
       (window as any).gtag("event", "guigolo_micro_feedback", {
         feeling: value,
@@ -33,7 +39,7 @@ export default function FeedbackButtons({ pageId }: { pageId: string }) {
     }
   };
 
-  const handleClick = (value: OptionId) => {
+  const handleClick = (value: Option["id"]) => {
     if (selected) return;
 
     setSelected(value);
@@ -46,7 +52,7 @@ export default function FeedbackButtons({ pageId }: { pageId: string }) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-3">
-        {OPTIONS.map((opt) => {
+        {options.map((opt) => {
           const isSelected = selected === opt.id;
           const isLocked = selected !== null && !isSelected;
 
@@ -66,20 +72,14 @@ export default function FeedbackButtons({ pageId }: { pageId: string }) {
               ].join(" ")}
             >
               <span className="text-base">{opt.emoji}</span>
-              <span>{opt.label}.</span>
-              {isSelected ? (
-                <span className="ml-1 text-neutral-white/70">(listo)</span>
-              ) : null}
+              <span>{opt.label}</span>
+              {isSelected ? <span className="ml-1 text-neutral-white/70">(listo)</span> : null}
             </button>
           );
         })}
       </div>
 
-      {selected ? (
-        <p className="text-neutral-white/60 text-sm">Gracias por tu reacción ✨</p>
-      ) : (
-        <p className="text-neutral-white/50 text-sm"></p>
-      )}
+      {selected ? <p className="text-neutral-white/60 text-sm">{thanksText}</p> : <p className="text-neutral-white/50 text-sm" />}
     </div>
   );
 }

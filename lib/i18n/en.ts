@@ -351,8 +351,17 @@ export const en = {
       "It’s a personal design brand.",
     ],
 
-    feedbackTitle: "What did you feel the first time you read “Guigolo”?",
-  },
+    feedback: {
+      question: 'What did you feel the first time you read “Guigolo”?',
+      thanks: "Thanks for your reaction ✨",
+      options: [
+        { id: "confused", label: "It confused me", emoji: "😵‍💫" },
+        { id: "intrigued", label: "It intrigued me", emoji: "👀" },
+        { id: "smiled", label: "It made me smile", emoji: "😄" },
+        { id: "clear", label: "I got it fast", emoji: "⚡️" },
+      ] as const,
 
+    },
+  },
 
 };

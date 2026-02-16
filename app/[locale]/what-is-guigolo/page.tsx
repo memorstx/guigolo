@@ -143,8 +143,18 @@ export default async function WhatIsGuigoloPage({
             </section>
 
             <section className="space-y-6 pt-12 border-t border-neutral-white/10 font-light">
-              <h2 className="text-lg font-semibold">{copy.feedbackTitle}</h2>
-              <FeedbackButtons pageId="what-is-guigolo" />
+              <h2 className="text-lg font-semibold">
+                {copy.feedback.question}
+              </h2>
+
+
+             <FeedbackButtons
+                pageId="what-is-guigolo"
+                options={copy.feedback.options as any}
+                thanksText={copy.feedback.thanks}
+              />
+
+
             </section>
           </article>
         </PageFrame>

@@ -354,8 +354,18 @@ export const es = {
       "Es una marca personal de diseño.",
     ],
 
-    feedbackTitle: "¿Qué sentiste la primera vez que leíste “Guigolo”?",
-  },
+    feedback: {
+      question: "¿Qué sentiste la primera vez que leíste “Guigolo”?",
+      thanks: "Gracias por tu reacción ✨",
+      options: [
+        { id: "confused", label: "Me confundió", emoji: "😵‍💫" },
+        { id: "intrigued", label: "Me intrigó", emoji: "👀" },
+        { id: "smiled", label: "Me hizo sonreír", emoji: "😄" },
+        { id: "clear", label: "Lo entendí rápido", emoji: "⚡️" },
+      ] as const,
 
+    },
+  },
+  
 
 };
