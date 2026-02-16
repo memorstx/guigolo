@@ -10,11 +10,6 @@ import IconProjects from "./icons/IconProjects";
 import IconServices from "./icons/IconServices";
 import { usePathname } from "next/navigation";
 
-
-
-
-
-
 export default function Navbar({ dict }: { dict: any }) {
   
   const navItems = [
@@ -26,7 +21,7 @@ export default function Navbar({ dict }: { dict: any }) {
   ];
   
   const pathname = usePathname();
-  const locale = pathname.startsWith("/en") ? "en" : "es";
+  const locale = pathname.startsWith("/en") ? "en" : pathname.startsWith("/es") ? "es" : "es";
   const toAnchor = (hash: string) => `/${locale}${hash}`;
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -92,7 +87,7 @@ export default function Navbar({ dict }: { dict: any }) {
               className="mx-auto flex h-full items-center justify-between px-20"
               style={{ maxWidth: LEFT_W + RIGHT_W + 1200 }}
             >
-              <Link href="/" className="flex items-center gap-3">
+              <Link href={`/${locale}`} className="flex items-center gap-3">
                 <Image src="/brand/logo.svg" alt="Guigolo" width={144} height={24} className="h-auto w-[120px] md:w-[130px] lg:w-[140px] xl:w-[160px] 2xl:w-[170px]"/>
               </Link>
 
@@ -153,17 +148,18 @@ export default function Navbar({ dict }: { dict: any }) {
 
             {/* CTA */}
             <Link
-              href="#contacto"
+              href={toAnchor("#contacto")}
               onClick={() => setMenuOpen(false)}
               className="mt-6 rounded-md bg-accent-lime px-8 py-3 text-black font-medium"
             >
-              Contactar
+              {dict.nav.contactCta ?? dict.nav.contact}
             </Link>
+
           </div>
         )}
 
         <div className="flex h-[64px] items-center justify-between px-5 backdrop-blur-[4px] opacity-85 bg-black">
-          <Link href="#home">
+          <Link href={toAnchor("#home")}>
             <Image src="/brand/isologo.svg" alt="Guigolo" width={32} height={32} />
           </Link>
 
