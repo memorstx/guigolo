@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import SiteShell from "@/components/SiteShell";
 import PageFrame from "@/components/layout/PageFrame";
 
@@ -33,14 +32,7 @@ const COPY: Record<Locale, any> = {
   },
 };
 
-export const metadata = {
-  robots: { index: false, follow: false },
-};
-
-export default function NotFound() {
-  const pathname = usePathname() || "/";
-  const seg = pathname.split("/")[1];
-  const locale: Locale = seg === "en" ? "en" : "es";
+export default function NotFoundClient({ locale }: { locale: Locale }) {
   const t = COPY[locale];
 
   const homeHref = `/${locale}`;
@@ -51,7 +43,6 @@ export default function NotFound() {
       <main className="text-neutral-white">
         <PageFrame variant="prose" className="py-10">
           <section className="space-y-5">
-            {/* Ilustración */}
             <div className="flex items-center justify-center min-h-[220px]">
               <Image
                 src="/brand/errors/404-illustration.svg"
@@ -63,7 +54,6 @@ export default function NotFound() {
               />
             </div>
 
-            {/* Copy */}
             <header className="space-y-4">
               <div className="text-[12px] tracking-[0.35em] text-accent-lime/80">
                 {t.kicker}
@@ -74,7 +64,6 @@ export default function NotFound() {
               <p className="text-neutral-300 leading-relaxed">{t.body}</p>
             </header>
 
-            {/* Acciones */}
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href={homeHref}
@@ -91,7 +80,6 @@ export default function NotFound() {
               </Link>
             </div>
 
-            {/* Ayuda adicional */}
             <div className="border-t border-neutral-white/10 pt-8 text-neutral-500 text-sm space-y-2">
               <p>{t.help1}</p>
               <p className="text-neutral-600">{t.help2}</p>

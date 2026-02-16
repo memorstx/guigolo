@@ -363,5 +363,16 @@ export const en = {
 
     },
   },
+  notFound: {
+    illustrationAlt: "Page not found illustration",
+    kicker: "ERROR 404",
+    title: "This page doesn't exist",
+    body: "The link might be wrong, the page may have moved, or the internet is messing with you. No worries — I’ll get you back on track.",
+    primaryCta: "Back to home",
+    secondaryCta: "Contact",
+    helpLine1: "If you got here from a link inside the site, tell me and I’ll fix it.",
+    helpLine2: "Tip: if you were looking for a project, go back home and open “Projects”.",
+  },
+
 
 };

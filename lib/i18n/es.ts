@@ -366,6 +366,17 @@ export const es = {
 
     },
   },
-  
+  notFound: {
+    illustrationAlt: "Ilustración de página no encontrada",
+    kicker: "ERROR 404",
+    title: "Esta página no existe",
+    body: "Puede que el link esté mal, que la página se haya movido, o que el internet te esté jugando chueco. No pasa nada: te regreso al camino.",
+    primaryCta: "Volver al inicio",
+    secondaryCta: "Contacto",
+    helpLine1: "Si llegaste aquí desde un link dentro del sitio, avísame y lo arreglo.",
+    helpLine2: "Tip: si estabas buscando un proyecto, vuelve al inicio y entra a “Proyectos”.",
+  },
+
+
 
 };

@@ -7,14 +7,17 @@ function normalizeLocale(input: string): Locale {
   return SUPPORTED.includes(input as Locale) ? (input as Locale) : "es";
 }
 
+type Params = Promise<{ locale: string }>;
+
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
+  params: Params;
 }): Promise<Metadata> {
-  const locale = normalizeLocale(params.locale);
-  const baseUrl = "https://guigolo.com";
+  const { locale: raw } = await params;
+  const locale = normalizeLocale(raw);
 
+  const baseUrl = "https://guigolo.com";
   const canonical = `${baseUrl}/${locale}`;
 
   return {
