@@ -251,7 +251,7 @@ function ProjectSlide({ item }: { item: any }) {
               <SpecLabel>ROLE</SpecLabel>
               <SpecValue>{item.role}</SpecValue>
 
-              <SpecLabel>LINK</SpecLabel>
+              {/* <SpecLabel>CASE</SpecLabel>
               <SpecValue>
                 <Link
                   href={item.linkUrl}
@@ -261,11 +261,19 @@ function ProjectSlide({ item }: { item: any }) {
                 >
                   {item.linkLabel}
                 </Link>
-              </SpecValue>
+              </SpecValue> */}
 
               <SpecLabel>ACCESS</SpecLabel>
-              <SpecValue className="opacity-50">
-                {item.access ? item.access : "—"}
+              <SpecValue >
+                <Link
+                  href={item.access ? item.access : "—"}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noreferrer" : undefined}
+                  className="hover:text-white transition underline decoration-neutral-white/20 hover:decoration-neutral-white/50"
+                >
+                  {item.access ? item.access : "—"}
+                </Link>
+                
               </SpecValue>
             </div>
           </div>

@@ -12,20 +12,20 @@ export const FEATURED_PROJECTS_BASE: FeaturedProjectBase[] = [
     companyLogo: "/brand/projects/academia-global/logo-ag.png",
     image: "/brand/projects/academia-global/cover_plataforma_educativa.png",
     linkUrl: "/projects/ag/platform",
-    access: "guigolo.com/projects/ag/platform",
+    access: "https://academiaglobal.mx",
   },
   {
     id: "mironline-platform-project",
     companyLogo: "/brand/projects/mironline/logo-mironline.png",
     image: "/brand/projects/mironline/cover-mironline.png",
     linkUrl: "/projects/mironline/platform",
-    access: "guigolo.com/projects/mironline/platform",
+    access: "https://mironline.io",
   },
   {
     id: "latiendita-puntodeventa-project",
     companyLogo: "/brand/projects/tiendita/logo-tiendita.png",
     image: "/brand/projects/tiendita/cover_puntodeventa.png",
     linkUrl: "/projects/tiendita/pos",
-    access: "guigolo.com/projects/tiendita/pos",
+    access: "#",
   },
 ];

@@ -1,16 +1,86 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { MISSIONS, MISSION_BY_ID } from "./missionsCatalog";
-import { getMissionsState, getCompletedMissionsCount, hasMission } from "./missionsStore";
+import { useEffect, useState } from "react";
+import { MISSIONS } from "./missionsCatalog";
+import { getCompletedMissionsCount, hasMission } from "./missionsStore";
 import { onMissionUnlocked } from "./missionsEvents";
+import { usePathname } from "next/navigation";
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 
+type Locale = "es" | "en";
+
+function getLocaleFromPath(pathname: string | null): Locale {
+  const seg = (pathname || "/").split("/")[1];
+  return seg === "en" ? "en" : "es";
+}
+
+function pickLocalized(value: any, locale: Locale): string {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "object") {
+    return value?.[locale] ?? value?.es ?? value?.en ?? "";
+  }
+  return String(value);
+}
+
+const UI_COPY: Record<
+  Locale,
+  {
+    titleKicker: string;
+    progress: string;
+    subtitle: string;
+    close: string;
+    reward: string;
+    rewardLocked: string;
+    rewardUnlockMissionName: string;
+    rewardTitle: string;
+    rewardHint: string;
+    ownerChecklistTitle: string;
+    tip: string;
+    doneEmoji: string;
+    pendingEmoji: string;
+  }
+> = {
+  es: {
+    titleKicker: "Misiones",
+    progress: "Progreso",
+    subtitle: "Nivel 3 · macro-logros (con intención)",
+    close: "Cerrar",
+    reward: "Recompensa",
+    rewardLocked: "Se desbloquea al completar",
+    rewardUnlockMissionName: "Intención de contacto",
+    rewardTitle: "Diagnóstico Express",
+    rewardHint: "Si decides escribirme, menciona este código:",
+    ownerChecklistTitle: "Checklist privada",
+    tip: "Consejo: esto vive en tu Footer para no estorbar.",
+    doneEmoji: "✅",
+    pendingEmoji: "⏳",
+  },
+  en: {
+    titleKicker: "Missions",
+    progress: "Progress",
+    subtitle: "Level 3 · macro-achievements (with intent)",
+    close: "Close",
+    reward: "Reward",
+    rewardLocked: "Unlocks after completing",
+    rewardUnlockMissionName: "Contact intent",
+    rewardTitle: "Express Diagnostic",
+    rewardHint: "If you decide to message me, mention this code:",
+    ownerChecklistTitle: "Private checklist",
+    tip: "Tip: keep this in your Footer so it doesn’t get in the way.",
+    doneEmoji: "✅",
+    pendingEmoji: "⏳",
+  },
+};
+
 export default function MissionsPanel({ open, onClose }: Props) {
+  const pathname = usePathname();
+  const locale = getLocaleFromPath(pathname);
+
   const total = MISSIONS.length;
   const [done, setDone] = useState<number>(0);
 
@@ -33,8 +103,9 @@ export default function MissionsPanel({ open, onClose }: Props) {
   }, [onClose]);
 
   const contactUnlocked = hasMission("mission_contact");
-  const isOwner = typeof window !== "undefined" && localStorage.getItem("guigolo_owner") === "1";
-  
+  const isOwner =
+    typeof window !== "undefined" && localStorage.getItem("guigolo_owner") === "1";
+
   if (!open) return null;
 
   return (
@@ -60,13 +131,13 @@ export default function MissionsPanel({ open, onClose }: Props) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="text-[10px] tracking-[0.35em] text-accent-lime/80 uppercase">
-              Misiones
+              {UI_COPY[locale].titleKicker}
             </div>
             <div className="mt-2 text-neutral-white font-semibold">
-              Progreso: {done}/{total}
+              {UI_COPY[locale].progress}: {done}/{total}
             </div>
             <div className="mt-1 text-sm text-neutral-white/60">
-              Nivel 3 · macro-logros (con intención)
+              {UI_COPY[locale].subtitle}
             </div>
           </div>
 
@@ -75,13 +146,17 @@ export default function MissionsPanel({ open, onClose }: Props) {
             onClick={onClose}
             className="rounded-md border border-neutral-white/15 px-3 py-2 text-neutral-white/80 hover:border-neutral-white/35 transition"
           >
-            Cerrar
+            {UI_COPY[locale].close}
           </button>
         </div>
 
         <div className="mt-6 space-y-3">
-          {MISSIONS.map((m) => {
+          {MISSIONS.map((m: any) => {
             const ok = hasMission(m.id);
+
+            const title = pickLocalized(m.title, locale) || m.id;
+            const description = pickLocalized(m.description, locale);
+
             return (
               <div
                 key={m.id}
@@ -93,17 +168,15 @@ export default function MissionsPanel({ open, onClose }: Props) {
                 ].join(" ")}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="text-neutral-white font-medium">
-                    {m.title}
-                  </div>
+                  <div className="text-neutral-white font-medium">{title}</div>
                   <div className="text-sm">
-                    {ok ? "✅" : "⏳"}
+                    {ok ? UI_COPY[locale].doneEmoji : UI_COPY[locale].pendingEmoji}
                   </div>
                 </div>
 
-                <div className="mt-1 text-sm text-neutral-white/65">
-                  {m.description}
-                </div>
+                {description ? (
+                  <div className="mt-1 text-sm text-neutral-white/65">{description}</div>
+                ) : null}
               </div>
             );
           })}
@@ -111,47 +184,69 @@ export default function MissionsPanel({ open, onClose }: Props) {
 
         <div className="mt-6 rounded-2xl border border-neutral-white/10 bg-neutral-black-800/35 p-4">
           <div className="text-[10px] tracking-[0.35em] text-neutral-white/45 uppercase">
-            Recompensa
+            {UI_COPY[locale].reward}
           </div>
 
           {!contactUnlocked ? (
             <div className="mt-2 text-sm text-neutral-white/70">
-              Se desbloquea al completar <span className="text-neutral-white/90">Intención de contacto</span>.
+              {UI_COPY[locale].rewardLocked}{" "}
+              <span className="text-neutral-white/90">
+                {UI_COPY[locale].rewardUnlockMissionName}
+              </span>
+              .
             </div>
           ) : (
             <>
               <div className="mt-2 text-neutral-white font-semibold">
-                Diagnóstico Express
+                {UI_COPY[locale].rewardTitle}
               </div>
               <div className="mt-1 text-sm text-neutral-white/70">
-                Si decides escribirme, menciona este código:
+                {UI_COPY[locale].rewardHint}
               </div>
               <div className="mt-3 rounded-lg border border-neutral-white/10 bg-neutral-black-900/60 px-3 py-2 text-neutral-white/90 tracking-[0.22em]">
                 MATCH-03
               </div>
 
-                {isOwner ? (
+              {isOwner ? (
                 <>
-                    <div className="mt-5 text-neutral-white font-semibold">
-                        Checklist privada
-                    </div>
-                    <ul className="mt-2 space-y-2 text-sm text-neutral-white/70 list-disc pl-5">
-                        <li>¿Qué acción quieres que la gente complete en 5 segundos?</li>
-                        <li>¿Qué duda principal tiene el usuario al llegar?</li>
-                        <li>¿Qué prueba de confianza ve antes del CTA?</li>
-                        <li>¿Qué fricción existe (texto confuso, demasiado scroll, links rotos)?</li>
-                        <li>¿Qué métrica define “sí funcionó” (contactos, leads, tiempo, clicks)?</li>
-                    </ul>
+                  <div className="mt-5 text-neutral-white font-semibold">
+                    {UI_COPY[locale].ownerChecklistTitle}
+                  </div>
+                  <ul className="mt-2 space-y-2 text-sm text-neutral-white/70 list-disc pl-5">
+                    <li>
+                      {locale === "en"
+                        ? "What action should people complete in 5 seconds?"
+                        : "¿Qué acción quieres que la gente complete en 5 segundos?"}
+                    </li>
+                    <li>
+                      {locale === "en"
+                        ? "What’s the main doubt users have when they land?"
+                        : "¿Qué duda principal tiene el usuario al llegar?"}
+                    </li>
+                    <li>
+                      {locale === "en"
+                        ? "What trust proof do they see before the CTA?"
+                        : "¿Qué prueba de confianza ve antes del CTA?"}
+                    </li>
+                    <li>
+                      {locale === "en"
+                        ? "What friction exists (confusing text, too much scroll, broken links)?"
+                        : "¿Qué fricción existe (texto confuso, demasiado scroll, links rotos)?"}
+                    </li>
+                    <li>
+                      {locale === "en"
+                        ? 'What metric defines “it worked” (contacts, leads, time, clicks)?'
+                        : '¿Qué métrica define “sí funcionó” (contactos, leads, tiempo, clicks)?'}
+                    </li>
+                  </ul>
                 </>
-                ) : null}
-
-              
+              ) : null}
             </>
           )}
         </div>
 
         <div className="mt-4 text-[10px] tracking-[0.28em] text-neutral-white/35 uppercase">
-          Consejo: esto vive en tu Footer para no estorbar.
+          {UI_COPY[locale].tip}
         </div>
       </aside>
     </>

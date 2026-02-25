@@ -294,7 +294,6 @@ export const es = {
     },
     copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
   },
-
   whatIsGuigolo: {
     meta: {
       title: "¿Qué es Guigolo? | Marca, significado y origen",
@@ -381,6 +380,72 @@ export const es = {
     secondaryCta: "Contacto",
     helpLine1: "Si llegaste aquí desde un link dentro del sitio, avísame y lo arreglo.",
     helpLine2: "Tip: si estabas buscando un proyecto, vuelve al inicio y entra a “Proyectos”.",
+  },
+  gamification: {
+    achievements: {
+      title: "LOGROS",
+      empty: "Aún no desbloqueas logros…",
+      progressLabel: "Progreso",
+      unlockedToastTitle: "Logro desbloqueado",
+      unlockedToastPrefix: "Desbloqueaste:",
+    },
+
+    missions: {
+      title: "MISIONES",
+      progressLabel: "Progreso",
+      close: "Cerrar",
+      ctaView: "VER",
+      rewardLockedTitle: "Recompensa bloqueada",
+      rewardLockedBody: "Completa todas las misiones para verla.",
+      rewardUnlockedTitle: "Recompensa desbloqueada",
+      rewardUnlockedBody: "Código:",
+      checklistTitle: "Checklist",
+    },
+    achievementItems: {
+      first_contact: {
+        title: "Primer contacto",
+        description: "Mandaste un mensaje por el formulario.",
+      },
+      almost_talked: {
+        title: "Casi me escribes",
+        description: "Llegaste a contacto y te quedaste un ratito.",
+      },
+      took_courage: {
+        title: "Te animaste",
+        description: "Escribiste un mensaje con intención (50+ chars).",
+      },
+      explorer: {
+        title: "Explorador",
+        description: "Recorriste varias secciones del sitio.",
+      },
+      process_reader: {
+        title: "Leyó el proceso",
+        description: "Te clavaste en la sección del proceso.",
+      },
+      projects_scroller: {
+        title: "Curioso de proyectos",
+        description: "Interactuaste con el carrusel de proyectos.",
+      },
+    },
+
+    missionItems: {
+      mission_route: {
+        title: "Ruta secreta",
+        description: "Abriste un link /go/…",
+      },
+      mission_attention: {
+        title: "Tiempo de calidad",
+        description: "Te quedaste un rato explorando.",
+      },
+      mission_contact: {
+        title: "Hagamos match",
+        description: "Te animaste a escribirme.",
+      },
+      mission_easter: {
+        title: "Easter egg",
+        description: "Encontraste el easter egg.",
+      },
+    },
   },
 
 

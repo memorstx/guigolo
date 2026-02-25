@@ -5,6 +5,8 @@ import { getUnlockedCount } from "./achievementsStore";
 import { onAchievementUnlocked } from "./achievementEvents";
 import { ACHIEVEMENTS } from "./achievementsCatalog";
 
+type Locale = "es" | "en";
+
 type ToastState = {
   id: string;
   title: string;
@@ -12,20 +14,48 @@ type ToastState = {
   icon?: string;
 };
 
+function getLocaleFromPath(): Locale {
+  if (typeof window === "undefined") return "es";
+  const seg = window.location.pathname.split("/")[1];
+  return seg === "en" ? "en" : "es";
+}
+
+const UI = {
+  es: {
+    unlockedKicker: "logro desbloqueado",
+    fallbackTitle: "Logro desbloqueado",
+    progress: "Progreso",
+  },
+  en: {
+    unlockedKicker: "achievement unlocked",
+    fallbackTitle: "Achievement unlocked",
+    progress: "Progress",
+  },
+} as const;
+
 export default function AchievementsUI() {
   const total = ACHIEVEMENTS.length;
+
   const [unlockedCount, setUnlockedCount] = useState<number | null>(null);
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const hideTimerRef = useRef<number | null>(null);
 
+  const locale = useMemo(() => getLocaleFromPath(), []);
+  const t = UI[locale];
+
   const byId = useMemo(() => {
     const m = new Map<string, { title: string; description?: string; icon?: string }>();
-    ACHIEVEMENTS.forEach((a) =>
-      m.set(a.id, { title: a.title, description: a.description, icon: (a as any).icon })
-    );
+    ACHIEVEMENTS.forEach((a) => {
+      m.set(a.id, {
+        title: a.title[locale],
+        description: a.description?.[locale],
+        icon: a.icon,
+      });
+    });
     return m;
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale]);
 
   useEffect(() => {
     // Inicial
@@ -37,17 +67,15 @@ export default function AchievementsUI() {
 
       const meta = byId.get(id);
 
-      // Si hay un toast activo, reiniciamos el timer para que no se "pisen"
       if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
 
       setToast({
         id,
-        title: meta?.title ?? "Logro desbloqueado",
+        title: meta?.title ?? t.fallbackTitle,
         description: meta?.description,
         icon: meta?.icon,
       });
 
-      // ⏱️ Toast duración: 10s (reiniciable)
       hideTimerRef.current = window.setTimeout(() => {
         setToast(null);
         hideTimerRef.current = null;
@@ -58,15 +86,15 @@ export default function AchievementsUI() {
       off();
       if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
     };
-  }, [byId]);
+  }, [byId, t.fallbackTitle]);
 
   return (
     <>
-      {/* TOAST */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-[80] max-w-[360px]">
           <div className="rounded-2xl border border-neutral-white/10 bg-neutral-black-900/80 backdrop-blur px-5 py-4 shadow-[0_0_2.5rem_rgba(0,0,0,0.35)]">
             <div className="flex items-center gap-3">
+              {/* ✅ Ilustración / Icon como tú lo tenías */}
               {toast.icon ? (
                 <img
                   src={toast.icon}
@@ -78,7 +106,7 @@ export default function AchievementsUI() {
 
               <div className="min-w-0">
                 <div className="text-[9px] tracking-[0.35em] text-accent-lime/80 uppercase">
-                  logro desbloqueado
+                  {t.unlockedKicker}
                 </div>
 
                 <div className="mt-2 text-neutral-white font-semibold">
@@ -92,7 +120,7 @@ export default function AchievementsUI() {
                 ) : null}
 
                 <div className="mt-3 text-[10px] tracking-[0.28em] text-neutral-white/35 uppercase">
-                  Progreso: {unlockedCount ?? "—"}/{total}
+                  {t.progress}: {unlockedCount ?? "—"}/{total}
                 </div>
               </div>
             </div>

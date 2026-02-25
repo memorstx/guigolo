@@ -291,7 +291,6 @@ export const en = {
     },
     copyrightSuffix: "GUIGOLO · MODULE · FOOTER SIGNAL",
   },
-
   whatIsGuigolo: {
     meta: {
       title: "What is Guigolo? | Brand, meaning and origin",
@@ -378,6 +377,73 @@ export const en = {
     secondaryCta: "Contact",
     helpLine1: "If you got here from a link inside the site, tell me and I’ll fix it.",
     helpLine2: "Tip: if you were looking for a project, go back home and open “Projects”.",
+  },
+  gamification: {
+    achievements: {
+      title: "ACHIEVEMENTS",
+      empty: "No achievements yet…",
+      progressLabel: "Progress",
+      unlockedToastTitle: "Achievement unlocked",
+      unlockedToastPrefix: "You unlocked:",
+    },
+
+    missions: {
+      title: "MISSIONS",
+      progressLabel: "Progress",
+      close: "Close",
+      ctaView: "VIEW",
+      rewardLockedTitle: "Reward locked",
+      rewardLockedBody: "Complete all missions to reveal it.",
+      rewardUnlockedTitle: "Reward unlocked",
+      rewardUnlockedBody: "Code:",
+      checklistTitle: "Checklist",
+    },
+
+    achievementItems: {
+      first_contact: {
+        title: "First contact",
+        description: "You sent a message through the form.",
+      },
+      almost_talked: {
+        title: "Almost talked",
+        description: "You reached contact and stayed for a bit.",
+      },
+      took_courage: {
+        title: "Took courage",
+        description: "You typed a real message (50+ chars).",
+      },
+      explorer: {
+        title: "Explorer",
+        description: "You visited multiple sections of the site.",
+      },
+      process_reader: {
+        title: "Process reader",
+        description: "You spent time on the process section.",
+      },
+      projects_scroller: {
+        title: "Project curious",
+        description: "You interacted with the projects carousel.",
+      },
+    },
+
+    missionItems: {
+      mission_route: {
+        title: "Secret route",
+        description: "You opened a /go/… link.",
+      },
+      mission_attention: {
+        title: "Quality time",
+        description: "You stayed exploring for a while.",
+      },
+      mission_contact: {
+        title: "Let’s build",
+        description: "You reached out to me.",
+      },
+      mission_easter: {
+        title: "Easter egg",
+        description: "You found the easter egg.",
+      },
+    },
   },
 
 
