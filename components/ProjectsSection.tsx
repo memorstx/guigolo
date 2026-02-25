@@ -271,7 +271,7 @@ function ProjectSlide({ item }: { item: any }) {
                   rel={"noreferrer"}
                   className="hover:text-white transition underline decoration-neutral-white/20 hover:decoration-neutral-white/50"
                 >
-                  {item.access ? item.access : "—"}
+                  {item.access}
                 </Link>
                 
               </SpecValue>
