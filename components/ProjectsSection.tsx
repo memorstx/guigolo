@@ -267,8 +267,8 @@ function ProjectSlide({ item }: { item: any }) {
               <SpecValue >
                 <Link
                   href={item.access ? item.access : "—"}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noreferrer" : undefined}
+                  target={"_blank"}
+                  rel={"noreferrer"}
                   className="hover:text-white transition underline decoration-neutral-white/20 hover:decoration-neutral-white/50"
                 >
                   {item.access ? item.access : "—"}
