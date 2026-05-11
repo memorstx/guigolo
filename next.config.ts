@@ -204,6 +204,11 @@ const nextConfig: NextConfig = {
         destination: '/?utm_source=airtable&utm_medium=bio&utm_campaign=productivity_navigation', 
         permanent: false,
       },
+      {
+        source: '/go/multiplica',
+        destination: '/?utm_source=multiplica&utm_medium=bio&utm_campaign=productivity_navigation', 
+        permanent: false,
+      },
       
     ]
   },

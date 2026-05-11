@@ -26,6 +26,6 @@ export const FEATURED_PROJECTS_BASE: FeaturedProjectBase[] = [
     companyLogo: "/brand/projects/tiendita/logo-tiendita.png",
     image: "/brand/projects/tiendita/cover_puntodeventa.png",
     linkUrl: "/projects/tiendita/pos",
-    access: "#",
+    access: "",
   },
 ];
