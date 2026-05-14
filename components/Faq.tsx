@@ -30,7 +30,7 @@ export default function FAQSection({ items, copy, defaultOpenId }: Props) {
 
   return (
     <section id="faq" className="relative w-full bg-neutral-black-900 xl:px-32">
-      <div className="mx-auto max-w-[1280px] py-44">
+      <div className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]">
         {/* Title */}
         <h2 className="heading-h2 tracking-tight">
           {copy.title}
