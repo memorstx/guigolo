@@ -47,9 +47,14 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: "Guigolo · Diseño centrado en usuario y negocio",
+      title:
+        locale === "es"
+          ? "Guigolo · Diseño UX/UI para productos digitales"
+          : "Guigolo · UX/UI Design for Digital Products",
       description:
-        "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
+      locale === "es"
+        ? "Portafolio de Guillermo González López. Diseño interfaces claras, humanas y estratégicas para productos digitales, marcas y experiencias web."
+        : "Guillermo González López portfolio. I design clear, human and strategic interfaces for digital products, brands and web experiences.",
       images: ["/og/cover-social.png"],
     },
   };
