@@ -29,8 +29,28 @@ export async function generateMetadata({
       },
     },
     openGraph: {
+      title: "Guigolo · Diseño centrado en usuario y negocio",
+      description:
+        "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
       url: canonical,
+      siteName: "Guigolo",
+      images: [
+        {
+          url: "/og/cover-social.png",
+          width: 1200,
+          height: 630,
+          alt: "Guigolo · Portafolio UX/UI",
+        },
+      ],
       locale: locale === "es" ? "es_MX" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Guigolo · Diseño centrado en usuario y negocio",
+      description:
+        "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
+      images: ["/og/cover-social.png"],
     },
   };
 }
