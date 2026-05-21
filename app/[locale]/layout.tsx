@@ -31,7 +31,7 @@ export async function generateMetadata({
     openGraph: {
       title: "Guigolo · Diseño centrado en usuario y negocio",
       description:
-        "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
+        "Diseño que impulsa, conecta y acompaña tu visión.",
       url: canonical,
       siteName: "Guigolo",
       images: [
