@@ -36,7 +36,7 @@ export async function generateMetadata({
       siteName: "Guigolo",
       images: [
         {
-          url: "/og/cover-social.png",
+          url: "/og/og_v2.png",
           width: 1200,
           height: 630,
           alt: "Guigolo · Portafolio UX/UI",
@@ -55,7 +55,7 @@ export async function generateMetadata({
       locale === "es"
         ? "Portafolio de Guillermo González López. Diseño interfaces claras, humanas y estratégicas para productos digitales, marcas y experiencias web."
         : "Guillermo González López portfolio. I design clear, human and strategic interfaces for digital products, brands and web experiences.",
-      images: ["/og/cover-social.png"],
+      images: ["/og/og_v2.png"],
     },
   };
 }
