@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { MISSIONS } from "./missionsCatalog";
-import { getCompletedMissionsCount, hasMission } from "./missionsStore";
+import {
+  getCompletedMissionsCount,
+  hasMission,
+  type MissionId,
+} from "./missionsStore";
 import { onMissionUnlocked } from "./missionsEvents";
 import { usePathname } from "next/navigation";
 
@@ -13,18 +17,29 @@ type Props = {
 
 type Locale = "es" | "en";
 
+type LocalizedText =
+  | string
+  | {
+      es?: string;
+      en?: string;
+    };
+
+type Mission = {
+  id: MissionId;
+  title: LocalizedText;
+  description?: LocalizedText;
+};
+
 function getLocaleFromPath(pathname: string | null): Locale {
   const seg = (pathname || "/").split("/")[1];
   return seg === "en" ? "en" : "es";
 }
 
-function pickLocalized(value: any, locale: Locale): string {
+function pickLocalized(value: LocalizedText | undefined, locale: Locale): string {
   if (!value) return "";
   if (typeof value === "string") return value;
-  if (typeof value === "object") {
-    return value?.[locale] ?? value?.es ?? value?.en ?? "";
-  }
-  return String(value);
+
+  return value[locale] ?? value.es ?? value.en ?? "";
 }
 
 const UI_COPY: Record<
@@ -82,11 +97,13 @@ export default function MissionsPanel({ open, onClose }: Props) {
   const locale = getLocaleFromPath(pathname);
 
   const total = MISSIONS.length;
-  const [done, setDone] = useState<number>(0);
+  const [done, setDone] = useState<number>(() => {
+    if (typeof window === "undefined") return 0;
+
+    return getCompletedMissionsCount();
+  });
 
   useEffect(() => {
-    setDone(getCompletedMissionsCount());
-
     const off = onMissionUnlocked(() => {
       setDone(getCompletedMissionsCount());
     });
@@ -96,6 +113,7 @@ export default function MissionsPanel({ open, onClose }: Props) {
     };
 
     window.addEventListener("keydown", onEsc);
+
     return () => {
       off();
       window.removeEventListener("keydown", onEsc);
@@ -104,7 +122,8 @@ export default function MissionsPanel({ open, onClose }: Props) {
 
   const contactUnlocked = hasMission("mission_contact");
   const isOwner =
-    typeof window !== "undefined" && localStorage.getItem("guigolo_owner") === "1";
+    typeof window !== "undefined" &&
+    localStorage.getItem("guigolo_owner") === "1";
 
   if (!open) return null;
 
@@ -151,15 +170,15 @@ export default function MissionsPanel({ open, onClose }: Props) {
         </div>
 
         <div className="mt-6 space-y-3">
-          {MISSIONS.map((m: any) => {
-            const ok = hasMission(m.id);
+          {(MISSIONS as Mission[]).map((mission) => {
+            const ok = hasMission(mission.id);
 
-            const title = pickLocalized(m.title, locale) || m.id;
-            const description = pickLocalized(m.description, locale);
+            const title = pickLocalized(mission.title, locale) || mission.id;
+            const description = pickLocalized(mission.description, locale);
 
             return (
               <div
-                key={m.id}
+                key={mission.id}
                 className={[
                   "rounded-xl border px-4 py-3",
                   ok
@@ -170,12 +189,16 @@ export default function MissionsPanel({ open, onClose }: Props) {
                 <div className="flex items-start justify-between gap-3">
                   <div className="text-neutral-white font-medium">{title}</div>
                   <div className="text-sm">
-                    {ok ? UI_COPY[locale].doneEmoji : UI_COPY[locale].pendingEmoji}
+                    {ok
+                      ? UI_COPY[locale].doneEmoji
+                      : UI_COPY[locale].pendingEmoji}
                   </div>
                 </div>
 
                 {description ? (
-                  <div className="mt-1 text-sm text-neutral-white/65">{description}</div>
+                  <div className="mt-1 text-sm text-neutral-white/65">
+                    {description}
+                  </div>
                 ) : null}
               </div>
             );

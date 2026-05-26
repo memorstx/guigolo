@@ -7,11 +7,15 @@ import { onAchievementUnlocked } from "./achievementEvents";
 
 export default function AchievementsCounter() {
   const total = ACHIEVEMENTS.length;
-  const [count, setCount] = useState<number | null>(null);
+  const [count, setCount] = useState<number | null>(() => {
+    if (typeof window === "undefined") return null;
+
+    return getUnlockedCount();
+  });
 
   useEffect(() => {
-    setCount(getUnlockedCount());
     const off = onAchievementUnlocked(() => setCount(getUnlockedCount()));
+
     return () => off();
   }, []);
 

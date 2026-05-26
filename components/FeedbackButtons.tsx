@@ -16,36 +16,54 @@ type Props = {
   thanksText?: string;
 };
 
+type WindowWithGtag = Window & {
+  gtag?: (
+    command: "event",
+    eventName: string,
+    params: {
+      feeling: Option["id"];
+      page: string;
+    }
+  ) => void;
+};
+
 const STORAGE_KEY = "guigolo_micro_feedback_v1";
 
-export default function FeedbackButtons({ pageId, options, thanksText = "Gracias por tu reacción ✨" }: Props) {
-  const [selected, setSelected] = useState<Option["id"] | null>(null);
+export default function FeedbackButtons({
+  pageId,
+  options,
+  thanksText = "Gracias por tu reacción ✨",
+}: Props) {
+  const [selected, setSelected] = useState<Option["id"] | null>(() => {
+    if (typeof window === "undefined") return null;
+
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    const isValid = options.some((option) => option.id === saved);
+
+    return isValid ? (saved as Option["id"]) : null;
+  });
 
   useEffect(() => {
-    const saved =
-      typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
+    if (!selected) return;
 
-    if (saved && options.some((o) => o.id === saved)) {
-      setSelected(saved as Option["id"]);
-    }
-  }, [options]);
+    window.localStorage.setItem(STORAGE_KEY, selected);
+  }, [selected]);
 
   const fireGA = (value: Option["id"]) => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "guigolo_micro_feedback", {
-        feeling: value,
-        page: pageId,
-      });
-    }
+    const gtag = (window as WindowWithGtag).gtag;
+
+    if (!gtag) return;
+
+    gtag("event", "guigolo_micro_feedback", {
+      feeling: value,
+      page: pageId,
+    });
   };
 
   const handleClick = (value: Option["id"]) => {
     if (selected) return;
 
     setSelected(value);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, value);
-    }
     fireGA(value);
   };
 
@@ -73,13 +91,19 @@ export default function FeedbackButtons({ pageId, options, thanksText = "Gracias
             >
               <span className="text-base">{opt.emoji}</span>
               <span>{opt.label}</span>
-              {isSelected ? <span className="ml-1 text-neutral-white/70">(listo)</span> : null}
+              {isSelected ? (
+                <span className="ml-1 text-neutral-white/70">(listo)</span>
+              ) : null}
             </button>
           );
         })}
       </div>
 
-      {selected ? <p className="text-neutral-white/60 text-sm">{thanksText}</p> : <p className="text-neutral-white/50 text-sm" />}
+      {selected ? (
+        <p className="text-neutral-white/60 text-sm">{thanksText}</p>
+      ) : (
+        <p className="text-neutral-white/50 text-sm" />
+      )}
     </div>
   );
 }

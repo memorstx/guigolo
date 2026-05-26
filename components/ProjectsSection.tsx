@@ -17,9 +17,23 @@ type ProjectsCopy = {
   ctaButton: string;
 };
 
+type ProjectItem = {
+  id: string;
+  companyLogo: string;
+  title?: string;
+  sector?: string;
+  description?: string[];
+  stack?: string;
+  role?: string;
+  linkUrl?: string;
+  linkLabel?: string;
+  access?: string;
+  image: string;
+};
+
 type Props = {
-  items: any[];
-  copy: any;
+  items: ProjectItem[];
+  copy: ProjectsCopy;
 };
 
 
@@ -43,7 +57,9 @@ export default function ProjectsSection({ items, copy }: Props) {
     [autoplay]
   );
 
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(() => {
+    return emblaApi?.selectedScrollSnap() ?? 0;
+  });
   const pauseTimerRef = useRef<number | null>(null);
 
   const safeStop = useCallback(() => {
@@ -72,18 +88,19 @@ export default function ProjectsSection({ items, copy }: Props) {
     setSelected(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
-  useEffect(() => {
-    if (!emblaApi) return;
+ useEffect(() => {
+  if (!emblaApi) return;
 
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("pointerUp", pauseAfterUserAction);
+  // setSelected(emblaApi.selectedScrollSnap());
 
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("pointerUp", pauseAfterUserAction);
-    };
-  }, [emblaApi, onSelect, pauseAfterUserAction]);
+  emblaApi.on("select", onSelect);
+  emblaApi.on("pointerUp", pauseAfterUserAction);
+
+  return () => {
+    emblaApi.off("select", onSelect);
+    emblaApi.off("pointerUp", pauseAfterUserAction);
+  };
+}, [emblaApi, onSelect, pauseAfterUserAction]);
 
   useEffect(() => {
     return () => {
@@ -191,10 +208,8 @@ export default function ProjectsSection({ items, copy }: Props) {
   );
 }
 
-function ProjectSlide({ item }: { item: any }) {
-
-  const isExternal = item.linkUrl.startsWith("http");
-
+function ProjectSlide({ item }: { item: ProjectItem }) {
+  const description = item.description ?? [];
   return (
     <div className="w-full">
       <div
@@ -238,7 +253,7 @@ function ProjectSlide({ item }: { item: any }) {
 
             {/* descripción */}
             <div className="mt-6 space-y-4 text-neutral-white/70 text-[14px] leading-relaxed">
-              {item.description.map((t: string, idx: number) => (
+              {description.map((t, idx) => (
                 <p key={idx}>{t}</p>
               ))}
             </div>
@@ -266,7 +281,7 @@ function ProjectSlide({ item }: { item: any }) {
               <SpecLabel>ACCESS</SpecLabel>
               <SpecValue >
                 <Link
-                  href={item.access ? item.access : "—"}
+                  href={item.access ?? "#"}
                   target={"_blank"}
                   rel={"noreferrer"}
                   className="hover:text-white transition underline decoration-neutral-white/20 hover:decoration-neutral-white/50"

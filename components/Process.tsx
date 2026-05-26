@@ -58,9 +58,10 @@ export default function ProcessStackScroll({ copy, className = "" }: Props) {
 }, [copy]);
 
   const [vh, setVh] = useState(800);
-  const [titleH, setTitleH] = useState(120);
+  const [, setTitleH] = useState(120);
   const [stickyH, setStickyH] = useState(600);
   const [scrollY, setScrollY] = useState(0);
+  const [sectionTop, setSectionTop] = useState(0);
 
   useLayoutEffect(() => {
     const measure = () => {
@@ -99,28 +100,41 @@ export default function ProcessStackScroll({ copy, className = "" }: Props) {
     };
   }, []);
 
+  useEffect(() => {
+  const updateSectionTop = () => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const top = (window.scrollY || 0) + rect.top;
+
+    setSectionTop(top);
+  };
+
+  updateSectionTop();
+
+  window.addEventListener("resize", updateSectionTop);
+
+  return () => {
+    window.removeEventListener("resize", updateSectionTop);
+  };
+}, []);
+
   const stepPx = useMemo(() => Math.round(vh * 0.92), [vh]);
   const totalSteps = Math.max(0, items.length - 1);
 
-  // ✅ Track = altura del sticky wrapper + (pasos) + aire final
+  
   const trackH = useMemo(() => {
     const exitPad = Math.round(vh * 0.2);
     return stickyH + totalSteps * stepPx + exitPad;
   }, [stickyH, totalSteps, stepPx, vh]);
 
   const progress = useMemo(() => {
-    const el = sectionRef.current;
-    if (!el) return 0;
-
-    const rect = el.getBoundingClientRect();
-    const sectionTop = (window.scrollY || 0) + rect.top;
-
-    // ✅ La animación corre mientras el sticky wrapper está “pegado”
     const start = sectionTop;
     const p = (scrollY - start) / stepPx;
 
     return clamp(p, 0, totalSteps);
-  }, [scrollY, stepPx, totalSteps]);
+  }, [scrollY, sectionTop, stepPx, totalSteps]);
 
   const jitter = useMemo(() => {
     const angles = [1, -1, 2, -2];

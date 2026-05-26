@@ -40,11 +40,14 @@ type Props = {
 
 export default function Footer({ copy, locale }: Props) {
   const [open, setOpen] = useState(false);
-  const [missionsDone, setMissionsDone] = useState<number>(0);
+  const [missionsDone, setMissionsDone] = useState<number>(() => {
+    if (typeof window === "undefined") return 0;
+
+    return getCompletedMissionsCount();
+  });
 
   useEffect(() => {
-    setMissionsDone(getCompletedMissionsCount());
-
+    
     const off = onMissionUnlocked(() => {
       setMissionsDone(getCompletedMissionsCount());
     });

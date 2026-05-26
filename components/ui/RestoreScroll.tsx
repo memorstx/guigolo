@@ -18,7 +18,7 @@ export default function RestoreScroll() {
     if (shouldRestore !== "1") return;
 
     sessionStorage.removeItem(key);
-    window.scrollTo({ top: o.fromScrollY, behavior: "instant" as any });
+    window.scrollTo({ top: o.fromScrollY, behavior: "auto" });
   }, []);
 
   return null;

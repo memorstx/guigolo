@@ -1,4 +1,4 @@
-# Guigolo — Diseño UX/UI con intención humana
+# Guigolo — Diseño UX/UI 
 
 Portafolio personal de **Guillermo González López**.  
 Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.
@@ -35,7 +35,7 @@ Está pensada tanto para **reclutadores**, **clientes**, como para **personas cu
 
 Crear un portafolio que:
 
-- Priorice **claridad, intención y emoción**
+- Priorice **claridad y funcionalidad**
 - Explique mi proceso sin abrumar
 - Se sienta humano, no corporativo
 - Sea técnicamente sólido y escalable
@@ -51,7 +51,7 @@ Este proyecto no busca impresionar con ruido, sino **convencer con criterio**.
 - Diseño emocional sin caer en lo cursi  
 - Cyberpunk suave: tecnología sensible, no agresiva  
 - Micro-detalles que acompañan, no estorban  
-- Decisiones visuales alineadas a intención y negocio  
+- Decisiones visuales alineadas a negocio  
 
 Diseñar bien no es solo verse bonito.  
 Es **hacer que algo se sienta correcto**.

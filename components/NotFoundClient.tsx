@@ -7,7 +7,18 @@ import PageFrame from "@/components/layout/PageFrame";
 
 type Locale = "es" | "en";
 
-const COPY: Record<Locale, any> = {
+type NotFoundCopy = {
+  kicker: string;
+  title: string;
+  body: string;
+  ctaHome: string;
+  ctaContact: string;
+  help1: string;
+  help2: string;
+  imgAlt: string;
+};
+
+const COPY: Record<Locale, NotFoundCopy> = {
   es: {
     kicker: "ERROR 404",
     title: "Esta página no existe",

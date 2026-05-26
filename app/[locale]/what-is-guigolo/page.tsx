@@ -4,6 +4,7 @@ import SiteShell from "@/components/SiteShell";
 import PageFrame from "@/components/layout/PageFrame";
 import FeedbackButtons from "@/components/FeedbackButtons";
 import { getDict } from "@/lib/i18n/getDict";
+import type { Option } from "@/components/FeedbackButtons";
 
 type Params = Promise<{ locale: "es" | "en" }>;
 
@@ -173,7 +174,7 @@ export default async function WhatIsGuigoloPage({
 
               <FeedbackButtons
                 pageId="what-is-guigolo"
-                options={copy.feedback.options as any}
+                options={[...copy.feedback.options] as Option[]}
                 thanksText={copy.feedback.thanks}
               />
             </section>

@@ -4,8 +4,7 @@ import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
 import SectionAbout from "@/components/SectionAbout";
 import ServicesAccordion from "@/components/ServicesAccordion";
-
-import Process from "@/components/Process"; 
+import Process from "@/components/Process";
 import FAQSection from "@/components/Faq";
 import { FAQS_BASE } from "@/components/faq/faq.data";
 import RestoreScroll from "@/components/ui/RestoreScroll";
@@ -23,60 +22,79 @@ const featuredIds = new Set([
   "latiendita-puntodeventa-project",
 ]);
 
-  export default async function Home({
+type Locale = "es" | "en";
+
+type ProjectBase = (typeof FEATURED_PROJECTS_BASE)[number];
+
+type ProjectTranslation = Partial<ProjectBase>;
+
+type FaqTranslation = {
+  q?: string;
+  a?: string;
+};
+
+export default async function Home({
   params,
-  }: {
-    params: Promise<{ locale: string }>;
-  }) {
-    const { locale } = await params;
-    const dict = getDict(locale);
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: rawLocale } = await params;
+  const locale = rawLocale === "en" ? "en" : "es";
+  const dict = getDict(locale);
 
-  
-  const featuredProjects = FEATURED_PROJECTS_BASE
-  .filter((p: any) => featuredIds.has(p.id))
-  .map((p: any) => {
+  const projectTranslations = dict.projects.items as Record<
+    string,
+    ProjectTranslation | undefined
+  >;
 
-    const t = (dict.projects.items as Record<string, any>)[p.id];
-    if (!t) return p;
-    return { ...p, ...t };
+  const faqTranslations = dict.faq.items as Record<
+    string,
+    FaqTranslation | undefined
+  >;
+
+  const featuredProjects = FEATURED_PROJECTS_BASE.filter((project) =>
+    featuredIds.has(project.id)
+  ).map((project) => {
+    const translation = projectTranslations[project.id];
+
+    if (!translation) return project;
+
+    return { ...project, ...translation };
   });
 
-  const faqItems = FAQS_BASE.map((b) => {
-    const t = (dict.faq.items as Record<string, any>)[b.id];
+  const faqItems = FAQS_BASE.map((item) => {
+    const translation = faqTranslations[item.id];
+
     return {
-      id: b.id,
-      q: t?.q ?? "",
-      a: t?.a ?? "",
+      id: item.id,
+      q: translation?.q ?? "",
+      a: translation?.a ?? "",
     };
   });
 
-
   return (
-    <SiteShell locale={locale as "es" | "en"}>
+    <SiteShell locale={locale as Locale}>
       <main>
         <RestoreScroll />
-        <Hero copy={dict.hero}/>
-        
+        <Hero copy={dict.hero} />
+
         <GamificationBoot />
         <TriggersBoot />
         <MissionsBoot />
         <AchievementsUI />
         <ServicesAccordion copy={dict.services} />
 
-        {
-          /*
+        {/*
           <ProjectsIntro />
           <ProjectsList />
-          */
-        }
+        */}
         <ProjectsSection items={featuredProjects} copy={dict.projects} />
 
-
         <Process copy={dict.process} />
-        <SectionAbout copy={dict.about}  />
-        <ContactCTA  copy={dict.cta} />
+        <SectionAbout copy={dict.about} />
+        <ContactCTA copy={dict.cta} />
         <FAQSection items={faqItems} copy={dict.faq} />
-        <Contact copy={dict.contact} locale={locale as "es" | "en"}  />
+        <Contact copy={dict.contact} locale={locale as Locale} />
       </main>
     </SiteShell>
   );

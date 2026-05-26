@@ -10,7 +10,18 @@ import IconProjects from "./icons/IconProjects";
 import IconServices from "./icons/IconServices";
 import { usePathname } from "next/navigation";
 
-export default function Navbar({ dict }: { dict: any }) {
+type NavbarDict = {
+  nav: {
+    home: string;
+    services: string;
+    projects: string;
+    about: string;
+    contact: string;
+    contactCta?: string;
+  };
+};
+
+export default function Navbar({ dict }: { dict: NavbarDict }) {
   
   const navItems = [
     { href: "#home", label: dict.nav.home, Icon: IconHome },
