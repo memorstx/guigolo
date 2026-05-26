@@ -323,7 +323,7 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
 
     return () => {
       root.removeEventListener("click", onClickCapture, true);
-      root.removeEventListener("pointerdown", onPointerDown as any);
+      root.removeEventListener("pointerdown", onPointerDown);
       track?.removeEventListener("transitionend", onTransitionEnd);
       if (unlockTimerRef.current) window.clearTimeout(unlockTimerRef.current);
     };
@@ -347,7 +347,7 @@ export default function useAchievementTriggers(cfg: TriggersConfig = {}) {
     return () => {
       window.removeEventListener("wheel", markHuman);
       window.removeEventListener("touchmove", markHuman);
-      window.removeEventListener("pointerdown", markHuman as any);
+      window.removeEventListener("pointerdown", markHuman);
     };
   }, []);
 

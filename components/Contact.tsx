@@ -53,18 +53,23 @@ type Props = {
 };
 
 export default function Contact({ copy, locale }: Props) {
-  const [status, setStatus] = useState<Status>("idle");
-  const [origin, setOrigin] = useState<ContactOrigin | null>(null);
+  const [status, setStatus] = useState<Status>(() => {
+    if (typeof window === "undefined") return "idle";
+
+    return sessionStorage.getItem("contact_sent_v1") === "1" ? "success" : "idle";
+  });
+  const [origin] = useState<ContactOrigin | null>(() => {
+    if (typeof window === "undefined") return null;
+
+    return readContactOrigin();
+  });
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  // --- almost_talked (anti-autoscroll + “se quedó”) ---
   const almostUnlockedRef = useRef(false);
   const humanIntentRef = useRef(false);
   const dwellTimerRef = useRef<number | null>(null);
 
-  // --- took_courage ---
-  const COURAGE_MIN_CHARS = 50;
   const courageUnlockedRef = useRef(false);
 
   const markCourage = () => {
@@ -73,17 +78,8 @@ export default function Contact({ copy, locale }: Props) {
     unlockAchievement("took_courage");
   };
 
-  // ✅ helper: arma rutas correctas con locale (/es#..., /en#...)
   const homeHash = (hash: string) => `/${locale}${hash}`;
 
-  useEffect(() => {
-    setOrigin(readContactOrigin());
-
-    const sent = sessionStorage.getItem("contact_sent_v1");
-    if (sent === "1") setStatus("success");
-  }, []);
-
-  // ✅ almost_talked: visible + intención humana + dwell
   useEffect(() => {
     const el = document.getElementById("contacto");
     if (!el) return;
@@ -109,10 +105,10 @@ export default function Contact({ copy, locale }: Props) {
     };
 
     const removeIntentListeners = () => {
-      el.removeEventListener("wheel", markIntent as any);
-      el.removeEventListener("touchmove", markIntent as any);
-      el.removeEventListener("pointerdown", markIntent as any);
-      el.removeEventListener("keydown", markIntent as any);
+      el.removeEventListener("wheel", markIntent);
+      el.removeEventListener("touchmove", markIntent);
+      el.removeEventListener("pointerdown", markIntent);
+      el.removeEventListener("keydown", markIntent);
     };
 
     addIntentListeners();

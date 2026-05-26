@@ -1,7 +1,14 @@
 export type Locale = "es" | "en";
 
+export type MissionId =
+  | "mission_scroll"
+  | "mission_projects"
+  | "mission_about"
+  | "mission_contact"
+  | "mission_send";
+
 export type Mission = {
-  id: string;
+  id: MissionId;
   title: Record<Locale, string>;
   description: Record<Locale, string>;
 };
@@ -54,7 +61,7 @@ export const MISSIONS: Mission[] = [
   {
     id: "mission_send",
     title: {
-      es: "Envia el mensaje",
+      es: "Envía el mensaje",
       en: "Send the message",
     },
     description: {
@@ -64,19 +71,17 @@ export const MISSIONS: Mission[] = [
   },
 ];
 
-export const MISSION_BY_ID: Record<string, Mission> = Object.fromEntries(
-  MISSIONS.map((m) => [m.id, m])
-);
+export const MISSION_BY_ID: Record<MissionId, Mission> =
+  Object.fromEntries(MISSIONS.map((m) => [m.id, m])) as Record<
+    MissionId,
+    Mission
+  >;
 
-/**
- * Helper opcional por si lo necesitas en UI:
- * getMissionText("mission_contact","es") -> {title, description}
- */
-export function getMissionText(id: string, locale: Locale) {
-  const m = MISSION_BY_ID[id];
-  if (!m) return null;
+export function getMissionText(id: MissionId, locale: Locale) {
+  const mission = MISSION_BY_ID[id];
+
   return {
-    title: m.title[locale],
-    description: m.description[locale],
+    title: mission.title[locale],
+    description: mission.description[locale],
   };
 }

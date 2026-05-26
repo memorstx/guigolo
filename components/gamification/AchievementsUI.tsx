@@ -36,7 +36,11 @@ const UI = {
 export default function AchievementsUI() {
   const total = ACHIEVEMENTS.length;
 
-  const [unlockedCount, setUnlockedCount] = useState<number | null>(null);
+  const [unlockedCount, setUnlockedCount] = useState<number | null>(() => {
+    if (typeof window === "undefined") return null;
+
+    return getUnlockedCount();
+  });
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const hideTimerRef = useRef<number | null>(null);
@@ -58,10 +62,6 @@ export default function AchievementsUI() {
   }, [locale]);
 
   useEffect(() => {
-    // Inicial
-    setUnlockedCount(getUnlockedCount());
-
-    // Escuchar logros
     const off = onAchievementUnlocked(({ id }) => {
       setUnlockedCount(getUnlockedCount());
 

@@ -1,20 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SERVICES_BASE } from "./services/servicesData";
-import Link from "next/link";
 import ContactLink from "@/components/ui/ContactLink";
 
 
+type ServiceCopyItem = {
+  title: string;
+  iconLabel: string;
+  description: string;
+};
 
+type ServicesCopy = {
+  kicker: string;
+  headline: string;
+  items: Record<string, ServiceCopyItem>;
+  cta: {
+    description: string;
+    primaryButton: string;
+    secondaryButton: string;
+  };
+};
 
 type Props = {
   autoMs?: number;
   pauseMs?: number;
+  copy: ServicesCopy;
 };
 
-export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000, copy }: Props & { copy: any }) {
+export default function ServicesAccordion({
+  autoMs = 50000,
+  pauseMs = 45000,
+  copy,
+}: Props) {
   const items = useMemo(() => {
     return SERVICES_BASE.map((base) => ({
       id: base.id,
@@ -35,24 +54,24 @@ export default function ServicesAccordion({ autoMs = 50000, pauseMs = 45000, cop
   const [desktopRailH, setDesktopRailH] = useState<number | null>(null);
   const [railW, setRailW] = useState<number>(0);
 
-  const clearTimers = () => {
+ const clearTimers = useCallback(() => {
     if (intervalRef.current) window.clearInterval(intervalRef.current);
     if (pauseTimeoutRef.current) window.clearTimeout(pauseTimeoutRef.current);
     intervalRef.current = null;
     pauseTimeoutRef.current = null;
-  };
+  }, []);
 
-  const startAutoplay = () => {
+  const startAutoplay = useCallback(() => {
     clearTimers();
     intervalRef.current = window.setInterval(() => {
       setActive((prev) => (prev + 1) % items.length);
     }, autoMs);
-  };
+  }, [autoMs, clearTimers, items.length]);
 
   useEffect(() => {
     startAutoplay();
     return () => clearTimers();
-  }, [autoMs, items.length]);
+  }, [clearTimers, startAutoplay]);
 
   const onSelect = (idx: number) => {
     setActive(idx);
