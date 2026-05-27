@@ -9,9 +9,9 @@ export const en = {
     contact: "Wow",
   },
   hero: {
-    titleAccent: "UX/UI Designer",
-    titleRest: "turning ideas into products people get instantly",
-    body: "I help startups and founders design (and, if you want, build) fast, clear experiences that are ready to convert.",
+    titleAccent: "I turn ideas",
+    titleRest: "into experiences with their own personality",
+    body: "Strategic UX/UI for digital products that want to look distinct and feel memorable.",
     ctaContact: "Let’s talk",
     ctaProjects: "See projects",
   },

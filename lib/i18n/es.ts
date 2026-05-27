@@ -11,10 +11,10 @@ export const es = {
     contact: "Contacto",
   },
   hero: {
-    titleAccent: "Diseñador UX/UI",
-    titleRest: "que convierte ideas en productos claros",
-    body: "Ayudo a startups y emprendedores a diseñar (y si lo necesitas, construir) experiencias rápidas, claras y listas para convertir.",
-    ctaContact: "Contactar",
+    titleAccent: "Convierto ideas",
+    titleRest: "en experiencias con personalidad propia",
+    body: "UX/UI para productos digitales que quieren verse distintos y sentirse memorables.",
+    ctaContact: "Hablemos",
     ctaProjects: "Ver proyectos",
   },
   services: {
