@@ -1,41 +1,75 @@
-export function SeoJsonLd() {
+type SeoJsonLdProps = {
+  locale: "es" | "en";
+};
+
+export default function SeoJsonLd({ locale }: SeoJsonLdProps) {
+  const baseUrl = "https://guigolo.com";
+  const pageUrl = `${baseUrl}/${locale}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebSite",
-        "@id": "https://guigolo.com/#website",
-        "url": "https://guigolo.com/",
-        "name": "Guigolo",
-        "description":
-          "Portafolio de Guillermo González López. Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.",
-        "inLanguage": "es-MX"
+        "@type": "Person",
+        "@id": `${baseUrl}/#person`,
+        name: "Guillermo González López",
+        alternateName: ["Guigolo", "Memo"],
+        url: baseUrl,
+        email: "info@guigolo.com",
+        jobTitle:
+          locale === "es"
+            ? "Diseñador UI y desarrollador frontend"
+            : "UI Designer and Frontend Developer",
+        knowsAbout: [
+          "UI Design",
+          "UX Design",
+          "Frontend Development",
+          "Design Systems",
+          "Interactive Web Experiences",
+          "Creative Development",
+          "Emotional Branding",
+        ],
+        sameAs: [
+          "https://www.linkedin.com/in/guigolo",
+        ],
       },
       {
-        "@type": "Person",
-        "@id": "https://guigolo.com/#person",
-        "name": "Guillermo González López",
-        "alternateName": ["Guigolo", "Memo"],
-        "url": "https://guigolo.com/",
-        "jobTitle": ["Diseñador UX/UI", "Diseñador Web", "Front-end Developer"],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Guigolo Studio",
+        "@type": "WebSite",
+        "@id": `${baseUrl}/#website`,
+        url: baseUrl,
+        name: "Guigolo",
+        inLanguage: locale === "es" ? "es-MX" : "en-US",
+        publisher: {
+          "@id": `${baseUrl}/#person`,
         },
-        "sameAs": [
-          "https://www.linkedin.com/in/guigolo",
-          // "https://github.com/[PONER_AQUI]",
-          // "https://www.behance.net/[PONER_AQUI]"
-        ]
-      }
-    ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": `${baseUrl}/#service`,
+        name: "Guigolo",
+        url: pageUrl,
+        email: "info@guigolo.com",
+        founder: {
+          "@id": `${baseUrl}/#person`,
+        },
+        areaServed: ["Mexico", "Remote"],
+        serviceType: [
+          "UI Design",
+          "UX Design",
+          "Frontend Development",
+          "Web Design",
+          "Design Systems",
+        ],
+      },
+    ],
   };
 
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(jsonLd),
+      }}
     />
   );
 }

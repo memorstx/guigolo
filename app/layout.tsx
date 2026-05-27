@@ -3,7 +3,6 @@ import { Unbounded, Anta } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import { SeoJsonLd } from "../components/SeoJsonLd";
 import { HtmlLangSync } from "../components/HtmlLangSync";
 
 const unbounded = Unbounded({
@@ -73,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" suppressHydrationWarning>
       <body className={`${unbounded.variable} ${anta.variable}`}>
         <HtmlLangSync />
-        <SeoJsonLd />
+        
         {children}
 
         {/* Google Analytics — SOLO producción */}
