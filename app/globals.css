@@ -240,4 +240,12 @@ body {
     animation: none !important;
   }
 }
-
+@media (max-width: 767px) {
+  .float-slow-1,
+  .float-slow-2,
+  .float-slow-3,
+  .float-slow-4,
+  .text-gradient-anim {
+    animation: none !important;
+  }
+}
