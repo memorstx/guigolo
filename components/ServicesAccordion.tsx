@@ -194,7 +194,13 @@ export default function ServicesAccordion({
                       <div className="mt-6 flex items-center justify-center">
                         <div className="relative" style={{ width: "clamp(14rem, 60vw, 24rem)" }}>
                           <div className="relative aspect-square">
-                            <Image src={item.imageSrc} alt={item.title} fill className="object-contain" sizes="100vw" />
+                            <Image
+                              src={item.imageSrc}
+                              alt={item.title}
+                              fill
+                              className="object-contain"
+                              sizes="(max-width: 767px) 60vw, 384px"
+                            />
                           </div>
                         </div>
                       </div>
@@ -340,7 +346,13 @@ export default function ServicesAccordion({
                             style={{ width: "clamp(12rem, 18vw, 28rem)", willChange: "opacity" }}
                           >
                             <div className="relative aspect-square">
-                              <Image src={item.imageSrc} alt={item.title} fill className="object-contain" sizes="320px" />
+                              <Image
+                                src={item.imageSrc}
+                                alt={item.title}
+                                fill
+                                className="object-contain"
+                                sizes="(max-width: 1279px) 288px, (max-width: 1535px) 320px, 448px"
+                              />
                             </div>
                           </div>
                         </div>
