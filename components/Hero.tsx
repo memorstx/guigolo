@@ -96,18 +96,22 @@ export default function Hero({ copy }: { copy: HeroCopy }) {
                   height={800}
                   priority
                   fetchPriority="high"
+                  unoptimized
                   draggable={false}
                   className="absolute inset-0 h-full w-full object-contain select-none"
                 />
 
                 {layers.map((l) => (
-                  <img
+                  <Image
                     key={l.src}
                     src={l.src}
                     alt=""
+                    width={600}
+                    height={600}
+                    unoptimized
                     draggable={false}
                     className={[
-                      "absolute select-none will-change-transform",
+                      "absolute h-auto select-none will-change-transform",
                       l.float,
                       l.className,
                     ].join(" ")}

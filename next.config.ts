@@ -235,7 +235,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/hero/scene.svg",
+        source: "/brand/hero/scene.svg",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, noimageindex" },
         ],
