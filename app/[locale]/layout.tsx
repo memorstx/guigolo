@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SeoJsonLd from "@/components/SeoJsonLd";
 
 const SUPPORTED = ["es", "en"] as const;
 type Locale = (typeof SUPPORTED)[number];
@@ -65,5 +66,10 @@ export default function LocaleLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <SeoJsonLd locale="es" />
+      {children}
+    </>
+  );
 }

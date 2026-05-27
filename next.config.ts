@@ -215,6 +215,26 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/",
+        headers: [
+          {
+            key: "Link",
+            value:
+              '</llms.txt>; rel="service-doc"; type="text/plain", </.well-known/agent-skills/index.json>; rel="service-doc"; type="application/json"',
+          },
+        ],
+      },
+      {
+        source: "/:locale(es|en)",
+        headers: [
+          {
+            key: "Link",
+            value:
+              '</llms.txt>; rel="service-doc"; type="text/plain", </.well-known/agent-skills/index.json>; rel="service-doc"; type="application/json"',
+          },
+        ],
+      },
+      {
         source: "/hero/scene.svg",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, noimageindex" },
