@@ -1,7 +1,7 @@
 # Guigolo — Diseño UX/UI 
 
 Portafolio personal de **Guillermo González López**.  
-Diseño interfaces claras, sensibles y estratégicas para productos digitales reales.
+Diseño experiencias digitales estratégicas con identidad propia para productos, SaaS, interfaces y plataformas web.
 
 > La conexión real empieza donde termina lo estético.
 
@@ -9,7 +9,7 @@ Diseño interfaces claras, sensibles y estratégicas para productos digitales re
 
 ## 🖤 Preview
 
-![Guigolo — Hero Preview](./public/og/og.png)
+![Guigolo — Hero Preview](./public/og/cover_social.png)
 
 > Portafolio en producción:  
 👉 https://guigolo.com/go/github
