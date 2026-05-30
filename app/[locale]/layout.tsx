@@ -30,32 +30,50 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: "Guigolo · Diseño centrado en usuario y negocio",
+      title:
+        locale === "es"
+          ? "Guigolo · UX/UI estratégico para productos digitales"
+          : "Guigolo · Strategic UX/UI for digital products",
+
       description:
-        "Diseño que impulsa, conecta y acompaña tu visión.",
+        locale === "es"
+          ? "Portafolio de Guillermo González López. Diseño experiencias digitales estratégicas con identidad propia para productos, SaaS, interfaces y plataformas web."
+          : "Portfolio of Guillermo González López. I design strategic digital experiences with their own identity for products, SaaS platforms and web interfaces.",
+
       url: canonical,
+
       siteName: "Guigolo",
+
       images: [
         {
           url: "/og/og_v2.png",
           width: 1200,
           height: 630,
-          alt: "Guigolo · Portafolio UX/UI",
+          alt:
+            locale === "es"
+              ? "Guigolo · UX/UI estratégico para productos digitales"
+              : "Guigolo · Strategic UX/UI for digital products",
         },
       ],
+
       locale: locale === "es" ? "es_MX" : "en_US",
+
       type: "website",
     },
+
     twitter: {
       card: "summary_large_image",
+
       title:
         locale === "es"
-          ? "Guigolo · Diseño UX/UI para productos digitales"
-          : "Guigolo · UX/UI Design for Digital Products",
+          ? "Guigolo · UX/UI estratégico para productos digitales"
+          : "Guigolo · Strategic UX/UI for digital products",
+
       description:
-      locale === "es"
-        ? "Portafolio de Guillermo González López. Diseño interfaces claras, humanas y estratégicas para productos digitales, marcas y experiencias web."
-        : "Guillermo González López portfolio. I design clear, human and strategic interfaces for digital products, brands and web experiences.",
+        locale === "es"
+          ? "Diseño productos digitales, interfaces y experiencias web con identidad, claridad y enfoque estratégico."
+          : "I design digital products, interfaces and web experiences with identity, clarity and strategic thinking.",
+
       images: ["/og/og_v2.png"],
     },
   };

@@ -2,19 +2,17 @@ import SiteShell from "@/components/SiteShell";
 import Hero from "@/components/Hero";
 import ContactCTA from "@/components/ContactCTA";
 import Contact from "@/components/Contact";
-import SectionAbout from "@/components/SectionAbout";
 import ServicesAccordion from "@/components/ServicesAccordion";
-import Process from "@/components/Process";
-import FAQSection from "@/components/Faq";
 import { FAQS_BASE } from "@/components/faq/faq.data";
 import RestoreScroll from "@/components/ui/RestoreScroll";
-import GamificationBoot from "@/components/gamification/Boot";
-import TriggersBoot from "@/components/gamification/TriggersBoot";
-import AchievementsUI from "@/components/gamification/AchievementsUI";
-import MissionsBoot from "@/components/gamification/MissionsBoot";
 import { getDict } from "@/lib/i18n/getDict";
 import ProjectsSection from "@/components/ProjectsSection";
 import { FEATURED_PROJECTS_BASE } from "@/components/projects/project.data";
+import GamificationRuntime from "@/components/gamification/GamificationRuntime";
+import dynamic from "next/dynamic";
+const Process = dynamic(() => import("@/components/Process"));
+const SectionAbout = dynamic(() => import("@/components/SectionAbout"));
+const FAQSection = dynamic(() => import("@/components/Faq"));
 
 const featuredIds = new Set([
   "academia-platform-project",
@@ -77,11 +75,7 @@ export default async function Home({
       <main>
         <RestoreScroll />
         <Hero copy={dict.hero} />
-
-        <GamificationBoot />
-        <TriggersBoot />
-        <MissionsBoot />
-        <AchievementsUI />
+        <GamificationRuntime />
         <ServicesAccordion copy={dict.services} />
 
         {/*
