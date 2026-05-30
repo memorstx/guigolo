@@ -10,7 +10,7 @@ import {
 import { unlockAchievement } from "./gamification/achievementsStore";
 import { completeMission } from "./gamification/missionsStore";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqqzvro";
+const CONTACT_ENDPOINT = "/api/contact";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -161,7 +161,7 @@ export default function Contact({ copy, locale }: Props) {
     const formData = new FormData(form);
 
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: formData,
