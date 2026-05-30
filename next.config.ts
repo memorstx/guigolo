@@ -209,6 +209,11 @@ const nextConfig: NextConfig = {
         destination: '/?utm_source=multiplica&utm_medium=bio&utm_campaign=productivity_navigation', 
         permanent: false,
       },
+      {
+        source: '/go/bongodex',
+        destination: '/?utm_source=bongodex&utm_medium=bio&utm_campaign=portfoloio_navigation', 
+        permanent: false,
+      },
       
     ]
   },
