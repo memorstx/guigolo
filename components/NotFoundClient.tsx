@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import SiteShell from "@/components/SiteShell";
 import PageFrame from "@/components/layout/PageFrame";
 
@@ -43,7 +44,9 @@ const COPY: Record<Locale, NotFoundCopy> = {
   },
 };
 
-export default function NotFoundClient({ locale }: { locale: Locale }) {
+export default function NotFoundClient() {
+  const pathname = usePathname();
+  const locale: Locale = pathname?.startsWith("/en") ? "en" : "es";
   const t = COPY[locale];
 
   const homeHref = `/${locale}`;

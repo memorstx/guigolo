@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { getUnlockedCount } from "./achievementsStore";
 import { onAchievementUnlocked } from "./achievementEvents";
 import { ACHIEVEMENTS } from "./achievementsCatalog";
@@ -13,12 +14,6 @@ type ToastState = {
   description?: string;
   icon?: string;
 };
-
-function getLocaleFromPath(): Locale {
-  if (typeof window === "undefined") return "es";
-  const seg = window.location.pathname.split("/")[1];
-  return seg === "en" ? "en" : "es";
-}
 
 const UI = {
   es: {
@@ -36,16 +31,12 @@ const UI = {
 export default function AchievementsUI() {
   const total = ACHIEVEMENTS.length;
 
-  const [unlockedCount, setUnlockedCount] = useState<number | null>(() => {
-    if (typeof window === "undefined") return null;
-
-    return getUnlockedCount();
-  });
+  const [unlockedCount, setUnlockedCount] = useState<number | null>(null);
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const hideTimerRef = useRef<number | null>(null);
-
-  const locale = useMemo(() => getLocaleFromPath(), []);
+  const pathname = usePathname();
+  const locale: Locale = pathname?.startsWith("/en") ? "en" : "es";
   const t = UI[locale];
 
   const byId = useMemo(() => {
@@ -62,6 +53,8 @@ export default function AchievementsUI() {
   }, [locale]);
 
   useEffect(() => {
+    setUnlockedCount(getUnlockedCount());
+
     const off = onAchievementUnlocked(({ id }) => {
       setUnlockedCount(getUnlockedCount());
 

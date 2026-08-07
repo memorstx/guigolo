@@ -34,14 +34,16 @@ export default function FeedbackButtons({
   options,
   thanksText = "Gracias por tu reacción ✨",
 }: Props) {
-  const [selected, setSelected] = useState<Option["id"] | null>(() => {
-    if (typeof window === "undefined") return null;
+  const [selected, setSelected] = useState<Option["id"] | null>(null);
 
+  useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     const isValid = options.some((option) => option.id === saved);
 
-    return isValid ? (saved as Option["id"]) : null;
-  });
+    if (isValid) {
+      setSelected(saved as Option["id"]);
+    }
+  }, [options]);
 
   useEffect(() => {
     if (!selected) return;

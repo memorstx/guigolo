@@ -10,6 +10,12 @@ function normalizeLocale(input: string): Locale {
 
 type Params = Promise<{ locale: string }>;
 
+export function generateStaticParams() {
+  return SUPPORTED.map((locale) => ({ locale }));
+}
+
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
@@ -34,16 +40,12 @@ export async function generateMetadata({
         locale === "es"
           ? "Guigolo · UX/UI estratégico para productos digitales"
           : "Guigolo · Strategic UX/UI for digital products",
-
       description:
         locale === "es"
           ? "Portafolio de Guillermo González López. Diseño experiencias digitales estratégicas con identidad propia para productos, SaaS, interfaces y plataformas web."
           : "Portfolio of Guillermo González López. I design strategic digital experiences with their own identity for products, SaaS platforms and web interfaces.",
-
       url: canonical,
-
       siteName: "Guigolo",
-
       images: [
         {
           url: "/og/og_v2.png",
@@ -55,38 +57,37 @@ export async function generateMetadata({
               : "Guigolo · Strategic UX/UI for digital products",
         },
       ],
-
       locale: locale === "es" ? "es_MX" : "en_US",
-
       type: "website",
     },
-
     twitter: {
       card: "summary_large_image",
-
       title:
         locale === "es"
           ? "Guigolo · UX/UI estratégico para productos digitales"
           : "Guigolo · Strategic UX/UI for digital products",
-
       description:
         locale === "es"
           ? "Diseño productos digitales, interfaces y experiencias web con identidad, claridad y enfoque estratégico."
           : "I design digital products, interfaces and web experiences with identity, clarity and strategic thinking.",
-
       images: ["/og/og_v2.png"],
     },
   };
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Params;
 }) {
+  const { locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+
   return (
     <>
-      <SeoJsonLd locale="es" />
+      <SeoJsonLd locale={locale} />
       {children}
     </>
   );

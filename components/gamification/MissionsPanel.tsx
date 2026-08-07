@@ -97,13 +97,11 @@ export default function MissionsPanel({ open, onClose }: Props) {
   const locale = getLocaleFromPath(pathname);
 
   const total = MISSIONS.length;
-  const [done, setDone] = useState<number>(() => {
-    if (typeof window === "undefined") return 0;
-
-    return getCompletedMissionsCount();
-  });
+  const [done, setDone] = useState(0);
 
   useEffect(() => {
+    setDone(getCompletedMissionsCount());
+
     const off = onMissionUnlocked(() => {
       setDone(getCompletedMissionsCount());
     });
@@ -120,12 +118,10 @@ export default function MissionsPanel({ open, onClose }: Props) {
     };
   }, [onClose]);
 
-  const contactUnlocked = hasMission("mission_contact");
-  const isOwner =
-    typeof window !== "undefined" &&
-    localStorage.getItem("guigolo_owner") === "1";
-
   if (!open) return null;
+
+  const contactUnlocked = hasMission("mission_contact");
+  const isOwner = localStorage.getItem("guigolo_owner") === "1";
 
   return (
     <>

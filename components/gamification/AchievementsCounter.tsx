@@ -7,14 +7,16 @@ import { onAchievementUnlocked } from "./achievementEvents";
 
 export default function AchievementsCounter() {
   const total = ACHIEVEMENTS.length;
-  const [count, setCount] = useState<number | null>(() => {
-    if (typeof window === "undefined") return null;
-
-    return getUnlockedCount();
-  });
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    const off = onAchievementUnlocked(() => setCount(getUnlockedCount()));
+    // El primer render debe ser idéntico en servidor y cliente.
+    // localStorage sólo se consulta después de hidratar en el navegador.
+    setCount(getUnlockedCount());
+
+    const off = onAchievementUnlocked(() => {
+      setCount(getUnlockedCount());
+    });
 
     return () => off();
   }, []);

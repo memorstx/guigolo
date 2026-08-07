@@ -53,16 +53,8 @@ type Props = {
 };
 
 export default function Contact({ copy, locale }: Props) {
-  const [status, setStatus] = useState<Status>(() => {
-    if (typeof window === "undefined") return "idle";
-
-    return sessionStorage.getItem("contact_sent_v1") === "1" ? "success" : "idle";
-  });
-  const [origin] = useState<ContactOrigin | null>(() => {
-    if (typeof window === "undefined") return null;
-
-    return readContactOrigin();
-  });
+  const [status, setStatus] = useState<Status>("idle");
+  const [origin, setOrigin] = useState<ContactOrigin | null>(null);
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -79,6 +71,14 @@ export default function Contact({ copy, locale }: Props) {
   };
 
   const homeHash = (hash: string) => `/${locale}${hash}`;
+
+  useEffect(() => {
+    // sessionStorage sólo existe en el navegador; leerlo aquí evita hydration mismatch.
+    setStatus(
+      sessionStorage.getItem("contact_sent_v1") === "1" ? "success" : "idle"
+    );
+    setOrigin(readContactOrigin());
+  }, []);
 
   useEffect(() => {
     const el = document.getElementById("contacto");
