@@ -306,11 +306,17 @@ export default function Contact({ copy, locale }: Props) {
             <input type="hidden" name="origin_cta" value={origin?.ctaId ?? ""} />
 
             <div className="grid gap-2">
-              <label className="text-label-sm uppercase text-neutral-white/60">
+              <label
+                htmlFor="contact-name"
+                className="text-label-sm uppercase text-neutral-white/60"
+              >
                 {copy.form.nameLabel}
               </label>
               <input
+                id="contact-name"
+                type="text"
                 name="name"
+                autoComplete="name"
                 required
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
                 placeholder={copy.form.namePlaceholder}
@@ -318,12 +324,17 @@ export default function Contact({ copy, locale }: Props) {
             </div>
 
             <div className="grid gap-2">
-              <label className="text-label-sm uppercase text-neutral-white/60">
+              <label
+                htmlFor="contact-email"
+                className="text-label-sm uppercase text-neutral-white/60"
+              >
                 {copy.form.emailLabel}
               </label>
               <input
+                id="contact-email"
                 type="email"
                 name="email"
+                autoComplete="email"
                 required
                 className="w-full rounded-md border border-neutral-white/10 bg-neutral-black-900/60 px-4 py-3 text-neutral-white outline-none focus:border-accent-lilac/60"
                 placeholder={copy.form.emailPlaceholder}
@@ -331,10 +342,14 @@ export default function Contact({ copy, locale }: Props) {
             </div>
 
             <div className="grid gap-2">
-              <label className="text-label-sm uppercase text-neutral-white/60">
+              <label
+                htmlFor="contact-message"
+                className="text-label-sm uppercase text-neutral-white/60"
+              >
                 {copy.form.messageLabel}
               </label>
               <textarea
+                id="contact-message"
                 name="message"
                 required
                 rows={5}

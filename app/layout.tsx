@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Guigolo",
     images: [
       {
-        url: "/og/cover-social.png",
+        url: "/og/cover_social.png",
         width: 1200,
         height: 630,
         alt: "Guigolo · Portafolio UX/UI",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "Guigolo · Diseño centrado en usuario y negocio",
     description:
       "Diseño que impulsa, conecta y acompaña tu visión. Interfaces humanas, claras y con intención.",
-    images: ["/og/cover-social.png"],
+    images: ["/og/cover_social.png"],
   },
 };
 
@@ -71,8 +71,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={`${unbounded.variable} ${anta.variable}`}>
+        <Script id="html-lang" strategy="beforeInteractive">
+          {`document.documentElement.lang = location.pathname.startsWith('/en') ? 'en' : 'es';`}
+        </Script>
         <HtmlLangSync />
-        
+
         {children}
 
         {/* Google Analytics — SOLO producción */}

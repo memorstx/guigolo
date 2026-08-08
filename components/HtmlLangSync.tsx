@@ -7,8 +7,7 @@ export function HtmlLangSync() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const isEn = pathname?.startsWith("/en");
-    document.documentElement.lang = isEn ? "en" : "es";
+    document.documentElement.lang = pathname?.startsWith("/en") ? "en" : "es";
   }, [pathname]);
 
   return null;

@@ -29,6 +29,21 @@ export async function generateMetadata({
       url,
       siteName: "Guigolo",
       type: "article",
+      locale: locale === "es" ? "es_MX" : "en_US",
+      images: [
+        {
+          url: "/og/og_v2.png",
+          width: 1200,
+          height: 630,
+          alt: m.ogTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: m.ogTitle,
+      description: m.ogDescription,
+      images: ["/og/og_v2.png"],
     },
     alternates: {
       canonical: url,

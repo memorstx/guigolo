@@ -26,6 +26,32 @@ export default async function ChangelogPage({
             {/* ⬇️ AQUÍ VA EL CONTENIDO NUEVO */}
             <section className="space-y-10">
               <div>
+                <h2>[1.3.0] — Static Runtime + Language UX</h2>
+
+                <h3>Added</h3>
+                <ul>
+                  <li>Selector visual <code>ES / EN</code> en el header, responsive y conservando ruta, query y hash.</li>
+                  <li>Sincronización temprana del atributo <code>lang</code> del documento según la ruta activa.</li>
+                </ul>
+
+                <h3>Changed</h3>
+                <ul>
+                  <li>Español (<code>/es</code>) pasa a ser el idioma por defecto.</li>
+                  <li>Locales conocidos (<code>es</code> y <code>en</code>) se prerenderizan para reducir trabajo en runtime.</li>
+                  <li>Rutas de contenido para agentes y markdown se sirven de forma estática cuando aplica.</li>
+                </ul>
+
+                <h3>Fixed</h3>
+                <ul>
+                  <li>Eliminado el Proxy global que podía ejecutarse en solicitudes que no necesitaban lógica de servidor.</li>
+                  <li>Corregidos hydration mismatches en contadores, misiones, feedback y estado del formulario.</li>
+                  <li>Corregidas imágenes Open Graph y Twitter en metadata global y en “What is Guigolo”.</li>
+                  <li>El acceso externo de proyectos ya no se renderiza cuando no existe una URL.</li>
+                  <li>Labels del formulario asociados explícitamente con sus campos.</li>
+                </ul>
+              </div>
+
+              <div>
                 <h2>[1.2.0] — i18n + Locale Routing (es/en)</h2>
 
                 <h3>Added</h3>
