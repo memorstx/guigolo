@@ -46,6 +46,30 @@ function localizeHref(href: string | undefined, locale: "es" | "en") {
   return `/${locale}${href}`;
 }
 
+function renderDescription(text: string) {
+  const parts = text.split(/(\[[^\]]+\]\(https?:\/\/[^)]+\))/g);
+
+  return parts.map((part, index) => {
+    const match = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/);
+
+    if (!match) return part;
+
+    const [, label, href] = match;
+
+    return (
+      <a
+        key={`${href}-${index}`}
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="text-accent-purple underline decoration-accent-purple/40 underline-offset-4 transition hover:text-neutral-white hover:decoration-neutral-white/60"
+      >
+        {label}
+      </a>
+    );
+  });
+}
+
 export default function ProjectsSection({ items, copy, locale }: Props) {
   const autoplay = useMemo(
     () =>
@@ -313,7 +337,7 @@ function ProjectSlide({
 
           <div className="mt-4 space-y-2.5 text-[12px] leading-[1.65] text-neutral-white/68 sm:text-[13px]">
             {description.map((text, descriptionIndex) => (
-              <p key={descriptionIndex}>{text}</p>
+              <p key={descriptionIndex}>{renderDescription(text)}</p>
             ))}
           </div>
 

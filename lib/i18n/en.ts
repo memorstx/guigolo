@@ -84,8 +84,8 @@ export const en = {
         title: "bongodex",
         sector: "Collector product · Product Design + Frontend",
         description: [
-          "An own product that organizes Bongo Cat inventory as a collection with context, progress, and explicit states.",
-          "Collection, Overview, Activity, and Bongo Battle solve different problems while sharing the same inventory data foundation."
+          "bongodex is a tool for Bongo Cat collectors that organizes your Steam inventory and shows your collection progress.",
+          "It helps you see what you own, what you’re missing, duplicates, rarities, and activity in one place."
         ],
         stack: "Next.js, React, Tailwind, Prisma, Neon",
         role: "Product Designer + Frontend",
