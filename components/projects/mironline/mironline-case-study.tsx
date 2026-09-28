@@ -291,6 +291,114 @@ function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
   );
 }
 
+function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.audience;
+
+  return (
+    <section
+      id="audience"
+      className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
+    >
+      <div className={`${styles.ambient} ${styles.ambientPurple} -left-64 top-20`} />
+
+      <div className={SITE_SECTION_GUTTERS}>
+        <Reveal>
+          <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+            <StageHeader title={section.title} />
+            <p className={styles.bodyCopy}>{section.intro}</p>
+          </div>
+        </Reveal>
+
+        <div className={styles.audienceProfiles}>
+          {section.profiles.map((profile, index) => (
+            <Reveal key={profile.role} delay={index * 90}>
+              <article className={styles.audienceProfile}>
+                <span className={styles.audienceIndex}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <p className={styles.microLabel}>
+                  {index === 0 ? "PRIMARY USER" : "SECONDARY USER"}
+                </p>
+                <h3 className={styles.audienceRole}>{profile.role}</h3>
+                <p className={`${styles.bodyCopy} mt-4 max-w-[34rem]`}>
+                  {profile.context}
+                </p>
+
+                <div className={styles.needList}>
+                  {profile.needs.map((need) => (
+                    <div key={need} className={styles.needItem}>
+                      <span aria-hidden className={styles.needDot} />
+                      <span>{need}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className={styles.userStory}>
+                  <p className={styles.microLabel}>{section.storyLabel}</p>
+                  <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/72 md:text-[15px]">
+                    {profile.story}
+                  </p>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal className="mt-20 md:mt-28">
+          <div className="grid gap-10 xl:grid-cols-[.78fr_1.22fr] xl:items-start xl:gap-20">
+            <div>
+              <p className={styles.microLabel}>{section.architectureTitle}</p>
+              <p className={`${styles.sectionLeadSmall} mt-4 max-w-[34rem]`}>
+                mironline conectaba práctica, feedback y seguimiento dentro de un mismo producto.
+              </p>
+            </div>
+
+            <div className={styles.architectureMap}>
+              <div className={styles.architectureRoot}>mironline</div>
+              <div className={styles.architectureBranches}>
+                {section.architecture.map((branch) => (
+                  <div key={branch.label} className={styles.architectureBranch}>
+                    <h3 className={styles.architectureBranchTitle}>{branch.label}</h3>
+                    <div className={styles.architectureItems}>
+                      {branch.items.map((item) => (
+                        <span key={item} className={styles.architectureItem}>
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-20 md:mt-24">
+          <p className={styles.microLabel}>{section.flowTitle}</p>
+          <div className={styles.flowTrack}>
+            {section.flow.map((step, index) => (
+              <div key={step} className={styles.flowStep}>
+                <span className={styles.flowNumber}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className={styles.flowLabel}>{step}</span>
+                {index < section.flow.length - 1 ? (
+                  <span className={styles.flowArrow} aria-hidden>
+                    →
+                  </span>
+                ) : null}
+              </div>
+            ))}
+          </div>
+
+          <p className={styles.audienceNote}>{section.note}</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.challenge;
   const words = ["FLASH", "MOBILE", "BROWSER", "LOAD"];
@@ -997,6 +1105,7 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Hero locale={locale} copy={copy} />
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
+      <AudienceSection copy={copy} />
       <ProblemSection copy={copy} />
       <RoleSection locale={locale} copy={copy} />
       <ResearchSection copy={copy} />

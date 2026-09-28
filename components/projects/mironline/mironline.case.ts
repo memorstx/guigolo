@@ -21,6 +21,23 @@ export type MironlineCaseCopy = {
       body: string[];
       ecosystem: Array<{ label: string; value: string }>;
     };
+    audience: {
+      kicker: string;
+      title: string;
+      intro: string;
+      profiles: Array<{
+        role: string;
+        context: string;
+        needs: string[];
+        story: string;
+      }>;
+      storyLabel: string;
+      architectureTitle: string;
+      architecture: Array<{ label: string; items: string[] }>;
+      flowTitle: string;
+      flow: string[];
+      note: string;
+    };
     challenge: {
       kicker: string;
       title: string;
@@ -169,6 +186,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Contexto" },
+      { id: "audience", label: "Usuarios" },
       { id: "problem", label: "Problema" },
       { id: "scope", label: "Alcance" },
       { id: "research", label: "Investigación" },
@@ -194,8 +212,65 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           { label: "DATOS", value: "Progreso y desempeño" },
         ],
       },
-      challenge: {
+      audience: {
         kicker: "02",
+        title: "Usuarios y estructura",
+        intro:
+          "Los dos usuarios principales eran estudiantes y docentes. Para este caso resumo sus necesidades a partir de problemas que aparecían en soporte, conversaciones y uso de la plataforma.",
+        profiles: [
+          {
+            role: "Estudiante",
+            context:
+              "Practica inglés dentro de un curso y resuelve actividades desde computadora, tablet o celular.",
+            needs: [
+              "Entender qué hacer en cada actividad.",
+              "Mantener disponible el contexto mientras responde.",
+              "Recibir feedback después de una respuesta.",
+              "Consultar su avance dentro del curso.",
+            ],
+            story:
+              "Como estudiante, necesito mantener disponible el contenido que estoy usando mientras respondo, para no perder el contexto.",
+          },
+          {
+            role: "Docente",
+            context:
+              "Da seguimiento a grupos y revisa cómo avanzan los alumnos dentro de sus cursos.",
+            needs: [
+              "Consultar grupos y alumnos.",
+              "Revisar calificaciones.",
+              "Ver progreso y desempeño.",
+              "Dar seguimiento académico sin recorrer demasiadas pantallas.",
+            ],
+            story:
+              "Como docente, necesito consultar avance, calificaciones y desempeño por grupo, para dar seguimiento al curso.",
+          },
+        ],
+        storyLabel: "User story",
+        architectureTitle: "Arquitectura de información",
+        architecture: [
+          {
+            label: "Estudiante",
+            items: ["Curso", "Contenido y actividades", "Feedback", "Progreso"],
+          },
+          {
+            label: "Docente",
+            items: ["Grupos", "Alumnos", "Calificaciones", "Seguimiento"],
+          },
+        ],
+        flowTitle: "Golden path · estudiante",
+        flow: [
+          "Entrar al curso",
+          "Abrir actividad",
+          "Leer instrucción",
+          "Responder",
+          "Recibir feedback",
+          "Continuar",
+        ],
+        note:
+          "Los perfiles y user stories están resumidos aquí a partir de necesidades reales observadas durante el proyecto.",
+      },
+      challenge: {
+        kicker: "03",
         title: "Problema",
         statement: "Migración de actividades heredadas de Flash a una experiencia web responsive.",
         body:
@@ -551,6 +626,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Context" },
+      { id: "audience", label: "Users" },
       { id: "problem", label: "Problem" },
       { id: "scope", label: "Scope" },
       { id: "research", label: "Research" },
@@ -576,8 +652,65 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           { label: "DATA", value: "Progress + performance" },
         ],
       },
-      challenge: {
+      audience: {
         kicker: "02",
+        title: "Users and structure",
+        intro:
+          "The two primary users were students and teachers. For this case study, I summarize their needs from issues surfaced through support, conversations and product usage.",
+        profiles: [
+          {
+            role: "Student",
+            context:
+              "Practices English within a course and completes activities on desktop, tablet or mobile.",
+            needs: [
+              "Understand what to do in each activity.",
+              "Keep relevant context available while answering.",
+              "Receive feedback after an answer.",
+              "Check progress within the course.",
+            ],
+            story:
+              "As a student, I need the content I am using to remain available while I answer, so I do not lose context.",
+          },
+          {
+            role: "Teacher",
+            context:
+              "Follows groups and reviews how students are progressing through their courses.",
+            needs: [
+              "Check groups and students.",
+              "Review grades.",
+              "See progress and performance.",
+              "Follow academic progress without navigating through too many screens.",
+            ],
+            story:
+              "As a teacher, I need to review progress, grades and performance by group, so I can follow the course.",
+          },
+        ],
+        storyLabel: "User story",
+        architectureTitle: "Information architecture",
+        architecture: [
+          {
+            label: "Student",
+            items: ["Course", "Content and activities", "Feedback", "Progress"],
+          },
+          {
+            label: "Teacher",
+            items: ["Groups", "Students", "Grades", "Follow-up"],
+          },
+        ],
+        flowTitle: "Golden path · student",
+        flow: [
+          "Enter course",
+          "Open activity",
+          "Read instruction",
+          "Answer",
+          "Receive feedback",
+          "Continue",
+        ],
+        note:
+          "The profiles and user stories shown here summarize real needs observed during the project.",
+      },
+      challenge: {
+        kicker: "03",
         title: "Problem",
         statement: "Migrating Flash-based activities into a responsive web experience.",
         body:
