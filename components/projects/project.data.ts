@@ -2,7 +2,7 @@ export type FeaturedProjectBase = {
   id: string;
   companyLogo?: string;
   image: string;
-  linkUrl: string;
+  linkUrl?: string;
   access?: string;
 };
 
@@ -11,7 +11,11 @@ export const FEATURED_PROJECTS_BASE: FeaturedProjectBase[] = [
     id: "academia-platform-project",
     companyLogo: "/brand/projects/academia-global/logo-ag.png",
     image: "/brand/projects/academia-global/cover_plataforma_educativa.png",
-    linkUrl: "/projects/ag/platform",
+
+    // Case study pendiente.
+    // Cuando esté listo, sólo vuelve a activar esta línea:
+    // linkUrl: "/projects/ag/platform",
+
     access: "https://academiaglobal.mx",
   },
   {
@@ -24,6 +28,10 @@ export const FEATURED_PROJECTS_BASE: FeaturedProjectBase[] = [
   {
     id: "bongodex-platform-project",
     image: "/brand/projects/bongodex/case-study/01-bongodex-cover.png",
-    linkUrl: "/projects/bongodex/platform",
+
+    // Case study pendiente.
+    // La ruta y el código siguen existiendo; sólo ocultamos "Ver caso" por ahora.
+    // Cuando esté listo, vuelve a activar:
+    // linkUrl: "/projects/bongodex/platform",
   },
 ];
