@@ -5,7 +5,6 @@ import path from "node:path";
 import type { Locale, MironlineCaseCopy } from "./mironline.case";
 import {
   BeforeAfterCompare,
-  InteractionStage,
   Reveal,
 } from "./mironline-case-study-client";
 import {
@@ -106,14 +105,13 @@ function StageHeader({
 function MediaAsset({
   asset,
   label,
-  index,
   className = "",
   imageClassName = "object-contain",
   priority = false,
 }: {
   asset: AssetKey;
   label: string;
-  index: string;
+  index?: string;
   className?: string;
   imageClassName?: string;
   priority?: boolean;
@@ -121,9 +119,11 @@ function MediaAsset({
   const src = assets[asset];
   const exists = publicAssetExists(src);
 
+  if (!exists) return null;
+
   return (
-    <figure className={`${styles.assetStage} ${className}`}>
-      {exists ? (
+    <figure className={className}>
+      <div className={styles.assetStage}>
         <Image
           src={src}
           alt={label}
@@ -132,17 +132,7 @@ function MediaAsset({
           className={`relative z-[1] ${imageClassName}`}
           sizes="(min-width: 1536px) 68vw, (min-width: 1024px) 72vw, 100vw"
         />
-      ) : (
-        <div className={styles.assetPlaceholder}>
-          <div className={styles.assetPlaceholderInner}>
-            <div className={styles.assetIndex}>{index}</div>
-            <div className={styles.assetFile}>{src.split("/").pop()}</div>
-            <div className="mt-2 text-[12px] tracking-[0.12em] text-neutral-white/25 uppercase">
-              1600 × 1000
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
       <figcaption className={styles.assetLabel}>{label}</figcaption>
     </figure>
   );
@@ -304,6 +294,7 @@ function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
 function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.challenge;
   const words = ["FLASH", "MOBILE", "BROWSER", "LOAD"];
+  const hasResearchVisual = publicAssetExists(assets.research);
 
   return (
     <section id="problem" className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32">
@@ -317,15 +308,23 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
           </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
-          <Reveal>
-            <MediaAsset asset="research" label={copy.assetLabels.research} index="12"  />
-          </Reveal>
+        <div className={`mt-12 grid gap-10 ${hasResearchVisual ? "lg:grid-cols-[1.12fr_.88fr] lg:items-center" : "lg:grid-cols-[.82fr_1.18fr] lg:items-start"}`}>
+          {hasResearchVisual ? (
+            <Reveal>
+              <MediaAsset asset="research" label={copy.assetLabels.research} />
+            </Reveal>
+          ) : (
+            <Reveal>
+              <div className="max-w-[720px]">
+                <p className={styles.bodyCopy}>{section.body}</p>
+              </div>
+            </Reveal>
+          )}
 
           <Reveal delay={100}>
-            <p className={styles.bodyCopy}>{section.body}</p>
+            {hasResearchVisual ? <p className={styles.bodyCopy}>{section.body}</p> : null}
 
-            <div className="mt-11 grid grid-cols-2 gap-x-7 gap-y-3">
+            <div className={`${hasResearchVisual ? "mt-10" : "mt-0"} grid grid-cols-1 gap-x-7 gap-y-4 sm:grid-cols-2`}>
               {words.map((word, index) => (
                 <div key={word} className={styles.signalWord}>
                   <span className={styles.signalGhost}>{word}</span>
@@ -360,6 +359,7 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.role;
+  const hasProcessVisual = publicAssetExists(assets.process);
 
   return (
     <SectionShell id="scope" className="overflow-hidden">
@@ -371,7 +371,7 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
         <StageHeader title={section.title} />
       </Reveal>
 
-      <div className="mt-14 grid gap-12 lg:grid-cols-[.82fr_1.18fr] xl:gap-20">
+      <div className={`mt-12 grid gap-12 ${hasProcessVisual ? "lg:grid-cols-[.82fr_1.18fr] xl:gap-20" : "lg:grid-cols-2 xl:gap-20"}`}>
         <Reveal>
           <div className="space-y-6">
             {section.body.map((paragraph) => (
@@ -381,11 +381,9 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
             ))}
           </div>
 
-          <div className="mt-12">
-            <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
-              {section.teamTitle}
-            </p>
-            <div className="mt-5 space-y-2">
+          <div className="mt-10">
+            <p className={styles.microLabel}>{section.teamTitle}</p>
+            <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3 lg:grid-cols-2">
               {section.team.map((member) => (
                 <div key={member} className={styles.mutedListTitle}>
                   {member}
@@ -396,9 +394,9 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
         </Reveal>
 
         <Reveal delay={100}>
-          <MediaAsset asset="process" label={copy.assetLabels.process} index="13"  />
+          {hasProcessVisual ? <MediaAsset asset="process" label={copy.assetLabels.process} /> : null}
 
-          <div className="mt-10 grid gap-10 md:grid-cols-2">
+          <div className={`${hasProcessVisual ? "mt-10" : "mt-0"} grid gap-10 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2`}>
             <div>
               <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">
                 {section.workflowTitle}
@@ -429,6 +427,7 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.research;
+  const hasResearchVisual = publicAssetExists(assets.research);
 
   return (
     <section id="research" className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32">
@@ -438,18 +437,20 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
           <StageHeader title={section.title} intro={section.intro} align="center" />
         </Reveal>
 
-        <div className="relative mt-16 md:mt-20">
-          <div className="mx-auto max-w-[1100px]">
-            <Reveal>
-              <MediaAsset asset="research" label={copy.assetLabels.research} index="12"  />
-            </Reveal>
-          </div>
+        <div className="relative mt-12 md:mt-14">
+          {hasResearchVisual ? (
+            <div className="mx-auto max-w-[1100px]">
+              <Reveal>
+                <MediaAsset asset="research" label={copy.assetLabels.research} />
+              </Reveal>
+            </div>
+          ) : null}
 
-          <div className="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-2 xl:grid-cols-4">
+          <div className={`${hasResearchVisual ? "mt-12" : "mt-0"} grid gap-x-10 gap-y-10 sm:grid-cols-2 xl:grid-cols-4`}>
             {section.signals.map((signal, index) => (
               <Reveal key={signal.title} delay={index * 70}>
                 <div className="relative pt-4">
-                  <div className="absolute -top-2 right-0 select-none text-[clamp(3rem,5vw,5rem)] font-bold leading-none text-neutral-white/[0.025]">
+                  <div className="absolute -top-2 right-0 select-none text-[clamp(2.25rem,3.5vw,3.5rem)] font-bold leading-none text-neutral-white/[0.025]">
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <h3 className={styles.cardTitle}>{signal.title}</h3>
@@ -495,34 +496,28 @@ function IdeationSection({ copy }: { copy: MironlineCaseCopy }) {
 
   return (
     <section id="ideation" className="relative overflow-hidden bg-neutral-black-800/25">
-      <div className={`${SITE_SECTION_GUTTERS} py-20 md:py-28 xl:py-32`}>
+      <div className={`${SITE_SECTION_GUTTERS} py-16 md:py-20 xl:py-24`}>
         <Reveal>
           <StageHeader title={section.title} />
         </Reveal>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1.18fr_.82fr] lg:items-center xl:gap-16">
           <Reveal>
-            <MediaAsset asset="player" label={copy.assetLabels.player} index="02"  />
+            <MediaAsset asset="player" label={copy.assetLabels.player} />
           </Reveal>
           <Reveal delay={100}>
-            <div className="pb-4 lg:pb-12">
-              <div className={`${styles.stageWord} ${styles.stageWordCyan}`}>30+</div>
-              <p className={`${styles.bodyCopy} mt-4 max-w-md`}>
-                {section.intro}
-              </p>
+            <div className="max-w-[560px]">
+              <p className={styles.microLabel}>30+ patrones de interacción</p>
+              <p className={`${styles.bodyCopy} mt-4`}>{section.intro}</p>
+              <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-[13px] leading-relaxed text-neutral-white/48">
+                {section.interactions.slice(0, 6).map((interaction) => (
+                  <span key={interaction.title}>{interaction.title}</span>
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>
-
-        <Reveal className="mt-10 md:mt-14">
-          <InteractionStage interactions={section.interactions} />
-        </Reveal>
-
-        <Reveal className="mt-12 md:mt-16">
-          <MediaAsset asset="gallery" label={copy.assetLabels.gallery} index="14"  />
-        </Reveal>
       </div>
-      <Marquee>interaction patterns · learning player · feedback states · responsive behavior</Marquee>
     </section>
   );
 }
@@ -818,52 +813,38 @@ function TeacherSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function ValidationSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.measure;
-  const orbitPositions = [
-    "left-[4%] top-[15%] md:left-[9%] md:top-[12%]",
-    "right-[4%] top-[15%] md:right-[9%] md:top-[12%]",
-    "left-[4%] bottom-[14%] md:left-[9%] md:bottom-[11%]",
-    "right-[4%] bottom-[14%] md:right-[9%] md:bottom-[11%]",
-  ];
+  const hasAnalyticsVisual = publicAssetExists(assets.analytics);
 
   return (
-    <section id="validation" className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32">
+    <section id="validation" className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24">
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} align="center" />
+          <StageHeader title={section.title} intro={section.intro} />
         </Reveal>
 
-        <Reveal className="mt-8 md:mt-12">
-          <div className={styles.validationOrbit}>
-            <div className={styles.orbitCenter}>
-              <div className="text-center">
-                <div className="text-[12px] tracking-[0.22em] text-accent-purple/65 uppercase">release</div>
-                <div className="mt-2 text-[13px] font-semibold text-neutral-white/75 uppercase">production</div>
-              </div>
-            </div>
+        {hasAnalyticsVisual ? (
+          <Reveal className="mx-auto mt-10 max-w-[1050px]">
+            <MediaAsset asset="analytics" label={copy.assetLabels.analytics} />
+          </Reveal>
+        ) : null}
 
-            {section.sources.map((source, index) => (
-              <div key={source.title} className={`${styles.orbitItem} ${orbitPositions[index]}`}>
-                <p className="text-[12px] font-semibold tracking-[0.08em] text-neutral-white/80 uppercase">
-                  {source.title}
-                </p>
-                <p className="mt-2 text-[12px] leading-relaxed text-neutral-white/40">{source.body}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+        <div className={`${hasAnalyticsVisual ? "mt-12" : "mt-10"} grid gap-6 sm:grid-cols-2 xl:grid-cols-4`}>
+          {section.sources.map((source, index) => (
+            <Reveal key={source.title} delay={index * 60}>
+              <article className="h-full border-t border-neutral-white/10 pt-5">
+                <p className={styles.microLabel}>{source.title}</p>
+                <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/58">{source.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
-        <Reveal className="mx-auto mt-4 max-w-[1050px]">
-          <MediaAsset asset="analytics" label={copy.assetLabels.analytics} index="10"  />
-        </Reveal>
-
-        <Reveal className="mt-12">
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-4 text-[12px] tracking-[0.08em] text-neutral-white/45 uppercase md:text-[13px]">
+        <Reveal className="mt-10">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-3 text-[12px] tracking-[0.06em] text-neutral-white/42 uppercase">
             {section.loop.map((step, index) => (
               <span key={`${step}-${index}`} className="contents">
                 <span>{step}</span>
-                {index < section.loop.length - 1 ? (
-                  <span className="text-accent-purple/45">→</span>
-                ) : null}
+                {index < section.loop.length - 1 ? <span className="text-accent-purple/45">→</span> : null}
               </span>
             ))}
           </div>
@@ -931,6 +912,7 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function EvolutionSection({ locale, copy }: Props) {
   const section = copy.sections.beyond;
+  const hasBeyondVisual = publicAssetExists(assets.beyond);
 
   return (
     <section id="evolution" className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32">
@@ -939,21 +921,31 @@ function EvolutionSection({ locale, copy }: Props) {
           <StageHeader title={section.title} />
         </Reveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[1.28fr_.72fr] lg:items-start xl:gap-20">
-          <Reveal>
-            <MediaAsset asset="beyond" label={copy.assetLabels.beyond} index="11"  />
-          </Reveal>
+        <div className={`mt-12 grid gap-12 ${hasBeyondVisual ? "lg:grid-cols-[1.28fr_.72fr] lg:items-start xl:gap-20" : "lg:grid-cols-[1fr_.8fr] lg:items-start xl:gap-20"}`}>
+          {hasBeyondVisual ? (
+            <Reveal>
+              <MediaAsset asset="beyond" label={copy.assetLabels.beyond} />
+            </Reveal>
+          ) : (
+            <Reveal>
+              <div className="max-w-[760px] space-y-6">
+                {section.body.map((paragraph) => (
+                  <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
+                ))}
+              </div>
+            </Reveal>
+          )}
 
           <Reveal delay={100}>
-            <div className="space-y-6 lg:pt-8">
-              {section.body.map((paragraph) => (
-                <p key={paragraph} className={styles.bodyCopy}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+            {hasBeyondVisual ? (
+              <div className="space-y-6 lg:pt-8">
+                {section.body.map((paragraph) => (
+                  <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
+                ))}
+              </div>
+            ) : null}
 
-            <div className="mt-16">
+            <div className={hasBeyondVisual ? "mt-14" : "mt-0"}>
               <div className={styles.quoteMark}>“</div>
               <blockquote className={`${styles.sectionLead} max-w-[680px]`}>
                 {section.quote}
@@ -964,7 +956,7 @@ function EvolutionSection({ locale, copy }: Props) {
 
         <Reveal className="mt-20 md:mt-28">
           <div className="relative overflow-hidden bg-[radial-gradient(80%_140%_at_100%_0%,rgba(20,177,255,.10),transparent_60%)] py-10 md:py-14">
-            <div className="pointer-events-none absolute right-[-2%] top-1/2 -translate-y-1/2 select-none text-[clamp(5rem,12vw,12rem)] font-bold leading-none tracking-[-.08em] text-neutral-white/[0.025] uppercase">
+            <div className="pointer-events-none absolute right-[-2%] top-1/2 -translate-y-1/2 select-none text-[clamp(4rem,8vw,7rem)] font-bold leading-none tracking-[-.08em] text-neutral-white/[0.025] uppercase">
               mironline
             </div>
             <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
