@@ -28,6 +28,7 @@ const assets = {
   research: `${ASSET_ROOT}/12-research-evidence.png`,
   process: `${ASSET_ROOT}/13-process-map.png`,
   gallery: `${ASSET_ROOT}/14-interaction-gallery.png`,
+  problem: `${ASSET_ROOT}/15-problem-statement.png`,
 } as const;
 
 type AssetKey = keyof typeof assets;
@@ -158,15 +159,8 @@ function Hero({ locale, copy }: Props) {
     ? "/brand/projects/mironline/cover-mironline-mobile.png"
     : desktopCover;
 
-  const heroTitle =
-    locale === "es"
-      ? "De Flash a una experiencia web responsive."
-      : "From Flash to a responsive web experience.";
-
-  const heroSummary =
-    locale === "es"
-      ? "Diseñé e implementé actividades para estudiantes y docentes, llevando mironline a una experiencia usable en celular, tablet y escritorio."
-      : "I designed and implemented learning activities for students and teachers, bringing mironline to a usable experience across mobile, tablet and desktop.";
+  const heroTitle = copy.headline;
+  const heroSummary = copy.intro;
 
   return (
     <header className="relative overflow-hidden">
@@ -313,32 +307,38 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
           {section.profiles.map((profile, index) => (
             <Reveal key={profile.role} delay={index * 90}>
               <article className={styles.audienceProfile}>
-                <span className={styles.audienceIndex}>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <p className={styles.microLabel}>
-                  {index === 0 ? "PRIMARY USER" : "SECONDARY USER"}
-                </p>
-                <h3 className={styles.audienceRole}>{profile.role}</h3>
-                <p className={`${styles.bodyCopy} mt-4 max-w-[34rem]`}>
-                  {profile.context}
-                </p>
-
-                <div className={styles.needList}>
-                  {profile.needs.map((need) => (
-                    <div key={need} className={styles.needItem}>
-                      <span aria-hidden className={styles.needDot} />
-                      <span>{need}</span>
-                    </div>
-                  ))}
+                <div className={styles.audienceMedia}>
+                  <MediaAsset
+                    asset={profile.asset}
+                    label={copy.assetLabels[profile.asset]}
+                  />
                 </div>
 
-                <div className={styles.userStory}>
-                  <p className={styles.microLabel}>{section.storyLabel}</p>
-                  <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/72 md:text-[15px]">
-                    {profile.story}
+                <div className={styles.audienceProfileBody}>
+                  <span className={styles.audienceIndex}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p className={styles.microLabel}>{profile.typeLabel}</p>
+                  <h3 className={styles.audienceRole}>{profile.role}</h3>
+                  <p className={`${styles.bodyCopy} mt-4 max-w-[34rem]`}>
+                    {profile.context}
                   </p>
+
+                  <div className={styles.needList}>
+                    {profile.needs.map((need) => (
+                      <div key={need} className={styles.needItem}>
+                        <span aria-hidden className={styles.needDot} />
+                        <span>{need}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className={styles.userStory}>
+                    <p className={styles.microLabel}>{section.storyLabel}</p>
+                    <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/72 md:text-[15px]">
+                      {profile.story}
+                    </p>
+                  </div>
                 </div>
               </article>
             </Reveal>
@@ -346,11 +346,11 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
         </div>
 
         <Reveal className="mt-20 md:mt-28">
-          <div className="grid gap-10 xl:grid-cols-[.78fr_1.22fr] xl:items-start xl:gap-20">
+          <div className="grid gap-10 xl:grid-cols-[.72fr_1.28fr] xl:items-start xl:gap-20">
             <div>
               <p className={styles.microLabel}>{section.architectureTitle}</p>
               <p className={`${styles.sectionLeadSmall} mt-4 max-w-[34rem]`}>
-                mironline conectaba práctica, feedback y seguimiento dentro de un mismo producto.
+                {section.architectureIntro}
               </p>
             </div>
 
@@ -401,61 +401,64 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.challenge;
-  const words = ["FLASH", "MOBILE", "BROWSER", "LOAD"];
-  const hasResearchVisual = publicAssetExists(assets.research);
+  const hasProblemVisual = publicAssetExists(assets.problem);
 
   return (
-    <section id="problem" className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32">
-      <div className={`${SITE_SECTION_GUTTERS}`}>
+    <section
+      id="problem"
+      className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32"
+    >
+      <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
-            <StageHeader title={section.title} />
-            <p className={`${styles.sectionLead} max-w-3xl`}>
-              {section.statement}
-            </p>
-          </div>
+          <StageHeader title={section.title} />
         </Reveal>
 
-        <div className={`mt-12 grid gap-10 ${hasResearchVisual ? "lg:grid-cols-[1.12fr_.88fr] lg:items-center" : "lg:grid-cols-[.82fr_1.18fr] lg:items-start"}`}>
-          {hasResearchVisual ? (
-            <Reveal>
-              <MediaAsset asset="research" label={copy.assetLabels.research} />
-            </Reveal>
-          ) : (
-            <Reveal>
-              <div className="max-w-[720px]">
-                <p className={styles.bodyCopy}>{section.body}</p>
-              </div>
-            </Reveal>
-          )}
+        <Reveal className="mt-10 md:mt-14">
+          <p className={styles.problemStatement}>{section.statement}</p>
+        </Reveal>
+
+        {hasProblemVisual ? (
+          <Reveal className="mt-10 md:mt-14">
+            <MediaAsset asset="problem" label={copy.assetLabels.problem} />
+          </Reveal>
+        ) : null}
+
+        <div className="mt-12 grid gap-12 lg:grid-cols-[.92fr_1.08fr] lg:items-start xl:gap-20">
+          <Reveal>
+            <div className="space-y-6">
+              {section.context.map((paragraph) => (
+                <p key={paragraph} className={styles.bodyCopy}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </Reveal>
 
           <Reveal delay={100}>
-            {hasResearchVisual ? <p className={styles.bodyCopy}>{section.body}</p> : null}
+            <div className={styles.problemReports}>
+              <p className={styles.microLabel}>{section.reportsTitle}</p>
 
-            <div className={`${hasResearchVisual ? "mt-10" : "mt-0"} grid grid-cols-1 gap-x-7 gap-y-4 sm:grid-cols-2`}>
-              {words.map((word, index) => (
-                <div key={word} className={styles.signalWord}>
-                  <span className={styles.signalGhost}>{word}</span>
-                  <p className="relative z-10 max-w-[17rem] pb-4 text-[12px] leading-relaxed text-neutral-white/55 md:text-[13px]">
-                    {section.tickets[index]}
-                  </p>
-                </div>
-              ))}
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {section.reports.map((report) => (
+                  <article key={report.label} className={styles.problemReport}>
+                    <span className={styles.problemReportLabel}>{report.label}</span>
+                    <p>{report.body}</p>
+                  </article>
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>
 
         <Reveal className="mt-16 md:mt-20">
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+          <p className={styles.microLabel}>{section.constraintsTitle}</p>
+          <div className="mt-6 grid gap-x-10 gap-y-8 md:grid-cols-2 xl:grid-cols-4">
             {section.constraints.map((constraint, index) => (
-              <div key={constraint} className="relative min-h-28 pt-5">
-                <span className="absolute left-0 top-0 h-[2px] w-8 bg-accent-purple/55" />
-                <p className="text-[13px] leading-relaxed text-neutral-white/65 md:text-[14px]">
-                  {constraint}
-                </p>
-                <span className="pointer-events-none absolute -right-1 top-0 text-[3rem] font-bold leading-none text-neutral-white/[0.025]">
+              <div key={constraint} className={styles.problemConstraint}>
+                <span className={styles.problemConstraintIndex}>
                   {String(index + 1).padStart(2, "0")}
                 </span>
+                <p>{constraint}</p>
               </div>
             ))}
           </div>
@@ -465,7 +468,7 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   );
 }
 
-function RoleSection({ locale, copy }: Props) {
+function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.role;
   const hasProcessVisual = publicAssetExists(assets.process);
 
@@ -490,13 +493,9 @@ function RoleSection({ locale, copy }: Props) {
           </div>
 
           <div className="mt-8 border-l border-accent-purple/35 pl-5">
-            <p className={styles.microLabel}>
-              {locale === "es" ? "Forma de trabajo" : "Ways of working"}
-            </p>
+            <p className={styles.microLabel}>{section.workingTitle}</p>
             <p className="mt-3 max-w-[680px] text-[13px] leading-relaxed text-neutral-white/60 md:text-[14px]">
-              {locale === "es"
-                ? "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo."
-                : "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time."}
+              {section.workingBody}
             </p>
           </div>
 
@@ -626,7 +625,7 @@ function IdeationSection({ copy }: { copy: MironlineCaseCopy }) {
           </Reveal>
           <Reveal delay={100}>
             <div className="max-w-[560px]">
-              <p className={styles.microLabel}>30+ patrones de interacción</p>
+              <p className={styles.microLabel}>{section.statLabel}</p>
               <p className={`${styles.bodyCopy} mt-4`}>{section.intro}</p>
               <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-[13px] leading-relaxed text-neutral-white/48">
                 {section.interactions.slice(0, 6).map((interaction) => (
@@ -738,11 +737,11 @@ function SystemSection({ copy }: { copy: MironlineCaseCopy }) {
 
         <div className="mx-auto mt-8 grid max-w-[1100px] gap-10 md:grid-cols-2 md:gap-16">
           <Reveal>
-            <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">Design → Code</p>
+            <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">{section.designToCodeLabel}</p>
             <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/70">{section.designToCode}</p>
           </Reveal>
           <Reveal delay={80}>
-            <p className="text-[12px] tracking-[0.2em] text-accent-purple/65 uppercase">Code → Design</p>
+            <p className="text-[12px] tracking-[0.2em] text-accent-purple/65 uppercase">{section.codeToDesignLabel}</p>
             <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/70">{section.codeToDesign}</p>
           </Reveal>
         </div>
@@ -807,7 +806,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
           <Reveal>
             <div className="lg:sticky lg:top-28">
               <p className="mb-6 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
-                Áreas de Professional English
+                {section.areasTitle}
               </p>
 
               <div className="space-y-3.5">
@@ -855,7 +854,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
 
                 <div className="md:pt-[2px]">
                   <p className="text-[12px] tracking-[0.22em] text-neutral-white/30 uppercase">
-                    Flujo de interacción
+                    {section.flowTitle}
                   </p>
                   <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 text-[12px] tracking-[0.08em] text-neutral-white/48 uppercase md:text-[12px]">
                     {section.threeDSteps.map((step, index) => (
@@ -871,7 +870,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                   <div className="mt-6 flex items-center gap-5">
                     <span className="inline-flex items-center gap-2 text-[12px] tracking-[0.2em] text-accent-lime/70 uppercase">
                       <span className="h-1 w-1 rounded-full bg-accent-lime" aria-hidden="true" />
-                      3D interactivo
+                      {section.interactiveLabel}
                     </span>
                     <a
                       href={`https://sketchfab.com/3d-models/the-muskuloskeletal-system-${sketchfabUid}`}
@@ -879,7 +878,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                       rel="noreferrer"
                       className="group inline-flex items-center gap-2 text-[12px] tracking-[0.18em] text-neutral-white/32 uppercase transition-colors hover:text-accent-purple focus-visible:outline-none focus-visible:text-accent-purple"
                     >
-                      Ver en Sketchfab
+                      {section.externalLabel}
                       <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
                     </a>
                   </div>
@@ -1105,9 +1104,9 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Hero locale={locale} copy={copy} />
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
-      <AudienceSection copy={copy} />
       <ProblemSection copy={copy} />
-      <RoleSection locale={locale} copy={copy} />
+      <AudienceSection copy={copy} />
+      <RoleSection copy={copy} />
       <ResearchSection copy={copy} />
       <DefinitionSection copy={copy} />
       <IdeationSection copy={copy} />

@@ -550,28 +550,102 @@
   font-family: Georgia, serif;
 }
 
+.problemStatement {
+  max-width: 68rem;
+  font-size: clamp(1.45rem, 2.4vw, 2.5rem);
+  line-height: 1.16;
+  letter-spacing: -.035em;
+  font-weight: 600;
+  color: rgba(237,237,237,.94);
+  text-wrap: balance;
+}
+
+.problemReports {
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border: 1px solid rgba(237,237,237,.08);
+  background:
+    radial-gradient(90% 130% at 100% 0%, rgba(188,167,255,.08), transparent 52%),
+    rgba(255,255,255,.018);
+}
+
+.problemReport {
+  min-height: 8rem;
+  padding: 1rem;
+  background: rgba(237,237,237,.92);
+  color: #151515;
+}
+
+.problemReportLabel {
+  display: block;
+  margin-bottom: .8rem;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(21,21,21,.48);
+}
+
+.problemReport p {
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.problemConstraint {
+  position: relative;
+  min-height: 7rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(188,167,255,.3);
+}
+
+.problemConstraintIndex {
+  display: block;
+  margin-bottom: .75rem;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: rgba(188,167,255,.56);
+}
+
+.problemConstraint p {
+  max-width: 18rem;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(237,237,237,.64);
+}
+
 .audienceProfiles {
   margin-top: clamp(3rem, 6vw, 5.5rem);
   display: grid;
-  border-top: 1px solid rgba(237,237,237,.09);
-  border-bottom: 1px solid rgba(237,237,237,.09);
+  gap: clamp(1.25rem, 2vw, 2rem);
 }
 
 .audienceProfile {
   position: relative;
   overflow: hidden;
-  padding: clamp(2rem, 4vw, 3.5rem) 0;
+  border: 1px solid rgba(237,237,237,.08);
+  background: rgba(255,255,255,.018);
 }
 
-.audienceProfile + .audienceProfile {
-  border-top: 1px solid rgba(237,237,237,.09);
+.audienceMedia .assetStage {
+  border: 0;
+  border-bottom: 1px solid rgba(237,237,237,.08);
+  aspect-ratio: 16 / 9;
+}
+
+.audienceMedia .assetLabel {
+  display: none;
+}
+
+.audienceProfileBody {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.4rem);
 }
 
 .audienceIndex {
   position: absolute;
-  right: 0;
-  top: 1.4rem;
-  font-size: clamp(4.5rem, 9vw, 8rem);
+  right: 1.2rem;
+  top: 1.1rem;
+  font-size: clamp(3.5rem, 7vw, 6rem);
   line-height: .8;
   letter-spacing: -.08em;
   font-weight: 700;
@@ -752,17 +826,6 @@
 @media (min-width: 900px) {
   .audienceProfiles {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .audienceProfile {
-    padding-right: clamp(2rem, 4vw, 4rem);
-  }
-
-  .audienceProfile + .audienceProfile {
-    border-top: 0;
-    border-left: 1px solid rgba(237,237,237,.09);
-    padding-left: clamp(2rem, 4vw, 4rem);
-    padding-right: 0;
   }
 }
 

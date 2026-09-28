@@ -26,13 +26,16 @@ export type MironlineCaseCopy = {
       title: string;
       intro: string;
       profiles: Array<{
+        typeLabel: string;
         role: string;
         context: string;
         needs: string[];
         story: string;
+        asset: "dashboard" | "teacher";
       }>;
       storyLabel: string;
       architectureTitle: string;
+      architectureIntro: string;
       architecture: Array<{ label: string; items: string[] }>;
       flowTitle: string;
       flow: string[];
@@ -42,8 +45,10 @@ export type MironlineCaseCopy = {
       kicker: string;
       title: string;
       statement: string;
-      body: string;
-      tickets: string[];
+      context: string[];
+      reportsTitle: string;
+      reports: Array<{ label: string; body: string }>;
+      constraintsTitle: string;
       constraints: string[];
     };
     role: {
@@ -54,6 +59,8 @@ export type MironlineCaseCopy = {
       team: string[];
       workflowTitle: string;
       workflow: string[];
+      workingTitle: string;
+      workingBody: string;
       reverseTitle: string;
       reverseBody: string;
     };
@@ -72,6 +79,7 @@ export type MironlineCaseCopy = {
       kicker: string;
       title: string;
       intro: string;
+      statLabel: string;
       interactions: Interaction[];
     };
     iteration: {
@@ -92,7 +100,9 @@ export type MironlineCaseCopy = {
       title: string;
       intro: string;
       points: string[];
+      designToCodeLabel: string;
       designToCode: string;
+      codeToDesignLabel: string;
       codeToDesign: string;
     };
     responsive: {
@@ -105,10 +115,14 @@ export type MironlineCaseCopy = {
       kicker: string;
       title: string;
       intro: string;
+      areasTitle: string;
       areas: string[];
       threeDTitle: string;
       threeDBody: string;
+      flowTitle: string;
       threeDSteps: string[];
+      interactiveLabel: string;
+      externalLabel: string;
     };
     teachers: {
       kicker: string;
@@ -186,8 +200,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Contexto" },
-      { id: "audience", label: "Usuarios" },
       { id: "problem", label: "Problema" },
+      { id: "audience", label: "Usuarios" },
       { id: "scope", label: "Alcance" },
       { id: "research", label: "Investigación" },
       { id: "definition", label: "Definición" },
@@ -213,12 +227,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
       },
       audience: {
-        kicker: "02",
-        title: "Usuarios y estructura",
+        kicker: "03",
+        title: "Quién usaba mironline",
         intro:
-          "Los dos usuarios principales eran estudiantes y docentes. Para este caso resumo sus necesidades a partir de problemas que aparecían en soporte, conversaciones y uso de la plataforma.",
+          "La plataforma tenía dos recorridos principales. El alumno entraba para practicar y avanzar en su curso; el docente necesitaba revisar grupos, calificaciones y progreso. Sus necesidades eran distintas, pero compartían la misma información académica.",
         profiles: [
           {
+            typeLabel: "Usuario principal",
             role: "Estudiante",
             context:
               "Practica inglés dentro de un curso y resuelve actividades desde computadora, tablet o celular.",
@@ -230,8 +245,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "Como estudiante, necesito mantener disponible el contenido que estoy usando mientras respondo, para no perder el contexto.",
+            asset: "dashboard",
           },
           {
+            typeLabel: "Usuario de seguimiento",
             role: "Docente",
             context:
               "Da seguimiento a grupos y revisa cómo avanzan los alumnos dentro de sus cursos.",
@@ -243,10 +260,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "Como docente, necesito consultar avance, calificaciones y desempeño por grupo, para dar seguimiento al curso.",
+            asset: "teacher",
           },
         ],
-        storyLabel: "User story",
-        architectureTitle: "Arquitectura de información",
+        storyLabel: "Necesidad resumida",
+        architectureTitle: "Cómo se organizaba la información",
+        architectureIntro:
+          "mironline conectaba la práctica del alumno con la información que el docente necesitaba para dar seguimiento.",
         architecture: [
           {
             label: "Estudiante",
@@ -257,7 +277,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             items: ["Grupos", "Alumnos", "Calificaciones", "Seguimiento"],
           },
         ],
-        flowTitle: "Golden path · estudiante",
+        flowTitle: "Flujo principal del estudiante",
         flow: [
           "Entrar al curso",
           "Abrir actividad",
@@ -267,25 +287,32 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "Continuar",
         ],
         note:
-          "Los perfiles y user stories están resumidos aquí a partir de necesidades reales observadas durante el proyecto.",
+          "Estos perfiles y necesidades resumen patrones observados durante el trabajo; no son personas ficticias creadas para el portafolio.",
       },
       challenge: {
-        kicker: "03",
-        title: "Problema",
-        statement: "Migración de actividades heredadas de Flash a una experiencia web responsive.",
-        body:
-          "En soporte aparecían reportes de pantallas en blanco, problemas con navegadores, tiempos de carga largos y ejercicios que no funcionaban desde el celular. La migración tenía que conservar el objetivo académico de cada actividad y, al mismo tiempo, resolver esos problemas de uso.",
-        tickets: [
-          "La actividad se queda en blanco.",
-          "En mi celular no abre.",
-          "Firefox dice que no es compatible.",
-          "El reproductor tarda demasiado en cargar.",
+        kicker: "02",
+        title: "El problema",
+        statement:
+          "El contenido académico seguía siendo útil, pero una parte importante de la experiencia dependía de tecnología que ya impedía usarla con normalidad.",
+        context: [
+          "Cuando mi rol pasó a UI/UX + frontend en 2021, mironline ya tenía años de cursos y actividades publicadas. Muchas habían sido construidas con Flash y estaban pensadas principalmente para computadora.",
+          "Para un alumno, ese problema no se veía como una decisión tecnológica: veía una pantalla en blanco, un ejercicio que no abría en su celular, un aviso de navegador incompatible o un reproductor que tardaba demasiado.",
+          "Parte de mi trabajo también era revisar los reportes que llegaban a soporte y conversar con el equipo académico sobre lo que estaba fallando. Esas señales, junto con Analytics y los datos internos de uso, ayudaban a decidir qué migrar y qué ajustar primero.",
+          "El reto no era copiar cada pantalla de Flash en HTML. Había que conservar lo que cada ejercicio quería enseñar o evaluar y reconstruir la interacción para web, responsive y navegadores actuales.",
         ],
+        reportsTitle: "Lo que veía el alumno",
+        reports: [
+          { label: "Pantalla", body: "La actividad se queda en blanco." },
+          { label: "Celular", body: "En mi celular no abre." },
+          { label: "Navegador", body: "El navegador dice que no es compatible." },
+          { label: "Carga", body: "El reproductor tarda demasiado en cargar." },
+        ],
+        constraintsTitle: "Lo que la solución tenía que conservar",
         constraints: [
-          "Conservar lo que cada actividad debía evaluar.",
-          "Funcionar en computadora, tablet y celular.",
-          "Considerar navegadores y equipos distintos.",
-          "Mantener reglas compartidas entre ejercicios diferentes.",
+          "El objetivo académico de cada actividad.",
+          "Uso en computadora, tablet y celular.",
+          "Compatibilidad entre navegadores y equipos.",
+          "Reglas compartidas entre ejercicios diferentes.",
         ],
       },
       role: {
@@ -313,6 +340,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "revisar datos y comentarios",
           "ajustar",
         ],
+        workingTitle: "Forma de trabajo",
+        workingBody:
+          "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo.",
         reverseTitle: "Exploración técnica",
         reverseBody:
           "En integraciones como Sketchfab primero probaba qué permitía la API. Cuando la interacción ya funcionaba, documentaba ese patrón en Figma para reutilizarlo después.",
@@ -371,6 +401,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Ideación",
         intro:
           "A partir de esos criterios fui diseñando y reutilizando patrones para distintos objetivos de aprendizaje. Algunas actividades eran simples; otras mezclaban lectura, audio, video o modelos 3D.",
+        statLabel: "30+ patrones de interacción",
         interactions: [
           {
             title: "Multiple choice",
@@ -445,7 +476,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "responsive",
           "light y dark mode",
         ],
+        designToCodeLabel: "Design → Code",
         designToCode: "Figma → componente → frontend → revisión",
+        codeToDesignLabel: "Code → Design",
         codeToDesign:
           "prueba en código → ajuste → patrón funcional → documentación en Figma",
       },
@@ -466,6 +499,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Aplicación especializada",
         intro:
           "Professional English llevaba el mismo sistema a contenido relacionado con seis áreas académicas. La interacción tenía que adaptarse al tipo de vocabulario y a la situación que se quería practicar.",
+        areasTitle: "Áreas de Professional English",
         areas: [
           "Agricultura y medio ambiente",
           "Ciencias computacionales",
@@ -477,6 +511,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         threeDTitle: "Interacción 3D",
         threeDBody:
           "En algunas actividades de Ciencias de la Salud trabajé con modelos preparados en Blender y 3ds Max e integrados con Sketchfab. Sobre el modelo agregaba hotspots, preguntas, pistas y feedback.",
+        flowTitle: "Flujo de interacción",
         threeDSteps: [
           "explorar",
           "localizar",
@@ -484,6 +519,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "responder",
           "ver feedback",
         ],
+        interactiveLabel: "3D interactivo",
+        externalLabel: "Ver en Sketchfab",
       },
       teachers: {
         kicker: "11",
@@ -576,6 +613,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       research: "Evidencia y señales de uso",
       process: "Proceso de diseño e implementación",
       gallery: "Galería de interacciones",
+      problem: "Contexto del problema",
     },
     cta: {
       label: "FIN DEL CASO",
@@ -626,8 +664,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Context" },
-      { id: "audience", label: "Users" },
       { id: "problem", label: "Problem" },
+      { id: "audience", label: "Users" },
       { id: "scope", label: "Scope" },
       { id: "research", label: "Research" },
       { id: "definition", label: "Definition" },
@@ -653,12 +691,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
       },
       audience: {
-        kicker: "02",
-        title: "Users and structure",
+        kicker: "03",
+        title: "Who used mironline",
         intro:
-          "The two primary users were students and teachers. For this case study, I summarize their needs from issues surfaced through support, conversations and product usage.",
+          "The platform had two main journeys. Students used it to practice and move through a course; teachers needed to review groups, grades and progress. Their needs were different, but both depended on the same academic information.",
         profiles: [
           {
+            typeLabel: "Primary user",
             role: "Student",
             context:
               "Practices English within a course and completes activities on desktop, tablet or mobile.",
@@ -670,8 +709,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "As a student, I need the content I am using to remain available while I answer, so I do not lose context.",
+            asset: "dashboard",
           },
           {
+            typeLabel: "Follow-up user",
             role: "Teacher",
             context:
               "Follows groups and reviews how students are progressing through their courses.",
@@ -683,10 +724,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "As a teacher, I need to review progress, grades and performance by group, so I can follow the course.",
+            asset: "teacher",
           },
         ],
-        storyLabel: "User story",
-        architectureTitle: "Information architecture",
+        storyLabel: "Need summary",
+        architectureTitle: "How information was organized",
+        architectureIntro:
+          "mironline connected student practice with the information teachers needed for academic follow-up.",
         architecture: [
           {
             label: "Student",
@@ -697,7 +741,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             items: ["Groups", "Students", "Grades", "Follow-up"],
           },
         ],
-        flowTitle: "Golden path · student",
+        flowTitle: "Student main flow",
         flow: [
           "Enter course",
           "Open activity",
@@ -707,25 +751,32 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "Continue",
         ],
         note:
-          "The profiles and user stories shown here summarize real needs observed during the project.",
+          "These profiles and needs summarize patterns observed during the work; they are not fictional personas created for the portfolio.",
       },
       challenge: {
-        kicker: "03",
-        title: "Problem",
-        statement: "Migrating Flash-based activities into a responsive web experience.",
-        body:
-          "Support tickets included blank screens, browser issues, long loading times and exercises that did not work on mobile. The migration had to keep the learning goal of each activity while fixing those usage problems.",
-        tickets: [
-          "The activity is just a blank screen.",
-          "It does not open on my phone.",
-          "Firefox says it is unsupported.",
-          "The player takes too long to load.",
+        kicker: "02",
+        title: "The problem",
+        statement:
+          "The academic content was still useful, but an important part of the experience depended on technology that was getting in the way of using it normally.",
+        context: [
+          "When my role shifted to UI/UX + frontend in 2021, mironline already had years of published courses and activities. Many had been built with Flash and were designed mainly for desktop use.",
+          "For a student, this did not look like a technical decision: it looked like a blank screen, an exercise that would not open on a phone, an unsupported-browser message or a player that took too long to load.",
+          "Part of my work also included reviewing reports that reached support and talking with the academic team about what was failing. Those signals, together with Analytics and internal usage data, helped decide what needed to be migrated or adjusted first.",
+          "The challenge was not to copy every Flash screen into HTML. Each exercise still had to preserve what it was meant to teach or assess while being rebuilt for the web, responsive layouts and current browsers.",
         ],
+        reportsTitle: "What the student experienced",
+        reports: [
+          { label: "Screen", body: "The activity is just a blank screen." },
+          { label: "Mobile", body: "It does not open on my phone." },
+          { label: "Browser", body: "The browser says it is unsupported." },
+          { label: "Loading", body: "The player takes too long to load." },
+        ],
+        constraintsTitle: "What the solution had to preserve",
         constraints: [
-          "Keep what each activity was meant to assess.",
-          "Work on desktop, tablet and mobile.",
-          "Account for different browsers and devices.",
-          "Share rules across very different exercises.",
+          "The learning goal of each activity.",
+          "Use across desktop, tablet and mobile.",
+          "Compatibility across browsers and devices.",
+          "Shared rules across different exercises.",
         ],
       },
       role: {
@@ -753,6 +804,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "review data and comments",
           "adjust",
         ],
+        workingTitle: "Ways of working",
+        workingBody:
+          "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time.",
         reverseTitle: "Technical exploration",
         reverseBody:
           "For integrations such as Sketchfab, I first tested what the API allowed. Once the interaction worked, I documented the pattern in Figma so it could be reused later.",
@@ -809,6 +863,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Ideation",
         intro:
           "Using those criteria, I designed and reused patterns for different learning goals. Some activities were simple; others combined reading, audio, video or 3D models.",
+        statLabel: "30+ interaction patterns",
         interactions: [
           {
             title: "Multiple choice",
@@ -880,7 +935,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "responsive",
           "light and dark mode",
         ],
+        designToCodeLabel: "Design → Code",
         designToCode: "Figma → component → frontend → review",
+        codeToDesignLabel: "Code → Design",
         codeToDesign:
           "code test → adjustment → working pattern → Figma documentation",
       },
@@ -901,6 +958,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Specialized application",
         intro:
           "Professional English applied the same system to content across six academic areas. The interaction had to fit the vocabulary and situation being practiced.",
+        areasTitle: "Professional English areas",
         areas: [
           "Agriculture and Environment",
           "Computer Science",
@@ -912,6 +970,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         threeDTitle: "3D interaction",
         threeDBody:
           "For some Health Sciences activities I worked with models prepared in Blender and 3ds Max and integrated through Sketchfab. I added hotspots, questions, hints and feedback around the model.",
+        flowTitle: "Interaction flow",
         threeDSteps: [
           "explore",
           "locate",
@@ -919,6 +978,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "answer",
           "view feedback",
         ],
+        interactiveLabel: "Interactive 3D",
+        externalLabel: "View on Sketchfab",
       },
       teachers: {
         kicker: "11",
@@ -1011,6 +1072,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       research: "Usage evidence and signals",
       process: "Design and implementation process",
       gallery: "Interaction gallery",
+      problem: "Problem context",
     },
     cta: {
       label: "END OF CASE",
