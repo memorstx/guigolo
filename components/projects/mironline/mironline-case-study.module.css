@@ -70,8 +70,8 @@
 
 .heroVisual {
   position: relative;
-  height: clamp(36rem, 72svh, 48rem);
-  min-height: 36rem;
+  height: clamp(30rem, 62svh, 42rem);
+  min-height: 30rem;
   overflow: hidden;
   background: #101010;
 }
@@ -80,10 +80,11 @@
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(16,16,16,.08) 0%, rgba(16,16,16,.08) 34%, rgba(16,16,16,.64) 76%, #101010 100%),
-    linear-gradient(to right, rgba(16,16,16,.78) 0%, rgba(16,16,16,.26) 46%, rgba(16,16,16,.08) 76%, rgba(16,16,16,.4) 100%);
+    linear-gradient(to bottom, rgba(16,16,16,.06) 0%, rgba(16,16,16,.02) 42%, rgba(16,16,16,.6) 78%, #101010 100%),
+    linear-gradient(to right, rgba(16,16,16,.9) 0%, rgba(16,16,16,.58) 32%, rgba(16,16,16,.16) 62%, rgba(16,16,16,.2) 100%);
 }
 
 .heroScrim {
@@ -92,45 +93,130 @@
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(70% 80% at 22% 72%, rgba(16,16,16,.03), rgba(16,16,16,.48) 80%),
-    linear-gradient(to top, rgba(16,16,16,.78), transparent 58%);
+    radial-gradient(60% 72% at 18% 76%, rgba(16,16,16,.06), rgba(16,16,16,.48) 76%),
+    linear-gradient(to top, rgba(16,16,16,.7), transparent 54%);
+}
+
+.heroContent {
+  width: min(100%, 60rem);
+}
+
+.heroBrandRow {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-height: 1.5rem;
+}
+
+.heroBrandName {
+  font-size: .9rem;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: .01em;
+  color: rgba(237,237,237,.86);
+}
+
+.heroMeta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  margin-left: .2rem;
+  padding-left: .9rem;
+  border-left: 1px solid rgba(237,237,237,.16);
+  font-size: .72rem;
+  line-height: 1;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(188,167,255,.76);
 }
 
 .heroTitle {
-  margin-top: 1.2rem;
-  max-width: 58rem;
-  font-size: clamp(2.15rem, 4.25vw, 4.5rem);
-  line-height: .99;
-  letter-spacing: -.045em;
+  margin-top: 1.15rem;
+  max-width: 53rem;
+  font-size: clamp(2.55rem, 4.7vw, 4.9rem);
+  line-height: .98;
+  letter-spacing: -.05em;
   font-weight: 650;
   text-wrap: balance;
-  color: rgba(237,237,237,.98);
-  text-shadow: 0 12px 36px rgba(0,0,0,.34);
+  color: rgba(237,237,237,.99);
+  text-shadow: 0 12px 36px rgba(0,0,0,.36);
 }
 
 .heroIntro {
-  margin-top: 1.35rem;
-  max-width: 47rem;
-  font-size: clamp(.98rem, 1.15vw, 1.12rem);
-  line-height: 1.7;
+  margin-top: 1.15rem;
+  max-width: 44rem;
+  font-size: clamp(1rem, 1.08vw, 1.1rem);
+  line-height: 1.68;
   color: rgba(237,237,237,.7);
   text-wrap: pretty;
 }
 
 .sectionTitle {
-  font-size: clamp(1.8rem, 3vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(1.75rem, 2.55vw, 2.75rem);
+  line-height: 1.06;
   letter-spacing: -.035em;
   font-weight: 650;
   color: rgba(237,237,237,.96);
   text-wrap: balance;
 }
 
+.sectionIntro,
 .bodyCopy {
-  font-size: clamp(.98rem, 1.05vw, 1.08rem);
-  line-height: 1.72;
+  font-size: clamp(.98rem, 1vw, 1.06rem);
+  line-height: 1.7;
   color: rgba(237,237,237,.68);
   text-wrap: pretty;
+}
+
+.sectionLead {
+  font-size: clamp(1.08rem, 1.45vw, 1.38rem);
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  color: rgba(237,237,237,.82);
+}
+
+.sectionLeadSmall {
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  line-height: 1.62;
+  color: rgba(237,237,237,.68);
+}
+
+.cardTitle {
+  font-size: clamp(1.02rem, 1.25vw, 1.28rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  color: rgba(237,237,237,.84);
+}
+
+.mutedListTitle {
+  font-size: clamp(1rem, 1.18vw, 1.22rem);
+  line-height: 1.28;
+  font-weight: 600;
+  color: rgba(237,237,237,.36);
+  transition: color .25s ease, transform .25s ease;
+}
+
+.mutedListTitle:hover {
+  color: rgba(237,237,237,.78);
+  transform: translate3d(4px,0,0);
+}
+
+.pullQuote {
+  font-size: clamp(1.3rem, 2.05vw, 2rem);
+  line-height: 1.22;
+  letter-spacing: -.025em;
+  font-weight: 600;
+  color: rgba(237,237,237,.9);
+}
+
+.microLabel {
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(188,167,255,.72);
 }
 
 .heroNoise {
@@ -156,7 +242,7 @@
 }
 
 .stageWord {
-  font-size: clamp(3.5rem, 10vw, 10rem);
+  font-size: clamp(3rem, 7vw, 7rem);
   line-height: .9;
   letter-spacing: -.06em;
   font-weight: 700;
@@ -294,7 +380,7 @@
   position: absolute;
   right: .25rem;
   top: .25rem;
-  font-size: clamp(5rem, 10vw, 9rem);
+  font-size: clamp(4rem, 7vw, 6.5rem);
   line-height: .8;
   letter-spacing: -.08em;
   font-weight: 700;
@@ -359,7 +445,7 @@
 }
 
 .areaWord {
-  font-size: clamp(1.05rem, 1.55vw, 1.5rem);
+  font-size: clamp(1rem, 1.25vw, 1.28rem);
   line-height: 1.05;
   font-weight: 600;
   text-transform: uppercase;
@@ -387,7 +473,7 @@
 
 .validationOrbit {
   position: relative;
-  min-height: clamp(27rem, 48vw, 36rem);
+  min-height: clamp(24rem, 42vw, 32rem);
   display: grid;
   place-items: center;
 }
@@ -434,7 +520,7 @@
 }
 
 .metricValue {
-  font-size: clamp(3.25rem, 7vw, 6.5rem);
+  font-size: clamp(3rem, 5.5vw, 5.4rem);
   line-height: .82;
   letter-spacing: -.07em;
   font-weight: 700;
@@ -460,7 +546,7 @@
 }
 
 .quoteMark {
-  font-size: clamp(4.5rem, 8vw, 7rem);
+  font-size: clamp(3.6rem, 6vw, 5.5rem);
   line-height: .6;
   color: rgba(188,167,255,.12);
   font-family: Georgia, serif;
@@ -537,6 +623,31 @@
   .responsiveSticky {
     position: sticky;
     top: 7rem;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .heroVisual {
+    height: clamp(31rem, 66svh, 37rem);
+  }
+
+  .heroTitle {
+    max-width: 42rem;
+    font-size: clamp(2.7rem, 5vw, 4rem);
+  }
+
+  .sectionTitle {
+    font-size: clamp(1.8rem, 2.8vw, 2.35rem);
+  }
+
+  .stageWord,
+  .systemWord {
+    display: none;
+  }
+
+  .principle {
+    min-height: 16rem;
   }
 }
 

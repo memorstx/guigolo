@@ -137,7 +137,7 @@ function MediaAsset({
           <div className={styles.assetPlaceholderInner}>
             <div className={styles.assetIndex}>{index}</div>
             <div className={styles.assetFile}>{src.split("/").pop()}</div>
-            <div className="mt-2 text-[11px] tracking-[0.12em] text-neutral-white/25 uppercase">
+            <div className="mt-2 text-[12px] tracking-[0.12em] text-neutral-white/25 uppercase">
               1600 × 1000
             </div>
           </div>
@@ -152,7 +152,7 @@ function Marquee({ children }: { children: string }) {
   const repeated = `${children} · ${children} · ${children} · ${children} · `;
 
   return (
-    <div className={`${styles.marqueeMask} py-4 text-[11px] tracking-[0.34em] text-neutral-white/10 uppercase`}>
+    <div className={`${styles.marqueeMask} py-4 text-[12px] tracking-[0.34em] text-neutral-white/10 uppercase`}>
       <div className={styles.marqueeTrack} aria-hidden="true">
         {repeated.repeat(3)}
       </div>
@@ -168,15 +168,25 @@ function Hero({ locale, copy }: Props) {
     ? "/brand/projects/mironline/cover-mironline-mobile.png"
     : desktopCover;
 
+  const heroTitle =
+    locale === "es"
+      ? "De Flash a una experiencia web responsive."
+      : "From Flash to a responsive web experience.";
+
+  const heroSummary =
+    locale === "es"
+      ? "Diseñé e implementé actividades para estudiantes y docentes, llevando mironline a una experiencia usable en celular, tablet y escritorio."
+      : "I designed and implemented learning activities for students and teachers, bringing mironline to a usable experience across mobile, tablet and desktop.";
+
   return (
-    <header className="relative overflow-hidden pt-20 md:pt-24">
+    <header className="relative overflow-hidden">
       <div className={styles.heroVisual}>
         <Image
           src={desktopCover}
           alt=""
           fill
           priority
-          className="hidden object-cover object-[50%_42%] opacity-75 sm:block"
+          className="hidden object-cover object-[62%_44%] opacity-80 sm:block"
           sizes="100vw"
         />
         <Image
@@ -184,48 +194,56 @@ function Hero({ locale, copy }: Props) {
           alt=""
           fill
           priority
-          className="object-cover object-[50%_38%] opacity-72 sm:hidden"
+          className="object-cover object-[54%_38%] opacity-78 sm:hidden"
           sizes="100vw"
         />
         <div className={styles.heroScrim} />
         <div className={styles.heroNoise} />
 
         <div className={`absolute inset-0 z-10 flex h-full flex-col ${SITE_SECTION_GUTTERS}`}>
-          <div className="pt-6 md:pt-8">
+          <div className="pt-5 sm:pt-6 md:pt-7">
             <Link
               href={`/${locale}/#projects`}
-              className="group inline-flex items-center gap-3 text-[12px] tracking-[0.14em] text-neutral-white/65 uppercase transition hover:text-neutral-white"
+              className="group inline-flex items-center gap-3 text-[12px] tracking-[0.13em] text-neutral-white/68 uppercase transition hover:text-neutral-white"
             >
-              <span aria-hidden className="text-[17px] leading-none transition-transform group-hover:-translate-x-1">←</span>
+              <span
+                aria-hidden
+                className="text-[18px] leading-none transition-transform group-hover:-translate-x-1"
+              >
+                ←
+              </span>
               {copy.back}
             </Link>
           </div>
 
-          <Reveal className="mt-auto pb-10 sm:pb-12 md:pb-14 lg:pb-16">
-            <div className="max-w-[980px]">
-              <Image
-                src="/brand/projects/mironline/logo-mironline.png"
-                alt="mironline"
-                width={480}
-                height={120}
-                className="h-auto w-8 object-contain object-left opacity-90 sm:w-9 md:w-10 lg:w-11 xl:w-12"
-                priority
-              />
-              <h1 className={styles.heroTitle}>{copy.headline}</h1>
-              <p className={styles.heroIntro}>{copy.intro}</p>
+          <Reveal className="mt-auto pb-9 sm:pb-10 md:pb-12 lg:pb-14">
+            <div className={styles.heroContent}>
+              <div className={styles.heroBrandRow}>
+                <Image
+                  src="/brand/projects/mironline/logo-mironline.png"
+                  alt=""
+                  width={120}
+                  height={120}
+                  className="h-[22px] w-[22px] shrink-0 object-contain opacity-95 sm:h-6 sm:w-6"
+                  priority
+                />
+                <span className={styles.heroBrandName}>mironline</span>
+                <span className={styles.heroMeta}>{copy.eyebrow}</span>
+              </div>
+
+              <h1 className={styles.heroTitle}>{heroTitle}</h1>
+              <p className={styles.heroIntro}>{heroSummary}</p>
             </div>
           </Reveal>
         </div>
       </div>
 
       <div className="relative bg-neutral-black-900">
-        <div className={`${SITE_SECTION_GUTTERS} py-8 md:py-10`}>
-          <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
+        <div className={`${SITE_SECTION_GUTTERS} py-7 md:py-8`}>
+          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
             {copy.facts.map((fact, index) => (
               <Reveal key={fact.label} delay={index * 70}>
-                <p className="text-[11px] tracking-[0.18em] text-accent-purple/70 uppercase">
-                  {fact.label}
-                </p>
+                <p className={styles.microLabel}>{fact.label}</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-neutral-white/72">
                   {fact.value}
                 </p>
@@ -264,10 +282,10 @@ function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
           <div className="mt-12 grid gap-y-9 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             {section.ecosystem.map((item) => (
               <div key={item.label}>
-                <p className="text-[11px] tracking-[0.22em] text-neutral-white/35 uppercase">
+                <p className="text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
                   {item.label}
                 </p>
-                <p className="mt-2 text-[clamp(1.15rem,2vw,1.7rem)] font-semibold leading-tight text-neutral-white/85">
+                <p className={`${styles.cardTitle} mt-2`}>
                   {item.value}
                 </p>
               </div>
@@ -293,7 +311,7 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
         <Reveal>
           <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
             <StageHeader title={section.title} />
-            <p className="max-w-3xl text-[clamp(1.15rem,1.75vw,1.65rem)] font-semibold leading-[1.22] text-neutral-white/85">
+            <p className={`${styles.sectionLead} max-w-3xl`}>
               {section.statement}
             </p>
           </div>
@@ -364,12 +382,12 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
           </div>
 
           <div className="mt-12">
-            <p className="text-[11px] tracking-[0.22em] text-accent-purple/70 uppercase">
+            <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
               {section.teamTitle}
             </p>
             <div className="mt-5 space-y-2">
               {section.team.map((member) => (
-                <div key={member} className="text-[clamp(1.05rem,1.45vw,1.45rem)] font-semibold leading-tight text-neutral-white/25 transition-colors hover:text-neutral-white/80">
+                <div key={member} className={styles.mutedListTitle}>
                   {member}
                 </div>
               ))}
@@ -382,7 +400,7 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
 
           <div className="mt-10 grid gap-10 md:grid-cols-2">
             <div>
-              <p className="text-[11px] tracking-[0.2em] text-neutral-white/35 uppercase">
+              <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">
                 {section.workflowTitle}
               </p>
               <div className={`${styles.editorialRail} mt-6 space-y-5`}>
@@ -395,7 +413,7 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
             </div>
 
             <div className="md:pt-16">
-              <p className="text-[11px] tracking-[0.2em] text-accent-purple/70 uppercase">
+              <p className="text-[12px] tracking-[0.2em] text-accent-purple/70 uppercase">
                 {section.reverseTitle}
               </p>
               <p className="mt-5 text-[14px] leading-relaxed text-neutral-white/65">
@@ -434,7 +452,7 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
                   <div className="absolute -top-2 right-0 select-none text-[clamp(3rem,5vw,5rem)] font-bold leading-none text-neutral-white/[0.025]">
                     {String(index + 1).padStart(2, "0")}
                   </div>
-                  <h3 className="heading-h4 text-neutral-white/85">{signal.title}</h3>
+                  <h3 className={styles.cardTitle}>{signal.title}</h3>
                   <p className="mt-4 text-[13px] leading-relaxed text-neutral-white/55">{signal.body}</p>
                 </div>
               </Reveal>
@@ -460,7 +478,7 @@ function DefinitionSection({ copy }: { copy: MironlineCaseCopy }) {
           <Reveal key={item.title} delay={index * 90}>
             <article className={styles.principle}>
               <span className={styles.principleIndex}>{String(index + 1).padStart(2, "0")}</span>
-              <h3 className="heading-h3 max-w-[18rem] text-neutral-white/90">{item.title}</h3>
+              <h3 className={`${styles.cardTitle} max-w-[18rem]`}>{item.title}</h3>
               <p className="mt-5 max-w-[24rem] text-[13px] leading-relaxed text-neutral-white/55 md:text-[14px]">
                 {item.body}
               </p>
@@ -489,7 +507,7 @@ function IdeationSection({ copy }: { copy: MironlineCaseCopy }) {
           <Reveal delay={100}>
             <div className="pb-4 lg:pb-12">
               <div className={`${styles.stageWord} ${styles.stageWordCyan}`}>30+</div>
-              <p className="mt-4 max-w-md text-[13px] leading-relaxed text-neutral-white/50 md:text-[14px]">
+              <p className={`${styles.bodyCopy} mt-4 max-w-md`}>
                 {section.intro}
               </p>
             </div>
@@ -539,12 +557,12 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
 
       <div className="mt-16 grid gap-12 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
         <Reveal>
-          <p className="text-[11px] tracking-[0.22em] text-accent-purple/70 uppercase">
+          <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
             {section.feedbackTitle}
           </p>
           <div className="mt-6 space-y-7">
             {section.feedback.map((feedback) => (
-              <p key={feedback} className="text-[clamp(1rem,1.35vw,1.25rem)] leading-relaxed text-neutral-white/65">
+              <p key={feedback} className={styles.sectionLeadSmall}>
                 {feedback}
               </p>
             ))}
@@ -554,10 +572,10 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
         <Reveal delay={100}>
           <div className="relative pl-0 lg:pl-10">
             <div className={styles.quoteMark}>“</div>
-            <p className="mt-1 max-w-[860px] text-[clamp(1.35rem,2.25vw,2.25rem)] font-semibold leading-[1.16] tracking-[-.025em] text-neutral-white/90">
+            <p className={`${styles.pullQuote} mt-1 max-w-[860px]`}>
               {section.outcomeBody}
             </p>
-            <p className="mt-7 text-[11px] tracking-[0.22em] text-neutral-white/35 uppercase">
+            <p className="mt-7 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
               {section.outcomeTitle}
             </p>
           </div>
@@ -606,11 +624,11 @@ function SystemSection({ copy }: { copy: MironlineCaseCopy }) {
 
         <div className="mx-auto mt-8 grid max-w-[1100px] gap-10 md:grid-cols-2 md:gap-16">
           <Reveal>
-            <p className="text-[11px] tracking-[0.2em] text-neutral-white/35 uppercase">Design → Code</p>
+            <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">Design → Code</p>
             <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/70">{section.designToCode}</p>
           </Reveal>
           <Reveal delay={80}>
-            <p className="text-[11px] tracking-[0.2em] text-accent-purple/65 uppercase">Code → Design</p>
+            <p className="text-[12px] tracking-[0.2em] text-accent-purple/65 uppercase">Code → Design</p>
             <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/70">{section.codeToDesign}</p>
           </Reveal>
         </div>
@@ -633,7 +651,7 @@ function ResponsiveSection({ copy }: { copy: MironlineCaseCopy }) {
             <div className="mt-10 space-y-7">
               {section.points.map((point, index) => (
                 <div key={point} className="grid grid-cols-[auto_1fr] gap-4">
-                  <span className="pt-[2px] text-[11px] tracking-[0.18em] text-accent-purple/55">
+                  <span className="pt-[2px] text-[12px] tracking-[0.18em] text-accent-purple/55">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <p className="text-[13px] leading-relaxed text-neutral-white/60">{point}</p>
@@ -674,7 +692,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
         <div className="mt-14 grid gap-12 lg:grid-cols-[.44fr_1.56fr] lg:items-start xl:gap-16">
           <Reveal>
             <div className="lg:sticky lg:top-28">
-              <p className="mb-6 text-[11px] tracking-[0.22em] text-neutral-white/35 uppercase">
+              <p className="mb-6 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
                 Áreas de Professional English
               </p>
 
@@ -713,7 +731,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
 
               <div className="mt-8 grid gap-8 md:grid-cols-[.82fr_1.18fr] md:gap-12">
                 <div>
-                  <p className="text-[11px] tracking-[0.22em] text-accent-purple/80 uppercase">
+                  <p className="text-[12px] tracking-[0.22em] text-accent-purple/80 uppercase">
                     {section.threeDTitle}
                   </p>
                   <p className="mt-4 max-w-[560px] text-[14px] leading-relaxed text-neutral-white/62 md:text-[15px]">
@@ -722,10 +740,10 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                 </div>
 
                 <div className="md:pt-[2px]">
-                  <p className="text-[11px] tracking-[0.22em] text-neutral-white/30 uppercase">
+                  <p className="text-[12px] tracking-[0.22em] text-neutral-white/30 uppercase">
                     Flujo de interacción
                   </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 text-[11px] tracking-[0.08em] text-neutral-white/48 uppercase md:text-[12px]">
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 text-[12px] tracking-[0.08em] text-neutral-white/48 uppercase md:text-[12px]">
                     {section.threeDSteps.map((step, index) => (
                       <span key={step} className="contents">
                         <span>{step}</span>
@@ -737,7 +755,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                   </div>
 
                   <div className="mt-6 flex items-center gap-5">
-                    <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] text-accent-lime/70 uppercase">
+                    <span className="inline-flex items-center gap-2 text-[12px] tracking-[0.2em] text-accent-lime/70 uppercase">
                       <span className="h-1 w-1 rounded-full bg-accent-lime" aria-hidden="true" />
                       3D interactivo
                     </span>
@@ -745,7 +763,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                       href={`https://sketchfab.com/3d-models/the-muskuloskeletal-system-${sketchfabUid}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="group inline-flex items-center gap-2 text-[11px] tracking-[0.18em] text-neutral-white/32 uppercase transition-colors hover:text-accent-purple focus-visible:outline-none focus-visible:text-accent-purple"
+                      className="group inline-flex items-center gap-2 text-[12px] tracking-[0.18em] text-neutral-white/32 uppercase transition-colors hover:text-accent-purple focus-visible:outline-none focus-visible:text-accent-purple"
                     >
                       Ver en Sketchfab
                       <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
@@ -783,10 +801,10 @@ function TeacherSection({ copy }: { copy: MironlineCaseCopy }) {
           <div className="space-y-5 md:space-y-6 lg:pl-2 xl:pl-4">
             {section.points.map((point, index) => (
               <div key={point}>
-                <div className="text-[11px] tracking-[0.18em] text-neutral-white/25">
+                <div className="text-[12px] tracking-[0.18em] text-neutral-white/25">
                   {String(index + 1).padStart(2, "0")}
                 </div>
-                <div className="mt-1 text-[clamp(1rem,1.35vw,1.45rem)] font-semibold leading-[1.08] text-neutral-white/75">
+                <div className={`${styles.cardTitle} mt-1`}>
                   {point}
                 </div>
               </div>
@@ -818,7 +836,7 @@ function ValidationSection({ copy }: { copy: MironlineCaseCopy }) {
           <div className={styles.validationOrbit}>
             <div className={styles.orbitCenter}>
               <div className="text-center">
-                <div className="text-[11px] tracking-[0.22em] text-accent-purple/65 uppercase">release</div>
+                <div className="text-[12px] tracking-[0.22em] text-accent-purple/65 uppercase">release</div>
                 <div className="mt-2 text-[13px] font-semibold text-neutral-white/75 uppercase">production</div>
               </div>
             </div>
@@ -828,7 +846,7 @@ function ValidationSection({ copy }: { copy: MironlineCaseCopy }) {
                 <p className="text-[12px] font-semibold tracking-[0.08em] text-neutral-white/80 uppercase">
                   {source.title}
                 </p>
-                <p className="mt-2 text-[11px] leading-relaxed text-neutral-white/40">{source.body}</p>
+                <p className="mt-2 text-[12px] leading-relaxed text-neutral-white/40">{source.body}</p>
               </div>
             ))}
           </div>
@@ -880,7 +898,7 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
                   {stat.label}
                 </div>
                 {stat.note ? (
-                  <p className="mt-3 max-w-sm text-[11px] leading-relaxed text-neutral-white/35">{stat.note}</p>
+                  <p className="mt-3 max-w-sm text-[12px] leading-relaxed text-neutral-white/35">{stat.note}</p>
                 ) : null}
               </div>
             </Reveal>
@@ -889,19 +907,19 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
 
         <div className="mt-20 grid gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <p className="text-[11px] tracking-[0.22em] text-accent-purple/70 uppercase">
+            <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
               {section.supportTitle}
             </p>
-            <p className="mt-5 text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-neutral-white/65">
+            <p className={`${styles.bodyCopy} mt-5`}>
               {section.supportBody}
             </p>
           </Reveal>
 
           <Reveal delay={100}>
-            <p className="text-[11px] tracking-[0.22em] text-neutral-white/35 uppercase">
+            <p className="text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
               {section.productTitle}
             </p>
-            <p className="mt-5 text-[clamp(1rem,1.3vw,1.25rem)] leading-relaxed text-neutral-white/65">
+            <p className={`${styles.bodyCopy} mt-5`}>
               {section.productBody}
             </p>
           </Reveal>
@@ -937,7 +955,7 @@ function EvolutionSection({ locale, copy }: Props) {
 
             <div className="mt-16">
               <div className={styles.quoteMark}>“</div>
-              <blockquote className="max-w-[680px] text-[clamp(1.15rem,1.7vw,1.6rem)] font-semibold leading-[1.3] text-neutral-white/80">
+              <blockquote className={`${styles.sectionLead} max-w-[680px]`}>
                 {section.quote}
               </blockquote>
             </div>
@@ -951,15 +969,15 @@ function EvolutionSection({ locale, copy }: Props) {
             </div>
             <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
-                <p className="text-[11px] tracking-[0.22em] text-accent-purple/65 uppercase">
+                <p className="text-[12px] tracking-[0.22em] text-accent-purple/65 uppercase">
                   {copy.cta.label}
                 </p>
-                <h2 className="mt-4 heading-h2 !text-left tracking-tight uppercase">{copy.cta.title}</h2>
+                <h2 className={`${styles.sectionTitle} mt-4 text-left uppercase`}>{copy.cta.title}</h2>
                 <p className={`${styles.bodyCopy} mt-5 max-w-[820px]`}>{copy.cta.body}</p>
               </div>
               <Link href={`/${locale}/#projects`} className={`${SITE_PRIMARY_BUTTON} inline-flex w-fit items-center gap-3 px-7 py-3.5 text-[14px]`}>
                 {copy.cta.button}
-                <span aria-hidden className="text-[18px] leading-none">↗</span>
+                <span aria-hidden className="text-[20px] leading-none">↗</span>
               </Link>
             </div>
           </div>
