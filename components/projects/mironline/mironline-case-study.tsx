@@ -357,7 +357,7 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   );
 }
 
-function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
+function RoleSection({ locale, copy }: Props) {
   const section = copy.sections.role;
   const hasProcessVisual = publicAssetExists(assets.process);
 
@@ -379,6 +379,17 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
                 {paragraph}
               </p>
             ))}
+          </div>
+
+          <div className="mt-8 border-l border-accent-purple/35 pl-5">
+            <p className={styles.microLabel}>
+              {locale === "es" ? "Forma de trabajo" : "Ways of working"}
+            </p>
+            <p className="mt-3 max-w-[680px] text-[13px] leading-relaxed text-neutral-white/60 md:text-[14px]">
+              {locale === "es"
+                ? "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo."
+                : "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time."}
+            </p>
           </div>
 
           <div className="mt-10">
@@ -987,7 +998,7 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
       <ProblemSection copy={copy} />
-      <RoleSection copy={copy} />
+      <RoleSection locale={locale} copy={copy} />
       <ResearchSection copy={copy} />
       <DefinitionSection copy={copy} />
       <IdeationSection copy={copy} />
