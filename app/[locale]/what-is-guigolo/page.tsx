@@ -145,7 +145,7 @@ export default async function WhatIsGuigoloPage({
                 <p>
                   <Link
                     href={copy.brandbookHref}
-                    className="text-accent-lime hover:underline"
+                    className="text-accent-purple hover:underline"
                   >
                     {copy.brandbookCta}
                   </Link>
@@ -163,7 +163,7 @@ export default async function WhatIsGuigoloPage({
                 <p>
                   <Link
                     href={aboutHref}
-                    className="text-accent-lime hover:underline"
+                    className="text-accent-purple hover:underline"
                   >
                     {copy.aboutCta}
                   </Link>

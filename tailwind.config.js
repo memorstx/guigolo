@@ -25,8 +25,10 @@ module.exports = {
       "neutral-gray-500": "#4c4c4c",
 
       "accent-lilac": "#6900ea",
+      "accent-purple": "#BCA7FF",
 
       "accent-cyan-10": "rgba(20,177,255,0.10)",
+      // Secondary / semantic accent. Purple is now the primary brand accent.
       "accent-lime": "#C6FF00",
     },
 

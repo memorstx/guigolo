@@ -60,35 +60,35 @@ export const en = {
         title: "ACADEMIA GLOBAL",
         sector: "EdTech · Learning platform redesign",
         description: [
-          "A redesign that makes learning feel clear, measurable, and motivating.",
-          "Visual system and interaction focused on progress, hierarchy, and fast decisions."
+          "Redesigned a learning campus to make progress, information hierarchy, and key actions easier to understand.",
+          "UI and frontend work on a live education platform."
         ],
         stack: "Figma, HTML5, CSS, JavaScript",
-        role: "UI Designer & Web Development",
+        role: "UI Designer + Web Development",
         linkLabel: "View case"
       },
 
       "mironline-platform-project": {
-        title: "MIRONLINE",
+        title: "mironline",
         sector: "EdTech · Learning platform",
         description: [
-          "An experience built for clarity, structure, and trust.",
-          "Designed to guide users with zero friction."
+          "Migration and evolution of Flash activities into a responsive web experience for students and teachers.",
+          "Design and implementation of 30+ interaction patterns, UI system, analytics, and Professional English experiences."
         ],
-        stack: "Figma, UI System",
-        role: "UI Designer",
+        stack: "Figma, HTML, CSS, JavaScript, Analytics",
+        role: "UI/UX Designer + Frontend",
         linkLabel: "View case"
       },
 
-      "latiendita-puntodeventa-project": {
-        title: "LA TIENDITA",
-        sector: "Retail · Point of Sale",
+      "bongodex-platform-project": {
+        title: "bongodex",
+        sector: "Collector product · Product Design + Frontend",
         description: [
-          "An interface designed for speed and fewer mistakes.",
-          "Hierarchy and flow built for decisions in seconds."
+          "An own product that organizes Bongo Cat inventory as a collection with context, progress, and explicit states.",
+          "Collection, Overview, Activity, and Bongo Battle solve different problems while sharing the same inventory data foundation."
         ],
-        stack: "Figma, UI",
-        role: "UI Designer",
+        stack: "Next.js, React, Tailwind, Prisma, Neon",
+        role: "Product Designer + Frontend",
         linkLabel: "View case"
       }
     }

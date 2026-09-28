@@ -226,7 +226,7 @@ export default function Contact({ copy, locale }: Props) {
                   clearContactOrigin();
                   window.location.href = homeHash("#projects");
                 }}
-                className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
+                className="rounded-md bg-accent-purple px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
                 {copy.success.primaryBtn}
               </button>
@@ -271,7 +271,7 @@ export default function Contact({ copy, locale }: Props) {
               <button
                 type="button"
                 onClick={() => (window.location.href = homeHash("#projects"))}
-                className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
+                className="rounded-md bg-accent-purple px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
                 {copy.error.exploreBtn}
               </button>

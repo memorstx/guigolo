@@ -21,7 +21,7 @@ export default function FinalCTA({ copy }: { copy: CtaCopy }) {
           className="absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full blur-[80px] opacity-25"
           style={{
             background:
-              "radial-gradient(circle at 30% 30%, rgba(163,255,0,0.9), rgba(163,255,0,0) 60%)",
+              "radial-gradient(circle at 30% 30%, rgba(188,167,255,0.82), rgba(188,167,255,0) 60%)",
           }}
         />
         {/* grid */}
@@ -77,7 +77,7 @@ export default function FinalCTA({ copy }: { copy: CtaCopy }) {
                 ctaId="cta-ready-to-build"
                 className="
                   group inline-flex items-center gap-3
-                  rounded-md bg-accent-lime
+                  rounded-md bg-accent-purple
                   px-8 py-3
                   text-[13px] font-semibold tracking-[0.22em]
                   text-black

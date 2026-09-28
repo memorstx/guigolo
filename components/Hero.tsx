@@ -69,7 +69,7 @@ export default function Hero({ copy }: { copy: HeroCopy }) {
             <div className="mt-7 flex flex-wrap gap-4 justify-center lg:justify-start xl:justify-start 2xl:justify-start 3xl:justify-start 4xl:justify-start">
               <ContactLink
                 ctaId="hero-contact"
-                className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full md:w-auto lg:w-auto xl:w-auto 2xl:w-auto 3xl:w-auto 4xl:w-auto text-center"
+                className="rounded-md bg-accent-purple px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full md:w-auto lg:w-auto xl:w-auto 2xl:w-auto 3xl:w-auto 4xl:w-auto text-center"
               >
                 {copy.ctaContact}
               </ContactLink>

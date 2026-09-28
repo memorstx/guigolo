@@ -113,7 +113,7 @@ export default function Navbar({ dict }: { dict: NavbarDict }) {
                     <Link
                       key={item.href}
                       href={toAnchor(item.href)}
-                      className="group flex items-center gap-1.5 whitespace-nowrap text-[0.66rem] leading-relaxed tracking-widest text-neutral-white/70 transition hover:text-accent-lime xl:gap-2 xl:text-[0.72rem] 2xl:text-[0.8rem] 3xl:text-[0.86rem] 4xl:text-[1rem]"
+                      className="group flex items-center gap-1.5 whitespace-nowrap text-[0.66rem] leading-relaxed tracking-widest text-neutral-white/70 transition hover:text-accent-purple xl:gap-2 xl:text-[0.72rem] 2xl:text-[0.8rem] 3xl:text-[0.86rem] 4xl:text-[1rem]"
                     >
                       {(() => {
                         const Icon = item.Icon;
@@ -142,7 +142,7 @@ export default function Navbar({ dict }: { dict: NavbarDict }) {
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-neutral-white/10 bg-neutral-black-900/60 text-xl text-neutral-white/80 transition hover:border-neutral-white/25 hover:text-accent-lime"
+              className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-neutral-white/10 bg-neutral-black-900/60 text-xl text-neutral-white/80 transition hover:border-neutral-white/25 hover:text-accent-purple"
               aria-label={locale === "es" ? "Cerrar menú" : "Close menu"}
             >
               ✕
@@ -154,7 +154,7 @@ export default function Navbar({ dict }: { dict: NavbarDict }) {
                   key={item.href}
                   href={toAnchor(item.href)}
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 text-[clamp(.95rem,4vw,1.15rem)] tracking-widest text-neutral-white/70 transition hover:text-accent-lime"
+                  className="flex items-center gap-3 text-[clamp(.95rem,4vw,1.15rem)] tracking-widest text-neutral-white/70 transition hover:text-accent-purple"
                 >
                   {(() => {
                     const Icon = item.Icon;
@@ -171,7 +171,7 @@ export default function Navbar({ dict }: { dict: NavbarDict }) {
             <Link
               href={toAnchor("#contacto")}
               onClick={() => setMenuOpen(false)}
-              className="mt-4 rounded-md bg-accent-lime px-8 py-3 font-medium text-black transition hover:brightness-110"
+              className="mt-4 rounded-md bg-accent-purple px-8 py-3 font-medium text-black transition hover:brightness-110"
             >
               {dict.nav.contactCta ?? dict.nav.contact}
             </Link>
@@ -189,7 +189,7 @@ export default function Navbar({ dict }: { dict: NavbarDict }) {
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              className="flex h-9 min-w-10 items-center justify-center rounded-md border border-neutral-white/10 bg-neutral-black-900/40 px-3 text-neutral-white/80 transition hover:border-neutral-white/20 hover:text-accent-lime"
+              className="flex h-9 min-w-10 items-center justify-center rounded-md border border-neutral-white/10 bg-neutral-black-900/40 px-3 text-neutral-white/80 transition hover:border-neutral-white/20 hover:text-accent-purple"
               aria-label={locale === "es" ? "Abrir menú" : "Open menu"}
               aria-expanded={menuOpen}
             >

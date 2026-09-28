@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SERVICES_BASE } from "./services/servicesData";
 import ContactLink from "@/components/ui/ContactLink";
+import { SITE_SECTION_GUTTERS, SITE_SECTION_SPACING } from "@/components/layout/siteLayout";
 
 
 type ServiceCopyItem = {
@@ -127,10 +128,10 @@ export default function ServicesAccordion({
   }, [items.length]);
 
   return (
-    <section id="services" className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]">
+    <section id="services" className={`mx-auto ${SITE_SECTION_GUTTERS} ${SITE_SECTION_SPACING}`}>
       <div className="w-full mx-auto text-center">
         
-        <p className="text-[12px] tracking-widest text-accent-lime/80">
+        <p className="text-[12px] tracking-widest text-accent-purple/80">
           {copy.kicker}
         </p>
 
@@ -151,7 +152,7 @@ export default function ServicesAccordion({
                   onClick={() => onSelect(idx)}
                   className={[
                     "relative overflow-hidden text-left border border-neutral-gray-600/40",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime/60",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple/60",
                     "transition-[max-height,background-color,box-shadow,border-color] duration-500 ease-out",
                     "w-full",
                     isActive
@@ -277,7 +278,7 @@ export default function ServicesAccordion({
                       onClick={() => onSelect(idx)}
                       className={[
                         "relative overflow-hidden text-left border min-w-0",
-                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime/60",
+                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple/60",
                         "transition-[flex,box-shadow,border-color,background-color] duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
                         "flex flex-col h-[110%] xl:h-[120%] 2xl:h-[130%]",
                         isActive
@@ -388,7 +389,7 @@ export default function ServicesAccordion({
           <div className="flex flex-wrap gap-4 justify-center">
             <ContactLink
               ctaId="services-primary-contact"
-              className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
+              className="rounded-md bg-accent-purple px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
             >
               {copy.cta.primaryButton}
             </ContactLink>

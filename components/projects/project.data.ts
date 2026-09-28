@@ -1,6 +1,6 @@
 export type FeaturedProjectBase = {
   id: string;
-  companyLogo: string;
+  companyLogo?: string;
   image: string;
   linkUrl: string;
   access?: string;
@@ -22,9 +22,8 @@ export const FEATURED_PROJECTS_BASE: FeaturedProjectBase[] = [
     access: "https://mironline.io",
   },
   {
-    id: "latiendita-puntodeventa-project",
-    companyLogo: "/brand/projects/tiendita/logo-tiendita.png",
-    image: "/brand/projects/tiendita/cover_puntodeventa.png",
-    linkUrl: "/projects/tiendita/pos",
+    id: "bongodex-platform-project",
+    image: "/brand/projects/bongodex/case-study/01-bongodex-cover.png",
+    linkUrl: "/projects/bongodex/platform",
   },
 ];

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import AboutDocsSliderCard from "./about/AboutDocsSliderCard";
 import { ABOUT_DOC_SLIDES_BASE } from "./about/AboutDocsSliderCard.data";
+import { SITE_SECTION_GUTTERS, SITE_SECTION_SPACING } from "./layout/siteLayout";
 
 type AboutCopy = {
   header: {
@@ -134,10 +135,10 @@ export default function SectionAbout({ copy }: { copy: AboutCopy }) {
 
   return (
     <section id="about" className="relative">
-      <div className="mx-auto px-4 pb-24 pt-[120px] sm:pt-[48px] sm:px-[1rem] md:px-[48px] lg:px-[96px] xl:px-[128px] 2xl:px-[144px] 3xl:px-[244px] 4xl:px-[320px]">
+      <div className={`mx-auto ${SITE_SECTION_GUTTERS} ${SITE_SECTION_SPACING}`}>
         {/* Header */}
         <div className="text-center">
-          <div className="text-[12px] tracking-widest text-accent-lime/80">
+          <div className="text-[12px] tracking-widest text-accent-purple/80">
             {copy.header.kicker}
           </div>
 
@@ -245,7 +246,7 @@ export default function SectionAbout({ copy }: { copy: AboutCopy }) {
             <div className="mt-8 flex flex-col items-baseline sm:items-center gap-4">
               <a
                 href="#contacto"
-                className="inline-flex justify-start items-start sm:items-center sm:justify-center rounded-md bg-accent-lime px-10 py-3 text-[12px] font-semibold tracking-widest text-black shadow-[0_0_0_2px_rgba(0,0,0,0.25)]"
+                className="inline-flex justify-start items-start sm:items-center sm:justify-center rounded-md bg-accent-purple px-10 py-3 text-[12px] font-semibold tracking-widest text-black shadow-[0_0_0_2px_rgba(0,0,0,0.25)]"
               >
                 {copy.value.cta} <span className="ml-2">↗</span>
               </a>

@@ -63,35 +63,35 @@ export const es = {
         title: "ACADEMIA GLOBAL",
         sector: "EdTech · Rediseño de plataforma educativa",
         description: [
-          "Rediseño un campus para que aprender se sienta claro, medible y motivador.",
-          "Sistema visual e interacción enfocados en progreso, jerarquía de información y decisiones rápidas."
+          "Rediseño de un campus para hacer más claro el progreso, la jerarquía de información y las acciones principales.",
+          "Trabajo de UI y frontend sobre una plataforma educativa en uso."
         ],
         stack: "Figma, HTML5, CSS, JavaScript",
-        role: "UI Designer & Web Development",
+        role: "UI Designer + Web Development",
         linkLabel: "Ver caso"
       },
 
       "mironline-platform-project": {
-        title: "MIRONLINE",
-        sector: "EdTech · Plataforma de aprendizaje",
+        title: "mironline",
+        sector: "EdTech · Plataforma educativa",
         description: [
-          "Experiencia centrada en claridad, estructura y confianza.",
-          "Diseño pensado para guiar al usuario sin fricción."
+          "Migración y evolución de actividades Flash hacia una experiencia web responsive para estudiantes y docentes.",
+          "Diseño e implementación de 30+ patrones de interacción, sistema UI, analítica y experiencias de Professional English."
         ],
-        stack: "Figma, UI System",
-        role: "UI Designer",
+        stack: "Figma, HTML, CSS, JavaScript, Analytics",
+        role: "UI/UX Designer + Frontend",
         linkLabel: "Ver caso"
       },
 
-      "latiendita-puntodeventa-project": {
-        title: "LA TIENDITA",
-        sector: "Retail · Punto de venta",
+      "bongodex-platform-project": {
+        title: "bongodex",
+        sector: "Producto para coleccionistas · Product Design + Frontend",
         description: [
-          "Interfaz hecha para operar rápido y sin errores.",
-          "Jerarquía y flujo pensados para decisiones en segundos."
+          "Producto propio para organizar el inventario de Bongo Cat como una colección con contexto, progreso y estados claros.",
+          "Collection, overview, Activity y Bongo Battle nacieron a partir de problemas distintos, pero comparten la misma base de datos del inventario."
         ],
-        stack: "Figma, UI",
-        role: "UI Designer",
+        stack: "Next.js, React, Tailwind, Prisma, Neon",
+        role: "Product Designer + Frontend",
         linkLabel: "Ver caso"
       }
     }

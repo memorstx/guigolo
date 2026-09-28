@@ -176,7 +176,7 @@ export default function ProcessStackScroll({ copy, className = "" }: Props) {
           ].join(" ")}
         >
           <div className="mx-auto max-w-[1280px] px-6 md:px-12 lg:px-24 pt-24 2xl:pt-32 md:pt-8 text-center">
-            <div className="text-[12px] tracking-[0.35em] text-accent-lime/80">
+            <div className="text-[12px] tracking-[0.35em] text-accent-purple/80">
               MI PROCESO
             </div>
             <h2 className="mt-4 heading-h2 tracking-tight">

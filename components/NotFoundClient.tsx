@@ -69,7 +69,7 @@ export default function NotFoundClient() {
             </div>
 
             <header className="space-y-4">
-              <div className="text-[12px] tracking-[0.35em] text-accent-lime/80">
+              <div className="text-[12px] tracking-[0.35em] text-accent-purple/80">
                 {t.kicker}
               </div>
 
@@ -81,7 +81,7 @@ export default function NotFoundClient() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href={homeHref}
-                className="rounded-md bg-accent-lime px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
+                className="rounded-md bg-accent-purple px-6 py-3 text-black font-medium shadow-[0_0_0_2px_rgba(0,0,0,0.25)] w-full sm:w-auto text-center"
               >
                 {t.ctaHome}
               </Link>

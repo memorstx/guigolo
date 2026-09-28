@@ -93,7 +93,7 @@ export default function AboutDocsSliderCard({ slides }: { slides: Slide[] }) {
               onClick={() => emblaApi?.scrollTo(i)}
               className={[
                 "h-4 w-4 rounded-full border border-neutral-white/20 transition",
-                i === selected ? "bg-accent-lime" : "bg-transparent",
+                i === selected ? "bg-accent-purple" : "bg-transparent",
               ].join(" ")}
               aria-label={`Go to slide ${i + 1}`}
             />

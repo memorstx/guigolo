@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         destination: "/es/what-is-guigolo",
         permanent: true,
       },
+      {
+        source: "/projects/mironline/platform",
+        destination: "/es/projects/mironline/platform",
+        permanent: false,
+      },
 
       {
         source: '/go/figma',

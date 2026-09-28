@@ -17,7 +17,7 @@ const FAQSection = dynamic(() => import("@/components/Faq"));
 const featuredIds = new Set([
   "academia-platform-project",
   "mironline-platform-project",
-  "latiendita-puntodeventa-project",
+  "bongodex-platform-project",
 ]);
 
 type Locale = "es" | "en";
@@ -82,7 +82,7 @@ export default async function Home({
           <ProjectsIntro />
           <ProjectsList />
         */}
-        <ProjectsSection items={featuredProjects} copy={dict.projects} />
+        <ProjectsSection items={featuredProjects} copy={dict.projects} locale={locale as Locale} />
 
         <Process copy={dict.process} />
         <SectionAbout copy={dict.about} />

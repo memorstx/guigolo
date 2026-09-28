@@ -145,7 +145,7 @@ export default function MissionsPanel({ open, onClose }: Props) {
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-[10px] tracking-[0.35em] text-accent-lime/80 uppercase">
+            <div className="text-[10px] tracking-[0.35em] text-accent-purple/80 uppercase">
               {UI_COPY[locale].titleKicker}
             </div>
             <div className="mt-2 text-neutral-white font-semibold">
