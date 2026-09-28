@@ -28,7 +28,8 @@ const assets = {
   research: `${ASSET_ROOT}/12-research-evidence.png`,
   process: `${ASSET_ROOT}/13-process-map.png`,
   gallery: `${ASSET_ROOT}/14-interaction-gallery.png`,
-  problem: `${ASSET_ROOT}/15-problem-statement.png`,
+  problem: `${ASSET_ROOT}/15-problem-board.png`,
+  audienceOverview: `${ASSET_ROOT}/16-user-personas.png`,
 } as const;
 
 type AssetKey = keyof typeof assets;
@@ -287,6 +288,7 @@ function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.audience;
+  const hasAudienceOverview = publicAssetExists(assets.audienceOverview);
 
   return (
     <section
@@ -302,6 +304,16 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
             <p className={styles.bodyCopy}>{section.intro}</p>
           </div>
         </Reveal>
+
+        {hasAudienceOverview ? (
+          <Reveal className="mt-12 md:mt-16">
+            <MediaAsset
+              asset="audienceOverview"
+              label={copy.assetLabels.audienceOverview}
+              className={styles.editorialArtifact}
+            />
+          </Reveal>
+        ) : null}
 
         <div className={styles.audienceProfiles}>
           {section.profiles.map((profile, index) => (
@@ -410,20 +422,16 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
     >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} />
+          <StageHeader title={section.title} intro={section.statement} />
         </Reveal>
 
-        <Reveal className="mt-10 md:mt-14">
-          <p className={styles.problemStatement}>{section.statement}</p>
-        </Reveal>
-
-        {hasProblemVisual ? (
-          <Reveal className="mt-10 md:mt-14">
-            <MediaAsset asset="problem" label={copy.assetLabels.problem} />
-          </Reveal>
-        ) : null}
-
-        <div className="mt-12 grid gap-12 lg:grid-cols-[.92fr_1.08fr] lg:items-start xl:gap-20">
+        <div
+          className={`mt-12 grid gap-12 ${
+            hasProblemVisual
+              ? "xl:grid-cols-[minmax(300px,.68fr)_minmax(0,1.32fr)] xl:items-start xl:gap-16"
+              : "lg:grid-cols-[.92fr_1.08fr] lg:items-start xl:gap-20"
+          }`}
+        >
           <Reveal>
             <div className="space-y-6">
               {section.context.map((paragraph) => (
@@ -435,18 +443,26 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
           </Reveal>
 
           <Reveal delay={100}>
-            <div className={styles.problemReports}>
-              <p className={styles.microLabel}>{section.reportsTitle}</p>
+            {hasProblemVisual ? (
+              <MediaAsset
+                asset="problem"
+                label={copy.assetLabels.problem}
+                className={styles.editorialArtifact}
+              />
+            ) : (
+              <div className={styles.problemReports}>
+                <p className={styles.microLabel}>{section.reportsTitle}</p>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {section.reports.map((report) => (
-                  <article key={report.label} className={styles.problemReport}>
-                    <span className={styles.problemReportLabel}>{report.label}</span>
-                    <p>{report.body}</p>
-                  </article>
-                ))}
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {section.reports.map((report) => (
+                    <article key={report.label} className={styles.problemReport}>
+                      <span className={styles.problemReportLabel}>{report.label}</span>
+                      <p>{report.body}</p>
+                    </article>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </Reveal>
         </div>
 

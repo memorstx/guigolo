@@ -613,7 +613,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       research: "Evidencia y señales de uso",
       process: "Proceso de diseño e implementación",
       gallery: "Galería de interacciones",
-      problem: "Contexto del problema",
+      problem: "Síntesis de investigación y hallazgos",
+      audienceOverview: "Perfiles y necesidades de usuarios",
     },
     cta: {
       label: "FIN DEL CASO",
@@ -1072,7 +1073,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       research: "Usage evidence and signals",
       process: "Design and implementation process",
       gallery: "Interaction gallery",
-      problem: "Problem context",
+      problem: "Research synthesis and findings",
+      audienceOverview: "User profiles and needs",
     },
     cta: {
       label: "END OF CASE",
