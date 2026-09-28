@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import type { NextFetchEvent, NextRequest } from "next/server";
+import { detectCrawler } from "@/lib/crawlerDetection";
 
 const AI_SOURCES = [
   {
@@ -75,9 +76,94 @@ function contentFromPath(pathname: string) {
     .toLowerCase();
 }
 
-export function proxy(request: NextRequest) {
-  if (request.method !== "GET") {
-    return NextResponse.next();
+function unauthorized() {
+  return new NextResponse("Autenticación requerida.", {
+    status: 401,
+    headers: {
+      "WWW-Authenticate": 'Basic realm="guigolo crawler radar", charset="UTF-8"',
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
+function protectCrawlerDashboard(request: NextRequest) {
+  if (!request.nextUrl.pathname.startsWith("/admin/crawlers")) {
+    return null;
+  }
+
+  const user = process.env.CRAWLER_DASHBOARD_USER || "guigolo";
+  const password = process.env.CRAWLER_DASHBOARD_PASSWORD;
+
+  if (!password) {
+    return new NextResponse(
+      "CRAWLER_DASHBOARD_PASSWORD no está configurada.",
+      { status: 503 }
+    );
+  }
+
+  const auth = request.headers.get("authorization");
+
+  if (!auth?.startsWith("Basic ")) {
+    return unauthorized();
+  }
+
+  try {
+    const decoded = atob(auth.slice(6));
+
+    if (decoded !== `${user}:${password}`) {
+      return unauthorized();
+    }
+  } catch {
+    return unauthorized();
+  }
+
+  return null;
+}
+
+function logCrawler(request: NextRequest, event: NextFetchEvent) {
+  const userAgent = request.headers.get("user-agent") || "";
+  const crawler = detectCrawler(userAgent);
+  const ingestSecret = process.env.CRAWLER_INGEST_SECRET;
+
+  if (!crawler || !ingestSecret) {
+    return;
+  }
+
+  const payload = {
+    botName: crawler.name,
+    category: crawler.category,
+    path: request.nextUrl.pathname,
+    query: request.nextUrl.searchParams.toString() || null,
+    method: request.method,
+    userAgent,
+    referrer: request.headers.get("referer"),
+    vercelId: request.headers.get("x-vercel-id"),
+  };
+
+  const endpoint = new URL("/api/crawler-events", request.url);
+
+  event.waitUntil(
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-crawler-ingest-secret": ingestSecret,
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    }).then(() => undefined).catch(() => undefined)
+  );
+}
+
+export function proxy(request: NextRequest, event: NextFetchEvent) {
+  const dashboardResponse = protectCrawlerDashboard(request);
+
+  if (dashboardResponse) {
+    return dashboardResponse;
+  }
+
+  if (request.method === "GET") {
+    logCrawler(request, event);
   }
 
   const url = request.nextUrl.clone();
@@ -117,6 +203,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|llms.txt|.*\\..*).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|map|woff|woff2|ttf|otf)$).*)",
   ],
 };
