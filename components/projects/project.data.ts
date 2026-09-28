@@ -33,5 +33,7 @@ export const FEATURED_PROJECTS_BASE: FeaturedProjectBase[] = [
     // La ruta y el código siguen existiendo; sólo ocultamos "Ver caso" por ahora.
     // Cuando esté listo, vuelve a activar:
     // linkUrl: "/projects/bongodex/platform",
+
+    access: "https://bongodex.com",
   },
 ];
