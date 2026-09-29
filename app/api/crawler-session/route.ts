@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    path: "/admin/crawlers",
+    path: "/admin",
     maxAge: session.maxAge,
   });
 
@@ -67,7 +67,7 @@ export async function DELETE() {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    path: "/admin/crawlers",
+    path: "/admin",
     maxAge: 0,
   });
 
