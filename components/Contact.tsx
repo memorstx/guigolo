@@ -173,14 +173,6 @@ export default function Contact({ copy, locale }: Props) {
         form.reset();
         sessionStorage.setItem("contact_sent_v1", "1");
         setStatus("success");
-        window.dispatchEvent(
-          new CustomEvent("guigolo:action", {
-            detail: {
-              type: "contact_submit",
-              label: origin?.ctaId || "contact_form",
-            },
-          })
-        );
       } else {
         setStatus("error");
       }

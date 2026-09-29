@@ -1,12 +1,11 @@
 import Link from "next/link";
 
-type Section = "crawlers" | "traffic" | "actions" | "404s";
+type Section = "crawlers" | "traffic" | "404s";
 
 export default function AdminNav({ current }: { current: Section }) {
   const items: Array<{ key: Section; label: string; href: string }> = [
     { key: "crawlers", label: "Crawlers", href: "/admin/crawlers" },
     { key: "traffic", label: "Tráfico", href: "/admin/traffic" },
-    { key: "actions", label: "Acciones", href: "/admin/actions" },
     { key: "404s", label: "404", href: "/admin/404s" },
   ];
 
