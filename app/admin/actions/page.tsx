@@ -78,6 +78,25 @@ export default async function ActionsPage() {
     )
   `;
 
+  await sql`
+    CREATE TABLE IF NOT EXISTS traffic_events (
+      id BIGSERIAL PRIMARY KEY,
+      seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      session_id TEXT NOT NULL,
+      path TEXT NOT NULL,
+      query_string TEXT,
+      referrer TEXT,
+      source TEXT NOT NULL,
+      source_type TEXT NOT NULL,
+      locale TEXT NOT NULL,
+      is_entry BOOLEAN NOT NULL DEFAULT FALSE,
+      utm_source TEXT,
+      utm_medium TEXT,
+      utm_campaign TEXT,
+      utm_content TEXT
+    )
+  `;
+
   const [summaryRows, typeRows, pathRows, sourceRows, recentRows] =
     await Promise.all([
       sql`
