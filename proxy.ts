@@ -80,10 +80,10 @@ function contentFromPath(pathname: string) {
     .toLowerCase();
 }
 
-async function protectCrawlerDashboard(request: NextRequest) {
+async function protectAdmin(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  if (!pathname.startsWith("/admin/crawlers")) {
+  if (!pathname.startsWith("/admin")) {
     return null;
   }
 
@@ -156,7 +156,7 @@ function logCrawler(request: NextRequest, event: NextFetchEvent) {
 }
 
 export async function proxy(request: NextRequest, event: NextFetchEvent) {
-  const dashboardResponse = await protectCrawlerDashboard(request);
+  const dashboardResponse = await protectAdmin(request);
 
   if (dashboardResponse) {
     return dashboardResponse;

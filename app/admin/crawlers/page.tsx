@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { neon } from "@neondatabase/serverless";
 import LogoutButton from "./logout-button";
+import AdminNav from "../admin-nav";
 
 export const dynamic = "force-dynamic";
 
@@ -276,6 +277,8 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
             <LogoutButton />
           </div>
         </header>
+
+        <AdminNav current="crawlers" />
 
         <section className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <Stat
