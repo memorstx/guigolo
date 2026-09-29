@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { detectCrawler } from "@/lib/crawlerDetection";
+import {
+  CRAWLER_SESSION_COOKIE,
+  verifyCrawlerSession,
+} from "@/lib/crawlerSession";
 
 const AI_SOURCES = [
   {
@@ -76,48 +80,42 @@ function contentFromPath(pathname: string) {
     .toLowerCase();
 }
 
-function unauthorized() {
-  return new NextResponse("Autenticación requerida.", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="guigolo crawler radar", charset="UTF-8"',
-      "Cache-Control": "no-store",
-    },
-  });
-}
+async function protectCrawlerDashboard(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
 
-function protectCrawlerDashboard(request: NextRequest) {
-  if (!request.nextUrl.pathname.startsWith("/admin/crawlers")) {
+  if (!pathname.startsWith("/admin/crawlers")) {
+    return null;
+  }
+
+  if (pathname === "/admin/crawlers/login") {
     return null;
   }
 
   const user = process.env.CRAWLER_DASHBOARD_USER || "guigolo";
   const password = process.env.CRAWLER_DASHBOARD_PASSWORD;
+  const signingSecret = process.env.CRAWLER_INGEST_SECRET;
 
-  if (!password) {
-    return new NextResponse(
-      "CRAWLER_DASHBOARD_PASSWORD no está configurada.",
-      { status: 503 }
-    );
+  if (!password || !signingSecret) {
+    return new NextResponse("Crawler Radar no está configurado.", {
+      status: 503,
+      headers: { "Cache-Control": "no-store" },
+    });
   }
 
-  const auth = request.headers.get("authorization");
+  const token = request.cookies.get(CRAWLER_SESSION_COOKIE)?.value;
+  const validSession = await verifyCrawlerSession(token, user, signingSecret);
 
-  if (!auth?.startsWith("Basic ")) {
-    return unauthorized();
+  if (validSession) {
+    return null;
   }
 
-  try {
-    const decoded = atob(auth.slice(6));
+  const loginUrl = new URL("/admin/crawlers/login", request.url);
+  loginUrl.searchParams.set(
+    "next",
+    `${request.nextUrl.pathname}${request.nextUrl.search}`
+  );
 
-    if (decoded !== `${user}:${password}`) {
-      return unauthorized();
-    }
-  } catch {
-    return unauthorized();
-  }
-
-  return null;
+  return NextResponse.redirect(loginUrl);
 }
 
 function logCrawler(request: NextRequest, event: NextFetchEvent) {
@@ -151,12 +149,14 @@ function logCrawler(request: NextRequest, event: NextFetchEvent) {
       },
       body: JSON.stringify(payload),
       cache: "no-store",
-    }).then(() => undefined).catch(() => undefined)
+    })
+      .then(() => undefined)
+      .catch(() => undefined)
   );
 }
 
-export function proxy(request: NextRequest, event: NextFetchEvent) {
-  const dashboardResponse = protectCrawlerDashboard(request);
+export async function proxy(request: NextRequest, event: NextFetchEvent) {
+  const dashboardResponse = await protectCrawlerDashboard(request);
 
   if (dashboardResponse) {
     return dashboardResponse;
