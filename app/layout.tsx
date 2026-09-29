@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { HtmlLangSync } from "../components/HtmlLangSync";
 import TrafficTracker from "../components/TrafficTracker";
 import ActionTracker from "../components/ActionTracker";
+import PerformanceTracker from "../components/PerformanceTracker";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <HtmlLangSync />
         <TrafficTracker enabled={isProd} />
         <ActionTracker enabled={isProd} />
+        <PerformanceTracker enabled={isProd} />
 
         {children}
 
