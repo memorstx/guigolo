@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { HtmlLangSync } from "../components/HtmlLangSync";
+import TrafficTracker from "../components/TrafficTracker";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {`document.documentElement.lang = location.pathname.startsWith('/en') ? 'en' : 'es';`}
         </Script>
         <HtmlLangSync />
+        <TrafficTracker enabled={isProd} />
 
         {children}
 
