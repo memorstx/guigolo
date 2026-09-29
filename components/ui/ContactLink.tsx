@@ -40,7 +40,7 @@ export default function ContactLink({
   };
 
   return (
-    <Link href={href} onClick={onClick} className={className}>
+    <Link href={href} onClick={onClick} className={className} data-guigolo-action="contact_open" data-guigolo-label={ctaId}>
       {children}
     </Link>
   );

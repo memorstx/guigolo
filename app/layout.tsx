@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { HtmlLangSync } from "../components/HtmlLangSync";
 import TrafficTracker from "../components/TrafficTracker";
+import ActionTracker from "../components/ActionTracker";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <HtmlLangSync />
         <TrafficTracker enabled={isProd} />
+        <ActionTracker enabled={isProd} />
 
         {children}
 
