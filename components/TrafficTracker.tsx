@@ -24,6 +24,7 @@ export default function TrafficTracker({ enabled }: { enabled: boolean }) {
 
   useEffect(() => {
     if (!enabled || !pathname || pathname.startsWith("/admin")) return;
+    if (document.querySelector('[data-guigolo-not-found="true"]')) return;
 
     const isEntry = sessionStorage.getItem(ENTRY_KEY) !== "1";
 

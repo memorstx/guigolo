@@ -56,7 +56,7 @@ export default function NotFoundClient() {
   return (
     <SiteShell locale={locale}>
       <NotFoundTracker />
-      <main className="text-neutral-white">
+      <main data-guigolo-not-found="true" className="text-neutral-white">
         <PageFrame variant="prose" className="py-10">
           <section className="space-y-5">
             <div className="flex items-center justify-center min-h-[220px]">
