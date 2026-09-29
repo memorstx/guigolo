@@ -258,15 +258,12 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
         <header className="flex flex-col gap-6 border-b border-white/[0.07] pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-violet-300">
-              guigolo · crawler intelligence
+              guigolo · admin
             </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
               Crawler Radar
             </h1>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-400">
-              Vista de todo guigolo.com: qué crawlers llegan, qué URLs solicitan,
-              con qué frecuencia regresan y qué contenido real recorren.
-            </p>
+            <p className="mt-3 text-sm text-neutral-500">guigolo.com</p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -282,24 +279,20 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
 
         <section className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <Stat
-            label="Solicitudes registradas"
+            label="Solicitudes"
             value={String(summary.total_events ?? "0")}
-            detail={`${String(summary.content_events ?? "0")} fueron a contenido real`}
           />
           <Stat
-            label="Crawlers distintos"
+            label="Crawlers"
             value={String(summary.unique_bots ?? "0")}
-            detail="Según el User-Agent declarado"
           />
           <Stat
-            label="URLs de contenido"
+            label="URLs rastreadas"
             value={String(summary.unique_content_paths ?? "0")}
-            detail="Sin contar robots.txt ni sitemap.xml"
           />
           <Stat
             label="Última actividad"
             value={formatDate(summary.last_seen)}
-            detail={`Desde ${formatDate(summary.first_seen)}`}
           />
         </section>
 
@@ -310,9 +303,6 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
                 <Eyebrow>Actividad</Eyebrow>
                 <h2 className="mt-2 text-xl font-medium">Últimos 14 días</h2>
               </div>
-              <p className="text-xs text-neutral-500">
-                Cada barra representa solicitudes automatizadas registradas.
-              </p>
             </div>
 
             <div className="mt-8 flex h-44 items-end gap-2 border-b border-white/[0.08] pb-3">
@@ -389,10 +379,6 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
           <Panel>
             <Eyebrow>Contenido</Eyebrow>
             <h2 className="mt-2 text-xl font-medium">Páginas más rastreadas</h2>
-            <p className="mt-2 text-sm leading-6 text-neutral-500">
-              Sólo páginas reales de guigolo.com; aquí no contamos robots.txt ni
-              sitemap.xml.
-            </p>
 
             <div className="mt-6 space-y-2">
               {topPathRows.length ? (
@@ -427,7 +413,7 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
 
           <Panel>
             <Eyebrow>Crawlers</Eyebrow>
-            <h2 className="mt-2 text-xl font-medium">Quién ha pasado por aquí</h2>
+            <h2 className="mt-2 text-xl font-medium">Crawlers</h2>
 
             <div className="mt-5 overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
@@ -477,7 +463,7 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
               <Eyebrow>Historial</Eyebrow>
               <h2 className="mt-2 text-2xl font-medium">Todos los accesos</h2>
               <p className="mt-2 text-sm text-neutral-500">
-                {filteredCount.toLocaleString("es-MX")} registros con los filtros actuales · {PAGE_SIZE} por página
+                {filteredCount.toLocaleString("es-MX")} registros · {PAGE_SIZE} por página
               </p>
             </div>
 
@@ -544,10 +530,9 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
           </div>
 
           {filtersActive ? (
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-neutral-600">
-              <span>Filtros activos.</span>
-              <Link href="/admin/crawlers" className="text-violet-300 hover:text-violet-200">
-                Limpiar todo
+            <div className="mt-3">
+              <Link href="/admin/crawlers" className="text-xs text-violet-300 hover:text-violet-200">
+                Limpiar filtros
               </Link>
             </div>
           ) : null}
@@ -644,11 +629,6 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
           </div>
         </section>
 
-        <footer className="border-t border-white/[0.06] py-6 text-xs leading-5 text-neutral-700">
-          Crawler Radar registra bots y automatizaciones detectados por User-Agent en
-          todo guigolo.com. No representa tráfico humano y la identidad declarada no
-          equivale a una verificación criptográfica del crawler.
-        </footer>
       </div>
     </main>
   );
@@ -677,11 +657,9 @@ function EmptyText({ children }: { children: React.ReactNode }) {
 function Stat({
   label,
   value,
-  detail,
 }: {
   label: string;
   value: string;
-  detail: string;
 }) {
   return (
     <div className="rounded-[22px] border border-white/[0.08] bg-white/[0.02] p-5">
@@ -691,7 +669,6 @@ function Stat({
       <div className="mt-3 text-xl font-medium text-neutral-100 sm:text-2xl">
         {value}
       </div>
-      <div className="mt-2 text-[11px] leading-5 text-neutral-600">{detail}</div>
     </div>
   );
 }
