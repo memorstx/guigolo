@@ -7,6 +7,8 @@ import { HtmlLangSync } from "../components/HtmlLangSync";
 import TrafficTracker from "../components/TrafficTracker";
 import ActionTracker from "../components/ActionTracker";
 import PerformanceTracker from "../components/PerformanceTracker";
+import ErrorTracker from "../components/ErrorTracker";
+import ThirdPartyAnalytics from "../components/ThirdPartyAnalytics";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -51,7 +53,6 @@ export const metadata: Metadata = {
         alt: "Guigolo · Portafolio UX/UI",
       },
     ],
-    // OJO: esto es global. El locale real por idioma lo definimos en app/[locale]/layout.tsx
     locale: "es_MX",
     type: "website",
   },
@@ -67,7 +68,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const isProd = process.env.VERCEL_ENV === "production";
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-
   const HJ_ID = process.env.NEXT_PUBLIC_HJ_ID;
   const HJ_SV = process.env.NEXT_PUBLIC_HJ_SV || "6";
 
@@ -81,48 +81,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TrafficTracker enabled={isProd} />
         <ActionTracker enabled={isProd} />
         <PerformanceTracker enabled={isProd} />
+        <ErrorTracker enabled={isProd} />
 
         {children}
 
-        {/* Google Analytics — SOLO producción */}
-        {isProd && GA_ID ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script
-              id="ga-init"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${GA_ID}');
-                `,
-              }}
-            />
-          </>
-        ) : null}
-
-        {/* Hotjar — SOLO producción */}
-        {isProd && HJ_ID ? (
-          <Script
-            id="hotjar-init"
-            strategy="lazyOnload"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(h,o,t,j,a,r){
-                  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                  h._hjSettings={hjid:${HJ_ID},hjsv:${HJ_SV}};
-                  a=o.getElementsByTagName('head')[0];
-                  r=o.createElement('script');r.async=1;
-                  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                  a.appendChild(r);
-                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-              `,
-            }}
+        {isProd ? (
+          <ThirdPartyAnalytics
+            gaId={GA_ID}
+            hotjarId={HJ_ID}
+            hotjarVersion={HJ_SV}
           />
         ) : null}
 
