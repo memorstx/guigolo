@@ -16,6 +16,10 @@ const typeLabels: Record<string, string> = {
   runtime: "JavaScript",
   unhandled_rejection: "Promise",
   render: "Render",
+  server_render: "Server render",
+  server_route: "API / Route",
+  server_action: "Server Action",
+  server_proxy: "Proxy",
 };
 
 function formatDate(value: unknown) {
@@ -229,8 +233,8 @@ export default async function HealthPage() {
         </details>
 
         <p className="mt-5 text-xs leading-relaxed text-neutral-600">
-          Health confirma disponibilidad al momento de abrir esta vista y registra errores del navegador/render.
-          No sustituye un monitor externo de uptime durante las 24 horas.
+          Health confirma disponibilidad al momento de abrir esta vista y registra errores de navegador,
+          render, servidor, APIs, Server Actions y proxy. No sustituye un monitor externo de uptime durante las 24 horas.
         </p>
 
         <div className="h-12" />
