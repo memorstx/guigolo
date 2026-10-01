@@ -247,107 +247,76 @@ function Hero({ locale, copy }: Props) {
 
 function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.product;
+  const history = copy.sections.history;
+  const milestones = history.milestones.filter((item) => item.phase === "product");
 
   return (
     <SectionShell id="context" className="overflow-hidden">
-      <div className="pointer-events-none absolute right-[-6%] top-[8%] hidden 2xl:block">
-        <div className={`${styles.stageWord} ${styles.stageWordCyan}`}>context</div>
-      </div>
-
       <Reveal>
-        <StageHeader title={section.title} />
+        <div className={styles.caseIntroBlock}>
+          <StageHeader title={section.title} />
+          <div className={styles.caseIntroCopy}>
+            <p className={styles.bodyCopy}>{section.body[0]}</p>
+          </div>
+        </div>
       </Reveal>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-[.78fr_1.22fr] lg:items-start xl:gap-20">
-        <Reveal className="lg:pt-8">
-          <div className="space-y-6">
-            {section.body.map((paragraph) => (
-              <p key={paragraph} className={styles.bodyCopy}>
-                {paragraph}
-              </p>
+      <Reveal className="mt-14 md:mt-18">
+        <div className={styles.contextHistory}>
+          <p className={styles.microLabel}>{history.productLabel}</p>
+          <div className={styles.contextHistoryTrack}>
+            {milestones.map((item) => (
+              <article key={item.year} className={styles.contextHistoryItem}>
+                <span className={styles.historyYear}>{item.year}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
             ))}
           </div>
-
-          <div className="mt-12 grid gap-y-9 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            {section.ecosystem.map((item) => (
-              <div key={item.label}>
-                <p className="text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
-                  {item.label}
-                </p>
-                <p className={`${styles.cardTitle} mt-2`}>
-                  {item.value}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={100}>
-          <MediaAsset asset="dashboard" label={copy.assetLabels.dashboard} index="01"  />
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
 
-
-function ProductHistorySection({ copy }: { copy: MironlineCaseCopy }) {
-  const section = copy.sections.history;
-  const productMilestones = section.milestones.filter((item) => item.phase === "product");
-  const uxMilestones = section.milestones.filter((item) => item.phase === "ux");
+function ProductSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.product;
 
   return (
     <section
-      id="product-evolution"
+      id="product"
       className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
     >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
-            <StageHeader title={section.title} />
-            <p className={styles.bodyCopy}>{section.intro}</p>
+          <div className={styles.caseSectionHeader}>
+            <p className={styles.microLabel}>02 · PRODUCTO</p>
+            <h2 className={styles.sectionTitle}>Producto</h2>
+            <div className={styles.caseSectionIntro}>
+              {section.body.slice(1).map((paragraph) => (
+                <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
+              ))}
+            </div>
           </div>
         </Reveal>
 
-        <Reveal className="mt-14 md:mt-18">
-          <div className={styles.historySection}>
-            <div className={styles.historyBand}>
-              <p className={styles.microLabel}>{section.productLabel}</p>
-              <div className={styles.historyProductTrack}>
-                {productMilestones.map((item) => (
-                  <article key={item.year} className={styles.historyProductItem}>
-                    <span className={styles.historyYear}>{item.year}</span>
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
+        <Reveal className="mt-12 md:mt-16">
+          <MediaAsset
+            asset="dashboard"
+            label={copy.assetLabels.dashboard}
+            className={styles.productHeroAsset}
+            sizes="100vw"
+          />
+        </Reveal>
 
-            <div className={styles.historyBand}>
-              <p className={styles.microLabel}>{section.experienceLabel}</p>
-              <div className={styles.historyUxTrack}>
-                {uxMilestones.map((item) => (
-                  <article key={item.year} className={styles.historyUxItem}>
-                    <div className={styles.historyUxHeader}>
-                      <span className={styles.historyYear}>{item.year}</span>
-                      <div>
-                        <h3>{item.title}</h3>
-                        <p>{item.body}</p>
-                      </div>
-                    </div>
-
-                    {item.activities?.length ? (
-                      <div className={styles.historyActivities}>
-                        {item.activities.map((activity) => (
-                          <span key={activity}>{activity}</span>
-                        ))}
-                      </div>
-                    ) : null}
-                  </article>
-                ))}
+        <Reveal className="mt-10 md:mt-12">
+          <div className={styles.productFacts}>
+            {section.ecosystem.map((item) => (
+              <div key={item.label} className={styles.productFact}>
+                <p className={styles.microLabel}>{item.label}</p>
+                <p>{item.value}</p>
               </div>
-            </div>
+            ))}
           </div>
         </Reveal>
       </div>
@@ -366,9 +335,9 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
 
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+          <div className={styles.caseSectionHeader}>
             <StageHeader title={section.title} />
-            <p className={styles.bodyCopy}>{section.intro}</p>
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
           </div>
         </Reveal>
         <div className={styles.audienceProfiles}>
@@ -469,9 +438,9 @@ function PedagogySection({ locale, copy }: Props) {
   return (
     <SectionShell id="pedagogy" className="overflow-hidden bg-neutral-black-800/20">
       <Reveal>
-        <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+        <div className={styles.caseSectionHeader}>
           <StageHeader title={section.title} />
-          <p className={styles.bodyCopy}>{section.intro}</p>
+          <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
         </div>
       </Reveal>
 
@@ -508,7 +477,6 @@ function PedagogySection({ locale, copy }: Props) {
 
 function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.challenge;
-  const hasProblemVisual = publicAssetExists(assets.problem);
 
   return (
     <section
@@ -520,46 +488,29 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
           <StageHeader title={section.title} intro={section.statement} />
         </Reveal>
 
-        <div
-          className={`mt-12 grid gap-12 ${
-            hasProblemVisual
-              ? "xl:grid-cols-[minmax(300px,.68fr)_minmax(0,1.32fr)] xl:items-start xl:gap-16"
-              : "lg:grid-cols-[.92fr_1.08fr] lg:items-start xl:gap-20"
-          }`}
-        >
-          <Reveal>
-            <div className="space-y-6">
+        <Reveal className="mt-10 md:mt-12">
+          <div className={styles.problemStory}>
+            <div className={styles.problemCopy}>
               {section.context.map((paragraph) => (
                 <p key={paragraph} className={styles.bodyCopy}>
                   {paragraph}
                 </p>
               ))}
             </div>
-          </Reveal>
 
-          <Reveal delay={100}>
-            {hasProblemVisual ? (
-              <MediaAsset
-                asset="problem"
-                label={copy.assetLabels.problem}
-                className={styles.editorialArtifact}
-              />
-            ) : (
-              <div className={styles.problemReports}>
-                <p className={styles.microLabel}>{section.reportsTitle}</p>
-
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {section.reports.map((report) => (
-                    <article key={report.label} className={styles.problemReport}>
-                      <span className={styles.problemReportLabel}>{report.label}</span>
-                      <p>{report.body}</p>
-                    </article>
-                  ))}
-                </div>
+            <div className={styles.problemReports}>
+              <p className={styles.microLabel}>{section.reportsTitle}</p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {section.reports.map((report) => (
+                  <article key={report.label} className={styles.problemReport}>
+                    <span className={styles.problemReportLabel}>{report.label}</span>
+                    <p>{report.body}</p>
+                  </article>
+                ))}
               </div>
-            )}
-          </Reveal>
-        </div>
+            </div>
+          </div>
+        </Reveal>
 
         <Reveal className="mt-16 md:mt-20">
           <p className={styles.microLabel}>{section.constraintsTitle}</p>
@@ -581,75 +532,49 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.role;
-  const hasProcessVisual = publicAssetExists(assets.process);
 
   return (
     <SectionShell id="scope" className="overflow-hidden">
-      <div className="pointer-events-none absolute left-[-3%] top-[10%] hidden 2xl:block">
-        <div className={styles.stageWord}>design↔code</div>
-      </div>
-
       <Reveal>
-        <StageHeader title={section.title} />
-      </Reveal>
-
-      <div className={`mt-12 grid gap-12 ${hasProcessVisual ? "lg:grid-cols-[.82fr_1.18fr] xl:gap-20" : "lg:grid-cols-2 xl:gap-20"}`}>
-        <Reveal>
-          <div className="space-y-6">
+        <div className={styles.caseSectionHeader}>
+          <StageHeader title={section.title} />
+          <div className={styles.caseSectionIntro}>
             {section.body.map((paragraph) => (
-              <p key={paragraph} className={styles.bodyCopy}>
-                {paragraph}
-              </p>
+              <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
             ))}
           </div>
+        </div>
+      </Reveal>
 
-          <div className="mt-8 border-l border-accent-purple/35 pl-5">
-            <p className={styles.microLabel}>{section.workingTitle}</p>
-            <p className="mt-3 max-w-[680px] text-[13px] leading-relaxed text-neutral-white/60 md:text-[14px]">
-              {section.workingBody}
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <p className={styles.microLabel}>{section.teamTitle}</p>
-            <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3 lg:grid-cols-2">
-              {section.team.map((member) => (
-                <div key={member} className={styles.mutedListTitle}>
-                  {member}
+      <Reveal className="mt-12 md:mt-16">
+        <div className={styles.roleLayout}>
+          <div>
+            <p className={styles.microLabel}>{section.workflowTitle}</p>
+            <div className={styles.roleWorkflow}>
+              {section.workflow.map((step, index) => (
+                <div key={step}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <p>{step}</p>
                 </div>
               ))}
             </div>
           </div>
-        </Reveal>
 
-        <Reveal delay={100}>
-          {hasProcessVisual ? <MediaAsset asset="process" label={copy.assetLabels.process} /> : null}
-
-          <div className={`${hasProcessVisual ? "mt-10" : "mt-0"} grid gap-10 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2`}>
+          <div className={styles.roleAside}>
             <div>
-              <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">
-                {section.workflowTitle}
-              </p>
-              <div className={`${styles.editorialRail} mt-6 space-y-5`}>
-                {section.workflow.map((step) => (
-                  <div key={step} className={styles.railStep}>
-                    <p className="text-[13px] leading-relaxed text-neutral-white/65">{step}</p>
-                  </div>
-                ))}
+              <p className={styles.microLabel}>{section.teamTitle}</p>
+              <div className={styles.roleTeam}>
+                {section.team.map((member) => <span key={member}>{member}</span>)}
               </div>
             </div>
 
-            <div className="md:pt-16">
-              <p className="text-[12px] tracking-[0.2em] text-accent-purple/70 uppercase">
-                {section.reverseTitle}
-              </p>
-              <p className="mt-5 text-[14px] leading-relaxed text-neutral-white/65">
-                {section.reverseBody}
-              </p>
+            <div>
+              <p className={styles.microLabel}>{section.reverseTitle}</p>
+              <p>{section.reverseBody}</p>
             </div>
           </div>
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -663,12 +588,15 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
       <div className={`${styles.ambient} ${styles.ambientCyan} -right-52 top-10`} />
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} align="center" />
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
         </Reveal>
 
         <div className="relative mt-12 md:mt-14">
           {hasResearchVisual ? (
-            <div className="mx-auto max-w-[1100px]">
+            <div className={styles.researchVisual}>
               <Reveal>
                 <MediaAsset asset="research" label={copy.assetLabels.research} />
               </Reveal>
@@ -689,6 +617,52 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
             ))}
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.analysis;
+  const hasProblemVisual = publicAssetExists(assets.problem);
+
+  return (
+    <section
+      id="analysis"
+      className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32"
+    >
+      <div className={SITE_SECTION_GUTTERS}>
+        <Reveal>
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
+        </Reveal>
+
+        {hasProblemVisual ? (
+          <Reveal className="mt-12 md:mt-16">
+            <MediaAsset
+              asset="problem"
+              label={copy.assetLabels.problem}
+              className={styles.analysisVisual}
+              sizes="100vw"
+            />
+          </Reveal>
+        ) : null}
+
+        <Reveal className="mt-10 md:mt-12">
+          <div className={styles.analysisFindings}>
+            {section.findings.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -1215,12 +1189,13 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Hero locale={locale} copy={copy} />
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
-      <ProductHistorySection copy={copy} />
-      <ProblemSection copy={copy} />
-      <RoleSection copy={copy} />
+      <ProductSection copy={copy} />
       <AudienceSection copy={copy} />
-      <PedagogySection locale={locale} copy={copy} />
+      <ProblemSection copy={copy} />
       <ResearchSection copy={copy} />
+      <AnalysisSection copy={copy} />
+      <RoleSection copy={copy} />
+      <PedagogySection locale={locale} copy={copy} />
       <DefinitionSection copy={copy} />
       <IdeationSection copy={copy} />
       <IterationSection copy={copy} />

@@ -72,6 +72,12 @@ export type MironlineCaseCopy = {
       constraintsTitle: string;
       constraints: string[];
     };
+    analysis: {
+      kicker: string;
+      title: string;
+      intro: string;
+      findings: Card[];
+    };
     role: {
       kicker: string;
       title: string;
@@ -221,12 +227,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Contexto" },
-      { id: "product-evolution", label: "Evolución" },
-      { id: "problem", label: "Problema" },
-      { id: "scope", label: "Alcance" },
+      { id: "product", label: "Producto" },
       { id: "audience", label: "Usuarios" },
-      { id: "pedagogy", label: "Contexto pedagógico" },
+      { id: "problem", label: "Problema" },
       { id: "research", label: "Investigación" },
+      { id: "analysis", label: "Análisis" },
+      { id: "scope", label: "Alcance" },
+      { id: "pedagogy", label: "Contexto pedagógico" },
       { id: "definition", label: "Definición" },
       { id: "ideation", label: "Ideación" },
       { id: "iteration", label: "Iteración" },
@@ -251,78 +258,36 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
       },
       history: {
-        kicker: "02",
-        title: "Evolución del producto",
+        kicker: "01",
+        title: "Origen del producto",
         intro:
-          "La modernización de 2021–2023 no partió de una pantalla en blanco. mironline heredaba varios años de contenido, decisiones técnicas y formas de trabajo que fueron evolucionando junto con el producto.",
-        productLabel: "Producto",
+          "mironline evolucionó a partir de un producto que ya llevaba varios años acompañando materiales impresos y práctica digital.",
+        productLabel: "Origen y evolución",
         experienceLabel: "UX / Producto",
         milestones: [
           {
             year: "2014",
             title: "Make It Real! Online",
-            body: "Se consolida una plataforma complementaria de práctica digital vinculada a los materiales impresos.",
+            body: "Se consolida el componente digital de práctica que acompañaba a los materiales impresos.",
             phase: "product",
           },
           {
             year: "2017",
             title: "Adaptación para Latinoamérica",
-            body: "El concepto se reestructura para un producto orientado a educación superior y contextos latinoamericanos.",
+            body: "El producto se reestructura para educación superior y contextos latinoamericanos.",
             phase: "product",
           },
           {
             year: "2017–2018",
-            title: "Nace mironline",
-            body: "Se desarrolla el LMS, General English y Professional English; comienza su adopción fuera del producto original.",
+            title: "mironline",
+            body: "Se desarrolla el LMS y se amplía la práctica con General English y Professional English.",
             phase: "product",
           },
           {
-            year: "2021",
-            title: "Investigación y modernización",
-            body: "Comienza la etapa de UX/UI que documento en este caso.",
-            phase: "ux",
-            activities: [
-              "auditoría de actividades heredadas",
-              "soporte y problemas recurrentes",
-              "Analytics y compatibilidad",
-              "revisión de necesidades de estudiantes y docentes",
-              "migración de Flash a web",
-              "responsive y comportamiento cross-browser",
-              "jerarquía, instrucciones, estados y feedback",
-              "validación del objetivo académico",
-            ],
-          },
-          {
-            year: "2022",
-            title: "Sistema e interacción",
-            body: "La experiencia empieza a resolverse como un sistema y no como pantallas aisladas.",
-            phase: "ux",
-            activities: [
-              "patrones para 30+ tipos de interacción",
-              "componentes y variantes en Figma",
-              "botones, inputs, errores y feedback",
-              "reading, matching, fill in the blank y audio",
-              "diseño responsive por tipo de actividad",
-              "integraciones 3D y pruebas con APIs",
-              "flujos de docente y seguimiento",
-              "QA visual y funcional entre dispositivos",
-            ],
-          },
-          {
-            year: "2023",
-            title: "Validación y consolidación",
-            body: "Los releases y el uso real alimentan nuevas iteraciones del producto.",
-            phase: "ux",
-            activities: [
-              "revisión de Analytics y datos internos",
-              "seguimiento de reportes de soporte",
-              "comparación de variantes de actividades",
-              "ajustes para mantener contexto y foco",
-              "refinamiento de navegación y player",
-              "mejoras específicas para mobile",
-              "consolidación de componentes reutilizables",
-              "iteración después de cada release",
-            ],
+            year: "2021–2023",
+            title: "Modernización UX/UI",
+            body: "Periodo documentado en este caso: migración web, responsive, sistema de interacción, validación e iteración.",
+            phase: "product",
           },
         ],
       },
@@ -439,6 +404,30 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "Uso en computadora, tablet y celular.",
           "Compatibilidad entre navegadores y equipos.",
           "Reglas compartidas entre ejercicios diferentes.",
+        ],
+      },
+      analysis: {
+        kicker: "06",
+        title: "Análisis",
+        intro:
+          "Al agrupar reportes, datos y observaciones aparecieron patrones repetidos. El problema no era una sola pantalla: había fricción técnica, inconsistencias entre actividades y momentos donde el estudiante perdía contexto.",
+        findings: [
+          {
+            title: "Compatibilidad",
+            body: "Flash, navegadores y comportamiento desktop-first estaban bloqueando actividades que todavía tenían valor académico.",
+          },
+          {
+            title: "Continuidad",
+            body: "Lecturas, instrucciones y feedback necesitaban permanecer cerca de la tarea para evitar pérdida de contexto.",
+          },
+          {
+            title: "Consistencia",
+            body: "Actividades distintas resolvían controles, estados y navegación de formas diferentes.",
+          },
+          {
+            title: "Escalabilidad",
+            body: "Con decenas de tipos de interacción, resolver cada actividad desde cero ya no era sostenible.",
+          },
         ],
       },
       role: {
@@ -792,12 +781,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Context" },
-      { id: "product-evolution", label: "Evolution" },
-      { id: "problem", label: "Problem" },
-      { id: "scope", label: "Scope" },
+      { id: "product", label: "Product" },
       { id: "audience", label: "Users" },
-      { id: "pedagogy", label: "Learning context" },
+      { id: "problem", label: "Problem" },
       { id: "research", label: "Research" },
+      { id: "analysis", label: "Analysis" },
+      { id: "scope", label: "Scope" },
+      { id: "pedagogy", label: "Learning context" },
       { id: "definition", label: "Definition" },
       { id: "ideation", label: "Ideation" },
       { id: "iteration", label: "Iteration" },
@@ -822,78 +812,36 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
       },
       history: {
-        kicker: "02",
-        title: "Product evolution",
+        kicker: "01",
+        title: "Product origin",
         intro:
-          "The 2021–2023 modernization did not start from a blank screen. mironline already carried years of content, technical decisions and ways of working that had evolved alongside the product.",
-        productLabel: "Product",
+          "mironline evolved from a product that had already spent several years connecting printed materials with digital practice.",
+        productLabel: "Origin and evolution",
         experienceLabel: "UX / Product",
         milestones: [
           {
             year: "2014",
             title: "Make It Real! Online",
-            body: "A complementary digital-practice platform becomes part of the printed learning materials.",
+            body: "The digital practice component accompanying printed learning materials becomes established.",
             phase: "product",
           },
           {
             year: "2017",
             title: "Adaptation for Latin America",
-            body: "The concept is restructured into a product aimed at higher education and Latin American contexts.",
+            body: "The product is restructured for higher education and Latin American contexts.",
             phase: "product",
           },
           {
             year: "2017–2018",
-            title: "mironline emerges",
-            body: "The LMS, General English and Professional English are developed and adoption expands beyond the original product.",
+            title: "mironline",
+            body: "The LMS is developed and practice expands through General English and Professional English.",
             phase: "product",
           },
           {
-            year: "2021",
-            title: "Research and modernization",
-            body: "The UI/UX stage documented in this case begins.",
-            phase: "ux",
-            activities: [
-              "legacy activity audit",
-              "support issues and recurring failures",
-              "Analytics and compatibility review",
-              "student and teacher needs",
-              "Flash-to-web migration",
-              "responsive and cross-browser behavior",
-              "hierarchy, instructions, states and feedback",
-              "preserving learning goals",
-            ],
-          },
-          {
-            year: "2022",
-            title: "System and interaction",
-            body: "The experience starts being treated as a system rather than a collection of isolated screens.",
-            phase: "ux",
-            activities: [
-              "patterns for 30+ interaction types",
-              "Figma components and variants",
-              "buttons, inputs, errors and feedback",
-              "reading, matching, fill-in-the-blank and audio",
-              "responsive behavior by activity type",
-              "3D integrations and API experiments",
-              "teacher and follow-up flows",
-              "visual and functional cross-device QA",
-            ],
-          },
-          {
-            year: "2023",
-            title: "Validation and consolidation",
-            body: "Releases and real usage feed the next product iterations.",
-            phase: "ux",
-            activities: [
-              "Analytics and internal-data review",
-              "support-report follow-up",
-              "activity-variant comparisons",
-              "context and focus adjustments",
-              "navigation and player refinement",
-              "mobile-specific improvements",
-              "reusable component consolidation",
-              "post-release iteration",
-            ],
+            year: "2021–2023",
+            title: "UI/UX modernization",
+            body: "The period documented in this case: web migration, responsive behavior, interaction system, validation and iteration.",
+            phase: "product",
           },
         ],
       },
@@ -1010,6 +958,30 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "Use across desktop, tablet and mobile.",
           "Compatibility across browsers and devices.",
           "Shared rules across different exercises.",
+        ],
+      },
+      analysis: {
+        kicker: "06",
+        title: "Analysis",
+        intro:
+          "Grouping reports, usage data and observations revealed recurring patterns. The issue was not one screen: there was technical friction, inconsistent interactions and moments where students lost context.",
+        findings: [
+          {
+            title: "Compatibility",
+            body: "Flash, browser limitations and desktop-first behavior were blocking activities that still had academic value.",
+          },
+          {
+            title: "Continuity",
+            body: "Readings, instructions and feedback needed to remain close to the task to prevent context loss.",
+          },
+          {
+            title: "Consistency",
+            body: "Different activities handled controls, states and navigation in different ways.",
+          },
+          {
+            title: "Scalability",
+            body: "With dozens of interaction types, solving each activity from scratch was no longer sustainable.",
+          },
         ],
       },
       role: {

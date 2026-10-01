@@ -1523,3 +1523,270 @@
     min-height: 0;
   }
 }
+
+
+/* Storytelling refactor: early case-study sections */
+.caseIntroBlock,
+.caseSectionHeader {
+  max-width: 58rem;
+}
+
+.caseIntroCopy,
+.caseSectionIntro {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: 52rem;
+}
+
+.caseSectionLead {
+  margin-top: 1.5rem;
+  max-width: 52rem;
+}
+
+.contextHistory {
+  max-width: 100%;
+}
+
+.contextHistoryTrack {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.4rem;
+  padding-top: 2.2rem;
+}
+
+.contextHistoryTrack::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: .55rem;
+  height: 1px;
+  background: rgba(255,255,255,.12);
+}
+
+.contextHistoryItem {
+  position: relative;
+  min-width: 0;
+}
+
+.contextHistoryItem::before {
+  content: "";
+  position: absolute;
+  top: -1.95rem;
+  left: 0;
+  width: .65rem;
+  height: .65rem;
+  border: 2px solid #101010;
+  border-radius: 999px;
+  background: rgba(188,167,255,.9);
+}
+
+.contextHistoryItem h3 {
+  margin-top: .6rem;
+  color: rgba(255,255,255,.9);
+  font-size: .9rem;
+  font-weight: 550;
+}
+
+.contextHistoryItem p {
+  margin-top: .45rem;
+  max-width: 18rem;
+  color: rgba(255,255,255,.42);
+  font-size: .72rem;
+  line-height: 1.6;
+}
+
+.productHeroAsset .assetStage,
+.researchVisual .assetStage,
+.analysisVisual .assetStage {
+  width: 100%;
+  aspect-ratio: 8 / 5;
+}
+
+.productFacts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.productFact {
+  min-width: 0;
+}
+
+.productFact > p:last-child {
+  margin-top: .45rem;
+  color: rgba(255,255,255,.78);
+  font-size: .85rem;
+  line-height: 1.45;
+}
+
+.problemStory {
+  display: grid;
+  gap: 2rem;
+}
+
+.problemCopy {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 54rem;
+}
+
+.researchVisual,
+.analysisVisual {
+  width: 100%;
+  max-width: none;
+}
+
+.analysisFindings {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 1rem;
+}
+
+.analysisFindings article {
+  display: grid;
+  grid-template-columns: 2rem minmax(0,1fr);
+  gap: .8rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.09);
+}
+
+.analysisFindings article > span {
+  color: rgba(188,167,255,.68);
+  font-size: .66rem;
+  letter-spacing: .14em;
+}
+
+.analysisFindings h3 {
+  color: rgba(255,255,255,.88);
+  font-size: .82rem;
+  font-weight: 550;
+}
+
+.analysisFindings p {
+  margin-top: .4rem;
+  color: rgba(255,255,255,.46);
+  font-size: .72rem;
+  line-height: 1.6;
+}
+
+.roleLayout {
+  display: grid;
+  grid-template-columns: minmax(0,1.2fr) minmax(16rem,.8fr);
+  gap: clamp(2rem,5vw,5rem);
+}
+
+.roleWorkflow {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .7rem 1.25rem;
+}
+
+.roleWorkflow > div {
+  display: grid;
+  grid-template-columns: 2rem minmax(0,1fr);
+  gap: .7rem;
+  padding: .85rem 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.roleWorkflow span {
+  color: rgba(188,167,255,.58);
+  font-size: .65rem;
+}
+
+.roleWorkflow p {
+  color: rgba(255,255,255,.65);
+  font-size: .76rem;
+  line-height: 1.45;
+}
+
+.roleAside {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.roleTeam {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: 1rem;
+}
+
+.roleTeam span {
+  padding: .45rem .6rem;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: .55rem;
+  color: rgba(255,255,255,.55);
+  font-size: .68rem;
+}
+
+.roleAside > div > p:last-child {
+  margin-top: 1rem;
+  color: rgba(255,255,255,.52);
+  font-size: .76rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 1279px) {
+  .productHeroAsset .assetStage,
+  .researchVisual .assetStage,
+  .analysisVisual .assetStage {
+    aspect-ratio: 8 / 5;
+  }
+
+  .roleLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 899px) {
+  .contextHistoryTrack {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 0;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(255,255,255,.12);
+  }
+
+  .contextHistoryTrack::before {
+    display: none;
+  }
+
+  .contextHistoryItem {
+    padding-left: .9rem;
+  }
+
+  .contextHistoryItem::before {
+    top: .2rem;
+    left: -1.37rem;
+  }
+
+  .productFacts,
+  .analysisFindings {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .roleWorkflow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 599px) {
+  .productFacts,
+  .analysisFindings {
+    grid-template-columns: 1fr;
+  }
+
+  .productHeroAsset .assetStage,
+  .researchVisual .assetStage,
+  .analysisVisual .assetStage {
+    aspect-ratio: 8 / 5;
+  }
+}
