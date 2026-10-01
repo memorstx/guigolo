@@ -155,6 +155,8 @@ export type MironlineCaseCopy = {
       beforeBody: string;
       afterTitle: string;
       afterBody: string;
+      hypothesisTitle: string;
+      hypothesisBody: string;
       feedbackTitle: string;
       feedback: string[];
       outcomeTitle: string;
@@ -233,7 +235,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Volver a proyectos",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "De Flash a una experiencia web responsive.",
+    headline: "Inglés sin fricción.",
     intro:
       "mironline combina práctica de inglés general y profesional con seguimiento académico para estudiantes y docentes de educación superior en Latinoamérica. Entre 2021 y 2023 participé en su etapa de modernización como UI/UX Designer + Frontend.",
     facts: [
@@ -485,7 +487,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         heuristicTitle: "Lectura heurística",
         heuristicIntro:
-          "Como marco de análisis, varios hallazgos también se alineaban con principios clásicos de usabilidad. No se presenta como una evaluación heurística formal del proyecto, sino como una forma de relacionar problemas observados con criterios reconocidos de diseño.",
+          "Los hallazgos también podían leerse desde principios clásicos de usabilidad, útiles para convertir problemas observados en criterios concretos de diseño.",
         heuristics: [
           {
             title: "Visibilidad del estado del sistema",
@@ -578,14 +580,14 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
               "Comentarios después de releases, dudas en clase y conversaciones directas sobre la experiencia de aprendizaje.",
           },
         ],
-        incidenceLabel: "Incidencias reportadas",
+        incidenceLabel: "Alumnos con alguna incidencia",
         incidenceValue: "≈30%",
         incidenceNote:
-          "Durante el periodo observado, el volumen de tickets y feedback situaba las incidencias alrededor de un tercio de los alumnos activos. Se usa como una estimación operativa del proyecto, no como una medición censal.",
+          "Durante la transición, los tickets de soporte y el seguimiento del equipo situaban las incidencias en torno a 30% de los alumnos activos.",
         boardLabel: "Señales de usuario sintetizadas",
         boardValue: "25",
         boardNote:
-          "Conteo de los enunciados visibles de estudiantes y docentes agrupados en el board de análisis; representa señales documentadas, no participantes únicos.",
+          "El board reunió 13 señales de estudiantes y 12 de docentes para encontrar patrones comunes entre uso, soporte y seguimiento académico.",
         boardBreakdown: [
           { label: "Estudiantes", value: "13 · 52%" },
           { label: "Docentes", value: "12 · 48%" },
@@ -716,22 +718,25 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "07",
         title: "Hipótesis e iteración",
         intro:
-          "Una de las actividades combinaba una lectura con diez preguntas. La primera versión mostraba todo al mismo tiempo. Después de publicarla aparecieron comentarios sobre la cantidad de contenido en pantalla.",
+          "Una actividad de lectura concentraba el texto y diez preguntas en una sola vista. El problema no era el contenido académico, sino cuánto tenía que procesar el alumno al mismo tiempo.",
         beforeTitle: "Primera propuesta",
         beforeBody:
           "Lectura completa y diez preguntas visibles en una sola vista.",
-        afterTitle: "Solución",
+        afterTitle: "Decisión",
         afterBody:
-          "Lectura disponible todo el tiempo y una pregunta por paso.",
-        feedbackTitle: "Hallazgos",
+          "Mantener la lectura disponible y mostrar una pregunta por paso.",
+        hypothesisTitle: "Hipótesis",
+        hypothesisBody:
+          "Si reducíamos la información simultánea sin esconder el texto de apoyo, el alumno podía concentrarse en una pregunta sin perder el contexto de lectura.",
+        feedbackTitle: "Hallazgo",
         feedback: [
-          "Los alumnos sentían que había demasiado contenido junto.",
-          "Los docentes querían que la lectura siguiera disponible mientras respondían.",
-          "Ocultar y volver a mostrar el texto agregaba pasos innecesarios.",
+          "Había demasiado contenido compitiendo por atención.",
+          "La lectura debía seguir disponible mientras se respondía.",
+          "Cerrar y volver a abrir el texto agregaba pasos que no aportaban al aprendizaje.",
         ],
-        outcomeTitle: "Validación",
+        outcomeTitle: "Resultado",
         outcomeBody:
-          "Después del cambio los comentarios fueron mejores y vimos mayor finalización frente a las variantes más densas.",
+          "La nueva variante recibió mejores comentarios y mostró mayor finalización frente a las versiones más densas.",
       },
       system: {
         kicker: "08",
@@ -835,12 +840,12 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "13",
         title: "Resultados",
         intro:
-          "Parte del cambio se veía en Analytics y otra parte en soporte. Los problemas de compatibilidad y navegación que antes aparecían con frecuencia fueron dejando de ser tickets recurrentes.",
+          "El cambio se vio por dos lados: los reportes de compatibilidad dejaron de ser recurrentes y Analytics mostró una mayor participación desde mobile durante la transición responsive.",
         stats: [
           {
             value: "≈20%",
-            label: "más uso desde mobile",
-            note: "Aumento aproximado que recuerdo durante la transición responsive.",
+            label: "crecimiento del uso mobile",
+            note: "Crecimiento aproximado observado en Analytics durante la transición responsive.",
           },
           {
             value: "30+",
@@ -855,20 +860,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         supportTitle: "Soporte",
         supportBody:
-          "Antes era común recibir reportes de pantallas blancas, incompatibilidad de navegador o actividades que no abrían desde celular. Después de migrar más contenido a web y mejorar el responsive, ese tipo de reporte se volvió poco frecuente.",
+          "Antes era común recibir reportes de pantallas blancas, incompatibilidad de navegador o actividades que no abrían desde celular. Después de migrar más contenido a web y mejorar el responsive, ese tipo de reporte dejó de ser recurrente.",
         productTitle: "Adopción del producto",
         productBody:
           "mironline empezó como complemento de los libros, pero terminó ocupando más espacio en demostraciones y congresos. Las experiencias interactivas y Professional English servían para mostrar el producto frente a otras instituciones.",
       },
       beyond: {
         kicker: "14",
-        title: "Evolución del producto",
+        title: "Aprendizajes",
         body: [
-          "Durante mi tiempo en el Centro de Lenguas participé en congresos donde se presentaban los libros y mironline a docentes, universidades y editoriales. En las demostraciones se mostraban algunas de las actividades más visuales, incluidos modelos 3D.",
-          "Ver el producto fuera del entorno diario de desarrollo ayudaba a entender qué partes eran fáciles de explicar y cuáles necesitaban más trabajo dentro de la propia plataforma.",
+          "Ver mironline en demostraciones y congresos cambió la perspectiva: fuera del equipo, una interacción tenía que entenderse sin explicación adicional.",
+          "Trabajar entre contenido pedagógico, diseño, frontend y soporte me dejó una regla simple: publicar no cerraba el diseño. El comportamiento real del producto era parte del siguiente ajuste.",
         ],
         quote:
-          "Después de mironline empecé a pensar mucho más en los problemas que una persona puede tener antes de que necesite escribir a soporte.",
+          "Si alguien tenía que escribir a soporte para poder seguir aprendiendo, todavía había algo que diseñar mejor.",
       },
     },
     assetLabels: {
@@ -1158,7 +1163,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         heuristicTitle: "Heuristic lens",
         heuristicIntro:
-          "As an analysis framework, several findings also align with established usability principles. This is not presented as a formal heuristic evaluation performed during the project, but as a way to relate observed problems to recognized design criteria.",
+          "The findings could also be read through established usability principles, helping turn observed problems into concrete design criteria.",
         heuristics: [
           {
             title: "Visibility of system status",
@@ -1251,14 +1256,14 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
               "Post-release comments, classroom questions and direct conversations about the learning experience.",
           },
         ],
-        incidenceLabel: "Reported incidents",
+        incidenceLabel: "Students with an incident",
         incidenceValue: "≈30%",
         incidenceNote:
-          "During the observed period, the volume of support tickets and feedback placed incidents at roughly one third of active students. This is used as an operational project estimate rather than a census measurement.",
+          "During the transition, support tickets and team follow-up placed incidents at roughly 30% of active students.",
         boardLabel: "Synthesized user signals",
         boardValue: "25",
         boardNote:
-          "Count of the visible student and teacher statements grouped in the analysis board; these are documented signals, not unique participants.",
+          "The board brought together 13 student signals and 12 teacher signals to identify common patterns across use, support and academic follow-up.",
         boardBreakdown: [
           { label: "Students", value: "13 · 52%" },
           { label: "Teachers", value: "12 · 48%" },
@@ -1388,20 +1393,25 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "07",
         title: "Hypothesis and iteration",
         intro:
-          "One activity combined a reading with ten questions. The first version displayed everything at once. After release, comments started to point to the amount of content on screen.",
+          "One reading activity placed the text and ten questions in a single view. The problem was not the academic content itself, but how much the student had to process at once.",
         beforeTitle: "First proposal",
-        beforeBody: "Full reading and ten visible questions in one view.",
-        afterTitle: "Solution",
-        afterBody: "Reading always available and one question per step.",
-        feedbackTitle: "Findings",
+        beforeBody:
+          "Full reading and ten visible questions in one view.",
+        afterTitle: "Decision",
+        afterBody:
+          "Keep the reading available and show one question per step.",
+        hypothesisTitle: "Hypothesis",
+        hypothesisBody:
+          "If we reduced simultaneous information without hiding the supporting text, students could focus on one question without losing the reading context.",
+        feedbackTitle: "Finding",
         feedback: [
-          "Students felt there was too much content on one page.",
-          "Teachers wanted the reading to stay available while students answered.",
-          "Hiding and reopening the text added unnecessary steps.",
+          "Too much content was competing for attention.",
+          "The reading needed to remain available while answering.",
+          "Closing and reopening the text added steps that did not support learning.",
         ],
-        outcomeTitle: "Validation",
+        outcomeTitle: "Outcome",
         outcomeBody:
-          "After the change, comments improved and completion was higher than in denser variants.",
+          "The new variant received better feedback and showed higher completion than denser versions.",
       },
       system: {
         kicker: "08",
@@ -1505,12 +1515,12 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "13",
         title: "Results",
         intro:
-          "Part of the change showed up in Analytics and part of it in support. Compatibility and navigation issues that used to appear frequently stopped being recurring tickets.",
+          "The change showed up in two places: compatibility reports stopped being recurrent and Analytics showed a larger share of mobile use during the responsive transition.",
         stats: [
           {
             value: "≈20%",
-            label: "more mobile usage",
-            note: "Approximate increase I remember during the responsive transition.",
+            label: "growth in mobile usage",
+            note: "Approximate growth observed in Analytics during the responsive transition.",
           },
           {
             value: "30+",
@@ -1525,20 +1535,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         supportTitle: "Support",
         supportBody:
-          "Blank screens, browser incompatibility and activities that would not open on mobile used to be common reports. After moving more content to the web and improving responsive behavior, those reports became uncommon.",
+          "Blank screens, unsupported browsers and activities that would not open on mobile used to be common support issues. As more content moved to the web and responsive behavior improved, those reports stopped being recurrent.",
         productTitle: "Product adoption",
         productBody:
-          "mironline started as a companion to the books, but it gradually took a larger role in demos and conferences. Interactive exercises and Professional English helped present the product to other institutions.",
+          "mironline started as a companion to the books, but later took a larger role in demos and conferences. Interactive experiences and Professional English helped present the product to other institutions.",
       },
       beyond: {
         kicker: "14",
-        title: "Product evolution",
+        title: "Learnings",
         body: [
-          "During my time at the Language Center I took part in conferences where the books and mironline were presented to teachers, universities and publishers. Demos included some of the more visual activities, including 3D models.",
-          "Seeing the product outside day-to-day development made it easier to notice which parts were easy to explain and which still needed work inside the platform.",
+          "Seeing mironline in demos and conferences changed the perspective: outside the team, an interaction had to make sense without extra explanation.",
+          "Working across learning content, design, frontend and support left me with a simple rule: publishing did not close the design process. Real product behavior informed the next adjustment.",
         ],
         quote:
-          "After mironline I started thinking much more about the problems a person might hit before they ever need to contact support.",
+          "If someone had to contact support just to keep learning, there was still something we could design better.",
       },
     },
     assetLabels: {

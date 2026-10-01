@@ -883,18 +883,14 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
 
   return (
     <SectionShell id="iteration" className="overflow-hidden">
-      <div className="pointer-events-none absolute right-[-2%] top-[5%] hidden 2xl:block">
-        <div className={`${styles.stageWord} ${styles.stageWordPurple}`}>iterate</div>
-      </div>
-
       <Reveal>
-        <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+        <div className={styles.caseSectionHeader}>
           <StageHeader title={section.title} />
-          <p className={styles.bodyCopy}>{section.intro}</p>
+          <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
         </div>
       </Reveal>
 
-      <Reveal className="mt-14 md:mt-20">
+      <Reveal className="mt-12 md:mt-16">
         <BeforeAfterCompare
           beforeSrc={assets.before}
           afterSrc={assets.after}
@@ -904,32 +900,28 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
         />
       </Reveal>
 
-      <div className="mt-16 grid gap-12 xl:grid-cols-[.7fr_1.3fr] xl:items-start">
-        <Reveal>
-          <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
-            {section.feedbackTitle}
-          </p>
-          <div className="mt-6 space-y-7">
-            {section.feedback.map((feedback) => (
-              <p key={feedback} className={styles.sectionLeadSmall}>
-                {feedback}
-              </p>
-            ))}
+      <Reveal className="mt-14 md:mt-16">
+        <div className={styles.iterationTrail}>
+          <div>
+            <p className={styles.microLabel}>{section.feedbackTitle}</p>
+            <ul>
+              {section.feedback.map((item) => <li key={item}>{item}</li>)}
+            </ul>
           </div>
-        </Reveal>
-
-        <Reveal delay={100}>
-          <div className="relative pl-0 lg:pl-10">
-            <div className={styles.quoteMark}>“</div>
-            <p className={`${styles.pullQuote} mt-1 max-w-[860px]`}>
-              {section.outcomeBody}
-            </p>
-            <p className="mt-7 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
-              {section.outcomeTitle}
-            </p>
+          <div>
+            <p className={styles.microLabel}>{section.hypothesisTitle}</p>
+            <p>{section.hypothesisBody}</p>
           </div>
-        </Reveal>
-      </div>
+          <div>
+            <p className={styles.microLabel}>{section.afterTitle}</p>
+            <p>{section.afterBody}</p>
+          </div>
+          <div>
+            <p className={styles.microLabel}>{section.outcomeTitle}</p>
+            <p>{section.outcomeBody}</p>
+          </div>
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -1235,11 +1227,11 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
                 <div className={`${styles.metricValue} ${index === 0 ? "text-gradient-anim" : "text-neutral-white"}`}>
                   {stat.value}
                 </div>
-                <div className="mt-5 text-[12px] font-semibold tracking-[0.12em] text-neutral-white/75 uppercase">
+                <div className="mt-5 text-[13px] font-semibold tracking-[0.1em] text-neutral-white/75 uppercase">
                   {stat.label}
                 </div>
                 {stat.note ? (
-                  <p className="mt-3 max-w-sm text-[12px] leading-relaxed text-neutral-white/35">{stat.note}</p>
+                  <p className="mt-3 max-w-sm text-[14px] leading-relaxed text-neutral-white/42">{stat.note}</p>
                 ) : null}
               </div>
             </Reveal>

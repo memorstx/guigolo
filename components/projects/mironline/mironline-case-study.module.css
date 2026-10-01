@@ -2560,3 +2560,69 @@
     grid-template-columns: repeat(2,minmax(0,1fr));
   }
 }
+
+
+/* Decision trail: finding → hypothesis → decision → outcome */
+.iterationTrail {
+  display: grid;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.iterationTrail > div {
+  min-width: 0;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.iterationTrail p:not(.microLabel),
+.iterationTrail li {
+  color: rgba(255,255,255,.6);
+  font-size: .9rem;
+  line-height: 1.62;
+}
+
+.iterationTrail > div > p:not(.microLabel),
+.iterationTrail ul {
+  margin-top: .7rem;
+}
+
+.iterationTrail ul {
+  display: grid;
+  gap: .45rem;
+  padding: 0;
+  list-style: none;
+}
+
+.iterationTrail li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.iterationTrail li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .72em;
+  width: .3rem;
+  height: .3rem;
+  border-radius: 50%;
+  background: rgba(188,167,255,.72);
+}
+
+@media (min-width: 900px) {
+  .iterationTrail {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 0 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .iterationTrail {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 0 2rem;
+  }
+
+  .iterationTrail > div {
+    padding-right: 1.25rem;
+  }
+}
