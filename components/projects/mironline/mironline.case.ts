@@ -53,6 +53,10 @@ export type MironlineCaseCopy = {
       architecture: Array<{ label: string; items: string[] }>;
       flowTitle: string;
       flow: string[];
+      teacherFlowTitle: string;
+      teacherFlow: string[];
+      relationTitle: string;
+      relation: string;
       note: string;
     };
     pedagogy: {
@@ -295,7 +299,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "03",
         title: "Usuarios",
         intro:
-          "La experiencia conectaba dos necesidades: practicar y avanzar en el curso, y dar seguimiento académico. Las láminas resumen el contexto de cada perfil; aquí destaco únicamente lo que condicionaba la interfaz.",
+          "La experiencia conectaba dos necesidades complementarias: practicar y avanzar en el curso, y dar seguimiento académico. Las láminas resumen el contexto de cada perfil; aquí destaco únicamente lo que condicionaba la interfaz.",
         profiles: [
           {
             typeLabel: "Usuario principal",
@@ -347,10 +351,22 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "Leer instrucción",
           "Responder",
           "Recibir feedback",
-          "Continuar",
+          "Revisar avance",
         ],
+        teacherFlowTitle: "Flujo principal del docente",
+        teacherFlow: [
+          "Entrar a la plataforma",
+          "Revisar grupos",
+          "Consultar alumnos",
+          "Ver progreso y calificaciones",
+          "Detectar necesidades",
+          "Dar seguimiento",
+        ],
+        relationTitle: "Cómo se relacionan",
+        relation:
+          "El estudiante genera actividad, respuestas y progreso; la plataforma organiza esa información para que el docente pueda revisar desempeño y dar seguimiento al curso.",
         note:
-          "Estos perfiles y necesidades resumen patrones observados durante el trabajo; no son personas ficticias creadas para el portafolio.",
+          "Estos perfiles condensan patrones reales de uso observados en estudiantes y docentes a lo largo del proyecto.",
       },
       pedagogy: {
         kicker: "04",

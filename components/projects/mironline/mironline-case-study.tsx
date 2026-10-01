@@ -32,7 +32,8 @@ const assets = {
   research: `${ASSET_ROOT}/12-research-evidence.png`,
   process: `${ASSET_ROOT}/13-process-map.png`,
   gallery: `${ASSET_ROOT}/14-interaction-gallery.png`,
-  problem: `${ASSET_ROOT}/15-problem-board.png`,
+  problem: `${ASSET_ROOT}/15-problem-symptoms.png`,
+  analysis: `${ASSET_ROOT}/16-analysis-synthesis.png`,
 } as const;
 
 type AssetKey = keyof typeof assets;
@@ -406,21 +407,49 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
         </Reveal>
 
         <Reveal className="mt-20 md:mt-24">
-          <p className={styles.microLabel}>{section.flowTitle}</p>
-          <div className={styles.flowTrack}>
-            {section.flow.map((step, index) => (
-              <div key={step} className={styles.flowStep}>
-                <span className={styles.flowNumber}>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className={styles.flowLabel}>{step}</span>
-                {index < section.flow.length - 1 ? (
-                  <span className={styles.flowArrow} aria-hidden>
-                    →
-                  </span>
-                ) : null}
+          <div className={styles.userFlows}>
+            <div>
+              <p className={styles.microLabel}>{section.flowTitle}</p>
+              <div className={styles.flowTrack}>
+                {section.flow.map((step, index) => (
+                  <div key={step} className={styles.flowStep}>
+                    <span className={styles.flowNumber}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.flowLabel}>{step}</span>
+                    {index < section.flow.length - 1 ? (
+                      <span className={styles.flowArrow} aria-hidden>
+                        →
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div>
+              <p className={styles.microLabel}>{section.teacherFlowTitle}</p>
+              <div className={styles.flowTrack}>
+                {section.teacherFlow.map((step, index) => (
+                  <div key={step} className={styles.flowStep}>
+                    <span className={styles.flowNumber}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.flowLabel}>{step}</span>
+                    {index < section.teacherFlow.length - 1 ? (
+                      <span className={styles.flowArrow} aria-hidden>
+                        →
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.userRelation}>
+            <p className={styles.microLabel}>{section.relationTitle}</p>
+            <p>{section.relation}</p>
           </div>
 
           <p className={styles.audienceNote}>{section.note}</p>
@@ -477,6 +506,7 @@ function PedagogySection({ locale, copy }: Props) {
 
 function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.challenge;
+  const hasProblemVisual = publicAssetExists(assets.problem);
 
   return (
     <section
@@ -487,6 +517,17 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
         <Reveal>
           <StageHeader title={section.title} intro={section.statement} />
         </Reveal>
+
+        {hasProblemVisual ? (
+          <Reveal className="mt-12 md:mt-16">
+            <MediaAsset
+              asset="problem"
+              label={copy.assetLabels.problem}
+              className={styles.problemVisual}
+              sizes="100vw"
+            />
+          </Reveal>
+        ) : null}
 
         <Reveal className="mt-10 md:mt-12">
           <div className={styles.problemStory}>
@@ -624,7 +665,7 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.analysis;
-  const hasProblemVisual = publicAssetExists(assets.problem);
+  const hasAnalysisVisual = publicAssetExists(assets.analysis);
 
   return (
     <section
@@ -639,11 +680,11 @@ function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
           </div>
         </Reveal>
 
-        {hasProblemVisual ? (
+        {hasAnalysisVisual ? (
           <Reveal className="mt-12 md:mt-16">
             <MediaAsset
-              asset="problem"
-              label={copy.assetLabels.problem}
+              asset="analysis"
+              label={copy.assetLabels.analysis}
               className={styles.analysisVisual}
               sizes="100vw"
             />

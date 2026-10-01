@@ -1790,3 +1790,35 @@
     aspect-ratio: 8 / 5;
   }
 }
+
+
+.userFlows {
+  display: grid;
+  gap: 3rem;
+}
+
+.userRelation {
+  margin-top: 3rem;
+  max-width: 58rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,.09);
+}
+
+.userRelation > p:last-child {
+  margin-top: .75rem;
+  color: rgba(255,255,255,.58);
+  font-size: .8rem;
+  line-height: 1.7;
+}
+
+.problemVisual .assetStage {
+  width: 100%;
+  aspect-ratio: 8 / 5;
+}
+
+@media (min-width: 1280px) {
+  .userFlows {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 2rem;
+  }
+}
