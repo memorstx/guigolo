@@ -384,10 +384,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "En integraciones como Sketchfab primero probaba qué permitía la API. Cuando la interacción ya funcionaba, documentaba ese patrón en Figma para reutilizarlo después.",
       },
       research: {
-        kicker: "04",
-        title: "Investigación",
+        kicker: "05",
+        title: "Del contexto a señales reales",
         intro:
-          "Las decisiones salían de varias fuentes que ya formaban parte del trabajo diario. No todo era una sesión formal de research; muchas veces el problema aparecía en soporte, en Analytics o directamente en lo que comentaban alumnos y docentes después de un release.",
+          "El contexto pedagógico explicaba qué debía respetar la experiencia. Para decidir qué ajustar, contrastábamos ese marco con lo que realmente ocurría al usar la plataforma: reportes de soporte, Analytics, datos internos y comentarios de alumnos y docentes. No todo llegaba desde una sesión formal de research; muchas señales aparecían durante el uso cotidiano y después de cada release.",
         signals: [
           {
             title: "Soporte",
@@ -879,10 +879,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "For integrations such as Sketchfab, I first tested what the API allowed. Once the interaction worked, I documented the pattern in Figma so it could be reused later.",
       },
       research: {
-        kicker: "04",
-        title: "Research",
+        kicker: "05",
+        title: "From context to real signals",
         intro:
-          "Decisions came from several sources already present in the day-to-day work. Not everything was a formal research session; sometimes the problem showed up in support, Analytics or comments from students and teachers after a release.",
+          "The pedagogical context explained what the experience needed to preserve. To decide what to adjust, we compared that framework with what actually happened in use: support reports, Analytics, internal data, and comments from students and teachers. Not every signal came from a formal research session; many appeared through everyday use and after each release.",
         signals: [
           {
             title: "Support",
