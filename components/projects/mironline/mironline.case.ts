@@ -746,7 +746,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       research: "Evidencia y señales de uso",
       process: "Proceso de diseño e implementación",
       gallery: "Galería de interacciones",
-      problem: "Síntesis de investigación y hallazgos",
+      problem: "Síntomas del problema en la experiencia",
+      analysis: "Síntesis de hallazgos",
     },
     cta: {
       label: "FIN DEL CASO",
@@ -917,10 +918,22 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "Read instruction",
           "Answer",
           "Receive feedback",
-          "Continue",
+          "Review progress",
         ],
+        teacherFlowTitle: "Teacher main flow",
+        teacherFlow: [
+          "Enter the platform",
+          "Review groups",
+          "Check students",
+          "Review progress and grades",
+          "Identify needs",
+          "Follow up",
+        ],
+        relationTitle: "How they connect",
+        relation:
+          "Student activity, answers and progress are organized by the platform so teachers can review performance and follow up on the course.",
         note:
-          "These profiles and needs summarize patterns observed during the work; they are not fictional personas created for the portfolio.",
+          "These profiles condense real usage patterns observed among students and teachers throughout the project.",
       },
       pedagogy: {
         kicker: "04",
@@ -1295,7 +1308,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       research: "Usage evidence and signals",
       process: "Design and implementation process",
       gallery: "Interaction gallery",
-      problem: "Research synthesis and findings",
+      problem: "Problem symptoms in the experience",
+      analysis: "Findings synthesis",
     },
     cta: {
       label: "END OF CASE",
