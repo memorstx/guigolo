@@ -99,7 +99,18 @@ export type MironlineCaseCopy = {
       kicker: string;
       title: string;
       intro: string;
+      questionsTitle: string;
+      questions: string[];
+      sourcesTitle: string;
       signals: Card[];
+      evidenceTitle: string;
+      evidence: Array<{
+        source: string;
+        observed: string;
+        limitation: string;
+      }>;
+      hypothesesTitle: string;
+      hypotheses: Card[];
     };
     principles: {
       kicker: string;
@@ -482,17 +493,25 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "05",
         title: "Investigación",
         intro:
-          "El contexto pedagógico explicaba qué debía respetar la experiencia. Para decidir qué ajustar, contrastábamos ese marco con lo que realmente ocurría al usar la plataforma: reportes de soporte, Analytics, datos internos y comentarios de alumnos y docentes. No todo llegaba desde una sesión formal de research; muchas señales aparecían durante el uso cotidiano y después de cada release.",
+          "El problema técnico era visible, pero no bastaba con saber que algo fallaba. Había que distinguir dónde se interrumpía la experiencia, qué cambiaba entre dispositivos y qué información necesitaban estudiantes y docentes para completar su tarea.",
+        questionsTitle: "Qué buscábamos entender",
+        questions: [
+          "¿En qué punto se interrumpe una actividad y qué impide continuar?",
+          "¿Qué cambia entre computadora, tablet y celular?",
+          "¿Qué información necesita permanecer visible mientras el estudiante responde?",
+          "¿Qué necesita consultar el docente para dar seguimiento sin recorrer demasiadas pantallas?",
+        ],
+        sourcesTitle: "Fuentes de evidencia",
         signals: [
           {
             title: "Soporte",
             body:
-              "Tickets sobre compatibilidad, navegación, pantallas vacías y actividades que no cargaban.",
+              "Tickets y reportes sobre compatibilidad, navegación, pantallas vacías y actividades que no cargaban.",
           },
           {
             title: "Google Analytics",
             body:
-              "Tráfico, dispositivos, navegadores y comportamiento general de uso.",
+              "Dispositivos, navegadores, tráfico y comportamiento general de uso.",
           },
           {
             title: "Datos internos",
@@ -503,6 +522,55 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             title: "Alumnos y docentes",
             body:
               "Comentarios posteriores a releases y conversaciones directas dentro del entorno académico.",
+          },
+        ],
+        evidenceTitle: "Qué podía aportar cada fuente",
+        evidence: [
+          {
+            source: "Soporte",
+            observed:
+              "Errores concretos, contexto del fallo y lenguaje usado por quien reportaba el problema.",
+            limitation:
+              "Sin un conteo estructurado, un ticket no indica por sí solo cuántas personas estaban afectadas.",
+          },
+          {
+            source: "Analytics",
+            observed:
+              "Distribución por dispositivo y navegador, tráfico y cambios generales de uso.",
+            limitation:
+              "Muestra qué ocurrió, pero no explica por sí solo por qué una persona tuvo una dificultad.",
+          },
+          {
+            source: "Datos internos",
+            observed:
+              "Avance, finalización, calificaciones y desempeño dentro del curso.",
+            limitation:
+              "Un resultado no explica automáticamente qué parte de la experiencia provocó ese comportamiento.",
+          },
+          {
+            source: "Alumnos y docentes",
+            observed:
+              "Confusiones, necesidad de contexto, problemas al responder y necesidades de seguimiento.",
+            limitation:
+              "Los comentarios directos orientaban el análisis, pero no se trataban como una muestra cuantitativa representativa.",
+          },
+        ],
+        hypothesesTitle: "Hipótesis de trabajo",
+        hypotheses: [
+          {
+            title: "Estabilizar el acceso",
+            body:
+              "Migrar actividades heredadas y resolver compatibilidad debía reducir bloqueos antes de iniciar o continuar una actividad.",
+          },
+          {
+            title: "Mantener el contexto",
+            body:
+              "Mantener lectura, instrucciones y feedback cerca de la tarea debía reducir pasos innecesarios y pérdida de contexto.",
+          },
+          {
+            title: "Hacer visible el seguimiento",
+            body:
+              "Agrupar progreso, calificaciones y desempeño debía facilitar que el docente detectara dónde intervenir.",
           },
         ],
       },
@@ -1049,25 +1117,84 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "05",
         title: "Research",
         intro:
-          "The pedagogical context explained what the experience needed to preserve. To decide what to adjust, we compared that framework with what actually happened in use: support reports, Analytics, internal data, and comments from students and teachers. Not every signal came from a formal research session; many appeared through everyday use and after each release.",
+          "The technical problem was visible, but knowing that something failed was not enough. We needed to distinguish where the experience broke, what changed across devices, and what information students and teachers needed to complete their tasks.",
+        questionsTitle: "What we needed to understand",
+        questions: [
+          "At what point does an activity break and what prevents the student from continuing?",
+          "What changes across desktop, tablet and mobile?",
+          "What information needs to remain visible while a student answers?",
+          "What does a teacher need to review progress without navigating through too many screens?",
+        ],
+        sourcesTitle: "Evidence sources",
         signals: [
           {
             title: "Support",
             body:
-              "Tickets about compatibility, navigation, blank screens and activities that failed to load.",
+              "Tickets and reports about compatibility, navigation, blank screens and activities that failed to load.",
           },
           {
             title: "Google Analytics",
-            body: "Traffic, devices, browsers and general usage behavior.",
+            body:
+              "Devices, browsers, traffic and general usage behavior.",
           },
           {
             title: "Internal data",
-            body: "Progress, grades, performance and activity completion.",
+            body:
+              "Progress, grades, performance and activity completion.",
           },
           {
             title: "Students and teachers",
             body:
-              "Post-release comments and direct conversations in the academic environment.",
+              "Post-release comments and direct conversations within the academic environment.",
+          },
+        ],
+        evidenceTitle: "What each source could tell us",
+        evidence: [
+          {
+            source: "Support",
+            observed:
+              "Concrete errors, failure context and the language people used to describe the issue.",
+            limitation:
+              "Without structured counts, a ticket alone does not show how many people were affected.",
+          },
+          {
+            source: "Analytics",
+            observed:
+              "Device and browser distribution, traffic and broad usage changes.",
+            limitation:
+              "It shows what happened, but not by itself why someone experienced a difficulty.",
+          },
+          {
+            source: "Internal data",
+            observed:
+              "Progress, completion, grades and performance within the course.",
+            limitation:
+              "A result does not automatically explain which part of the experience caused that behavior.",
+          },
+          {
+            source: "Students and teachers",
+            observed:
+              "Confusion, context needs, response friction and follow-up needs.",
+            limitation:
+              "Direct comments informed the analysis, but were not treated as a representative quantitative sample.",
+          },
+        ],
+        hypothesesTitle: "Working hypotheses",
+        hypotheses: [
+          {
+            title: "Stabilize access",
+            body:
+              "Migrating legacy activities and resolving compatibility should reduce blocks before starting or continuing an activity.",
+          },
+          {
+            title: "Keep context visible",
+            body:
+              "Keeping readings, instructions and feedback close to the task should reduce unnecessary steps and context loss.",
+          },
+          {
+            title: "Make follow-up visible",
+            body:
+              "Grouping progress, grades and performance should make it easier for teachers to identify where follow-up is needed.",
           },
         ],
       },

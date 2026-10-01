@@ -289,26 +289,28 @@ function ProductSection({ copy }: { copy: MironlineCaseCopy }) {
       className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
     >
       <div className={SITE_SECTION_GUTTERS}>
-        <Reveal>
-          <div className={styles.caseSectionHeader}>
-            <p className={styles.microLabel}>02 · PRODUCTO</p>
-            <h2 className={styles.sectionTitle}>Producto</h2>
-            <div className={styles.caseSectionIntro}>
-              {section.body.slice(1).map((paragraph) => (
-                <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
-              ))}
+        <div className={styles.productOverview}>
+          <Reveal>
+            <div className={styles.productCopy}>
+              <p className={styles.microLabel}>02 · PRODUCTO</p>
+              <h2 className={styles.sectionTitle}>Producto</h2>
+              <div className={styles.caseSectionIntro}>
+                {section.body.slice(1).map((paragraph) => (
+                  <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
+                ))}
+              </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
 
-        <Reveal className="mt-12 md:mt-16">
-          <MediaAsset
-            asset="dashboard"
-            label={copy.assetLabels.dashboard}
-            className={styles.productHeroAsset}
-            sizes="100vw"
-          />
-        </Reveal>
+          <Reveal delay={90}>
+            <MediaAsset
+              asset="dashboard"
+              label={copy.assetLabels.dashboard}
+              className={styles.productHeroAsset}
+              sizes="(min-width: 1280px) 58vw, 100vw"
+            />
+          </Reveal>
+        </div>
 
         <Reveal className="mt-10 md:mt-12">
           <div className={styles.productFacts}>
@@ -539,17 +541,19 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
               ))}
             </div>
 
-            <div className={styles.problemReports}>
-              <p className={styles.microLabel}>{section.reportsTitle}</p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {section.reports.map((report) => (
-                  <article key={report.label} className={styles.problemReport}>
-                    <span className={styles.problemReportLabel}>{report.label}</span>
-                    <p>{report.body}</p>
-                  </article>
-                ))}
+            {!hasProblemVisual ? (
+              <div className={styles.problemReports}>
+                <p className={styles.microLabel}>{section.reportsTitle}</p>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {section.reports.map((report) => (
+                    <article key={report.label} className={styles.problemReport}>
+                      <span className={styles.problemReportLabel}>{report.label}</span>
+                      <p>{report.body}</p>
+                    </article>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </Reveal>
 
@@ -622,11 +626,12 @@ function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.research;
-  const hasResearchVisual = publicAssetExists(assets.research);
 
   return (
-    <section id="research" className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32">
-      <div className={`${styles.ambient} ${styles.ambientCyan} -right-52 top-10`} />
+    <section
+      id="research"
+      className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
+    >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
           <div className={styles.caseSectionHeader}>
@@ -635,29 +640,63 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
           </div>
         </Reveal>
 
-        <div className="relative mt-12 md:mt-14">
-          {hasResearchVisual ? (
-            <div className={styles.researchVisual}>
-              <Reveal>
-                <MediaAsset asset="research" label={copy.assetLabels.research} />
-              </Reveal>
-            </div>
-          ) : null}
-
-          <div className={`${hasResearchVisual ? "mt-12" : "mt-0"} grid gap-x-10 gap-y-10 sm:grid-cols-2 xl:grid-cols-4`}>
-            {section.signals.map((signal, index) => (
-              <Reveal key={signal.title} delay={index * 70}>
-                <div className="relative pt-4">
-                  <div className="absolute -top-2 right-0 select-none text-[clamp(2.25rem,3.5vw,3.5rem)] font-bold leading-none text-neutral-white/[0.025]">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <h3 className={styles.cardTitle}>{signal.title}</h3>
-                  <p className="mt-4 text-[13px] leading-relaxed text-neutral-white/55">{signal.body}</p>
+        <Reveal className="mt-12 md:mt-16">
+          <div className={styles.researchQuestions}>
+            <p className={styles.microLabel}>{section.questionsTitle}</p>
+            <div>
+              {section.questions.map((question, index) => (
+                <div key={question} className={styles.researchQuestion}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <p>{question}</p>
                 </div>
-              </Reveal>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-18">
+          <p className={styles.microLabel}>{section.sourcesTitle}</p>
+          <div className={styles.researchSources}>
+            {section.signals.map((signal) => (
+              <article key={signal.title}>
+                <h3>{signal.title}</h3>
+                <p>{signal.body}</p>
+              </article>
             ))}
           </div>
-        </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-18">
+          <p className={styles.microLabel}>{section.evidenceTitle}</p>
+          <div className={styles.researchEvidence}>
+            <div className={styles.researchEvidenceHead} aria-hidden>
+              <span>Fuente</span>
+              <span>Qué permitía observar</span>
+              <span>Qué no respondía por sí sola</span>
+            </div>
+
+            {section.evidence.map((item) => (
+              <article key={item.source} className={styles.researchEvidenceRow}>
+                <h3>{item.source}</h3>
+                <p>{item.observed}</p>
+                <p>{item.limitation}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-18">
+          <p className={styles.microLabel}>{section.hypothesesTitle}</p>
+          <div className={styles.researchHypotheses}>
+            {section.hypotheses.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
