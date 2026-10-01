@@ -31,7 +31,7 @@ export type MironlineCaseCopy = {
         context: string;
         needs: string[];
         story: string;
-        asset: "dashboard" | "teacher";
+        asset: "studentUser" | "teacherUser";
       }>;
       storyLabel: string;
       architectureTitle: string;
@@ -228,7 +228,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       audience: {
         kicker: "03",
-        title: "Quién usaba mironline",
+        title: "Quién usa mironline",
         intro:
           "La plataforma tenía dos recorridos principales. El alumno entraba para practicar y avanzar en su curso; el docente necesitaba revisar grupos, calificaciones y progreso. Sus necesidades eran distintas, pero compartían la misma información académica.",
         profiles: [
@@ -245,7 +245,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "Como estudiante, necesito mantener disponible el contenido que estoy usando mientras respondo, para no perder el contexto.",
-            asset: "dashboard",
+            asset: "studentUser",
           },
           {
             typeLabel: "Usuario de seguimiento",
@@ -260,7 +260,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "Como docente, necesito consultar avance, calificaciones y desempeño por grupo, para dar seguimiento al curso.",
-            asset: "teacher",
+            asset: "teacherUser",
           },
         ],
         storyLabel: "Necesidad resumida",
@@ -607,6 +607,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       after: "Solución",
       responsive: "Comportamiento responsive",
       system: "Sistema de componentes",
+      studentUser: "Perfil de estudiante",
+      teacherUser: "Perfil de docente",
       teacher: "Vista para docentes",
       analytics: "Analytics y reportes internos",
       beyond: "Libros, plataforma y congresos",
@@ -614,7 +616,6 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       process: "Proceso de diseño e implementación",
       gallery: "Galería de interacciones",
       problem: "Síntesis de investigación y hallazgos",
-      audienceOverview: "Perfiles y necesidades de usuarios",
     },
     cta: {
       label: "FIN DEL CASO",
@@ -693,7 +694,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       audience: {
         kicker: "03",
-        title: "Who used mironline",
+        title: "Who uses mironline",
         intro:
           "The platform had two main journeys. Students used it to practice and move through a course; teachers needed to review groups, grades and progress. Their needs were different, but both depended on the same academic information.",
         profiles: [
@@ -710,7 +711,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "As a student, I need the content I am using to remain available while I answer, so I do not lose context.",
-            asset: "dashboard",
+            asset: "studentUser",
           },
           {
             typeLabel: "Follow-up user",
@@ -725,7 +726,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             ],
             story:
               "As a teacher, I need to review progress, grades and performance by group, so I can follow the course.",
-            asset: "teacher",
+            asset: "teacherUser",
           },
         ],
         storyLabel: "Need summary",
@@ -1067,6 +1068,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       after: "Solution",
       responsive: "Responsive behavior",
       system: "Component system",
+      studentUser: "Student profile",
+      teacherUser: "Teacher profile",
       teacher: "Teacher view",
       analytics: "Analytics and internal reporting",
       beyond: "Books, platform and conferences",
@@ -1074,7 +1077,6 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       process: "Design and implementation process",
       gallery: "Interaction gallery",
       problem: "Research synthesis and findings",
-      audienceOverview: "User profiles and needs",
     },
     cta: {
       label: "END OF CASE",

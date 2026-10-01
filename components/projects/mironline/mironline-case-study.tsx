@@ -22,6 +22,8 @@ const assets = {
   after: `${ASSET_ROOT}/04-reading-after.png`,
   responsive: `${ASSET_ROOT}/05-responsive-devices.png`,
   system: `${ASSET_ROOT}/06-design-system.png`,
+  studentUser: `${ASSET_ROOT}/07-student-user.png`,
+  teacherUser: `${ASSET_ROOT}/08-teacher-user.png`,
   teacher: `${ASSET_ROOT}/09-teacher-dashboard.png`,
   analytics: `${ASSET_ROOT}/10-analytics-reporting.png`,
   beyond: `${ASSET_ROOT}/11-beyond-screen.png`,
@@ -29,7 +31,6 @@ const assets = {
   process: `${ASSET_ROOT}/13-process-map.png`,
   gallery: `${ASSET_ROOT}/14-interaction-gallery.png`,
   problem: `${ASSET_ROOT}/15-problem-board.png`,
-  audienceOverview: `${ASSET_ROOT}/16-user-personas.png`,
 } as const;
 
 type AssetKey = keyof typeof assets;
@@ -288,8 +289,6 @@ function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
 
 function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.audience;
-  const hasAudienceOverview = publicAssetExists(assets.audienceOverview);
-
   return (
     <section
       id="audience"
@@ -304,17 +303,6 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
             <p className={styles.bodyCopy}>{section.intro}</p>
           </div>
         </Reveal>
-
-        {hasAudienceOverview ? (
-          <Reveal className="mt-12 md:mt-16">
-            <MediaAsset
-              asset="audienceOverview"
-              label={copy.assetLabels.audienceOverview}
-              className={styles.editorialArtifact}
-            />
-          </Reveal>
-        ) : null}
-
         <div className={styles.audienceProfiles}>
           {section.profiles.map((profile, index) => (
             <Reveal key={profile.role} delay={index * 90}>
