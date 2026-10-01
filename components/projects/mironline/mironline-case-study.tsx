@@ -5,6 +5,7 @@ import path from "node:path";
 import type { Locale, MironlineCaseCopy } from "./mironline.case";
 import {
   BeforeAfterCompare,
+  ExpandableImage,
   PedagogyMap,
   Reveal,
 } from "./mironline-case-study-client";
@@ -112,6 +113,7 @@ function MediaAsset({
   className = "",
   imageClassName = "object-contain",
   priority = false,
+  sizes = "(min-width: 1536px) 68vw, (min-width: 1024px) 72vw, 100vw",
 }: {
   asset: AssetKey;
   label: string;
@@ -119,7 +121,9 @@ function MediaAsset({
   className?: string;
   imageClassName?: string;
   priority?: boolean;
+  sizes?: string;
 }) {
+  void priority;
   const src = assets[asset];
   const exists = publicAssetExists(src);
 
@@ -128,13 +132,11 @@ function MediaAsset({
   return (
     <figure className={className}>
       <div className={styles.assetStage}>
-        <Image
+        <ExpandableImage
           src={src}
           alt={label}
-          fill
-          priority={priority}
-          className={`relative z-[1] ${imageClassName}`}
-          sizes="(min-width: 1536px) 68vw, (min-width: 1024px) 72vw, 100vw"
+          className={imageClassName}
+          sizes={sizes}
         />
       </div>
       <figcaption className={styles.assetLabel}>{label}</figcaption>
@@ -312,6 +314,7 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
                   <MediaAsset
                     asset={profile.asset}
                     label={copy.assetLabels[profile.asset]}
+                    sizes="(min-width: 1280px) 46vw, 100vw"
                   />
                 </div>
 
@@ -332,13 +335,6 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
                         <span>{need}</span>
                       </div>
                     ))}
-                  </div>
-
-                  <div className={styles.userStory}>
-                    <p className={styles.microLabel}>{section.storyLabel}</p>
-                    <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/72 md:text-[15px]">
-                      {profile.story}
-                    </p>
                   </div>
                 </div>
               </article>

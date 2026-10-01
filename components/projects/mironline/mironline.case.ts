@@ -236,20 +236,19 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       audience: {
         kicker: "03",
-        title: "Quién usa mironline",
+        title: "Usuarios",
         intro:
-          "La plataforma tenía dos recorridos principales. El alumno entraba para practicar y avanzar en su curso; el docente necesitaba revisar grupos, calificaciones y progreso. Sus necesidades eran distintas, pero compartían la misma información académica.",
+          "La experiencia conectaba dos necesidades: practicar y avanzar en el curso, y dar seguimiento académico. Las láminas resumen el contexto de cada perfil; aquí destaco únicamente lo que condicionaba la interfaz.",
         profiles: [
           {
             typeLabel: "Usuario principal",
             role: "Estudiante",
             context:
-              "Practica inglés dentro de un curso y resuelve actividades desde computadora, tablet o celular.",
+              "Usa mironline para practicar y resolver actividades desde distintos dispositivos.",
             needs: [
-              "Entender qué hacer en cada actividad.",
-              "Mantener disponible el contexto mientras responde.",
-              "Recibir feedback después de una respuesta.",
-              "Consultar su avance dentro del curso.",
+              "Instrucciones claras por actividad.",
+              "Contexto visible mientras responde.",
+              "Feedback y avance fáciles de entender.",
             ],
             story:
               "Como estudiante, necesito mantener disponible el contenido que estoy usando mientras respondo, para no perder el contexto.",
@@ -259,12 +258,11 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             typeLabel: "Usuario de seguimiento",
             role: "Docente",
             context:
-              "Da seguimiento a grupos y revisa cómo avanzan los alumnos dentro de sus cursos.",
+              "Usa la plataforma para revisar cómo avanzan sus grupos y detectar dónde hace falta seguimiento.",
             needs: [
-              "Consultar grupos y alumnos.",
-              "Revisar calificaciones.",
-              "Ver progreso y desempeño.",
-              "Dar seguimiento académico sin recorrer demasiadas pantallas.",
+              "Consulta rápida por grupo y alumno.",
+              "Progreso, calificaciones y desempeño.",
+              "Seguimiento sin recorrer demasiadas pantallas.",
             ],
             story:
               "Como docente, necesito consultar avance, calificaciones y desempeño por grupo, para dar seguimiento al curso.",
@@ -299,7 +297,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       pedagogy: {
         kicker: "04",
-        title: "Qué debía soportar la experiencia",
+        title: "Análisis del contexto",
         intro:
           "mironline no era sólo una colección de ejercicios. Las decisiones de interfaz convivían con un modelo pedagógico, distintos niveles de inglés y necesidades concretas de estudiantes y docentes.",
         body: [
@@ -385,7 +383,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       research: {
         kicker: "05",
-        title: "Del contexto a señales reales",
+        title: "Investigación",
         intro:
           "El contexto pedagógico explicaba qué debía respetar la experiencia. Para decidir qué ajustar, contrastábamos ese marco con lo que realmente ocurría al usar la plataforma: reportes de soporte, Analytics, datos internos y comentarios de alumnos y docentes. No todo llegaba desde una sesión formal de research; muchas señales aparecían durante el uso cotidiano y después de cada release.",
         signals: [
@@ -731,20 +729,19 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       audience: {
         kicker: "03",
-        title: "Who uses mironline",
+        title: "Users",
         intro:
-          "The platform had two main journeys. Students used it to practice and move through a course; teachers needed to review groups, grades and progress. Their needs were different, but both depended on the same academic information.",
+          "The experience connected two needs: practicing and moving through a course, and following academic progress. The profile boards summarize each user's context; here I highlight only what shaped the interface.",
         profiles: [
           {
             typeLabel: "Primary user",
             role: "Student",
             context:
-              "Practices English within a course and completes activities on desktop, tablet or mobile.",
+              "Uses mironline to practice and complete activities across different devices.",
             needs: [
-              "Understand what to do in each activity.",
-              "Keep relevant context available while answering.",
-              "Receive feedback after an answer.",
-              "Check progress within the course.",
+              "Clear instructions for each activity.",
+              "Visible context while answering.",
+              "Feedback and progress that are easy to understand.",
             ],
             story:
               "As a student, I need the content I am using to remain available while I answer, so I do not lose context.",
@@ -754,12 +751,11 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             typeLabel: "Follow-up user",
             role: "Teacher",
             context:
-              "Follows groups and reviews how students are progressing through their courses.",
+              "Uses the platform to review group progress and identify where follow-up is needed.",
             needs: [
-              "Check groups and students.",
-              "Review grades.",
-              "See progress and performance.",
-              "Follow academic progress without navigating through too many screens.",
+              "Quick access by group and student.",
+              "Progress, grades and performance.",
+              "Follow-up without navigating through too many screens.",
             ],
             story:
               "As a teacher, I need to review progress, grades and performance by group, so I can follow the course.",
@@ -794,7 +790,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       pedagogy: {
         kicker: "04",
-        title: "What the experience had to support",
+        title: "Context analysis",
         intro:
           "mironline was not simply a collection of exercises. Interface decisions had to coexist with a pedagogical model, different English levels, and concrete student and teacher needs.",
         body: [
@@ -880,7 +876,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       research: {
         kicker: "05",
-        title: "From context to real signals",
+        title: "Research",
         intro:
           "The pedagogical context explained what the experience needed to preserve. To decide what to adjust, we compared that framework with what actually happened in use: support reports, Analytics, internal data, and comments from students and teachers. Not every signal came from a formal research session; many appeared through everyday use and after each release.",
         signals: [

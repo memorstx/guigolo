@@ -405,6 +405,168 @@ export function InteractionStage({ interactions }: { interactions: Interaction[]
 }
 
 
+
+export function ExpandableImage({
+  src,
+  alt,
+  sizes = "100vw",
+  className = "",
+}: {
+  src: string;
+  alt: string;
+  sizes?: string;
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [scale, setScale] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    offsetX: number;
+    offsetY: number;
+  } | null>(null);
+
+  const close = useCallback(() => {
+    setOpen(false);
+    setScale(1);
+    setOffset({ x: 0, y: 0 });
+    dragRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [close, open]);
+
+  const setZoom = (next: number) => {
+    const clamped = Math.min(3.5, Math.max(1, next));
+    setScale(clamped);
+    if (clamped === 1) setOffset({ x: 0, y: 0 });
+  };
+
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (scale <= 1) return;
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: offset.x,
+      offsetY: offset.y,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    setOffset({
+      x: drag.offsetX + event.clientX - drag.startX,
+      y: drag.offsetY + event.clientY - drag.startY,
+    });
+  };
+
+  const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (dragRef.current?.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        className={styles.zoomableAssetButton}
+        onClick={() => setOpen(true)}
+        aria-label={`Abrir imagen: ${alt}`}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          unoptimized
+          className={`relative z-[1] ${className}`}
+          sizes={sizes}
+        />
+        <span className={styles.zoomableAssetHint} aria-hidden>
+          ↗
+        </span>
+      </button>
+
+      {open ? (
+        <div
+          className={styles.imageViewer}
+          role="dialog"
+          aria-modal="true"
+          aria-label={alt}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) close();
+          }}
+        >
+          <div className={styles.imageViewerToolbar}>
+            <span className={styles.imageViewerTitle}>{alt}</span>
+            <div className={styles.imageViewerActions}>
+              <button type="button" onClick={() => setZoom(scale - 0.5)} aria-label="Alejar">
+                −
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setScale(1);
+                  setOffset({ x: 0, y: 0 });
+                }}
+                aria-label="Restablecer zoom"
+              >
+                {Math.round(scale * 100)}%
+              </button>
+              <button type="button" onClick={() => setZoom(scale + 0.5)} aria-label="Acercar">
+                +
+              </button>
+              <button type="button" onClick={close} aria-label="Cerrar imagen">
+                ×
+              </button>
+            </div>
+          </div>
+
+          <div
+            className={styles.imageViewerCanvas}
+            data-zoomed={scale > 1 ? "true" : "false"}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
+          >
+            <div
+              className={styles.imageViewerImage}
+              style={{
+                transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${scale})`,
+              }}
+            >
+              <Image src={src} alt={alt} fill unoptimized className="object-contain" sizes="100vw" />
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 type PanZoomInstance = {
   zoomIn: () => void;
   zoomOut: () => void;

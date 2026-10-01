@@ -641,7 +641,7 @@
 .audienceMedia .assetStage {
   border: 0;
   border-bottom: 1px solid rgba(237,237,237,.08);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 8 / 5;
 }
 
 .audienceMedia .assetLabel {
@@ -835,7 +835,7 @@
   color: rgba(237,237,237,.28);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   .audienceProfiles {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1212,5 +1212,167 @@
 
   .pedagogyDetail {
     min-height: 10rem;
+  }
+}
+
+
+/* Reusable image viewer for dense case-study assets */
+.zoomableAssetButton {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.zoomableAssetButton img {
+  object-fit: contain;
+}
+
+.zoomableAssetButton:focus-visible {
+  outline: 2px solid rgba(188,167,255,.9);
+  outline-offset: -2px;
+}
+
+.zoomableAssetHint {
+  position: absolute;
+  right: .75rem;
+  bottom: .75rem;
+  z-index: 3;
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: .7rem;
+  background: rgba(8,8,10,.78);
+  color: rgba(255,255,255,.8);
+  font-size: .8rem;
+  opacity: 0;
+  transform: translateY(.2rem);
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .zoomableAssetButton:hover .zoomableAssetHint {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.imageViewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 1rem;
+  background: rgba(4,4,6,.94);
+  backdrop-filter: blur(16px);
+}
+
+.imageViewerToolbar {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0 .8rem;
+}
+
+.imageViewerTitle {
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(255,255,255,.7);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imageViewerActions {
+  display: flex;
+  flex-shrink: 0;
+  gap: .4rem;
+}
+
+.imageViewerActions button {
+  min-width: 2.6rem;
+  height: 2.6rem;
+  padding: 0 .7rem;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: .75rem;
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.85);
+  font-size: .78rem;
+}
+
+.imageViewerActions button:hover {
+  background: rgba(255,255,255,.08);
+}
+
+.imageViewerCanvas {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,.035), transparent 52%),
+    #09090b;
+  touch-action: none;
+  cursor: default;
+}
+
+.imageViewerCanvas[data-zoomed="true"] {
+  cursor: grab;
+}
+
+.imageViewerCanvas[data-zoomed="true"]:active {
+  cursor: grabbing;
+}
+
+.imageViewerImage {
+  position: absolute;
+  inset: 1.5rem;
+  transform-origin: center;
+  transition: transform .12s ease-out;
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  .imageViewer {
+    padding: .6rem;
+  }
+
+  .imageViewerToolbar {
+    align-items: flex-start;
+  }
+
+  .imageViewerTitle {
+    padding-top: .7rem;
+    max-width: 38vw;
+  }
+
+  .imageViewerActions {
+    gap: .25rem;
+  }
+
+  .imageViewerActions button {
+    min-width: 2.35rem;
+    height: 2.35rem;
+    padding: 0 .55rem;
+  }
+
+  .imageViewerImage {
+    inset: .75rem;
   }
 }
