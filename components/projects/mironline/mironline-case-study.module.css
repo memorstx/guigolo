@@ -2301,3 +2301,262 @@
     position: static;
   }
 }
+
+
+/* Research v3: editorial, evidence-led */
+.researchStats {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.researchPrimaryStat,
+.researchBoardStat {
+  min-width: 0;
+}
+
+.researchPrimaryStat > p:last-child,
+.researchBoardStat > p:last-child {
+  margin-top: .8rem;
+  max-width: 42rem;
+  color: rgba(255,255,255,.5);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+
+.researchIncidenceValue,
+.researchBoardValue {
+  margin-top: .45rem;
+  color: rgba(255,255,255,.96);
+  font-size: clamp(2.4rem,4.2vw,4.2rem);
+  line-height: .95;
+  letter-spacing: -.055em;
+  font-weight: 650;
+}
+
+.researchBreakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.researchBreakdown > div {
+  display: grid;
+  gap: .2rem;
+}
+
+.researchBreakdown span {
+  color: rgba(255,255,255,.38);
+  font-size: .72rem;
+}
+
+.researchBreakdown strong {
+  color: rgba(255,255,255,.78);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+@media (min-width: 960px) {
+  .researchStats {
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: 4rem;
+  }
+
+  .researchBoardStat {
+    padding-left: 4rem;
+    border-left: 1px solid rgba(255,255,255,.09);
+  }
+}
+
+.researchQuestionGrid {
+  display: grid;
+  gap: 0 2.5rem;
+  margin-top: 1rem;
+}
+
+.researchQuestionCard {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0,1fr);
+  gap: .8rem;
+  padding: 1.1rem 0;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.09);
+  background: transparent;
+}
+
+.researchQuestionCard > span {
+  padding-top: .15rem;
+  color: rgba(188,167,255,.64);
+  font-size: .7rem;
+}
+
+.researchQuestionCard > p {
+  color: rgba(255,255,255,.72);
+  font-size: .94rem;
+  line-height: 1.55;
+}
+
+@media (min-width: 900px) {
+  .researchQuestionGrid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+.researchSources {
+  display: grid;
+  gap: 0 2rem;
+  margin-top: 1rem;
+}
+
+.researchSources article {
+  padding: 1.1rem 0;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.09);
+  background: transparent;
+}
+
+.researchSources h3 {
+  font-size: .95rem;
+}
+
+.researchSources p {
+  font-size: .88rem;
+  line-height: 1.62;
+}
+
+@media (min-width: 700px) {
+  .researchSources {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .researchSources {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+  }
+}
+
+.researchHypothesesDetailed {
+  display: grid;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.researchHypothesesDetailed > article {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.hypothesisTitle {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0,1fr);
+  gap: .8rem;
+}
+
+.hypothesisTitle > span {
+  color: rgba(188,167,255,.64);
+  font-size: .7rem;
+}
+
+.hypothesisTitle h3 {
+  color: rgba(255,255,255,.9);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hypothesisBody {
+  display: grid;
+  gap: 1rem;
+  padding-left: 3rem;
+}
+
+.hypothesisBody > div > p:last-child {
+  margin-top: .4rem;
+  color: rgba(255,255,255,.52);
+  font-size: .86rem;
+  line-height: 1.62;
+}
+
+@media (min-width: 1000px) {
+  .researchHypothesesDetailed > article {
+    grid-template-columns: minmax(12rem,.45fr) minmax(0,1.55fr);
+    gap: 2.5rem;
+  }
+
+  .hypothesisBody {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 2rem;
+    padding-left: 0;
+  }
+}
+
+/* Heuristic lens */
+.heuristicIntro {
+  max-width: 54rem;
+}
+
+.heuristicIntro > p:last-child {
+  margin-top: .7rem;
+  color: rgba(255,255,255,.52);
+  font-size: .9rem;
+  line-height: 1.68;
+}
+
+.heuristicGrid {
+  display: grid;
+  gap: 0 2rem;
+  margin-top: 1rem;
+}
+
+.heuristicGrid article {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0,1fr);
+  gap: .8rem;
+  padding: 1.15rem 0;
+  border-top: 1px solid rgba(255,255,255,.09);
+}
+
+.heuristicGrid article > span {
+  color: rgba(188,167,255,.64);
+  font-size: .7rem;
+}
+
+.heuristicGrid h3 {
+  color: rgba(255,255,255,.88);
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.heuristicGrid p {
+  margin-top: .45rem;
+  color: rgba(255,255,255,.48);
+  font-size: .86rem;
+  line-height: 1.6;
+}
+
+.heuristicGrid p:last-child {
+  color: rgba(255,255,255,.65);
+}
+
+.heuristicSource {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: rgba(188,167,255,.72);
+  font-size: .76rem;
+  text-decoration: none;
+}
+
+.heuristicSource:hover {
+  color: rgba(205,190,255,1);
+}
+
+@media (min-width: 800px) {
+  .heuristicGrid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}

@@ -640,12 +640,26 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
         </Reveal>
 
         <Reveal className="mt-12 md:mt-14">
-          <div className={styles.researchIncidence}>
-            <div>
+          <div className={styles.researchStats}>
+            <div className={styles.researchPrimaryStat}>
               <p className={styles.microLabel}>{section.incidenceLabel}</p>
               <p className={styles.researchIncidenceValue}>{section.incidenceValue}</p>
+              <p>{section.incidenceNote}</p>
             </div>
-            <p>{section.incidenceNote}</p>
+
+            <div className={styles.researchBoardStat}>
+              <p className={styles.microLabel}>{section.boardLabel}</p>
+              <p className={styles.researchBoardValue}>{section.boardValue}</p>
+              <div className={styles.researchBreakdown}>
+                {section.boardBreakdown.map((item) => (
+                  <div key={item.label}>
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                  </div>
+                ))}
+              </div>
+              <p>{section.boardNote}</p>
+            </div>
           </div>
         </Reveal>
 
@@ -675,12 +689,27 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
 
         <Reveal className="mt-14 md:mt-16">
           <p className={styles.microLabel}>{section.hypothesesTitle}</p>
-          <div className={styles.researchHypotheses}>
+          <div className={styles.researchHypothesesDetailed}>
             {section.hypotheses.map((item, index) => (
               <article key={item.title}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
+                <div className={styles.hypothesisTitle}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{item.title}</h3>
+                </div>
+                <div className={styles.hypothesisBody}>
+                  <div>
+                    <p className={styles.microLabel}>Señal</p>
+                    <p>{item.signal}</p>
+                  </div>
+                  <div>
+                    <p className={styles.microLabel}>Supuesto</p>
+                    <p>{item.assumption}</p>
+                  </div>
+                  <div>
+                    <p className={styles.microLabel}>Validar con</p>
+                    <p>{item.validation}</p>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
@@ -718,8 +747,8 @@ function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
           </Reveal>
         ) : null}
 
-        <Reveal className="mt-10 md:mt-12">
-          <p className={styles.microLabel}>Hallazgos clave</p>
+        <Reveal className="mt-12 md:mt-14">
+          <p className={styles.microLabel}>{section.findingsTitle}</p>
           <div className={styles.analysisFindings}>
             {section.findings.map((item, index) => (
               <article key={item.title}>
@@ -731,6 +760,35 @@ function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
               </article>
             ))}
           </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-16">
+          <div className={styles.heuristicIntro}>
+            <p className={styles.microLabel}>{section.heuristicTitle}</p>
+            <p>{section.heuristicIntro}</p>
+          </div>
+
+          <div className={styles.heuristicGrid}>
+            {section.heuristics.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.issue}</p>
+                  <p>{item.implication}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <a
+            href="https://www.nngroup.com/articles/ten-usability-heuristics/"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.heuristicSource}
+          >
+            Referencia · Nielsen Norman Group ↗
+          </a>
         </Reveal>
       </div>
     </section>
