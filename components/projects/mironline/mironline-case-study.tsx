@@ -5,6 +5,8 @@ import path from "node:path";
 import type { Locale, MironlineCaseCopy } from "./mironline.case";
 import {
   BeforeAfterCompare,
+  ExpandableImage,
+  PedagogyMap,
   Reveal,
 } from "./mironline-case-study-client";
 import {
@@ -22,12 +24,16 @@ const assets = {
   after: `${ASSET_ROOT}/04-reading-after.png`,
   responsive: `${ASSET_ROOT}/05-responsive-devices.png`,
   system: `${ASSET_ROOT}/06-design-system.png`,
+  studentUser: `${ASSET_ROOT}/07-student-user.png`,
+  teacherUser: `${ASSET_ROOT}/08-teacher-user.png`,
   teacher: `${ASSET_ROOT}/09-teacher-dashboard.png`,
   analytics: `${ASSET_ROOT}/10-analytics-reporting.png`,
   beyond: `${ASSET_ROOT}/11-beyond-screen.png`,
   research: `${ASSET_ROOT}/12-research-evidence.png`,
   process: `${ASSET_ROOT}/13-process-map.png`,
   gallery: `${ASSET_ROOT}/14-interaction-gallery.png`,
+  problem: `${ASSET_ROOT}/15-problem-symptoms.png`,
+  analysis: `${ASSET_ROOT}/16-analysis-synthesis.png`,
 } as const;
 
 type AssetKey = keyof typeof assets;
@@ -108,6 +114,7 @@ function MediaAsset({
   className = "",
   imageClassName = "object-contain",
   priority = false,
+  sizes = "(min-width: 1536px) 68vw, (min-width: 1024px) 72vw, 100vw",
 }: {
   asset: AssetKey;
   label: string;
@@ -115,7 +122,9 @@ function MediaAsset({
   className?: string;
   imageClassName?: string;
   priority?: boolean;
+  sizes?: string;
 }) {
+  void priority;
   const src = assets[asset];
   const exists = publicAssetExists(src);
 
@@ -124,13 +133,11 @@ function MediaAsset({
   return (
     <figure className={className}>
       <div className={styles.assetStage}>
-        <Image
+        <ExpandableImage
           src={src}
           alt={label}
-          fill
-          priority={priority}
-          className={`relative z-[1] ${imageClassName}`}
-          sizes="(min-width: 1536px) 68vw, (min-width: 1024px) 72vw, 100vw"
+          className={imageClassName}
+          sizes={sizes}
         />
       </div>
       <figcaption className={styles.assetLabel}>{label}</figcaption>
@@ -158,15 +165,8 @@ function Hero({ locale, copy }: Props) {
     ? "/brand/projects/mironline/cover-mironline-mobile.png"
     : desktopCover;
 
-  const heroTitle =
-    locale === "es"
-      ? "De Flash a una experiencia web responsive."
-      : "From Flash to a responsive web experience.";
-
-  const heroSummary =
-    locale === "es"
-      ? "Diseñé e implementé actividades para estudiantes y docentes, llevando mironline a una experiencia usable en celular, tablet y escritorio."
-      : "I designed and implemented learning activities for students and teachers, bringing mironline to a usable experience across mobile, tablet and desktop.";
+  const heroTitle = copy.headline;
+  const heroSummary = copy.intro;
 
   return (
     <header className="relative overflow-hidden">
@@ -248,106 +248,75 @@ function Hero({ locale, copy }: Props) {
 
 function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.product;
+  const history = copy.sections.history;
+  const milestones = history.milestones.filter((item) => item.phase === "product");
 
   return (
     <SectionShell id="context" className="overflow-hidden">
-      <div className="pointer-events-none absolute right-[-6%] top-[8%] hidden 2xl:block">
-        <div className={`${styles.stageWord} ${styles.stageWordCyan}`}>context</div>
-      </div>
-
       <Reveal>
-        <StageHeader title={section.title} />
+        <div className={styles.caseIntroBlock}>
+          <StageHeader title={section.title} />
+          <div className={styles.caseIntroCopy}>
+            <p className={styles.bodyCopy}>{section.body[0]}</p>
+          </div>
+        </div>
       </Reveal>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-[.78fr_1.22fr] lg:items-start xl:gap-20">
-        <Reveal className="lg:pt-8">
-          <div className="space-y-6">
-            {section.body.map((paragraph) => (
-              <p key={paragraph} className={styles.bodyCopy}>
-                {paragraph}
-              </p>
+      <Reveal className="mt-14 md:mt-18">
+        <div className={styles.contextHistory}>
+          <p className={styles.microLabel}>{history.productLabel}</p>
+          <div className={styles.contextHistoryTrack}>
+            {milestones.map((item) => (
+              <article key={item.year} className={styles.contextHistoryItem}>
+                <span className={styles.historyYear}>{item.year}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
             ))}
           </div>
-
-          <div className="mt-12 grid gap-y-9 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            {section.ecosystem.map((item) => (
-              <div key={item.label}>
-                <p className="text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
-                  {item.label}
-                </p>
-                <p className={`${styles.cardTitle} mt-2`}>
-                  {item.value}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={100}>
-          <MediaAsset asset="dashboard" label={copy.assetLabels.dashboard} index="01"  />
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
 
-function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
-  const section = copy.sections.challenge;
-  const words = ["FLASH", "MOBILE", "BROWSER", "LOAD"];
-  const hasResearchVisual = publicAssetExists(assets.research);
+function ProductSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.product;
 
   return (
-    <section id="problem" className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32">
-      <div className={`${SITE_SECTION_GUTTERS}`}>
-        <Reveal>
-          <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
-            <StageHeader title={section.title} />
-            <p className={`${styles.sectionLead} max-w-3xl`}>
-              {section.statement}
-            </p>
-          </div>
-        </Reveal>
-
-        <div className={`mt-12 grid gap-10 ${hasResearchVisual ? "lg:grid-cols-[1.12fr_.88fr] lg:items-center" : "lg:grid-cols-[.82fr_1.18fr] lg:items-start"}`}>
-          {hasResearchVisual ? (
-            <Reveal>
-              <MediaAsset asset="research" label={copy.assetLabels.research} />
-            </Reveal>
-          ) : (
-            <Reveal>
-              <div className="max-w-[720px]">
-                <p className={styles.bodyCopy}>{section.body}</p>
+    <section
+      id="product"
+      className="relative overflow-hidden bg-neutral-black-900 py-16 md:py-20 xl:py-24"
+    >
+      <div className={SITE_SECTION_GUTTERS}>
+        <div className={styles.productOverview}>
+          <Reveal>
+            <div className={styles.productCopy}>
+              <h2 className={styles.sectionTitle}>Producto</h2>
+              <div className={styles.caseSectionIntro}>
+                {section.body.slice(1).map((paragraph) => (
+                  <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
+                ))}
               </div>
-            </Reveal>
-          )}
-
-          <Reveal delay={100}>
-            {hasResearchVisual ? <p className={styles.bodyCopy}>{section.body}</p> : null}
-
-            <div className={`${hasResearchVisual ? "mt-10" : "mt-0"} grid grid-cols-1 gap-x-7 gap-y-4 sm:grid-cols-2`}>
-              {words.map((word, index) => (
-                <div key={word} className={styles.signalWord}>
-                  <span className={styles.signalGhost}>{word}</span>
-                  <p className="relative z-10 max-w-[17rem] pb-4 text-[12px] leading-relaxed text-neutral-white/55 md:text-[13px]">
-                    {section.tickets[index]}
-                  </p>
-                </div>
-              ))}
             </div>
+          </Reveal>
+
+          <Reveal delay={90}>
+            <MediaAsset
+              asset="dashboard"
+              label={copy.assetLabels.dashboard}
+              className={styles.productHeroAsset}
+              sizes="(min-width: 1280px) 58vw, 100vw"
+            />
           </Reveal>
         </div>
 
-        <Reveal className="mt-16 md:mt-20">
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {section.constraints.map((constraint, index) => (
-              <div key={constraint} className="relative min-h-28 pt-5">
-                <span className="absolute left-0 top-0 h-[2px] w-8 bg-accent-purple/55" />
-                <p className="text-[13px] leading-relaxed text-neutral-white/65 md:text-[14px]">
-                  {constraint}
-                </p>
-                <span className="pointer-events-none absolute -right-1 top-0 text-[3rem] font-bold leading-none text-neutral-white/[0.025]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+        <Reveal className="mt-10 md:mt-12">
+          <div className={styles.productFacts}>
+            {section.ecosystem.map((item) => (
+              <div key={item.label} className={styles.productFact}>
+                <p className={styles.microLabel}>{item.label}</p>
+                <p>{item.value}</p>
               </div>
             ))}
           </div>
@@ -357,47 +326,171 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   );
 }
 
-function RoleSection({ locale, copy }: Props) {
-  const section = copy.sections.role;
-  const hasProcessVisual = publicAssetExists(assets.process);
+function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.audience;
+  return (
+    <section
+      id="audience"
+      className="relative overflow-hidden bg-neutral-black-900 py-16 md:py-20 xl:py-24"
+    >
+      <div className={`${styles.ambient} ${styles.ambientPurple} -left-64 top-20`} />
+
+      <div className={SITE_SECTION_GUTTERS}>
+        <Reveal>
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
+        </Reveal>
+        <div className={styles.audienceProfiles}>
+          {section.profiles.map((profile, index) => (
+            <Reveal key={profile.role} delay={index * 90}>
+              <article className={styles.audienceProfile}>
+                <div className={styles.audienceMedia}>
+                  <MediaAsset
+                    asset={profile.asset}
+                    label={copy.assetLabels[profile.asset]}
+                    sizes="(min-width: 1280px) 46vw, 100vw"
+                  />
+                </div>
+
+                <div className={styles.audienceProfileBody}>
+                  <span className={styles.audienceIndex}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p className={styles.microLabel}>{profile.typeLabel}</p>
+                  <h3 className={styles.audienceRole}>{profile.role}</h3>
+                  <p className={`${styles.bodyCopy} mt-4 max-w-[34rem]`}>
+                    {profile.context}
+                  </p>
+
+                  <div className={styles.needList}>
+                    {profile.needs.map((need) => (
+                      <div key={need} className={styles.needItem}>
+                        <span aria-hidden className={styles.needDot} />
+                        <span>{need}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal className="mt-20 md:mt-28">
+          <div className="grid gap-10 xl:grid-cols-[.72fr_1.28fr] xl:items-start xl:gap-20">
+            <div>
+              <p className={styles.microLabel}>{section.architectureTitle}</p>
+              <p className={`${styles.sectionLeadSmall} mt-4 max-w-[34rem]`}>
+                {section.architectureIntro}
+              </p>
+            </div>
+
+            <div className={styles.architectureMap}>
+              <div className={styles.architectureRoot}>mironline</div>
+              <div className={styles.architectureBranches}>
+                {section.architecture.map((branch) => (
+                  <div key={branch.label} className={styles.architectureBranch}>
+                    <h3 className={styles.architectureBranchTitle}>{branch.label}</h3>
+                    <div className={styles.architectureItems}>
+                      {branch.items.map((item) => (
+                        <span key={item} className={styles.architectureItem}>
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-20 md:mt-24">
+          <div className={styles.userFlows}>
+            <div>
+              <p className={styles.microLabel}>{section.flowTitle}</p>
+              <div className={styles.flowTrack}>
+                {section.flow.map((step, index) => (
+                  <div key={step} className={styles.flowStep}>
+                    <span className={styles.flowNumber}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.flowLabel}>{step}</span>
+                    {index < section.flow.length - 1 ? (
+                      <span className={styles.flowArrow} aria-hidden>
+                        →
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className={styles.microLabel}>{section.teacherFlowTitle}</p>
+              <div className={styles.flowTrack}>
+                {section.teacherFlow.map((step, index) => (
+                  <div key={step} className={styles.flowStep}>
+                    <span className={styles.flowNumber}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.flowLabel}>{step}</span>
+                    {index < section.teacherFlow.length - 1 ? (
+                      <span className={styles.flowArrow} aria-hidden>
+                        →
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.userRelation}>
+            <p className={styles.microLabel}>{section.relationTitle}</p>
+            <p>{section.relation}</p>
+          </div>
+
+          <p className={styles.audienceNote}>{section.note}</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+
+
+function PedagogySection({ locale, copy }: Props) {
+  const section = copy.sections.pedagogy;
 
   return (
-    <SectionShell id="scope" className="overflow-hidden">
-      <div className="pointer-events-none absolute left-[-3%] top-[10%] hidden 2xl:block">
-        <div className={styles.stageWord}>design↔code</div>
-      </div>
-
+    <SectionShell id="pedagogy" className="overflow-hidden bg-neutral-black-800/20">
       <Reveal>
-        <StageHeader title={section.title} />
+        <div className={styles.caseSectionHeader}>
+          <StageHeader title={section.title} />
+          <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+        </div>
       </Reveal>
 
-      <div className={`mt-12 grid gap-12 ${hasProcessVisual ? "lg:grid-cols-[.82fr_1.18fr] xl:gap-20" : "lg:grid-cols-2 xl:gap-20"}`}>
+      <div className="mt-12 grid gap-10 xl:grid-cols-[.72fr_1.28fr] xl:items-start xl:gap-16">
         <Reveal>
-          <div className="space-y-6">
+          <div className="space-y-7">
             {section.body.map((paragraph) => (
               <p key={paragraph} className={styles.bodyCopy}>
                 {paragraph}
               </p>
             ))}
-          </div>
 
-          <div className="mt-8 border-l border-accent-purple/35 pl-5">
-            <p className={styles.microLabel}>
-              {locale === "es" ? "Forma de trabajo" : "Ways of working"}
-            </p>
-            <p className="mt-3 max-w-[680px] text-[13px] leading-relaxed text-neutral-white/60 md:text-[14px]">
-              {locale === "es"
-                ? "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo."
-                : "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time."}
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <p className={styles.microLabel}>{section.teamTitle}</p>
-            <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3 lg:grid-cols-2">
-              {section.team.map((member) => (
-                <div key={member} className={styles.mutedListTitle}>
-                  {member}
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+              {section.points.map((point, index) => (
+                <div key={point.title} className={styles.pedagogyPoint}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3>{point.title}</h3>
+                    <p>{point.body}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -405,72 +498,298 @@ function RoleSection({ locale, copy }: Props) {
         </Reveal>
 
         <Reveal delay={100}>
-          {hasProcessVisual ? <MediaAsset asset="process" label={copy.assetLabels.process} /> : null}
-
-          <div className={`${hasProcessVisual ? "mt-10" : "mt-0"} grid gap-10 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2`}>
-            <div>
-              <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">
-                {section.workflowTitle}
-              </p>
-              <div className={`${styles.editorialRail} mt-6 space-y-5`}>
-                {section.workflow.map((step) => (
-                  <div key={step} className={styles.railStep}>
-                    <p className="text-[13px] leading-relaxed text-neutral-white/65">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="md:pt-16">
-              <p className="text-[12px] tracking-[0.2em] text-accent-purple/70 uppercase">
-                {section.reverseTitle}
-              </p>
-              <p className="mt-5 text-[14px] leading-relaxed text-neutral-white/65">
-                {section.reverseBody}
-              </p>
-            </div>
-          </div>
+          <PedagogyMap locale={locale} />
         </Reveal>
       </div>
     </SectionShell>
   );
 }
 
-function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
-  const section = copy.sections.research;
-  const hasResearchVisual = publicAssetExists(assets.research);
+function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.challenge;
+  const hasProblemVisual = publicAssetExists(assets.problem);
 
   return (
-    <section id="research" className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32">
-      <div className={`${styles.ambient} ${styles.ambientCyan} -right-52 top-10`} />
+    <section
+      id="problem"
+      className="relative overflow-hidden bg-neutral-black-800/30 py-16 md:py-20 xl:py-24"
+    >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} align="center" />
+          <StageHeader title={section.title} intro={section.statement} />
         </Reveal>
 
-        <div className="relative mt-12 md:mt-14">
-          {hasResearchVisual ? (
-            <div className="mx-auto max-w-[1100px]">
-              <Reveal>
-                <MediaAsset asset="research" label={copy.assetLabels.research} />
-              </Reveal>
-            </div>
-          ) : null}
+        {hasProblemVisual ? (
+          <Reveal className="mt-12 md:mt-16">
+            <MediaAsset
+              asset="problem"
+              label={copy.assetLabels.problem}
+              className={styles.problemVisual}
+              sizes="100vw"
+            />
+          </Reveal>
+        ) : null}
 
-          <div className={`${hasResearchVisual ? "mt-12" : "mt-0"} grid gap-x-10 gap-y-10 sm:grid-cols-2 xl:grid-cols-4`}>
-            {section.signals.map((signal, index) => (
-              <Reveal key={signal.title} delay={index * 70}>
-                <div className="relative pt-4">
-                  <div className="absolute -top-2 right-0 select-none text-[clamp(2.25rem,3.5vw,3.5rem)] font-bold leading-none text-neutral-white/[0.025]">
-                    {String(index + 1).padStart(2, "0")}
+        <Reveal className="mt-10 md:mt-12">
+          <div className={styles.problemStory}>
+            <div className={styles.problemCopy}>
+              {section.context.map((paragraph) => (
+                <p key={paragraph} className={styles.bodyCopy}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <div className={styles.problemConstraintsBlock}>
+              <p className={styles.microLabel}>{section.constraintsTitle}</p>
+              <div className={styles.problemConstraintsGrid}>
+                {section.constraints.map((constraint, index) => (
+                  <div key={constraint} className={styles.problemConstraint}>
+                    <span className={styles.problemConstraintIndex}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p>{constraint}</p>
                   </div>
-                  <h3 className={styles.cardTitle}>{signal.title}</h3>
-                  <p className="mt-4 text-[13px] leading-relaxed text-neutral-white/55">{signal.body}</p>
+                ))}
+              </div>
+            </div>
+
+            {!hasProblemVisual ? (
+              <div className={styles.problemReports}>
+                <p className={styles.microLabel}>{section.reportsTitle}</p>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {section.reports.map((report) => (
+                    <article key={report.label} className={styles.problemReport}>
+                      <span className={styles.problemReportLabel}>{report.label}</span>
+                      <p>{report.body}</p>
+                    </article>
+                  ))}
                 </div>
-              </Reveal>
+              </div>
+            ) : null}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function RoleSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.role;
+
+  return (
+    <SectionShell id="scope" className="overflow-hidden">
+      <Reveal>
+        <div className={styles.caseSectionHeader}>
+          <StageHeader title={section.title} />
+          <div className={styles.caseSectionIntro}>
+            {section.body.map((paragraph) => (
+              <p key={paragraph} className={styles.bodyCopy}>{paragraph}</p>
             ))}
           </div>
         </div>
+      </Reveal>
+
+      <Reveal className="mt-12 md:mt-16">
+        <div className={styles.roleLayout}>
+          <div>
+            <p className={styles.microLabel}>{section.workflowTitle}</p>
+            <div className={styles.roleWorkflow}>
+              {section.workflow.map((step, index) => (
+                <div key={step}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <p>{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.roleAside}>
+            <div>
+              <p className={styles.microLabel}>{section.teamTitle}</p>
+              <div className={styles.roleTeam}>
+                {section.team.map((member) => <span key={member}>{member}</span>)}
+              </div>
+            </div>
+
+            <div>
+              <p className={styles.microLabel}>{section.reverseTitle}</p>
+              <p>{section.reverseBody}</p>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </SectionShell>
+  );
+}
+
+function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.research;
+
+  return (
+    <section
+      id="research"
+      className="relative overflow-hidden bg-neutral-black-900 py-16 md:py-20 xl:py-24"
+    >
+      <div className={SITE_SECTION_GUTTERS}>
+        <Reveal>
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-12 md:mt-14">
+          <div className={styles.researchStats}>
+            <div className={styles.researchPrimaryStat}>
+              <p className={styles.microLabel}>{section.incidenceLabel}</p>
+              <p className={styles.researchIncidenceValue}>{section.incidenceValue}</p>
+              <p>{section.incidenceNote}</p>
+            </div>
+
+            <div className={styles.researchBoardStat}>
+              <p className={styles.microLabel}>{section.boardLabel}</p>
+              <p className={styles.researchBoardValue}>{section.boardValue}</p>
+              <div className={styles.researchBreakdown}>
+                {section.boardBreakdown.map((item) => (
+                  <div key={item.label}>
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                  </div>
+                ))}
+              </div>
+              <p>{section.boardNote}</p>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-16">
+          <p className={styles.microLabel}>{section.questionsTitle}</p>
+          <div className={styles.researchQuestionGrid}>
+            {section.questions.map((question, index) => (
+              <article key={question} className={styles.researchQuestionCard}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{question}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-16">
+          <p className={styles.microLabel}>{section.sourcesTitle}</p>
+          <div className={styles.researchSources}>
+            {section.signals.map((signal) => (
+              <article key={signal.title}>
+                <h3>{signal.title}</h3>
+                <p>{signal.body}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-16">
+          <p className={styles.microLabel}>{section.hypothesesTitle}</p>
+          <div className={styles.researchHypothesesDetailed}>
+            {section.hypotheses.map((item, index) => (
+              <article key={item.title}>
+                <div className={styles.hypothesisTitle}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{item.title}</h3>
+                </div>
+                <div className={styles.hypothesisBody}>
+                  <div>
+                    <p className={styles.microLabel}>{section.signalLabel}</p>
+                    <p>{item.signal}</p>
+                  </div>
+                  <div>
+                    <p className={styles.microLabel}>{section.assumptionLabel}</p>
+                    <p>{item.assumption}</p>
+                  </div>
+                  <div>
+                    <p className={styles.microLabel}>{section.validationLabel}</p>
+                    <p>{item.validation}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.analysis;
+  const hasAnalysisVisual = publicAssetExists(assets.analysis);
+
+  return (
+    <section
+      id="analysis"
+      className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24"
+    >
+      <div className={SITE_SECTION_GUTTERS}>
+        <Reveal>
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
+        </Reveal>
+
+        {hasAnalysisVisual ? (
+          <Reveal className="mt-12 md:mt-16">
+            <MediaAsset
+              asset="analysis"
+              label={copy.assetLabels.analysis}
+              className={styles.analysisVisual}
+              sizes="100vw"
+            />
+          </Reveal>
+        ) : null}
+
+        <Reveal className="mt-12 md:mt-14">
+          <p className={styles.microLabel}>{section.findingsTitle}</p>
+          <div className={styles.analysisFindings}>
+            {section.findings.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-16">
+          <div className={styles.heuristicIntro}>
+            <p className={styles.microLabel}>{section.heuristicTitle}</p>
+            <p>{section.heuristicIntro}</p>
+          </div>
+
+          <div className={styles.heuristicGrid}>
+            {section.heuristics.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.issue}</p>
+                  <p>{item.implication}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <a
+            href="https://www.nngroup.com/articles/ten-usability-heuristics/"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.heuristicSource}
+          >
+            Referencia · Nielsen Norman Group ↗
+          </a>
+        </Reveal>
       </div>
     </section>
   );
@@ -482,22 +801,46 @@ function DefinitionSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <SectionShell id="definition">
       <Reveal>
-        <StageHeader title={section.title} />
+        <div className={styles.caseSectionHeader}>
+          <StageHeader title={section.title} />
+          <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+        </div>
       </Reveal>
 
-      <div className="mt-10 grid gap-x-12 md:grid-cols-3 xl:gap-x-20">
+      <Reveal className="mt-12 md:mt-14">
+        <div className={styles.definitionChallenge}>
+          <p className={styles.microLabel}>{section.challengeLabel}</p>
+          <p>{section.challenge}</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="mt-14 md:mt-16">
+        <p className={styles.microLabel}>{section.principlesLabel}</p>
+      </Reveal>
+
+      <div className={styles.definitionPrinciples}>
         {section.items.map((item, index) => (
-          <Reveal key={item.title} delay={index * 90}>
-            <article className={styles.principle}>
-              <span className={styles.principleIndex}>{String(index + 1).padStart(2, "0")}</span>
-              <h3 className={`${styles.cardTitle} max-w-[18rem]`}>{item.title}</h3>
-              <p className="mt-5 max-w-[24rem] text-[13px] leading-relaxed text-neutral-white/55 md:text-[14px]">
-                {item.body}
-              </p>
+          <Reveal key={item.title} delay={index * 70}>
+            <article>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </article>
           </Reveal>
         ))}
       </div>
+
+      <Reveal className="mt-14 md:mt-16">
+        <p className={styles.microLabel}>{section.criteriaTitle}</p>
+        <div className={styles.definitionCriteria}>
+          {section.criteria.map((criterion, index) => (
+            <div key={criterion}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <p>{criterion}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -512,13 +855,13 @@ function IdeationSection({ copy }: { copy: MironlineCaseCopy }) {
           <StageHeader title={section.title} />
         </Reveal>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.18fr_.82fr] lg:items-center xl:gap-16">
+        <div className="mt-10 grid gap-10 xl:grid-cols-[1.18fr_.82fr] xl:items-center xl:gap-16">
           <Reveal>
             <MediaAsset asset="player" label={copy.assetLabels.player} />
           </Reveal>
           <Reveal delay={100}>
             <div className="max-w-[560px]">
-              <p className={styles.microLabel}>30+ patrones de interacción</p>
+              <p className={styles.microLabel}>{section.statLabel}</p>
               <p className={`${styles.bodyCopy} mt-4`}>{section.intro}</p>
               <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-[13px] leading-relaxed text-neutral-white/48">
                 {section.interactions.slice(0, 6).map((interaction) => (
@@ -540,18 +883,14 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
 
   return (
     <SectionShell id="iteration" className="overflow-hidden">
-      <div className="pointer-events-none absolute right-[-2%] top-[5%] hidden 2xl:block">
-        <div className={`${styles.stageWord} ${styles.stageWordPurple}`}>iterate</div>
-      </div>
-
       <Reveal>
-        <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+        <div className={styles.caseSectionHeader}>
           <StageHeader title={section.title} />
-          <p className={styles.bodyCopy}>{section.intro}</p>
+          <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
         </div>
       </Reveal>
 
-      <Reveal className="mt-14 md:mt-20">
+      <Reveal className="mt-12 md:mt-16">
         <BeforeAfterCompare
           beforeSrc={assets.before}
           afterSrc={assets.after}
@@ -561,32 +900,28 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
         />
       </Reveal>
 
-      <div className="mt-16 grid gap-12 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
-        <Reveal>
-          <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
-            {section.feedbackTitle}
-          </p>
-          <div className="mt-6 space-y-7">
-            {section.feedback.map((feedback) => (
-              <p key={feedback} className={styles.sectionLeadSmall}>
-                {feedback}
-              </p>
-            ))}
+      <Reveal className="mt-14 md:mt-16">
+        <div className={styles.iterationTrail}>
+          <div>
+            <p className={styles.microLabel}>{section.feedbackTitle}</p>
+            <ul>
+              {section.feedback.map((item) => <li key={item}>{item}</li>)}
+            </ul>
           </div>
-        </Reveal>
-
-        <Reveal delay={100}>
-          <div className="relative pl-0 lg:pl-10">
-            <div className={styles.quoteMark}>“</div>
-            <p className={`${styles.pullQuote} mt-1 max-w-[860px]`}>
-              {section.outcomeBody}
-            </p>
-            <p className="mt-7 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
-              {section.outcomeTitle}
-            </p>
+          <div>
+            <p className={styles.microLabel}>{section.hypothesisTitle}</p>
+            <p>{section.hypothesisBody}</p>
           </div>
-        </Reveal>
-      </div>
+          <div>
+            <p className={styles.microLabel}>{section.afterTitle}</p>
+            <p>{section.afterBody}</p>
+          </div>
+          <div>
+            <p className={styles.microLabel}>{section.outcomeTitle}</p>
+            <p>{section.outcomeBody}</p>
+          </div>
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -604,11 +939,14 @@ function SystemSection({ copy }: { copy: MironlineCaseCopy }) {
   ];
 
   return (
-    <section id="system" className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32">
+    <section id="system" className="relative overflow-hidden bg-neutral-black-800/30 py-16 md:py-20 xl:py-24">
       <div className={`${styles.ambient} ${styles.ambientCyan} left-1/2 top-1/3 -translate-x-1/2`} />
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} align="center" />
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
         </Reveal>
 
         <Reveal className="mt-10 md:mt-14">
@@ -630,11 +968,11 @@ function SystemSection({ copy }: { copy: MironlineCaseCopy }) {
 
         <div className="mx-auto mt-8 grid max-w-[1100px] gap-10 md:grid-cols-2 md:gap-16">
           <Reveal>
-            <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">Design → Code</p>
+            <p className="text-[12px] tracking-[0.2em] text-neutral-white/35 uppercase">{section.designToCodeLabel}</p>
             <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/70">{section.designToCode}</p>
           </Reveal>
           <Reveal delay={80}>
-            <p className="text-[12px] tracking-[0.2em] text-accent-purple/65 uppercase">Code → Design</p>
+            <p className="text-[12px] tracking-[0.2em] text-accent-purple/65 uppercase">{section.codeToDesignLabel}</p>
             <p className="mt-3 text-[14px] leading-relaxed text-neutral-white/70">{section.codeToDesign}</p>
           </Reveal>
         </div>
@@ -648,7 +986,7 @@ function ResponsiveSection({ copy }: { copy: MironlineCaseCopy }) {
 
   return (
     <SectionShell id="responsive">
-      <div className="grid gap-10 lg:grid-cols-[minmax(260px,.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-12 xl:gap-16">
+      <div className="grid gap-10 xl:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] xl:items-start xl:gap-16">
         <Reveal>
           <div className={styles.responsiveSticky}>
             <StageHeader title={section.title} />
@@ -683,23 +1021,23 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="professional"
-      className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24"
     >
       <div className={`${styles.ambient} ${styles.ambientCyan} -left-64 top-1/3`} />
 
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <div className="grid gap-7 lg:grid-cols-[.7fr_1.3fr] lg:items-end lg:gap-14 xl:gap-20">
+          <div className={styles.caseSectionHeader}>
             <StageHeader title={section.title} />
-            <p className={`${styles.bodyCopy} max-w-[820px]`}>{section.intro}</p>
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
           </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[.44fr_1.56fr] lg:items-start xl:gap-16">
+        <div className="mt-14 grid gap-12 xl:grid-cols-[.44fr_1.56fr] xl:items-start xl:gap-16">
           <Reveal>
             <div className="lg:sticky lg:top-28">
               <p className="mb-6 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
-                Áreas de Professional English
+                {section.areasTitle}
               </p>
 
               <div className="space-y-3.5">
@@ -747,7 +1085,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
 
                 <div className="md:pt-[2px]">
                   <p className="text-[12px] tracking-[0.22em] text-neutral-white/30 uppercase">
-                    Flujo de interacción
+                    {section.flowTitle}
                   </p>
                   <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 text-[12px] tracking-[0.08em] text-neutral-white/48 uppercase md:text-[12px]">
                     {section.threeDSteps.map((step, index) => (
@@ -763,7 +1101,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                   <div className="mt-6 flex items-center gap-5">
                     <span className="inline-flex items-center gap-2 text-[12px] tracking-[0.2em] text-accent-lime/70 uppercase">
                       <span className="h-1 w-1 rounded-full bg-accent-lime" aria-hidden="true" />
-                      3D interactivo
+                      {section.interactiveLabel}
                     </span>
                     <a
                       href={`https://sketchfab.com/3d-models/the-muskuloskeletal-system-${sketchfabUid}`}
@@ -771,7 +1109,7 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
                       rel="noreferrer"
                       className="group inline-flex items-center gap-2 text-[12px] tracking-[0.18em] text-neutral-white/32 uppercase transition-colors hover:text-accent-purple focus-visible:outline-none focus-visible:text-accent-purple"
                     >
-                      Ver en Sketchfab
+                      {section.externalLabel}
                       <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
                     </a>
                   </div>
@@ -798,7 +1136,7 @@ function TeacherSection({ copy }: { copy: MironlineCaseCopy }) {
         <StageHeader title={section.title} intro={section.intro} />
       </Reveal>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(230px,.5fr)] lg:items-center xl:gap-14">
+      <div className="mt-12 grid gap-10 xl:grid-cols-[minmax(0,1.5fr)_minmax(260px,.5fr)] xl:items-center xl:gap-14">
         <Reveal>
           <MediaAsset asset="teacher" label={copy.assetLabels.teacher} index="09"  />
         </Reveal>
@@ -830,7 +1168,10 @@ function ValidationSection({ copy }: { copy: MironlineCaseCopy }) {
     <section id="validation" className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24">
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} />
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
         </Reveal>
 
         {hasAnalyticsVisual ? (
@@ -869,13 +1210,13 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.impact;
 
   return (
-    <section id="results" className={`${styles.metricSweep} relative overflow-hidden py-20 md:py-28 xl:py-36`}>
+    <section id="results" className={`${styles.metricSweep} relative overflow-hidden py-16 md:py-20 xl:py-24`}>
       <div className={`${styles.ambient} ${styles.ambientPurple} -right-64 top-0`} />
       <div className={`${SITE_SECTION_GUTTERS} relative z-10`}>
         <Reveal>
-          <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+          <div className={styles.caseSectionHeader}>
             <StageHeader title={section.title} />
-            <p className={styles.bodyCopy}>{section.intro}</p>
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
           </div>
         </Reveal>
 
@@ -886,11 +1227,11 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
                 <div className={`${styles.metricValue} ${index === 0 ? "text-gradient-anim" : "text-neutral-white"}`}>
                   {stat.value}
                 </div>
-                <div className="mt-5 text-[12px] font-semibold tracking-[0.12em] text-neutral-white/75 uppercase">
+                <div className="mt-5 text-[13px] font-semibold tracking-[0.1em] text-neutral-white/75 uppercase">
                   {stat.label}
                 </div>
                 {stat.note ? (
-                  <p className="mt-3 max-w-sm text-[12px] leading-relaxed text-neutral-white/35">{stat.note}</p>
+                  <p className="mt-3 max-w-sm text-[14px] leading-relaxed text-neutral-white/42">{stat.note}</p>
                 ) : null}
               </div>
             </Reveal>
@@ -926,7 +1267,7 @@ function EvolutionSection({ locale, copy }: Props) {
   const hasBeyondVisual = publicAssetExists(assets.beyond);
 
   return (
-    <section id="evolution" className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32">
+    <section id="beyond" className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24">
       <div className={`${SITE_SECTION_GUTTERS}`}>
         <Reveal>
           <StageHeader title={section.title} />
@@ -997,10 +1338,14 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Hero locale={locale} copy={copy} />
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
+      <ProductSection copy={copy} />
+      <AudienceSection copy={copy} />
       <ProblemSection copy={copy} />
-      <RoleSection locale={locale} copy={copy} />
+      <PedagogySection locale={locale} copy={copy} />
       <ResearchSection copy={copy} />
+      <AnalysisSection copy={copy} />
       <DefinitionSection copy={copy} />
+      <RoleSection copy={copy} />
       <IdeationSection copy={copy} />
       <IterationSection copy={copy} />
       <SystemSection copy={copy} />

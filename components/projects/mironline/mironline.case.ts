@@ -21,13 +21,74 @@ export type MironlineCaseCopy = {
       body: string[];
       ecosystem: Array<{ label: string; value: string }>;
     };
+    history: {
+      kicker: string;
+      title: string;
+      intro: string;
+      productLabel: string;
+      experienceLabel: string;
+      milestones: Array<{
+        year: string;
+        title: string;
+        body: string;
+        activities?: string[];
+        phase?: "product" | "ux";
+      }>;
+    };
+    audience: {
+      kicker: string;
+      title: string;
+      intro: string;
+      profiles: Array<{
+        typeLabel: string;
+        role: string;
+        context: string;
+        needs: string[];
+        story: string;
+        asset: "studentUser" | "teacherUser";
+      }>;
+      storyLabel: string;
+      architectureTitle: string;
+      architectureIntro: string;
+      architecture: Array<{ label: string; items: string[] }>;
+      flowTitle: string;
+      flow: string[];
+      teacherFlowTitle: string;
+      teacherFlow: string[];
+      relationTitle: string;
+      relation: string;
+      note: string;
+    };
+    pedagogy: {
+      kicker: string;
+      title: string;
+      intro: string;
+      body: string[];
+      points: Card[];
+    };
     challenge: {
       kicker: string;
       title: string;
       statement: string;
-      body: string;
-      tickets: string[];
+      context: string[];
+      reportsTitle: string;
+      reports: Array<{ label: string; body: string }>;
+      constraintsTitle: string;
       constraints: string[];
+    };
+    analysis: {
+      kicker: string;
+      title: string;
+      intro: string;
+      findingsTitle: string;
+      findings: Card[];
+      heuristicTitle: string;
+      heuristicIntro: string;
+      heuristics: Array<{
+        title: string;
+        issue: string;
+        implication: string;
+      }>;
     };
     role: {
       kicker: string;
@@ -37,6 +98,8 @@ export type MironlineCaseCopy = {
       team: string[];
       workflowTitle: string;
       workflow: string[];
+      workingTitle: string;
+      workingBody: string;
       reverseTitle: string;
       reverseBody: string;
     };
@@ -44,17 +107,44 @@ export type MironlineCaseCopy = {
       kicker: string;
       title: string;
       intro: string;
+      questionsTitle: string;
+      questions: string[];
+      sourcesTitle: string;
       signals: Card[];
+      incidenceLabel: string;
+      incidenceValue: string;
+      incidenceNote: string;
+      boardLabel: string;
+      boardValue: string;
+      boardNote: string;
+      boardBreakdown: Array<{ label: string; value: string }>;
+      hypothesesTitle: string;
+      signalLabel: string;
+      assumptionLabel: string;
+      validationLabel: string;
+      hypotheses: Array<{
+        title: string;
+        signal: string;
+        assumption: string;
+        validation: string;
+      }>;
     };
     principles: {
       kicker: string;
       title: string;
+      intro: string;
+      challengeLabel: string;
+      challenge: string;
+      principlesLabel: string;
       items: Card[];
+      criteriaTitle: string;
+      criteria: string[];
     };
     player: {
       kicker: string;
       title: string;
       intro: string;
+      statLabel: string;
       interactions: Interaction[];
     };
     iteration: {
@@ -65,6 +155,8 @@ export type MironlineCaseCopy = {
       beforeBody: string;
       afterTitle: string;
       afterBody: string;
+      hypothesisTitle: string;
+      hypothesisBody: string;
       feedbackTitle: string;
       feedback: string[];
       outcomeTitle: string;
@@ -75,7 +167,9 @@ export type MironlineCaseCopy = {
       title: string;
       intro: string;
       points: string[];
+      designToCodeLabel: string;
       designToCode: string;
+      codeToDesignLabel: string;
       codeToDesign: string;
     };
     responsive: {
@@ -88,10 +182,14 @@ export type MironlineCaseCopy = {
       kicker: string;
       title: string;
       intro: string;
+      areasTitle: string;
       areas: string[];
       threeDTitle: string;
       threeDBody: string;
+      flowTitle: string;
       threeDSteps: string[];
+      interactiveLabel: string;
+      externalLabel: string;
     };
     teachers: {
       kicker: string;
@@ -137,9 +235,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Volver a proyectos",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "Diseño e implementación de una plataforma educativa en transición a web responsive.",
+    headline: "Más allá del libro.",
     intro:
-      "Entre 2021 y 2023 trabajé en mironline como Diseñador UI/UX + Frontend. Convertía contenido pedagógico en interfaces, implementaba gran parte del frontend y revisaba qué pasaba después de publicar para decidir qué ajustar.",
+      "mironline combina práctica de inglés general y profesional con seguimiento académico para estudiantes y docentes de educación superior en Latinoamérica. Entre 2021 y 2023 participé en su etapa de modernización como UI/UX Designer + Frontend.",
     facts: [
       { label: "ROL", value: "UI/UX Designer + Frontend" },
       { label: "PERIODO", value: "Oct 2021 — Oct 2023" },
@@ -169,13 +267,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Contexto" },
+      { id: "product", label: "Producto" },
+      { id: "audience", label: "Usuarios" },
       { id: "problem", label: "Problema" },
-      { id: "scope", label: "Alcance" },
+      { id: "pedagogy", label: "Contexto pedagógico" },
       { id: "research", label: "Investigación" },
+      { id: "analysis", label: "Análisis" },
       { id: "definition", label: "Definición" },
+      { id: "scope", label: "Alcance" },
       { id: "ideation", label: "Ideación" },
       { id: "iteration", label: "Iteración" },
       { id: "system", label: "Sistema" },
+      { id: "responsive", label: "Responsive" },
+      { id: "professional", label: "Aplicación" },
+      { id: "teacher", label: "Docentes" },
       { id: "validation", label: "Validación" },
       { id: "results", label: "Resultados" },
     ],
@@ -184,41 +289,234 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "01",
         title: "Contexto",
         body: [
-          "mironline acompañaba cursos de inglés de bachillerato y licenciatura. Los alumnos trabajaban con docentes y libros, y la plataforma servía para practicar, completar actividades y revisar su avance.",
-          "Además de General English, existía Professional English. Las actividades cambiaban según el área de estudio del alumno, así que el producto tenía que soportar formatos muy distintos sin perder consistencia.",
+          "mironline es una plataforma en línea de práctica de inglés para estudiantes y docentes de educación superior en Latinoamérica. Surgió como evolución de Make It Real! Online, el componente digital que complementaba una serie de libros con práctica adicional.",
+          "El producto fue creciendo hasta integrar General English y Professional English: actividades de gramática, vocabulario, lectura y escritura, seguimiento de progreso y contenidos especializados por área profesional. También incorporó audio, video, modelos 3D y experiencias 360°.",
+          "El libro marcaba parte de la secuencia académica; mironline extendía esa práctica en digital y conectaba lo que hacía el estudiante con la información que el docente necesitaba para dar seguimiento.",
         ],
         ecosystem: [
-          { label: "CLASE", value: "Docente + programa" },
-          { label: "LIBRO", value: "Contenido y secuencia" },
-          { label: "MIRONLINE", value: "Práctica digital" },
-          { label: "DATOS", value: "Progreso y desempeño" },
+          { label: "LIBROS", value: "Contenido y secuencia" },
+          { label: "GENERAL ENGLISH", value: "Práctica del idioma" },
+          { label: "PROFESSIONAL ENGLISH", value: "6 áreas profesionales" },
+          { label: "SEGUIMIENTO", value: "Progreso y desempeño" },
+        ],
+      },
+      history: {
+        kicker: "01",
+        title: "Origen del producto",
+        intro:
+          "mironline evolucionó a partir de un producto que ya llevaba varios años acompañando materiales impresos y práctica digital.",
+        productLabel: "Origen y evolución",
+        experienceLabel: "UX / Producto",
+        milestones: [
+          {
+            year: "2014",
+            title: "Make It Real! Online",
+            body: "Se consolida el componente digital de práctica que acompañaba a los materiales impresos.",
+            phase: "product",
+          },
+          {
+            year: "2017",
+            title: "Adaptación para Latinoamérica",
+            body: "El producto se reestructura para educación superior y contextos latinoamericanos.",
+            phase: "product",
+          },
+          {
+            year: "2017–2018",
+            title: "mironline",
+            body: "Se desarrolla el LMS y se amplía la práctica con General English y Professional English.",
+            phase: "product",
+          },
+          {
+            year: "2021–2023",
+            title: "Modernización UX/UI",
+            body: "Periodo documentado en este caso: migración web, responsive, sistema de interacción, validación e iteración.",
+            phase: "product",
+          },
+        ],
+      },
+      audience: {
+        kicker: "03",
+        title: "Usuarios",
+        intro:
+          "La experiencia conectaba dos necesidades complementarias: practicar y avanzar en el curso, y dar seguimiento académico. Las láminas resumen el contexto de cada perfil; aquí destaco únicamente lo que condicionaba la interfaz.",
+        profiles: [
+          {
+            typeLabel: "Usuario principal",
+            role: "Estudiante",
+            context:
+              "Usa mironline para practicar y resolver actividades desde distintos dispositivos.",
+            needs: [
+              "Instrucciones claras por actividad.",
+              "Contexto visible mientras responde.",
+              "Feedback y avance fáciles de entender.",
+            ],
+            story:
+              "Como estudiante, necesito mantener disponible el contenido que estoy usando mientras respondo, para no perder el contexto.",
+            asset: "studentUser",
+          },
+          {
+            typeLabel: "Usuario de seguimiento",
+            role: "Docente",
+            context:
+              "Usa la plataforma para revisar cómo avanzan sus grupos y detectar dónde hace falta seguimiento.",
+            needs: [
+              "Consulta rápida por grupo y alumno.",
+              "Progreso, calificaciones y desempeño.",
+              "Seguimiento sin recorrer demasiadas pantallas.",
+            ],
+            story:
+              "Como docente, necesito consultar avance, calificaciones y desempeño por grupo, para dar seguimiento al curso.",
+            asset: "teacherUser",
+          },
+        ],
+        storyLabel: "Necesidad resumida",
+        architectureTitle: "Cómo se organizaba la información",
+        architectureIntro:
+          "mironline conectaba la práctica del alumno con la información que el docente necesitaba para dar seguimiento.",
+        architecture: [
+          {
+            label: "Estudiante",
+            items: ["Curso", "Contenido y actividades", "Feedback", "Progreso"],
+          },
+          {
+            label: "Docente",
+            items: ["Grupos", "Alumnos", "Calificaciones", "Seguimiento"],
+          },
+        ],
+        flowTitle: "Flujo principal del estudiante",
+        flow: [
+          "Entrar al curso",
+          "Abrir actividad",
+          "Leer instrucción",
+          "Responder",
+          "Recibir feedback",
+          "Revisar avance",
+        ],
+        teacherFlowTitle: "Flujo principal del docente",
+        teacherFlow: [
+          "Entrar a la plataforma",
+          "Revisar grupos",
+          "Consultar alumnos",
+          "Ver progreso y calificaciones",
+          "Detectar necesidades",
+          "Dar seguimiento",
+        ],
+        relationTitle: "Cómo se relacionan",
+        relation:
+          "El estudiante genera actividad, respuestas y progreso; la plataforma organiza esa información para que el docente pueda revisar desempeño y dar seguimiento al curso.",
+        note:
+          "Estos perfiles condensan patrones reales de uso observados en estudiantes y docentes a lo largo del proyecto.",
+      },
+      pedagogy: {
+        kicker: "04",
+        title: "Análisis del contexto",
+        intro:
+          "mironline no era sólo una colección de ejercicios. Las decisiones de interfaz convivían con un modelo pedagógico, distintos niveles de inglés y necesidades concretas de estudiantes y docentes.",
+        body: [
+          "El material de trabajo del proyecto conectaba análisis situacional, necesidades del estudiante, uso del inglés en clase, ciclos de enseñanza y autonomía. Esa estructura ayudaba a entender por qué una interacción no podía diseñarse únicamente por apariencia.",
+          "Para producto, esto se traducía en una condición simple: la tecnología debía hacer más accesible la actividad sin romper la intención académica que había detrás.",
+        ],
+        points: [
+          {
+            title: "Contexto antes que patrón",
+            body: "Syllabus, necesidades de estudiantes y preparación docente condicionaban la experiencia.",
+          },
+          {
+            title: "Más de una forma de aprender",
+            body: "Texto, contenido, tareas, habilidades, comunicación y descubrimiento convivían en el mismo producto.",
+          },
+          {
+            title: "Distintos niveles",
+            body: "La experiencia debía funcionar para grupos mixtos y favorecer autonomía e interacción.",
+          },
+          {
+            title: "Diseñar sin perder el objetivo",
+            body: "Cada componente tenía que ser consistente sin convertir actividades distintas en la misma interacción.",
+          },
         ],
       },
       challenge: {
         kicker: "02",
-        title: "Problema",
-        statement: "Migración de actividades heredadas de Flash a una experiencia web responsive.",
-        body:
-          "En soporte aparecían reportes de pantallas en blanco, problemas con navegadores, tiempos de carga largos y ejercicios que no funcionaban desde el celular. La migración tenía que conservar el objetivo académico de cada actividad y, al mismo tiempo, resolver esos problemas de uso.",
-        tickets: [
-          "La actividad se queda en blanco.",
-          "En mi celular no abre.",
-          "Firefox dice que no es compatible.",
-          "El reproductor tarda demasiado en cargar.",
+        title: "El problema",
+        statement:
+          "El contenido académico seguía siendo útil, pero una parte importante de la experiencia dependía de tecnología que ya impedía usarla con normalidad.",
+        context: [
+          "Para 2021, mironline ya acumulaba años de cursos y actividades publicadas. Parte de ese contenido dependía de Flash*, una tecnología utilizada durante años para ejecutar experiencias multimedia e interactivas dentro del navegador.",
+          "Cuando los navegadores dejaron de soportarla, el problema se volvió visible para el usuario: pantallas en blanco, actividades que no abrían en celular, avisos de incompatibilidad o reproductores que tardaban demasiado.",
+          "La modernización no consistía en copiar cada pantalla antigua a HTML. Cada actividad debía conservar lo que buscaba enseñar o evaluar mientras se reconstruía para web responsive y navegadores actuales.",
+          "*Adobe terminó el soporte de Flash Player en 2020 y bloqueó su ejecución en 2021. La plataforma necesitaba sustituir esa dependencia por tecnologías web actuales.",
         ],
+        reportsTitle: "Lo que veía el alumno",
+        reports: [
+          { label: "Pantalla", body: "La actividad se queda en blanco." },
+          { label: "Celular", body: "En mi celular no abre." },
+          { label: "Navegador", body: "El navegador dice que no es compatible." },
+          { label: "Carga", body: "El reproductor tarda demasiado en cargar." },
+        ],
+        constraintsTitle: "Lo que la solución tenía que conservar",
         constraints: [
-          "Conservar lo que cada actividad debía evaluar.",
-          "Funcionar en computadora, tablet y celular.",
-          "Considerar navegadores y equipos distintos.",
-          "Mantener reglas compartidas entre ejercicios diferentes.",
+          "El objetivo académico de cada actividad.",
+          "Uso en computadora, tablet y celular.",
+          "Compatibilidad entre navegadores y equipos.",
+          "Reglas compartidas entre ejercicios diferentes.",
+        ],
+      },
+      analysis: {
+        kicker: "06",
+        title: "Análisis",
+        intro:
+          "Al agrupar reportes, datos y observaciones aparecieron patrones repetidos. El problema no era una sola pantalla: había fricción técnica, inconsistencias entre actividades y momentos donde el estudiante perdía información necesaria para aprender y responder.",
+        findingsTitle: "Hallazgos clave",
+        findings: [
+          {
+            title: "Compatibilidad",
+            body: "Flash, navegadores y comportamiento desktop-first bloqueaban actividades que todavía tenían valor académico.",
+          },
+          {
+            title: "Continuidad",
+            body: "Lecturas, instrucciones y feedback necesitaban permanecer cerca de la tarea para evitar pérdida de contexto.",
+          },
+          {
+            title: "Consistencia",
+            body: "Actividades distintas resolvían controles, estados y navegación de formas diferentes.",
+          },
+          {
+            title: "Escalabilidad",
+            body: "Con decenas de tipos de interacción, resolver cada actividad desde cero ya no era sostenible.",
+          },
+        ],
+        heuristicTitle: "Lectura heurística",
+        heuristicIntro:
+          "Los hallazgos también podían leerse desde principios clásicos de usabilidad, útiles para convertir problemas observados en criterios concretos de diseño.",
+        heuristics: [
+          {
+            title: "Visibilidad del estado del sistema",
+            issue: "Carga lenta, feedback poco claro y dudas sobre si una respuesta había sido registrada.",
+            implication: "La interfaz debía comunicar carga, respuesta, error, acierto y progreso de manera oportuna.",
+          },
+          {
+            title: "Consistencia y estándares",
+            issue: "Controles, navegación y estados variaban entre tipos de actividad.",
+            implication: "Patrones compartidos reducían el reaprendizaje entre ejercicios.",
+          },
+          {
+            title: "Reconocimiento antes que recuerdo",
+            issue: "El alumno debía volver a buscar lecturas o instrucciones para responder.",
+            implication: "El contexto relevante debía permanecer visible o recuperarse sin esfuerzo.",
+          },
+          {
+            title: "Prevención y recuperación de errores",
+            issue: "Incompatibilidades, actividades bloqueadas y pérdida de avance interrumpían la tarea.",
+            implication: "La experiencia debía prevenir estados sin salida y explicar cómo continuar cuando algo fallaba.",
+          },
         ],
       },
       role: {
         kicker: "03",
         title: "Alcance y rol",
         body: [
-          "Las actividades normalmente comenzaban en documentos de Word preparados por docentes y diseñadores instruccionales. Yo definía cómo convertir ese contenido en una interacción: jerarquía, instrucciones, controles, estados, feedback y comportamiento responsive.",
-          "Después implementaba la mayor parte del frontend con HTML, CSS y JavaScript. Eso hacía que diseño y desarrollo estuvieran muy cerca y permitía ajustar una solución mientras todavía se estaba construyendo.",
+          "Dentro de esa modernización, mi alcance cubría el recorrido entre contenido pedagógico, diseño de interacción y frontend. Las actividades solían comenzar como documentos preparados por docentes y diseño instruccional; el trabajo de producto consistía en convertirlos en una experiencia usable y consistente.",
+          "Mi responsabilidad incluía definir jerarquía, instrucciones, controles, estados, feedback y comportamiento responsive, además de implementar gran parte de esas decisiones en HTML, CSS y JavaScript. Diseño y desarrollo ocurrían muy cerca, así que una solución podía ajustarse mientras se construía y después de publicarse.",
         ],
         teamTitle: "Equipo",
         team: [
@@ -238,41 +536,114 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "revisar datos y comentarios",
           "ajustar",
         ],
+        workingTitle: "Forma de trabajo",
+        workingBody:
+          "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo.",
         reverseTitle: "Exploración técnica",
         reverseBody:
           "En integraciones como Sketchfab primero probaba qué permitía la API. Cuando la interacción ya funcionaba, documentaba ese patrón en Figma para reutilizarlo después.",
       },
       research: {
-        kicker: "04",
+        kicker: "05",
         title: "Investigación",
         intro:
-          "Las decisiones salían de varias fuentes que ya formaban parte del trabajo diario. No todo era una sesión formal de research; muchas veces el problema aparecía en soporte, en Analytics o directamente en lo que comentaban alumnos y docentes después de un release.",
+          "Después de identificar la fricción técnica, la investigación debía separar problemas de acceso de problemas de comprensión, carga cognitiva y seguimiento académico. La pregunta no era sólo si una actividad abría, sino si permitía aprender, responder y continuar sin perder contexto.",
+        questionsTitle: "Preguntas de investigación",
+        questions: [
+          "¿En qué punto se interrumpe una actividad y qué impide continuar?",
+          "¿Qué cambia entre computadora, tablet, celular y distintos navegadores?",
+          "¿Qué información necesita permanecer visible mientras el estudiante responde?",
+          "¿Qué feedback confirma que una respuesta fue registrada y qué sigue después?",
+          "¿Qué necesita consultar el docente para detectar avance, rezago o dificultades?",
+          "¿Qué objetivo pedagógico debe mantenerse intacto aunque cambie la interacción?",
+        ],
+        sourcesTitle: "Fuentes de evidencia",
         signals: [
           {
             title: "Soporte",
             body:
-              "Tickets sobre compatibilidad, navegación, pantallas vacías y actividades que no cargaban.",
+              "Tickets y reportes sobre acceso, compatibilidad, navegación, pantallas vacías y actividades que no cargaban.",
           },
           {
             title: "Google Analytics",
             body:
-              "Tráfico, dispositivos, navegadores y comportamiento general de uso.",
+              "Dispositivos, navegadores, tráfico y comportamiento general de uso.",
           },
           {
-            title: "Datos internos",
+            title: "Datos académicos",
             body:
               "Progreso, calificaciones, desempeño y finalización de actividades.",
           },
           {
             title: "Alumnos y docentes",
             body:
-              "Comentarios posteriores a releases y conversaciones directas dentro del entorno académico.",
+              "Comentarios después de releases, dudas en clase y conversaciones directas sobre la experiencia de aprendizaje.",
+          },
+        ],
+        incidenceLabel: "Alumnos con alguna incidencia",
+        incidenceValue: "≈30%",
+        incidenceNote:
+          "Durante la transición, los tickets de soporte y el seguimiento del equipo situaban las incidencias en torno a 30% de los alumnos activos.",
+        boardLabel: "Señales de usuario sintetizadas",
+        boardValue: "25",
+        boardNote:
+          "El board reunió 13 señales de estudiantes y 12 de docentes para encontrar patrones comunes entre uso, soporte y seguimiento académico.",
+        boardBreakdown: [
+          { label: "Estudiantes", value: "13 · 52%" },
+          { label: "Docentes", value: "12 · 48%" },
+        ],
+        hypothesesTitle: "Hipótesis de trabajo",
+        signalLabel: "Señal",
+        assumptionLabel: "Supuesto",
+        validationLabel: "Validar con",
+        hypotheses: [
+          {
+            title: "Acceso estable",
+            signal:
+              "Pantallas en blanco, incompatibilidad, carga lenta y actividades bloqueadas antes de comenzar.",
+            assumption:
+              "Si eliminábamos dependencias heredadas y normalizábamos compatibilidad, más alumnos podrían iniciar y terminar la actividad sin soporte.",
+            validation:
+              "Revisar tickets, carga correcta en navegadores actuales y finalización de actividades.",
+          },
+          {
+            title: "Contexto persistente",
+            signal:
+              "Lecturas e instrucciones desaparecían o quedaban separadas de la respuesta.",
+            assumption:
+              "Si el contenido necesario permanecía cerca de la tarea, el alumno tendría que recordar menos y podría responder con mayor continuidad.",
+            validation:
+              "Observar finalización, dudas reportadas y comentarios sobre lectura, instrucciones y feedback.",
+          },
+          {
+            title: "Menor carga cognitiva",
+            signal:
+              "Algunas actividades mostraban demasiada información, preguntas y controles al mismo tiempo.",
+            assumption:
+              "Si cada paso mostraba sólo lo necesario, sería más fácil identificar la tarea actual y continuar sin perderse.",
+            validation:
+              "Comparar variantes, revisar abandono y registrar dudas recurrentes durante el uso.",
+          },
+          {
+            title: "Seguimiento académico visible",
+            signal:
+              "Docentes necesitaban revisar grupos, progreso, calificaciones y desempeño desde información dispersa.",
+            assumption:
+              "Si agrupábamos la información por grupo y alumno, sería más rápido detectar quién necesitaba seguimiento.",
+            validation:
+              "Contrastar la consulta con docentes y revisar el uso de vistas de progreso y calificaciones.",
           },
         ],
       },
       principles: {
-        kicker: "05",
+        kicker: "06",
         title: "Definición",
+        intro:
+          "La síntesis no se convirtió en una lista de features. La usamos para definir qué debía mantenerse estable en cualquier actividad y qué podía variar según el objetivo de aprendizaje.",
+        challengeLabel: "Reto de diseño",
+        challenge:
+          "¿Cómo migrar más de 30 tipos de interacción a web responsive sin perder el objetivo académico ni diseñar cada actividad desde cero?",
+        principlesLabel: "Principios de diseño",
         items: [
           {
             title: "Contexto disponible",
@@ -290,12 +661,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
               "Botones, estados y feedback debían comportarse de forma parecida aunque cambiara el tipo de actividad.",
           },
         ],
+        criteriaTitle: "Criterios de aceptación",
+        criteria: [
+          "Funcionar en navegadores actuales sin depender de plugins.",
+          "Adaptarse a computadora, tablet y celular.",
+          "Mantener instrucciones, contexto y feedback disponibles durante la tarea.",
+          "Reutilizar controles, estados y reglas entre distintos tipos de ejercicio.",
+        ],
       },
       player: {
         kicker: "06",
         title: "Ideación",
         intro:
           "A partir de esos criterios fui diseñando y reutilizando patrones para distintos objetivos de aprendizaje. Algunas actividades eran simples; otras mezclaban lectura, audio, video o modelos 3D.",
+        statLabel: "30+ patrones de interacción",
         interactions: [
           {
             title: "Multiple choice",
@@ -339,22 +718,25 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "07",
         title: "Hipótesis e iteración",
         intro:
-          "Una de las actividades combinaba una lectura con diez preguntas. La primera versión mostraba todo al mismo tiempo. Después de publicarla aparecieron comentarios sobre la cantidad de contenido en pantalla.",
+          "Una actividad de lectura concentraba el texto y diez preguntas en una sola vista. El problema no era el contenido académico, sino cuánto tenía que procesar el alumno al mismo tiempo.",
         beforeTitle: "Primera propuesta",
         beforeBody:
           "Lectura completa y diez preguntas visibles en una sola vista.",
-        afterTitle: "Solución",
+        afterTitle: "Decisión",
         afterBody:
-          "Lectura disponible todo el tiempo y una pregunta por paso.",
-        feedbackTitle: "Hallazgos",
+          "Mantener la lectura disponible y mostrar una pregunta por paso.",
+        hypothesisTitle: "Hipótesis",
+        hypothesisBody:
+          "Si reducíamos la información simultánea sin esconder el texto de apoyo, el alumno podía concentrarse en una pregunta sin perder el contexto de lectura.",
+        feedbackTitle: "Hallazgo",
         feedback: [
-          "Los alumnos sentían que había demasiado contenido junto.",
-          "Los docentes querían que la lectura siguiera disponible mientras respondían.",
-          "Ocultar y volver a mostrar el texto agregaba pasos innecesarios.",
+          "Había demasiado contenido compitiendo por atención.",
+          "La lectura debía seguir disponible mientras se respondía.",
+          "Cerrar y volver a abrir el texto agregaba pasos que no aportaban al aprendizaje.",
         ],
-        outcomeTitle: "Validación",
+        outcomeTitle: "Resultado",
         outcomeBody:
-          "Después del cambio los comentarios fueron mejores y vimos mayor finalización frente a las variantes más densas.",
+          "La nueva variante recibió mejores comentarios y mostró mayor finalización frente a las versiones más densas.",
       },
       system: {
         kicker: "08",
@@ -370,7 +752,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "responsive",
           "light y dark mode",
         ],
+        designToCodeLabel: "Design → Code",
         designToCode: "Figma → componente → frontend → revisión",
+        codeToDesignLabel: "Code → Design",
         codeToDesign:
           "prueba en código → ajuste → patrón funcional → documentación en Figma",
       },
@@ -391,6 +775,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Aplicación especializada",
         intro:
           "Professional English llevaba el mismo sistema a contenido relacionado con seis áreas académicas. La interacción tenía que adaptarse al tipo de vocabulario y a la situación que se quería practicar.",
+        areasTitle: "Áreas de Professional English",
         areas: [
           "Agricultura y medio ambiente",
           "Ciencias computacionales",
@@ -402,6 +787,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         threeDTitle: "Interacción 3D",
         threeDBody:
           "En algunas actividades de Ciencias de la Salud trabajé con modelos preparados en Blender y 3ds Max e integrados con Sketchfab. Sobre el modelo agregaba hotspots, preguntas, pistas y feedback.",
+        flowTitle: "Flujo de interacción",
         threeDSteps: [
           "explorar",
           "localizar",
@@ -409,6 +795,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "responder",
           "ver feedback",
         ],
+        interactiveLabel: "3D interactivo",
+        externalLabel: "Ver en Sketchfab",
       },
       teachers: {
         kicker: "11",
@@ -452,12 +840,12 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "13",
         title: "Resultados",
         intro:
-          "Parte del cambio se veía en Analytics y otra parte en soporte. Los problemas de compatibilidad y navegación que antes aparecían con frecuencia fueron dejando de ser tickets recurrentes.",
+          "El cambio se vio por dos lados: los reportes de compatibilidad dejaron de ser recurrentes y Analytics mostró una mayor participación desde mobile durante la transición responsive.",
         stats: [
           {
             value: "≈20%",
-            label: "más uso desde mobile",
-            note: "Aumento aproximado que recuerdo durante la transición responsive.",
+            label: "crecimiento del uso mobile",
+            note: "Crecimiento aproximado observado en Analytics durante la transición responsive.",
           },
           {
             value: "30+",
@@ -472,20 +860,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         supportTitle: "Soporte",
         supportBody:
-          "Antes era común recibir reportes de pantallas blancas, incompatibilidad de navegador o actividades que no abrían desde celular. Después de migrar más contenido a web y mejorar el responsive, ese tipo de reporte se volvió poco frecuente.",
+          "Antes era común recibir reportes de pantallas blancas, incompatibilidad de navegador o actividades que no abrían desde celular. Después de migrar más contenido a web y mejorar el responsive, ese tipo de reporte dejó de ser recurrente.",
         productTitle: "Adopción del producto",
         productBody:
           "mironline empezó como complemento de los libros, pero terminó ocupando más espacio en demostraciones y congresos. Las experiencias interactivas y Professional English servían para mostrar el producto frente a otras instituciones.",
       },
       beyond: {
         kicker: "14",
-        title: "Evolución del producto",
+        title: "Aprendizajes",
         body: [
-          "Durante mi tiempo en el Centro de Lenguas participé en congresos donde se presentaban los libros y mironline a docentes, universidades y editoriales. En las demostraciones se mostraban algunas de las actividades más visuales, incluidos modelos 3D.",
-          "Ver el producto fuera del entorno diario de desarrollo ayudaba a entender qué partes eran fáciles de explicar y cuáles necesitaban más trabajo dentro de la propia plataforma.",
+          "Ver mironline en demostraciones y congresos cambió la perspectiva: fuera del equipo, una interacción tenía que entenderse sin explicación adicional.",
+          "Trabajar entre contenido pedagógico, diseño, frontend y soporte me dejó una regla simple: publicar no cerraba el diseño. El comportamiento real del producto era parte del siguiente ajuste.",
         ],
         quote:
-          "Después de mironline empecé a pensar mucho más en los problemas que una persona puede tener antes de que necesite escribir a soporte.",
+          "Si alguien tenía que escribir a soporte para poder seguir aprendiendo, todavía había algo que diseñar mejor.",
       },
     },
     assetLabels: {
@@ -495,12 +883,16 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       after: "Solución",
       responsive: "Comportamiento responsive",
       system: "Sistema de componentes",
+      studentUser: "Perfil de estudiante",
+      teacherUser: "Perfil de docente",
       teacher: "Vista para docentes",
       analytics: "Analytics y reportes internos",
       beyond: "Libros, plataforma y congresos",
       research: "Evidencia y señales de uso",
       process: "Proceso de diseño e implementación",
       gallery: "Galería de interacciones",
+      problem: "Síntomas del problema en la experiencia",
+      analysis: "Síntesis de hallazgos",
     },
     cta: {
       label: "FIN DEL CASO",
@@ -519,9 +911,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Back to projects",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "Design and frontend work for an education platform moving to responsive web.",
+    headline: "Beyond the book.",
     intro:
-      "Between 2021 and 2023 I worked on mironline as a UI/UX Designer + Frontend. I translated learning content into interfaces, implemented much of the frontend, and reviewed what happened after release to decide what needed another pass.",
+      "mironline combines General and Professional English practice with academic follow-up for higher-education students and teachers in Latin America. From 2021 to 2023 I took part in its modernization as a UI/UX Designer + Frontend developer.",
     facts: [
       { label: "ROLE", value: "UI/UX Designer + Frontend" },
       { label: "PERIOD", value: "Oct 2021 — Oct 2023" },
@@ -551,13 +943,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Context" },
+      { id: "product", label: "Product" },
+      { id: "audience", label: "Users" },
       { id: "problem", label: "Problem" },
-      { id: "scope", label: "Scope" },
+      { id: "pedagogy", label: "Learning context" },
       { id: "research", label: "Research" },
+      { id: "analysis", label: "Analysis" },
       { id: "definition", label: "Definition" },
+      { id: "scope", label: "Scope" },
       { id: "ideation", label: "Ideation" },
       { id: "iteration", label: "Iteration" },
       { id: "system", label: "System" },
+      { id: "responsive", label: "Responsive" },
+      { id: "professional", label: "Application" },
+      { id: "teacher", label: "Teachers" },
       { id: "validation", label: "Validation" },
       { id: "results", label: "Results" },
     ],
@@ -566,41 +965,234 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "01",
         title: "Context",
         body: [
-          "mironline supported English courses for high school and university students. Students worked with teachers and books, while the platform handled practice, activities and progress tracking.",
-          "Alongside General English there was Professional English. Activities changed depending on the student's field of study, so the product needed to support very different formats without losing consistency.",
+          "mironline is an online English-practice platform for higher-education students and teachers in Latin America. It evolved from Make It Real! Online, the digital component that complemented a book series with additional practice.",
+          "The product grew to include General English and Professional English: grammar, vocabulary, reading and writing activities, progress tracking, and specialized content by professional field. It also incorporated audio, video, 3D models and 360° experiences.",
+          "Books provided part of the academic sequence; mironline extended that practice digitally and connected student activity with the information teachers needed for follow-up.",
         ],
         ecosystem: [
-          { label: "CLASS", value: "Teacher + syllabus" },
-          { label: "BOOK", value: "Content + sequence" },
-          { label: "MIRONLINE", value: "Digital practice" },
-          { label: "DATA", value: "Progress + performance" },
+          { label: "BOOKS", value: "Content + sequence" },
+          { label: "GENERAL ENGLISH", value: "Language practice" },
+          { label: "PROFESSIONAL ENGLISH", value: "6 professional fields" },
+          { label: "FOLLOW-UP", value: "Progress + performance" },
+        ],
+      },
+      history: {
+        kicker: "01",
+        title: "Product origin",
+        intro:
+          "mironline evolved from a product that had already spent several years connecting printed materials with digital practice.",
+        productLabel: "Origin and evolution",
+        experienceLabel: "UX / Product",
+        milestones: [
+          {
+            year: "2014",
+            title: "Make It Real! Online",
+            body: "The digital practice component accompanying printed learning materials becomes established.",
+            phase: "product",
+          },
+          {
+            year: "2017",
+            title: "Adaptation for Latin America",
+            body: "The product is restructured for higher education and Latin American contexts.",
+            phase: "product",
+          },
+          {
+            year: "2017–2018",
+            title: "mironline",
+            body: "The LMS is developed and practice expands through General English and Professional English.",
+            phase: "product",
+          },
+          {
+            year: "2021–2023",
+            title: "UI/UX modernization",
+            body: "The period documented in this case: web migration, responsive behavior, interaction system, validation and iteration.",
+            phase: "product",
+          },
+        ],
+      },
+      audience: {
+        kicker: "03",
+        title: "Users",
+        intro:
+          "The experience connected two needs: practicing and moving through a course, and following academic progress. The profile boards summarize each user's context; here I highlight only what shaped the interface.",
+        profiles: [
+          {
+            typeLabel: "Primary user",
+            role: "Student",
+            context:
+              "Uses mironline to practice and complete activities across different devices.",
+            needs: [
+              "Clear instructions for each activity.",
+              "Visible context while answering.",
+              "Feedback and progress that are easy to understand.",
+            ],
+            story:
+              "As a student, I need the content I am using to remain available while I answer, so I do not lose context.",
+            asset: "studentUser",
+          },
+          {
+            typeLabel: "Follow-up user",
+            role: "Teacher",
+            context:
+              "Uses the platform to review group progress and identify where follow-up is needed.",
+            needs: [
+              "Quick access by group and student.",
+              "Progress, grades and performance.",
+              "Follow-up without navigating through too many screens.",
+            ],
+            story:
+              "As a teacher, I need to review progress, grades and performance by group, so I can follow the course.",
+            asset: "teacherUser",
+          },
+        ],
+        storyLabel: "Need summary",
+        architectureTitle: "How information was organized",
+        architectureIntro:
+          "mironline connected student practice with the information teachers needed for academic follow-up.",
+        architecture: [
+          {
+            label: "Student",
+            items: ["Course", "Content and activities", "Feedback", "Progress"],
+          },
+          {
+            label: "Teacher",
+            items: ["Groups", "Students", "Grades", "Follow-up"],
+          },
+        ],
+        flowTitle: "Student main flow",
+        flow: [
+          "Enter course",
+          "Open activity",
+          "Read instruction",
+          "Answer",
+          "Receive feedback",
+          "Review progress",
+        ],
+        teacherFlowTitle: "Teacher main flow",
+        teacherFlow: [
+          "Enter the platform",
+          "Review groups",
+          "Check students",
+          "Review progress and grades",
+          "Identify needs",
+          "Follow up",
+        ],
+        relationTitle: "How they connect",
+        relation:
+          "Student activity, answers and progress are organized by the platform so teachers can review performance and follow up on the course.",
+        note:
+          "These profiles condense real usage patterns observed among students and teachers throughout the project.",
+      },
+      pedagogy: {
+        kicker: "04",
+        title: "Context analysis",
+        intro:
+          "mironline was not simply a collection of exercises. Interface decisions had to coexist with a pedagogical model, different English levels, and concrete student and teacher needs.",
+        body: [
+          "Project material connected situational analysis, student needs, classroom English, teaching cycles and learner autonomy. That structure helped explain why an interaction could not be designed around appearance alone.",
+          "For the product, this became a simple condition: technology had to make the activity more accessible without breaking the academic intention behind it.",
+        ],
+        points: [
+          {
+            title: "Context before pattern",
+            body: "Syllabus, student needs and teacher preparation shaped the experience.",
+          },
+          {
+            title: "More than one way to learn",
+            body: "Text, content, tasks, skills, communication and discovery coexisted in the same product.",
+          },
+          {
+            title: "Different levels",
+            body: "The experience had to work for mixed-level groups and support autonomy and interaction.",
+          },
+          {
+            title: "Design without losing intent",
+            body: "Components had to stay consistent without turning different learning activities into the same interaction.",
+          },
         ],
       },
       challenge: {
         kicker: "02",
-        title: "Problem",
-        statement: "Migrating Flash-based activities into a responsive web experience.",
-        body:
-          "Support tickets included blank screens, browser issues, long loading times and exercises that did not work on mobile. The migration had to keep the learning goal of each activity while fixing those usage problems.",
-        tickets: [
-          "The activity is just a blank screen.",
-          "It does not open on my phone.",
-          "Firefox says it is unsupported.",
-          "The player takes too long to load.",
+        title: "The problem",
+        statement:
+          "The academic content was still useful, but an important part of the experience depended on technology that was getting in the way of using it normally.",
+        context: [
+          "By 2021, mironline already had years of published courses and activities. Part of that content depended on Flash*, a technology widely used to run multimedia and interactive experiences inside the browser.",
+          "Once browsers stopped supporting it, the problem became visible to users: blank screens, activities that would not open on mobile, compatibility warnings or players that took too long to load.",
+          "Modernization was not about copying every old screen into HTML. Each activity still had to preserve what it was meant to teach or assess while being rebuilt for responsive web and current browsers.",
+          "*Adobe ended support for Flash Player in 2020 and blocked Flash content from running in 2021. The platform needed to replace that dependency with current web technologies.",
         ],
+        reportsTitle: "What the student experienced",
+        reports: [
+          { label: "Screen", body: "The activity is just a blank screen." },
+          { label: "Mobile", body: "It does not open on my phone." },
+          { label: "Browser", body: "The browser says it is unsupported." },
+          { label: "Loading", body: "The player takes too long to load." },
+        ],
+        constraintsTitle: "What the solution had to preserve",
         constraints: [
-          "Keep what each activity was meant to assess.",
-          "Work on desktop, tablet and mobile.",
-          "Account for different browsers and devices.",
-          "Share rules across very different exercises.",
+          "The learning goal of each activity.",
+          "Use across desktop, tablet and mobile.",
+          "Compatibility across browsers and devices.",
+          "Shared rules across different exercises.",
+        ],
+      },
+      analysis: {
+        kicker: "06",
+        title: "Analysis",
+        intro:
+          "Grouping reports, data and observations revealed recurring patterns. The issue was not one screen: there was technical friction, inconsistent activities and moments where students lost information needed to learn and answer.",
+        findingsTitle: "Key findings",
+        findings: [
+          {
+            title: "Compatibility",
+            body: "Flash, browsers and desktop-first behavior were blocking activities that still had academic value.",
+          },
+          {
+            title: "Continuity",
+            body: "Readings, instructions and feedback needed to remain close to the task to prevent context loss.",
+          },
+          {
+            title: "Consistency",
+            body: "Different activities handled controls, states and navigation in different ways.",
+          },
+          {
+            title: "Scalability",
+            body: "With dozens of interaction types, solving each activity from scratch was no longer sustainable.",
+          },
+        ],
+        heuristicTitle: "Heuristic lens",
+        heuristicIntro:
+          "The findings could also be read through established usability principles, helping turn observed problems into concrete design criteria.",
+        heuristics: [
+          {
+            title: "Visibility of system status",
+            issue: "Slow loading, unclear feedback and uncertainty about whether an answer had been recorded.",
+            implication: "The interface needed to communicate loading, answers, errors, success and progress in a timely way.",
+          },
+          {
+            title: "Consistency and standards",
+            issue: "Controls, navigation and states varied across activity types.",
+            implication: "Shared patterns reduced relearning between exercises.",
+          },
+          {
+            title: "Recognition rather than recall",
+            issue: "Students had to return to readings or instructions in order to answer.",
+            implication: "Relevant context needed to remain visible or be recoverable with little effort.",
+          },
+          {
+            title: "Error prevention and recovery",
+            issue: "Incompatibilities, blocked activities and lost progress interrupted the task.",
+            implication: "The experience needed to prevent dead ends and explain how to continue when something failed.",
+          },
         ],
       },
       role: {
         kicker: "03",
         title: "Scope and role",
         body: [
-          "Activities usually started as Word documents prepared by teachers and instructional designers. I defined how that content would become an interaction: hierarchy, instructions, controls, states, feedback and responsive behavior.",
-          "I then implemented most of the frontend with HTML, CSS and JavaScript. Design and development stayed close, which made it easier to adjust a solution while it was still being built.",
+          "Within that modernization, my scope covered the path between learning content, interaction design and frontend. Activities often started as documents prepared by teachers and instructional designers; the product work was turning them into a usable and consistent experience.",
+          "My responsibility included hierarchy, instructions, controls, states, feedback and responsive behavior, as well as implementing much of those decisions in HTML, CSS and JavaScript. Design and development stayed close, so a solution could be adjusted while it was being built and again after release.",
         ],
         teamTitle: "Team",
         team: [
@@ -620,55 +1212,137 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "review data and comments",
           "adjust",
         ],
+        workingTitle: "Ways of working",
+        workingBody:
+          "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time.",
         reverseTitle: "Technical exploration",
         reverseBody:
           "For integrations such as Sketchfab, I first tested what the API allowed. Once the interaction worked, I documented the pattern in Figma so it could be reused later.",
       },
       research: {
-        kicker: "04",
+        kicker: "05",
         title: "Research",
         intro:
-          "Decisions came from several sources already present in the day-to-day work. Not everything was a formal research session; sometimes the problem showed up in support, Analytics or comments from students and teachers after a release.",
+          "After identifying the technical friction, research needed to separate access problems from comprehension, cognitive-load and academic-follow-up problems. The question was not only whether an activity opened, but whether it let students learn, answer and continue without losing context.",
+        questionsTitle: "Research questions",
+        questions: [
+          "At what point does an activity break and what prevents the student from continuing?",
+          "What changes across desktop, tablet, mobile and different browsers?",
+          "What information needs to remain visible while a student answers?",
+          "What feedback confirms that an answer was recorded and what happens next?",
+          "What does a teacher need to identify progress, lag or learning difficulties?",
+          "Which learning goal must remain intact even when the interaction changes?",
+        ],
+        sourcesTitle: "Evidence sources",
         signals: [
           {
             title: "Support",
             body:
-              "Tickets about compatibility, navigation, blank screens and activities that failed to load.",
+              "Tickets and reports about access, compatibility, navigation, blank screens and activities that failed to load.",
           },
           {
             title: "Google Analytics",
-            body: "Traffic, devices, browsers and general usage behavior.",
+            body:
+              "Devices, browsers, traffic and broad usage behavior.",
           },
           {
-            title: "Internal data",
-            body: "Progress, grades, performance and activity completion.",
+            title: "Academic data",
+            body:
+              "Progress, grades, performance and activity completion.",
           },
           {
             title: "Students and teachers",
             body:
-              "Post-release comments and direct conversations in the academic environment.",
+              "Post-release comments, classroom questions and direct conversations about the learning experience.",
+          },
+        ],
+        incidenceLabel: "Students with an incident",
+        incidenceValue: "≈30%",
+        incidenceNote:
+          "During the transition, support tickets and team follow-up placed incidents at roughly 30% of active students.",
+        boardLabel: "Synthesized user signals",
+        boardValue: "25",
+        boardNote:
+          "The board brought together 13 student signals and 12 teacher signals to identify common patterns across use, support and academic follow-up.",
+        boardBreakdown: [
+          { label: "Students", value: "13 · 52%" },
+          { label: "Teachers", value: "12 · 48%" },
+        ],
+        hypothesesTitle: "Working hypotheses",
+        signalLabel: "Signal",
+        assumptionLabel: "Assumption",
+        validationLabel: "Validate with",
+        hypotheses: [
+          {
+            title: "Stable access",
+            signal:
+              "Blank screens, incompatibility, slow loading and blocked activities before the task even started.",
+            assumption:
+              "Removing legacy dependencies and normalizing compatibility should let more students start and finish activities without support.",
+            validation:
+              "Review support tickets, successful loading in current browsers and activity completion.",
+          },
+          {
+            title: "Persistent context",
+            signal:
+              "Readings and instructions disappeared or were separated from the response area.",
+            assumption:
+              "Keeping required content close to the task should reduce memory load and improve continuity while answering.",
+            validation:
+              "Observe completion, reported questions and comments about reading, instructions and feedback.",
+          },
+          {
+            title: "Lower cognitive load",
+            signal:
+              "Some activities presented too much information, too many questions and too many controls at once.",
+            assumption:
+              "Showing only what is needed for the current step should make the task easier to identify and continue.",
+            validation:
+              "Compare variants, review drop-off and record recurring questions during use.",
+          },
+          {
+            title: "Visible academic follow-up",
+            signal:
+              "Teachers needed to review groups, progress, grades and performance across scattered information.",
+            assumption:
+              "Grouping information by group and student should make it faster to identify who needs follow-up.",
+            validation:
+              "Contrast the experience with teachers and review use of progress and grade views.",
           },
         ],
       },
       principles: {
-        kicker: "05",
+        kicker: "06",
         title: "Definition",
+        intro:
+          "The synthesis did not become a feature list. We used it to define what needed to remain stable across activities and what could vary according to the learning goal.",
+        challengeLabel: "Design challenge",
+        challenge:
+          "How could we migrate more than 30 interaction types to responsive web without losing the learning goal or designing every activity from scratch?",
+        principlesLabel: "Design principles",
         items: [
           {
-            title: "Available context",
+            title: "Context available",
             body:
-              "Information needed to answer should stay nearby, especially in readings and longer exercises.",
+              "Information needed to answer had to remain close, especially in readings and longer exercises.",
           },
           {
-            title: "Task focus",
+            title: "Focus per task",
             body:
-              "The screen should show what matters for the current step and reduce competing elements.",
+              "The screen should show what is needed for the current step and reduce elements competing for attention.",
           },
           {
             title: "Shared patterns",
             body:
-              "Buttons, states and feedback should behave consistently even when the activity type changes.",
+              "Buttons, states and feedback should behave consistently even when the activity type changed.",
           },
+        ],
+        criteriaTitle: "Acceptance criteria",
+        criteria: [
+          "Work in current browsers without depending on plugins.",
+          "Adapt to desktop, tablet and mobile.",
+          "Keep instructions, context and feedback available during the task.",
+          "Reuse controls, states and rules across different exercise types.",
         ],
       },
       player: {
@@ -676,6 +1350,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Ideation",
         intro:
           "Using those criteria, I designed and reused patterns for different learning goals. Some activities were simple; others combined reading, audio, video or 3D models.",
+        statLabel: "30+ interaction patterns",
         interactions: [
           {
             title: "Multiple choice",
@@ -718,20 +1393,25 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "07",
         title: "Hypothesis and iteration",
         intro:
-          "One activity combined a reading with ten questions. The first version displayed everything at once. After release, comments started to point to the amount of content on screen.",
+          "One reading activity placed the text and ten questions in a single view. The problem was not the academic content itself, but how much the student had to process at once.",
         beforeTitle: "First proposal",
-        beforeBody: "Full reading and ten visible questions in one view.",
-        afterTitle: "Solution",
-        afterBody: "Reading always available and one question per step.",
-        feedbackTitle: "Findings",
+        beforeBody:
+          "Full reading and ten visible questions in one view.",
+        afterTitle: "Decision",
+        afterBody:
+          "Keep the reading available and show one question per step.",
+        hypothesisTitle: "Hypothesis",
+        hypothesisBody:
+          "If we reduced simultaneous information without hiding the supporting text, students could focus on one question without losing the reading context.",
+        feedbackTitle: "Finding",
         feedback: [
-          "Students felt there was too much content on one page.",
-          "Teachers wanted the reading to stay available while students answered.",
-          "Hiding and reopening the text added unnecessary steps.",
+          "Too much content was competing for attention.",
+          "The reading needed to remain available while answering.",
+          "Closing and reopening the text added steps that did not support learning.",
         ],
-        outcomeTitle: "Validation",
+        outcomeTitle: "Outcome",
         outcomeBody:
-          "After the change, comments improved and completion was higher than in denser variants.",
+          "The new variant received better feedback and showed higher completion than denser versions.",
       },
       system: {
         kicker: "08",
@@ -747,7 +1427,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "responsive",
           "light and dark mode",
         ],
+        designToCodeLabel: "Design → Code",
         designToCode: "Figma → component → frontend → review",
+        codeToDesignLabel: "Code → Design",
         codeToDesign:
           "code test → adjustment → working pattern → Figma documentation",
       },
@@ -768,6 +1450,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         title: "Specialized application",
         intro:
           "Professional English applied the same system to content across six academic areas. The interaction had to fit the vocabulary and situation being practiced.",
+        areasTitle: "Professional English areas",
         areas: [
           "Agriculture and Environment",
           "Computer Science",
@@ -779,6 +1462,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         threeDTitle: "3D interaction",
         threeDBody:
           "For some Health Sciences activities I worked with models prepared in Blender and 3ds Max and integrated through Sketchfab. I added hotspots, questions, hints and feedback around the model.",
+        flowTitle: "Interaction flow",
         threeDSteps: [
           "explore",
           "locate",
@@ -786,6 +1470,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           "answer",
           "view feedback",
         ],
+        interactiveLabel: "Interactive 3D",
+        externalLabel: "View on Sketchfab",
       },
       teachers: {
         kicker: "11",
@@ -829,12 +1515,12 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "13",
         title: "Results",
         intro:
-          "Part of the change showed up in Analytics and part of it in support. Compatibility and navigation issues that used to appear frequently stopped being recurring tickets.",
+          "The change showed up in two places: compatibility reports stopped being recurrent and Analytics showed a larger share of mobile use during the responsive transition.",
         stats: [
           {
             value: "≈20%",
-            label: "more mobile usage",
-            note: "Approximate increase I remember during the responsive transition.",
+            label: "growth in mobile usage",
+            note: "Approximate growth observed in Analytics during the responsive transition.",
           },
           {
             value: "30+",
@@ -849,20 +1535,20 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         supportTitle: "Support",
         supportBody:
-          "Blank screens, browser incompatibility and activities that would not open on mobile used to be common reports. After moving more content to the web and improving responsive behavior, those reports became uncommon.",
+          "Blank screens, unsupported browsers and activities that would not open on mobile used to be common support issues. As more content moved to the web and responsive behavior improved, those reports stopped being recurrent.",
         productTitle: "Product adoption",
         productBody:
-          "mironline started as a companion to the books, but it gradually took a larger role in demos and conferences. Interactive exercises and Professional English helped present the product to other institutions.",
+          "mironline started as a companion to the books, but later took a larger role in demos and conferences. Interactive experiences and Professional English helped present the product to other institutions.",
       },
       beyond: {
         kicker: "14",
-        title: "Product evolution",
+        title: "Learnings",
         body: [
-          "During my time at the Language Center I took part in conferences where the books and mironline were presented to teachers, universities and publishers. Demos included some of the more visual activities, including 3D models.",
-          "Seeing the product outside day-to-day development made it easier to notice which parts were easy to explain and which still needed work inside the platform.",
+          "Seeing mironline in demos and conferences changed the perspective: outside the team, an interaction had to make sense without extra explanation.",
+          "Working across learning content, design, frontend and support left me with a simple rule: publishing did not close the design process. Real product behavior informed the next adjustment.",
         ],
         quote:
-          "After mironline I started thinking much more about the problems a person might hit before they ever need to contact support.",
+          "If someone had to contact support just to keep learning, there was still something we could design better.",
       },
     },
     assetLabels: {
@@ -872,12 +1558,16 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       after: "Solution",
       responsive: "Responsive behavior",
       system: "Component system",
+      studentUser: "Student profile",
+      teacherUser: "Teacher profile",
       teacher: "Teacher view",
       analytics: "Analytics and internal reporting",
       beyond: "Books, platform and conferences",
       research: "Usage evidence and signals",
       process: "Design and implementation process",
       gallery: "Interaction gallery",
+      problem: "Problem symptoms in the experience",
+      analysis: "Findings synthesis",
     },
     cta: {
       label: "END OF CASE",
