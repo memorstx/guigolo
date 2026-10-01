@@ -235,7 +235,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Volver a proyectos",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "Inglés sin fricción.",
+    headline: "Más allá del libro.",
     intro:
       "mironline combina práctica de inglés general y profesional con seguimiento académico para estudiantes y docentes de educación superior en Latinoamérica. Entre 2021 y 2023 participé en su etapa de modernización como UI/UX Designer + Frontend.",
     facts: [
@@ -911,7 +911,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Back to projects",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "English without friction.",
+    headline: "Beyond the book.",
     intro:
       "mironline combines General and Professional English practice with academic follow-up for higher-education students and teachers in Latin America. From 2021 to 2023 I took part in its modernization as a UI/UX Designer + Frontend developer.",
     facts: [
