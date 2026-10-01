@@ -461,6 +461,679 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       analysis: {
         kicker: "06",
+        title: "Análisis",
+        intro:
+          "Al agrupar reportes, datos y observaciones aparecieron patrones repetidos. El problema no era una sola pantalla: había fricción técnica, inconsistencias entre actividades y momentos donde el estudiante perdía información necesaria para aprender y responder.",
+        findingsTitle: "Hallazgos clave",
+        findings: [
+          {
+            title: "Compatibilidad",
+            body: "Flash, navegadores y comportamiento desktop-first bloqueaban actividades que todavía tenían valor académico.",
+          },
+          {
+            title: "Continuidad",
+            body: "Lecturas, instrucciones y feedback necesitaban permanecer cerca de la tarea para evitar pérdida de contexto.",
+          },
+          {
+            title: "Consistencia",
+            body: "Actividades distintas resolvían controles, estados y navegación de formas diferentes.",
+          },
+          {
+            title: "Escalabilidad",
+            body: "Con decenas de tipos de interacción, resolver cada actividad desde cero ya no era sostenible.",
+          },
+        ],
+        heuristicTitle: "Lectura heurística",
+        heuristicIntro:
+          "Como marco de análisis, varios hallazgos también se alineaban con principios clásicos de usabilidad. No se presenta como una evaluación heurística formal del proyecto, sino como una forma de relacionar problemas observados con criterios reconocidos de diseño.",
+        heuristics: [
+          {
+            title: "Visibilidad del estado del sistema",
+            issue: "Carga lenta, feedback poco claro y dudas sobre si una respuesta había sido registrada.",
+            implication: "La interfaz debía comunicar carga, respuesta, error, acierto y progreso de manera oportuna.",
+          },
+          {
+            title: "Consistencia y estándares",
+            issue: "Controles, navegación y estados variaban entre tipos de actividad.",
+            implication: "Patrones compartidos reducían el reaprendizaje entre ejercicios.",
+          },
+          {
+            title: "Reconocimiento antes que recuerdo",
+            issue: "El alumno debía volver a buscar lecturas o instrucciones para responder.",
+            implication: "El contexto relevante debía permanecer visible o recuperarse sin esfuerzo.",
+          },
+          {
+            title: "Prevención y recuperación de errores",
+            issue: "Incompatibilidades, actividades bloqueadas y pérdida de avance interrumpían la tarea.",
+            implication: "La experiencia debía prevenir estados sin salida y explicar cómo continuar cuando algo fallaba.",
+          },
+        ],
+      },
+      role: {
+        kicker: "03",
+        title: "Alcance y rol",
+        body: [
+          "Dentro de esa modernización, mi alcance cubría el recorrido entre contenido pedagógico, diseño de interacción y frontend. Las actividades solían comenzar como documentos preparados por docentes y diseño instruccional; el trabajo de producto consistía en convertirlos en una experiencia usable y consistente.",
+          "Mi responsabilidad incluía definir jerarquía, instrucciones, controles, estados, feedback y comportamiento responsive, además de implementar gran parte de esas decisiones en HTML, CSS y JavaScript. Diseño y desarrollo ocurrían muy cerca, así que una solución podía ajustarse mientras se construía y después de publicarse.",
+        ],
+        teamTitle: "Equipo",
+        team: [
+          "1 developer",
+          "1 diseñador gráfico",
+          "docentes",
+          "diseñadores instruccionales",
+          "pedagogos",
+        ],
+        workflowTitle: "Flujo de trabajo",
+        workflow: [
+          "entender la actividad",
+          "definir interacción",
+          "probar o prototipar",
+          "implementar",
+          "publicar",
+          "revisar datos y comentarios",
+          "ajustar",
+        ],
+        workingTitle: "Forma de trabajo",
+        workingBody:
+          "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo.",
+        reverseTitle: "Exploración técnica",
+        reverseBody:
+          "En integraciones como Sketchfab primero probaba qué permitía la API. Cuando la interacción ya funcionaba, documentaba ese patrón en Figma para reutilizarlo después.",
+      },
+      research: {
+        kicker: "05",
+        title: "Investigación",
+        intro:
+          "Después de identificar la fricción técnica, la investigación debía separar problemas de acceso de problemas de comprensión, carga cognitiva y seguimiento académico. La pregunta no era sólo si una actividad abría, sino si permitía aprender, responder y continuar sin perder contexto.",
+        questionsTitle: "Preguntas de investigación",
+        questions: [
+          "¿En qué punto se interrumpe una actividad y qué impide continuar?",
+          "¿Qué cambia entre computadora, tablet, celular y distintos navegadores?",
+          "¿Qué información necesita permanecer visible mientras el estudiante responde?",
+          "¿Qué feedback confirma que una respuesta fue registrada y qué sigue después?",
+          "¿Qué necesita consultar el docente para detectar avance, rezago o dificultades?",
+          "¿Qué objetivo pedagógico debe mantenerse intacto aunque cambie la interacción?",
+        ],
+        sourcesTitle: "Fuentes de evidencia",
+        signals: [
+          {
+            title: "Soporte",
+            body:
+              "Tickets y reportes sobre acceso, compatibilidad, navegación, pantallas vacías y actividades que no cargaban.",
+          },
+          {
+            title: "Google Analytics",
+            body:
+              "Dispositivos, navegadores, tráfico y comportamiento general de uso.",
+          },
+          {
+            title: "Datos académicos",
+            body:
+              "Progreso, calificaciones, desempeño y finalización de actividades.",
+          },
+          {
+            title: "Alumnos y docentes",
+            body:
+              "Comentarios después de releases, dudas en clase y conversaciones directas sobre la experiencia de aprendizaje.",
+          },
+        ],
+        incidenceLabel: "Incidencias reportadas",
+        incidenceValue: "≈30%",
+        incidenceNote:
+          "Durante el periodo observado, el volumen de tickets y feedback situaba las incidencias alrededor de un tercio de los alumnos activos. Se usa como una estimación operativa del proyecto, no como una medición censal.",
+        boardLabel: "Señales de usuario sintetizadas",
+        boardValue: "25",
+        boardNote:
+          "Conteo de los enunciados visibles de estudiantes y docentes agrupados en el board de análisis; representa señales documentadas, no participantes únicos.",
+        boardBreakdown: [
+          { label: "Estudiantes", value: "13 · 52%" },
+          { label: "Docentes", value: "12 · 48%" },
+        ],
+        hypothesesTitle: "Hipótesis de trabajo",
+        signalLabel: "Señal",
+        assumptionLabel: "Supuesto",
+        validationLabel: "Validar con",
+        hypotheses: [
+          {
+            title: "Acceso estable",
+            signal:
+              "Pantallas en blanco, incompatibilidad, carga lenta y actividades bloqueadas antes de comenzar.",
+            assumption:
+              "Si eliminábamos dependencias heredadas y normalizábamos compatibilidad, más alumnos podrían iniciar y terminar la actividad sin soporte.",
+            validation:
+              "Revisar tickets, carga correcta en navegadores actuales y finalización de actividades.",
+          },
+          {
+            title: "Contexto persistente",
+            signal:
+              "Lecturas e instrucciones desaparecían o quedaban separadas de la respuesta.",
+            assumption:
+              "Si el contenido necesario permanecía cerca de la tarea, el alumno tendría que recordar menos y podría responder con mayor continuidad.",
+            validation:
+              "Observar finalización, dudas reportadas y comentarios sobre lectura, instrucciones y feedback.",
+          },
+          {
+            title: "Menor carga cognitiva",
+            signal:
+              "Algunas actividades mostraban demasiada información, preguntas y controles al mismo tiempo.",
+            assumption:
+              "Si cada paso mostraba sólo lo necesario, sería más fácil identificar la tarea actual y continuar sin perderse.",
+            validation:
+              "Comparar variantes, revisar abandono y registrar dudas recurrentes durante el uso.",
+          },
+          {
+            title: "Seguimiento académico visible",
+            signal:
+              "Docentes necesitaban revisar grupos, progreso, calificaciones y desempeño desde información dispersa.",
+            assumption:
+              "Si agrupábamos la información por grupo y alumno, sería más rápido detectar quién necesitaba seguimiento.",
+            validation:
+              "Contrastar la consulta con docentes y revisar el uso de vistas de progreso y calificaciones.",
+          },
+        ],
+      },
+      principles: {
+        kicker: "06",
+        title: "Definición",
+        intro:
+          "La síntesis no se convirtió en una lista de features. La usamos para definir qué debía mantenerse estable en cualquier actividad y qué podía variar según el objetivo de aprendizaje.",
+        challengeLabel: "Reto de diseño",
+        challenge:
+          "¿Cómo migrar más de 30 tipos de interacción a web responsive sin perder el objetivo académico ni diseñar cada actividad desde cero?",
+        principlesLabel: "Principios de diseño",
+        items: [
+          {
+            title: "Contexto disponible",
+            body:
+              "La información necesaria para responder debía permanecer cerca, especialmente en lecturas y ejercicios largos.",
+          },
+          {
+            title: "Foco por tarea",
+            body:
+              "La pantalla debía mostrar lo necesario para el paso actual y reducir elementos que compitieran por atención.",
+          },
+          {
+            title: "Patrones compartidos",
+            body:
+              "Botones, estados y feedback debían comportarse de forma parecida aunque cambiara el tipo de actividad.",
+          },
+        ],
+        criteriaTitle: "Criterios de aceptación",
+        criteria: [
+          "Funcionar en navegadores actuales sin depender de plugins.",
+          "Adaptarse a computadora, tablet y celular.",
+          "Mantener instrucciones, contexto y feedback disponibles durante la tarea.",
+          "Reutilizar controles, estados y reglas entre distintos tipos de ejercicio.",
+        ],
+      },
+      player: {
+        kicker: "06",
+        title: "Ideación",
+        intro:
+          "A partir de esos criterios fui diseñando y reutilizando patrones para distintos objetivos de aprendizaje. Algunas actividades eran simples; otras mezclaban lectura, audio, video o modelos 3D.",
+        statLabel: "30+ patrones de interacción",
+        interactions: [
+          {
+            title: "Multiple choice",
+            body:
+              "Preguntas con dos, tres o cuatro opciones y estados de selección, error y acierto.",
+            meta: "CHOICE",
+          },
+          {
+            title: "Reading",
+            body:
+              "Lecturas con preguntas y distintas formas de mantener disponible el texto mientras el alumno respondía.",
+            meta: "READ",
+          },
+          {
+            title: "Fill in the blank",
+            body:
+              "Campos dentro de frases para completar palabras y recibir feedback después de responder.",
+            meta: "WRITE",
+          },
+          {
+            title: "Matching & ordering",
+            body:
+              "Actividades para relacionar elementos u ordenar partes de una frase.",
+            meta: "MATCH",
+          },
+          {
+            title: "Audio + texto",
+            body:
+              "Lecturas donde el texto se resaltaba al mismo tiempo que avanzaba el audio.",
+            meta: "LISTEN",
+          },
+          {
+            title: "Modelos 3D",
+            body:
+              "Ejercicios con modelos navegables, hotspots, pistas, preguntas y feedback.",
+            meta: "EXPLORE",
+          },
+        ],
+      },
+      iteration: {
+        kicker: "07",
+        title: "Hipótesis e iteración",
+        intro:
+          "Una de las actividades combinaba una lectura con diez preguntas. La primera versión mostraba todo al mismo tiempo. Después de publicarla aparecieron comentarios sobre la cantidad de contenido en pantalla.",
+        beforeTitle: "Primera propuesta",
+        beforeBody:
+          "Lectura completa y diez preguntas visibles en una sola vista.",
+        afterTitle: "Solución",
+        afterBody:
+          "Lectura disponible todo el tiempo y una pregunta por paso.",
+        feedbackTitle: "Hallazgos",
+        feedback: [
+          "Los alumnos sentían que había demasiado contenido junto.",
+          "Los docentes querían que la lectura siguiera disponible mientras respondían.",
+          "Ocultar y volver a mostrar el texto agregaba pasos innecesarios.",
+        ],
+        outcomeTitle: "Validación",
+        outcomeBody:
+          "Después del cambio los comentarios fueron mejores y vimos mayor finalización frente a las variantes más densas.",
+      },
+      system: {
+        kicker: "08",
+        title: "Sistema de diseño",
+        intro:
+          "Con más de 30 tipos de interacción, resolver cada pantalla desde cero dejó de ser práctico. Fui construyendo componentes y reglas en Figma a partir de lo que ya funcionaba en producción.",
+        points: [
+          "colores y espaciados",
+          "botones e inputs",
+          "variantes y estados",
+          "feedback de error y acierto",
+          "componentes reutilizables",
+          "responsive",
+          "light y dark mode",
+        ],
+        designToCodeLabel: "Design → Code",
+        designToCode: "Figma → componente → frontend → revisión",
+        codeToDesignLabel: "Code → Design",
+        codeToDesign:
+          "prueba en código → ajuste → patrón funcional → documentación en Figma",
+      },
+      responsive: {
+        kicker: "09",
+        title: "Adaptación responsive",
+        intro:
+          "El celular dejó de tratarse como una versión reducida del escritorio. Cada actividad se revisaba según el espacio disponible y el tipo de interacción.",
+        points: [
+          "Cambiar el orden del contenido cuando hacía falta.",
+          "Mantener controles y estados fáciles de encontrar.",
+          "Evitar acciones que dependieran de hover.",
+          "Revisar la actividad en distintos navegadores y tamaños.",
+        ],
+      },
+      professional: {
+        kicker: "10",
+        title: "Aplicación especializada",
+        intro:
+          "Professional English llevaba el mismo sistema a contenido relacionado con seis áreas académicas. La interacción tenía que adaptarse al tipo de vocabulario y a la situación que se quería practicar.",
+        areasTitle: "Áreas de Professional English",
+        areas: [
+          "Agricultura y medio ambiente",
+          "Ciencias computacionales",
+          "Ciencias sociales y humanidades",
+          "Construcción e ingeniería",
+          "Ciencias de la salud",
+          "Economía y administración",
+        ],
+        threeDTitle: "Interacción 3D",
+        threeDBody:
+          "En algunas actividades de Ciencias de la Salud trabajé con modelos preparados en Blender y 3ds Max e integrados con Sketchfab. Sobre el modelo agregaba hotspots, preguntas, pistas y feedback.",
+        flowTitle: "Flujo de interacción",
+        threeDSteps: [
+          "explorar",
+          "localizar",
+          "consultar una pista",
+          "responder",
+          "ver feedback",
+        ],
+        interactiveLabel: "3D interactivo",
+        externalLabel: "Ver en Sketchfab",
+      },
+      teachers: {
+        kicker: "11",
+        title: "Experiencia docente",
+        intro:
+          "La plataforma también tenía vistas para consultar grupos, calificaciones, progreso y seguimiento académico. Aquí el problema era ordenar más información sin volver lenta la consulta.",
+        points: [
+          "grupos y alumnos",
+          "calificaciones",
+          "progreso por curso",
+          "seguimiento académico",
+          "desempeño",
+        ],
+      },
+      measure: {
+        kicker: "12",
+        title: "Validación",
+        intro:
+          "No siempre había tiempo para hacer pruebas formales antes del desarrollo. Muchas veces validábamos internamente, publicábamos y después revisábamos el comportamiento real para decidir el siguiente ajuste.",
+        sources: [
+          {
+            title: "Google Analytics",
+            body: "dispositivos · navegadores · tráfico · uso",
+          },
+          {
+            title: "Datos internos",
+            body: "progreso · finalización · calificaciones · desempeño",
+          },
+          {
+            title: "Soporte",
+            body: "errores · compatibilidad · navegación",
+          },
+          {
+            title: "Comentarios",
+            body: "alumnos · docentes · equipo académico",
+          },
+        ],
+        loop: ["publicar", "revisar", "ajustar", "volver a publicar"],
+      },
+      impact: {
+        kicker: "13",
+        title: "Resultados",
+        intro:
+          "Parte del cambio se veía en Analytics y otra parte en soporte. Los problemas de compatibilidad y navegación que antes aparecían con frecuencia fueron dejando de ser tickets recurrentes.",
+        stats: [
+          {
+            value: "≈20%",
+            label: "más uso desde mobile",
+            note: "Aumento aproximado que recuerdo durante la transición responsive.",
+          },
+          {
+            value: "30+",
+            label: "tipos de interacción",
+            note: "Distintas actividades construidas sobre reglas compartidas.",
+          },
+          {
+            value: "6",
+            label: "áreas profesionales",
+            note: "Contenido de inglés aplicado a diferentes campos académicos.",
+          },
+        ],
+        supportTitle: "Soporte",
+        supportBody:
+          "Antes era común recibir reportes de pantallas blancas, incompatibilidad de navegador o actividades que no abrían desde celular. Después de migrar más contenido a web y mejorar el responsive, ese tipo de reporte se volvió poco frecuente.",
+        productTitle: "Adopción del producto",
+        productBody:
+          "mironline empezó como complemento de los libros, pero terminó ocupando más espacio en demostraciones y congresos. Las experiencias interactivas y Professional English servían para mostrar el producto frente a otras instituciones.",
+      },
+      beyond: {
+        kicker: "14",
+        title: "Evolución del producto",
+        body: [
+          "Durante mi tiempo en el Centro de Lenguas participé en congresos donde se presentaban los libros y mironline a docentes, universidades y editoriales. En las demostraciones se mostraban algunas de las actividades más visuales, incluidos modelos 3D.",
+          "Ver el producto fuera del entorno diario de desarrollo ayudaba a entender qué partes eran fáciles de explicar y cuáles necesitaban más trabajo dentro de la propia plataforma.",
+        ],
+        quote:
+          "Después de mironline empecé a pensar mucho más en los problemas que una persona puede tener antes de que necesite escribir a soporte.",
+      },
+    },
+    assetLabels: {
+      dashboard: "Dashboard del estudiante",
+      player: "Learning player",
+      before: "Primera propuesta",
+      after: "Solución",
+      responsive: "Comportamiento responsive",
+      system: "Sistema de componentes",
+      studentUser: "Perfil de estudiante",
+      teacherUser: "Perfil de docente",
+      teacher: "Vista para docentes",
+      analytics: "Analytics y reportes internos",
+      beyond: "Libros, plataforma y congresos",
+      research: "Evidencia y señales de uso",
+      process: "Proceso de diseño e implementación",
+      gallery: "Galería de interacciones",
+      problem: "Síntomas del problema en la experiencia",
+      analysis: "Síntesis de hallazgos",
+    },
+    cta: {
+      label: "FIN DEL CASO",
+      title: "mironline",
+      body:
+        "Este proyecto fue donde empecé a trabajar diseño e implementación como partes del mismo proceso.",
+      button: "Volver a proyectos",
+    },
+  },
+  en: {
+    meta: {
+      title: "mironline · Case study | Guigolo",
+      description:
+        "mironline case study: UX/UI design and frontend work during the transition from Flash-based activities to a responsive web platform.",
+    },
+    back: "Back to projects",
+    eyebrow: "CASE STUDY · EDTECH · 2021—2023",
+    title: "mironline",
+    headline: "Design and frontend work for an education platform moving to responsive web.",
+    intro:
+      "Between 2021 and 2023 I worked on mironline as a UI/UX Designer + Frontend. I translated learning content into interfaces, implemented much of the frontend, and reviewed what happened after release to decide what needed another pass.",
+    facts: [
+      { label: "ROLE", value: "UI/UX Designer + Frontend" },
+      { label: "PERIOD", value: "Oct 2021 — Oct 2023" },
+      { label: "PRODUCT", value: "English learning platform" },
+      {
+        label: "STACK",
+        value:
+          "Figma · HTML · CSS · JavaScript · Bootstrap · jQuery · GitLab · Google Analytics",
+      },
+    ],
+    quickStats: [
+      {
+        value: "30+",
+        label: "interaction types",
+        note: "Exercises for practice, assessment and feedback.",
+      },
+      {
+        value: "6",
+        label: "Professional English areas",
+        note: "Content tied to different fields of study.",
+      },
+      {
+        value: "≈20%",
+        label: "more mobile usage",
+        note: "Approximate increase I remember during the responsive phase.",
+      },
+    ],
+    nav: [
+      { id: "context", label: "Context" },
+      { id: "product", label: "Product" },
+      { id: "audience", label: "Users" },
+      { id: "problem", label: "Problem" },
+      { id: "pedagogy", label: "Learning context" },
+      { id: "research", label: "Research" },
+      { id: "analysis", label: "Analysis" },
+      { id: "definition", label: "Definition" },
+      { id: "scope", label: "Scope" },
+      { id: "ideation", label: "Ideation" },
+      { id: "iteration", label: "Iteration" },
+      { id: "system", label: "System" },
+      { id: "responsive", label: "Responsive" },
+      { id: "professional", label: "Application" },
+      { id: "teacher", label: "Teachers" },
+      { id: "validation", label: "Validation" },
+      { id: "results", label: "Results" },
+    ],
+    sections: {
+      product: {
+        kicker: "01",
+        title: "Context",
+        body: [
+          "mironline is an online English-practice platform for higher-education students and teachers in Latin America. It evolved from Make It Real! Online, the digital component that complemented a book series with additional practice.",
+          "The product grew to include General English and Professional English: grammar, vocabulary, reading and writing activities, progress tracking, and specialized content by professional field. It also incorporated audio, video, 3D models and 360° experiences.",
+          "Books provided part of the academic sequence; mironline extended that practice digitally and connected student activity with the information teachers needed for follow-up.",
+        ],
+        ecosystem: [
+          { label: "BOOKS", value: "Content + sequence" },
+          { label: "GENERAL ENGLISH", value: "Language practice" },
+          { label: "PROFESSIONAL ENGLISH", value: "6 professional fields" },
+          { label: "FOLLOW-UP", value: "Progress + performance" },
+        ],
+      },
+      history: {
+        kicker: "01",
+        title: "Product origin",
+        intro:
+          "mironline evolved from a product that had already spent several years connecting printed materials with digital practice.",
+        productLabel: "Origin and evolution",
+        experienceLabel: "UX / Product",
+        milestones: [
+          {
+            year: "2014",
+            title: "Make It Real! Online",
+            body: "The digital practice component accompanying printed learning materials becomes established.",
+            phase: "product",
+          },
+          {
+            year: "2017",
+            title: "Adaptation for Latin America",
+            body: "The product is restructured for higher education and Latin American contexts.",
+            phase: "product",
+          },
+          {
+            year: "2017–2018",
+            title: "mironline",
+            body: "The LMS is developed and practice expands through General English and Professional English.",
+            phase: "product",
+          },
+          {
+            year: "2021–2023",
+            title: "UI/UX modernization",
+            body: "The period documented in this case: web migration, responsive behavior, interaction system, validation and iteration.",
+            phase: "product",
+          },
+        ],
+      },
+      audience: {
+        kicker: "03",
+        title: "Users",
+        intro:
+          "The experience connected two needs: practicing and moving through a course, and following academic progress. The profile boards summarize each user's context; here I highlight only what shaped the interface.",
+        profiles: [
+          {
+            typeLabel: "Primary user",
+            role: "Student",
+            context:
+              "Uses mironline to practice and complete activities across different devices.",
+            needs: [
+              "Clear instructions for each activity.",
+              "Visible context while answering.",
+              "Feedback and progress that are easy to understand.",
+            ],
+            story:
+              "As a student, I need the content I am using to remain available while I answer, so I do not lose context.",
+            asset: "studentUser",
+          },
+          {
+            typeLabel: "Follow-up user",
+            role: "Teacher",
+            context:
+              "Uses the platform to review group progress and identify where follow-up is needed.",
+            needs: [
+              "Quick access by group and student.",
+              "Progress, grades and performance.",
+              "Follow-up without navigating through too many screens.",
+            ],
+            story:
+              "As a teacher, I need to review progress, grades and performance by group, so I can follow the course.",
+            asset: "teacherUser",
+          },
+        ],
+        storyLabel: "Need summary",
+        architectureTitle: "How information was organized",
+        architectureIntro:
+          "mironline connected student practice with the information teachers needed for academic follow-up.",
+        architecture: [
+          {
+            label: "Student",
+            items: ["Course", "Content and activities", "Feedback", "Progress"],
+          },
+          {
+            label: "Teacher",
+            items: ["Groups", "Students", "Grades", "Follow-up"],
+          },
+        ],
+        flowTitle: "Student main flow",
+        flow: [
+          "Enter course",
+          "Open activity",
+          "Read instruction",
+          "Answer",
+          "Receive feedback",
+          "Review progress",
+        ],
+        teacherFlowTitle: "Teacher main flow",
+        teacherFlow: [
+          "Enter the platform",
+          "Review groups",
+          "Check students",
+          "Review progress and grades",
+          "Identify needs",
+          "Follow up",
+        ],
+        relationTitle: "How they connect",
+        relation:
+          "Student activity, answers and progress are organized by the platform so teachers can review performance and follow up on the course.",
+        note:
+          "These profiles condense real usage patterns observed among students and teachers throughout the project.",
+      },
+      pedagogy: {
+        kicker: "04",
+        title: "Context analysis",
+        intro:
+          "mironline was not simply a collection of exercises. Interface decisions had to coexist with a pedagogical model, different English levels, and concrete student and teacher needs.",
+        body: [
+          "Project material connected situational analysis, student needs, classroom English, teaching cycles and learner autonomy. That structure helped explain why an interaction could not be designed around appearance alone.",
+          "For the product, this became a simple condition: technology had to make the activity more accessible without breaking the academic intention behind it.",
+        ],
+        points: [
+          {
+            title: "Context before pattern",
+            body: "Syllabus, student needs and teacher preparation shaped the experience.",
+          },
+          {
+            title: "More than one way to learn",
+            body: "Text, content, tasks, skills, communication and discovery coexisted in the same product.",
+          },
+          {
+            title: "Different levels",
+            body: "The experience had to work for mixed-level groups and support autonomy and interaction.",
+          },
+          {
+            title: "Design without losing intent",
+            body: "Components had to stay consistent without turning different learning activities into the same interaction.",
+          },
+        ],
+      },
+      challenge: {
+        kicker: "02",
+        title: "The problem",
+        statement:
+          "The academic content was still useful, but an important part of the experience depended on technology that was getting in the way of using it normally.",
+        context: [
+          "By 2021, mironline already had years of published courses and activities. Part of that content depended on Flash*, a technology widely used to run multimedia and interactive experiences inside the browser.",
+          "Once browsers stopped supporting it, the problem became visible to users: blank screens, activities that would not open on mobile, compatibility warnings or players that took too long to load.",
+          "Modernization was not about copying every old screen into HTML. Each activity still had to preserve what it was meant to teach or assess while being rebuilt for responsive web and current browsers.",
+          "*Adobe ended support for Flash Player in 2020 and blocked Flash content from running in 2021. The platform needed to replace that dependency with current web technologies.",
+        ],
+        reportsTitle: "What the student experienced",
+        reports: [
+          { label: "Screen", body: "The activity is just a blank screen." },
+          { label: "Mobile", body: "It does not open on my phone." },
+          { label: "Browser", body: "The browser says it is unsupported." },
+          { label: "Loading", body: "The player takes too long to load." },
+        ],
+        constraintsTitle: "What the solution had to preserve",
+        constraints: [
+          "The learning goal of each activity.",
+          "Use across desktop, tablet and mobile.",
+          "Compatibility across browsers and devices.",
+          "Shared rules across different exercises.",
+        ],
+      },
+      analysis: {
+        kicker: "06",
         title: "Analysis",
         intro:
           "Grouping reports, data and observations revealed recurring patterns. The issue was not one screen: there was technical friction, inconsistent activities and moments where students lost information needed to learn and answer.",
@@ -511,35 +1184,35 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       },
       role: {
         kicker: "03",
-        title: "Alcance y rol",
+        title: "Scope and role",
         body: [
-          "Dentro de esa modernización, mi alcance cubría el recorrido entre contenido pedagógico, diseño de interacción y frontend. Las actividades solían comenzar como documentos preparados por docentes y diseño instruccional; el trabajo de producto consistía en convertirlos en una experiencia usable y consistente.",
-          "Mi responsabilidad incluía definir jerarquía, instrucciones, controles, estados, feedback y comportamiento responsive, además de implementar gran parte de esas decisiones en HTML, CSS y JavaScript. Diseño y desarrollo ocurrían muy cerca, así que una solución podía ajustarse mientras se construía y después de publicarse.",
+          "Within that modernization, my scope covered the path between learning content, interaction design and frontend. Activities often started as documents prepared by teachers and instructional designers; the product work was turning them into a usable and consistent experience.",
+          "My responsibility included hierarchy, instructions, controls, states, feedback and responsive behavior, as well as implementing much of those decisions in HTML, CSS and JavaScript. Design and development stayed close, so a solution could be adjusted while it was being built and again after release.",
         ],
-        teamTitle: "Equipo",
+        teamTitle: "Team",
         team: [
           "1 developer",
-          "1 diseñador gráfico",
-          "docentes",
-          "diseñadores instruccionales",
-          "pedagogos",
+          "1 graphic designer",
+          "teachers",
+          "instructional designers",
+          "pedagogues",
         ],
-        workflowTitle: "Flujo de trabajo",
+        workflowTitle: "Workflow",
         workflow: [
-          "entender la actividad",
-          "definir interacción",
-          "probar o prototipar",
-          "implementar",
-          "publicar",
-          "revisar datos y comentarios",
-          "ajustar",
+          "understand the activity",
+          "define interaction",
+          "test or prototype",
+          "implement",
+          "release",
+          "review data and comments",
+          "adjust",
         ],
-        workingTitle: "Forma de trabajo",
+        workingTitle: "Ways of working",
         workingBody:
-          "El trabajo era iterativo y cercano a una dinámica ágil: entender, definir, prototipar o probar técnicamente, implementar, publicar y ajustar. Para UX tomaba recursos de investigación, prototipado y validación según lo que pedía cada problema, sin forzar un framework completo.",
-        reverseTitle: "Exploración técnica",
+          "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time.",
+        reverseTitle: "Technical exploration",
         reverseBody:
-          "En integraciones como Sketchfab primero probaba qué permitía la API. Cuando la interacción ya funcionaba, documentaba ese patrón en Figma para reutilizarlo después.",
+          "For integrations such as Sketchfab, I first tested what the API allowed. Once the interaction worked, I documented the pattern in Figma so it could be reused later.",
       },
       research: {
         kicker: "05",
@@ -630,120 +1303,6 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
               "Grouping information by group and student should make it faster to identify who needs follow-up.",
             validation:
               "Contrast the experience with teachers and review use of progress and grade views.",
-          },
-        ],
-      },
-      analysis: {
-        kicker: "06",
-        title: "Analysis",
-        intro:
-          "Grouping reports, usage data and observations revealed recurring patterns. The issue was not one screen: there was technical friction, inconsistent interactions and moments where students lost context.",
-        findings: [
-          {
-            title: "Compatibility",
-            body: "Flash, browser limitations and desktop-first behavior were blocking activities that still had academic value.",
-          },
-          {
-            title: "Continuity",
-            body: "Readings, instructions and feedback needed to remain close to the task to prevent context loss.",
-          },
-          {
-            title: "Consistency",
-            body: "Different activities handled controls, states and navigation in different ways.",
-          },
-          {
-            title: "Scalability",
-            body: "With dozens of interaction types, solving each activity from scratch was no longer sustainable.",
-          },
-        ],
-      },
-      role: {
-        kicker: "03",
-        title: "Scope and role",
-        body: [
-          "Within that modernization, my scope covered the path between learning content, interaction design and frontend. Activities often started as documents prepared by teachers and instructional designers; the product work was turning them into a usable and consistent experience.",
-          "My responsibility included hierarchy, instructions, controls, states, feedback and responsive behavior, as well as implementing much of those decisions in HTML, CSS and JavaScript. Design and development stayed close, so a solution could be adjusted while it was being built and again after release.",
-        ],
-        teamTitle: "Team",
-        team: [
-          "1 developer",
-          "1 graphic designer",
-          "teachers",
-          "instructional designers",
-          "pedagogues",
-        ],
-        workflowTitle: "Workflow",
-        workflow: [
-          "understand the activity",
-          "define interaction",
-          "test or prototype",
-          "implement",
-          "release",
-          "review data and comments",
-          "adjust",
-        ],
-        workingTitle: "Ways of working",
-        workingBody:
-          "The work was iterative and close to an agile way of working: understand, define, prototype or test technically, implement, release and adjust. For UX, I used research, prototyping and validation practices as each problem required, rather than forcing a full framework every time.",
-        reverseTitle: "Technical exploration",
-        reverseBody:
-          "For integrations such as Sketchfab, I first tested what the API allowed. Once the interaction worked, I documented the pattern in Figma so it could be reused later.",
-      },
-      research: {
-        kicker: "05",
-        title: "Research",
-        intro:
-          "After identifying the technical friction, research focused on understanding where tasks broke, what changed across devices, and what information students and teachers needed in order to continue.",
-        questionsTitle: "Research questions",
-        questions: [
-          "At what point does an activity break and what prevents the student from continuing?",
-          "What changes across desktop, tablet and mobile?",
-          "What information needs to remain visible while a student answers?",
-          "What does a teacher need to review progress without navigating through too many screens?",
-        ],
-        sourcesTitle: "Evidence sources",
-        signals: [
-          {
-            title: "Support",
-            body:
-              "Tickets and reports about compatibility, navigation, blank screens and activities that failed to load.",
-          },
-          {
-            title: "Google Analytics",
-            body:
-              "Devices, browsers, traffic and broad usage behavior.",
-          },
-          {
-            title: "Internal data",
-            body:
-              "Progress, grades, performance and activity completion.",
-          },
-          {
-            title: "Students and teachers",
-            body:
-              "Post-release comments, classroom questions and direct conversations with the team.",
-          },
-        ],
-        incidenceLabel: "Incidents during the period",
-        incidenceValue: "≈3 in 10 students",
-        incidenceNote:
-          "Approximate figure remembered from the project: around three in ten students reported some kind of incident. Informal student comments and recurring teacher feedback added further context.",
-        hypothesesTitle: "Working hypotheses",
-        hypotheses: [
-          {
-            title: "Stabilize access",
-            body:
-              "Migrating legacy activities and resolving compatibility should reduce blocks before starting or continuing an activity.",
-          },
-          {
-            title: "Keep context visible",
-            body:
-              "Keeping readings, instructions and feedback close to the task should reduce unnecessary steps and context loss.",
-          },
-          {
-            title: "Make follow-up visible",
-            body:
-              "Grouping progress, grades and performance should make it easier for teachers to identify where follow-up is needed.",
           },
         ],
       },
