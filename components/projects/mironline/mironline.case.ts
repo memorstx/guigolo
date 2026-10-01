@@ -119,6 +119,9 @@ export type MironlineCaseCopy = {
       boardNote: string;
       boardBreakdown: Array<{ label: string; value: string }>;
       hypothesesTitle: string;
+      signalLabel: string;
+      assumptionLabel: string;
+      validationLabel: string;
       hypotheses: Array<{
         title: string;
         signal: string;
@@ -588,6 +591,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           { label: "Teachers", value: "12 · 48%" },
         ],
         hypothesesTitle: "Working hypotheses",
+        signalLabel: "Signal",
+        assumptionLabel: "Assumption",
+        validationLabel: "Validate with",
         hypotheses: [
           {
             title: "Stable access",

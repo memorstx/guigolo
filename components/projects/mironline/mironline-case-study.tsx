@@ -698,15 +698,15 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
                 </div>
                 <div className={styles.hypothesisBody}>
                   <div>
-                    <p className={styles.microLabel}>Señal</p>
+                    <p className={styles.microLabel}>{section.signalLabel}</p>
                     <p>{item.signal}</p>
                   </div>
                   <div>
-                    <p className={styles.microLabel}>Supuesto</p>
+                    <p className={styles.microLabel}>{section.assumptionLabel}</p>
                     <p>{item.assumption}</p>
                   </div>
                   <div>
-                    <p className={styles.microLabel}>Validar con</p>
+                    <p className={styles.microLabel}>{section.validationLabel}</p>
                     <p>{item.validation}</p>
                   </div>
                 </div>
