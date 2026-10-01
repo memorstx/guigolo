@@ -911,9 +911,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Back to projects",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "Design and frontend work for an education platform moving to responsive web.",
+    headline: "English without friction.",
     intro:
-      "Between 2021 and 2023 I worked on mironline as a UI/UX Designer + Frontend. I translated learning content into interfaces, implemented much of the frontend, and reviewed what happened after release to decide what needed another pass.",
+      "mironline combines General and Professional English practice with academic follow-up for higher-education students and teachers in Latin America. From 2021 to 2023 I took part in its modernization as a UI/UX Designer + Frontend developer.",
     facts: [
       { label: "ROLE", value: "UI/UX Designer + Frontend" },
       { label: "PERIOD", value: "Oct 2021 — Oct 2023" },
