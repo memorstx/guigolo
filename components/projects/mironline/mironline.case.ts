@@ -41,6 +41,13 @@ export type MironlineCaseCopy = {
       flow: string[];
       note: string;
     };
+    pedagogy: {
+      kicker: string;
+      title: string;
+      intro: string;
+      body: string[];
+      points: Card[];
+    };
     challenge: {
       kicker: string;
       title: string;
@@ -200,9 +207,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Contexto" },
+      { id: "scope", label: "Alcance" },
       { id: "problem", label: "Problema" },
       { id: "audience", label: "Usuarios" },
-      { id: "scope", label: "Alcance" },
+      { id: "pedagogy", label: "Contexto pedagógico" },
       { id: "research", label: "Investigación" },
       { id: "definition", label: "Definición" },
       { id: "ideation", label: "Ideación" },
@@ -288,6 +296,34 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         note:
           "Estos perfiles y necesidades resumen patrones observados durante el trabajo; no son personas ficticias creadas para el portafolio.",
+      },
+      pedagogy: {
+        kicker: "04",
+        title: "Qué debía soportar la experiencia",
+        intro:
+          "mironline no era sólo una colección de ejercicios. Las decisiones de interfaz convivían con un modelo pedagógico, distintos niveles de inglés y necesidades concretas de estudiantes y docentes.",
+        body: [
+          "El material de trabajo del proyecto conectaba análisis situacional, necesidades del estudiante, uso del inglés en clase, ciclos de enseñanza y autonomía. Esa estructura ayudaba a entender por qué una interacción no podía diseñarse únicamente por apariencia.",
+          "Para producto, esto se traducía en una condición simple: la tecnología debía hacer más accesible la actividad sin romper la intención académica que había detrás.",
+        ],
+        points: [
+          {
+            title: "Contexto antes que patrón",
+            body: "Syllabus, necesidades de estudiantes y preparación docente condicionaban la experiencia.",
+          },
+          {
+            title: "Más de una forma de aprender",
+            body: "Texto, contenido, tareas, habilidades, comunicación y descubrimiento convivían en el mismo producto.",
+          },
+          {
+            title: "Distintos niveles",
+            body: "La experiencia debía funcionar para grupos mixtos y favorecer autonomía e interacción.",
+          },
+          {
+            title: "Diseñar sin perder el objetivo",
+            body: "Cada componente tenía que ser consistente sin convertir actividades distintas en la misma interacción.",
+          },
+        ],
       },
       challenge: {
         kicker: "02",
@@ -666,9 +702,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Context" },
+      { id: "scope", label: "Scope" },
       { id: "problem", label: "Problem" },
       { id: "audience", label: "Users" },
-      { id: "scope", label: "Scope" },
+      { id: "pedagogy", label: "Learning context" },
       { id: "research", label: "Research" },
       { id: "definition", label: "Definition" },
       { id: "ideation", label: "Ideation" },
@@ -754,6 +791,34 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
         note:
           "These profiles and needs summarize patterns observed during the work; they are not fictional personas created for the portfolio.",
+      },
+      pedagogy: {
+        kicker: "04",
+        title: "What the experience had to support",
+        intro:
+          "mironline was not simply a collection of exercises. Interface decisions had to coexist with a pedagogical model, different English levels, and concrete student and teacher needs.",
+        body: [
+          "Project material connected situational analysis, student needs, classroom English, teaching cycles and learner autonomy. That structure helped explain why an interaction could not be designed around appearance alone.",
+          "For the product, this became a simple condition: technology had to make the activity more accessible without breaking the academic intention behind it.",
+        ],
+        points: [
+          {
+            title: "Context before pattern",
+            body: "Syllabus, student needs and teacher preparation shaped the experience.",
+          },
+          {
+            title: "More than one way to learn",
+            body: "Text, content, tasks, skills, communication and discovery coexisted in the same product.",
+          },
+          {
+            title: "Different levels",
+            body: "The experience had to work for mixed-level groups and support autonomy and interaction.",
+          },
+          {
+            title: "Design without losing intent",
+            body: "Components had to stay consistent without turning different learning activities into the same interaction.",
+          },
+        ],
       },
       challenge: {
         kicker: "02",

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Script from "next/script";
 import {
   useCallback,
   useEffect,
@@ -398,6 +399,284 @@ export function InteractionStage({ interactions }: { interactions: Interaction[]
             <InteractionMock selected={selected} />
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+
+type PanZoomInstance = {
+  zoomIn: () => void;
+  zoomOut: () => void;
+  resetZoom: () => void;
+  center: () => void;
+  fit: () => void;
+  resize: () => void;
+  destroy: () => void;
+};
+
+type PanZoomFactory = (
+  element: SVGSVGElement,
+  options: {
+    zoomEnabled: boolean;
+    panEnabled: boolean;
+    controlIconsEnabled: boolean;
+    fit: boolean;
+    center: boolean;
+    minZoom: number;
+    maxZoom: number;
+    dblClickZoomEnabled: boolean;
+    mouseWheelZoomEnabled: boolean;
+  }
+) => PanZoomInstance;
+
+type PedagogyNode = {
+  id: string;
+  label: string;
+  detail: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  tone: "root" | "primary" | "secondary";
+};
+
+const pedagogyEdges = [
+  ["root", "situational"],
+  ["root", "needs"],
+  ["root", "classroom"],
+  ["root", "cycles"],
+  ["root", "mixed"],
+  ["situational", "syllabus"],
+  ["situational", "students"],
+  ["situational", "teachers"],
+  ["syllabus", "context"],
+  ["students", "specific"],
+  ["teachers", "elt"],
+  ["needs", "englishNeed"],
+  ["needs", "reading"],
+  ["englishNeed", "studyWork"],
+  ["reading", "readingSkill"],
+  ["classroom", "english"],
+  ["english", "mainLanguage"],
+  ["cycles", "teachingModel"],
+  ["cycles", "communication"],
+  ["mixed", "discovery"],
+  ["discovery", "positive"],
+  ["positive", "levels"],
+  ["mixed", "spanishElt"],
+  ["spanishElt", "cognates"],
+  ["spanishElt", "nativeLanguage"],
+] as const;
+
+function pedagogyNodes(locale: "es" | "en"): PedagogyNode[] {
+  const es = locale === "es";
+
+  return [
+    { id: "root", label: es ? "Racional pedagógico" : "Pedagogical rationale", detail: es ? "El material conectaba contexto, necesidades, enseñanza y autonomía dentro de una misma lógica." : "The material connected context, needs, teaching and learner autonomy within one rationale.", x: 570, y: 34, w: 260, h: 72, tone: "root" },
+    { id: "situational", label: es ? "Análisis situacional" : "Situational analysis", detail: es ? "El diseño partía del contexto académico, el syllabus y las necesidades de estudiantes y docentes." : "The rationale started from the academic context, syllabus, and student and teacher needs.", x: 80, y: 160, w: 210, h: 62, tone: "primary" },
+    { id: "needs", label: es ? "Necesidades del estudiante" : "Student needs analysis", detail: es ? "Se consideraban necesidades relacionadas con estudio, desarrollo profesional, trabajo y habilidades como lectura." : "Needs included study, professional development, work, and skills such as reading.", x: 350, y: 160, w: 220, h: 62, tone: "primary" },
+    { id: "classroom", label: es ? "Inglés en clase" : "Classroom English", detail: es ? "El inglés se planteaba como lengua principal dentro de la experiencia de clase." : "English was positioned as the main classroom language.", x: 620, y: 160, w: 190, h: 62, tone: "primary" },
+    { id: "cycles", label: es ? "Ciclos y comunicación" : "Teaching cycles & communication", detail: es ? "El enfoque combinaba enseñanza basada en texto, contenido, tareas y habilidades, con comunicación como parte del ciclo." : "The approach combined text-, content-, task- and skills-based teaching, with communication as part of the cycle.", x: 860, y: 160, w: 235, h: 62, tone: "primary" },
+    { id: "mixed", label: es ? "Niveles mixtos y autonomía" : "Mixed levels & learner autonomy", detail: es ? "El enfoque contemplaba grupos con distintos niveles y promovía exploración, descubrimiento e interacción positiva." : "The approach considered mixed-level groups and promoted exploration, discovery and positive interaction.", x: 1140, y: 160, w: 230, h: 62, tone: "primary" },
+
+    { id: "syllabus", label: "Syllabus", detail: es ? "El syllabus se evaluaba respecto al contexto UAEH." : "The syllabus was considered against the UAEH context.", x: 10, y: 300, w: 150, h: 54, tone: "secondary" },
+    { id: "students", label: es ? "Estudiantes" : "Students", detail: es ? "El análisis situacional contemplaba necesidades específicas del alumnado." : "The situational analysis considered students' specific needs.", x: 175, y: 300, w: 150, h: 54, tone: "secondary" },
+    { id: "teachers", label: es ? "Docentes" : "Teachers", detail: es ? "También se contemplaba la preparación ELT de los docentes." : "Teachers' ELT preparation was also considered.", x: 340, y: 300, w: 150, h: 54, tone: "secondary" },
+    { id: "context", label: es ? "Contexto UAEH" : "UAEH context", detail: es ? "El documento señala que el syllabus no siempre era adecuado para el contexto." : "The source notes that the syllabus was not always appropriate for the context.", x: 10, y: 405, w: 150, h: 54, tone: "secondary" },
+    { id: "specific", label: es ? "Necesidades específicas" : "Specific needs", detail: es ? "Las necesidades específicas del estudiante formaban parte del análisis." : "Students' specific needs were part of the analysis.", x: 175, y: 405, w: 150, h: 54, tone: "secondary" },
+    { id: "elt", label: es ? "Preparación ELT" : "ELT preparation", detail: es ? "La preparación de los docentes era otra condición del contexto." : "Teacher preparation was another contextual condition.", x: 340, y: 405, w: 150, h: 54, tone: "secondary" },
+
+    { id: "englishNeed", label: es ? "Necesidad de inglés" : "Need English", detail: es ? "El inglés se relacionaba con estudio, desarrollo profesional y trabajo." : "English was linked to study, professional development and work.", x: 360, y: 510, w: 180, h: 54, tone: "secondary" },
+    { id: "reading", label: es ? "Lectura" : "Reading", detail: es ? "La lectura aparece identificada como una habilidad importante." : "Reading is identified as an important skill.", x: 555, y: 510, w: 150, h: 54, tone: "secondary" },
+    { id: "studyWork", label: es ? "Estudio · desarrollo · trabajo" : "Study · development · work", detail: es ? "Tres contextos de uso señalados en el material." : "Three usage contexts identified in the source.", x: 345, y: 615, w: 210, h: 54, tone: "secondary" },
+    { id: "readingSkill", label: es ? "Habilidad importante" : "Important skill", detail: es ? "La lectura se priorizaba dentro del aprendizaje." : "Reading was highlighted within the learning model.", x: 570, y: 615, w: 170, h: 54, tone: "secondary" },
+
+    { id: "english", label: "English", detail: es ? "El idioma se colocaba al centro del trabajo en clase." : "English was placed at the center of classroom work.", x: 660, y: 300, w: 140, h: 54, tone: "secondary" },
+    { id: "mainLanguage", label: es ? "Lengua principal" : "Main classroom language", detail: es ? "El documento lo describe como la lengua principal del aula." : "The source describes English as the main classroom language.", x: 645, y: 405, w: 175, h: 54, tone: "secondary" },
+
+    { id: "teachingModel", label: es ? "Texto · contenido · tareas · habilidades" : "Text · content · tasks · skills", detail: es ? "La enseñanza combinaba distintos tipos de actividad y contenido." : "Teaching combined different types of activity and content.", x: 850, y: 300, w: 245, h: 54, tone: "secondary" },
+    { id: "communication", label: es ? "Comunicación" : "Communication", detail: es ? "Cada ciclo de enseñanza comenzaba con comunicación." : "Each teaching cycle began with communication.", x: 925, y: 405, w: 170, h: 54, tone: "secondary" },
+
+    { id: "discovery", label: es ? "Descubrimiento" : "Discovery approach", detail: es ? "El alumnado exploraba y descubría rasgos del idioma objetivo." : "Students explored and discovered features of the target language.", x: 1140, y: 300, w: 185, h: 54, tone: "secondary" },
+    { id: "positive", label: es ? "Interacción positiva" : "Positive interaction", detail: es ? "El enfoque de descubrimiento buscaba promover interacción positiva." : "The discovery approach aimed to promote positive interaction.", x: 1140, y: 405, w: 185, h: 54, tone: "secondary" },
+    { id: "levels", label: es ? "Alumnos con distintos niveles" : "Weaker & stronger students", detail: es ? "La interacción contemplaba alumnos con fortalezas y niveles distintos." : "Interaction considered students with different strengths and levels.", x: 1140, y: 510, w: 210, h: 54, tone: "secondary" },
+    { id: "spanishElt", label: es ? "Español + ELT UAEH" : "Spanish + UAEH ELT", detail: es ? "El material conecta el contexto lingüístico local con la enseñanza de inglés." : "The material connects the local language context with English teaching.", x: 880, y: 510, w: 200, h: 54, tone: "secondary" },
+    { id: "cognates", label: es ? "Uso de cognados" : "Use of cognates", detail: es ? "Los cognados aparecen como recurso dentro de ese contexto." : "Cognates appear as one resource within that context.", x: 810, y: 615, w: 165, h: 54, tone: "secondary" },
+    { id: "nativeLanguage", label: es ? "Lengua materna común" : "Common native language", detail: es ? "Compartir lengua materna también formaba parte del contexto de aprendizaje." : "A common native language was also part of the learning context.", x: 990, y: 615, w: 185, h: 54, tone: "secondary" },
+  ];
+}
+
+export function PedagogyMap({ locale }: { locale: "es" | "en" }) {
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const panZoomRef = useRef<PanZoomInstance | null>(null);
+  const [selectedId, setSelectedId] = useState("root");
+  const nodes = useMemo(() => pedagogyNodes(locale), [locale]);
+  const nodeById = useMemo(
+    () => new Map(nodes.map((node) => [node.id, node])),
+    [nodes]
+  );
+  const selected = nodeById.get(selectedId) ?? nodes[0];
+
+  const initialize = useCallback(() => {
+    if (!svgRef.current || panZoomRef.current) return;
+
+    const factory = (
+      window as unknown as { svgPanZoom?: PanZoomFactory }
+    ).svgPanZoom;
+
+    if (!factory) return;
+
+    panZoomRef.current = factory(svgRef.current, {
+      zoomEnabled: true,
+      panEnabled: true,
+      controlIconsEnabled: false,
+      fit: true,
+      center: true,
+      minZoom: 0.55,
+      maxZoom: 3.5,
+      dblClickZoomEnabled: true,
+      mouseWheelZoomEnabled: true,
+    });
+  }, []);
+
+  useEffect(() => {
+    initialize();
+
+    const instance = panZoomRef.current;
+    if (!instance || !svgRef.current) return;
+
+    const observer = new ResizeObserver(() => {
+      instance.resize();
+      instance.fit();
+      instance.center();
+    });
+
+    observer.observe(svgRef.current.parentElement ?? svgRef.current);
+
+    return () => {
+      observer.disconnect();
+      instance.destroy();
+      panZoomRef.current = null;
+    };
+  }, [initialize]);
+
+  const fit = () => {
+    panZoomRef.current?.resetZoom();
+    panZoomRef.current?.fit();
+    panZoomRef.current?.center();
+  };
+
+  return (
+    <div className={styles.pedagogyMapShell}>
+      <Script
+        id="svg-pan-zoom"
+        src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"
+        strategy="afterInteractive"
+        onLoad={initialize}
+      />
+
+      <div className={styles.pedagogyToolbar}>
+        <div>
+          <p className={styles.microLabel}>
+            {locale === "es" ? "MAPA INTERACTIVO" : "INTERACTIVE MAP"}
+          </p>
+          <p className={styles.pedagogyHint}>
+            {locale === "es"
+              ? "Arrastra para recorrer · usa zoom · selecciona un nodo"
+              : "Drag to explore · zoom · select a node"}
+          </p>
+        </div>
+
+        <div className={styles.pedagogyControls}>
+          <button type="button" onClick={() => panZoomRef.current?.zoomOut()} aria-label={locale === "es" ? "Alejar" : "Zoom out"}>
+            −
+          </button>
+          <button type="button" onClick={fit} aria-label={locale === "es" ? "Ajustar diagrama" : "Fit diagram"}>
+            ↙↗
+          </button>
+          <button type="button" onClick={() => panZoomRef.current?.zoomIn()} aria-label={locale === "es" ? "Acercar" : "Zoom in"}>
+            +
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.pedagogyViewport}>
+        <svg
+          ref={svgRef}
+          viewBox="0 0 1400 720"
+          role="img"
+          aria-label={
+            locale === "es"
+              ? "Mapa interactivo del contexto pedagógico de mironline"
+              : "Interactive map of mironline's pedagogical context"
+          }
+        >
+          <defs>
+            <marker id="pedagogyArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" className={styles.pedagogyArrow} />
+            </marker>
+          </defs>
+
+          <g className={styles.pedagogyScene}>
+            {pedagogyEdges.map(([from, to]) => {
+              const source = nodeById.get(from);
+              const target = nodeById.get(to);
+              if (!source || !target) return null;
+
+              const x1 = source.x + source.w / 2;
+              const y1 = source.y + source.h;
+              const x2 = target.x + target.w / 2;
+              const y2 = target.y;
+              const midY = y1 + (y2 - y1) / 2;
+
+              return (
+                <path
+                  key={`${from}-${to}`}
+                  d={`M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`}
+                  className={styles.pedagogyEdge}
+                  markerEnd="url(#pedagogyArrow)"
+                />
+              );
+            })}
+
+            {nodes.map((node) => {
+              const active = selectedId === node.id;
+
+              return (
+                <g
+                  key={node.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={node.label}
+                  onClick={() => setSelectedId(node.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelectedId(node.id);
+                    }
+                  }}
+                  className={styles.pedagogyNode}
+                  data-tone={node.tone}
+                  data-active={active ? "true" : "false"}
+                >
+                  <rect x={node.x} y={node.y} width={node.w} height={node.h} rx="18" />
+                  <foreignObject x={node.x + 14} y={node.y + 8} width={node.w - 28} height={node.h - 16}>
+                    <div className={styles.pedagogyNodeLabel}>{node.label}</div>
+                  </foreignObject>
+                </g>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
+
+      <div className={styles.pedagogyDetail} aria-live="polite">
+        <p className={styles.microLabel}>
+          {locale === "es" ? "LECTURA DEL NODO" : "NODE DETAIL"}
+        </p>
+        <h3>{selected.label}</h3>
+        <p>{selected.detail}</p>
       </div>
     </div>
   );

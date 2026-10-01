@@ -5,6 +5,7 @@ import path from "node:path";
 import type { Locale, MironlineCaseCopy } from "./mironline.case";
 import {
   BeforeAfterCompare,
+  PedagogyMap,
   Reveal,
 } from "./mironline-case-study-client";
 import {
@@ -396,6 +397,51 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+
+
+function PedagogySection({ locale, copy }: Props) {
+  const section = copy.sections.pedagogy;
+
+  return (
+    <SectionShell id="pedagogy" className="overflow-hidden bg-neutral-black-800/20">
+      <Reveal>
+        <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+          <StageHeader title={section.title} />
+          <p className={styles.bodyCopy}>{section.intro}</p>
+        </div>
+      </Reveal>
+
+      <div className="mt-12 grid gap-10 xl:grid-cols-[.72fr_1.28fr] xl:items-start xl:gap-16">
+        <Reveal>
+          <div className="space-y-7">
+            {section.body.map((paragraph) => (
+              <p key={paragraph} className={styles.bodyCopy}>
+                {paragraph}
+              </p>
+            ))}
+
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+              {section.points.map((point, index) => (
+                <div key={point.title} className={styles.pedagogyPoint}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3>{point.title}</h3>
+                    <p>{point.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <PedagogyMap locale={locale} />
+        </Reveal>
+      </div>
+    </SectionShell>
   );
 }
 
@@ -1108,9 +1154,10 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Hero locale={locale} copy={copy} />
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
+      <RoleSection copy={copy} />
       <ProblemSection copy={copy} />
       <AudienceSection copy={copy} />
-      <RoleSection copy={copy} />
+      <PedagogySection locale={locale} copy={copy} />
       <ResearchSection copy={copy} />
       <DefinitionSection copy={copy} />
       <IdeationSection copy={copy} />

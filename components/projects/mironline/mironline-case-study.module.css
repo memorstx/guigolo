@@ -1016,3 +1016,201 @@
     transition: none !important;
   }
 }
+
+
+/* Interactive pedagogical context map */
+.pedagogyPoint {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.pedagogyPoint > span {
+  color: rgba(188,167,255,.72);
+  font-size: .68rem;
+  letter-spacing: .16em;
+}
+
+.pedagogyPoint h3 {
+  color: rgba(255,255,255,.9);
+  font-size: .86rem;
+  font-weight: 500;
+}
+
+.pedagogyPoint p {
+  margin-top: .35rem;
+  color: rgba(255,255,255,.48);
+  font-size: .76rem;
+  line-height: 1.65;
+}
+
+.pedagogyMapShell {
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 1.5rem;
+  background: rgba(255,255,255,.018);
+}
+
+.pedagogyToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem .9rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.pedagogyHint {
+  margin-top: .3rem;
+  color: rgba(255,255,255,.35);
+  font-size: .68rem;
+}
+
+.pedagogyControls {
+  display: flex;
+  flex-shrink: 0;
+  gap: .4rem;
+}
+
+.pedagogyControls button {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: .75rem;
+  background: rgba(255,255,255,.035);
+  color: rgba(255,255,255,.72);
+  font-size: .9rem;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.pedagogyControls button:hover {
+  border-color: rgba(188,167,255,.35);
+  background: rgba(188,167,255,.08);
+  color: white;
+}
+
+.pedagogyViewport {
+  position: relative;
+  height: clamp(30rem, 58vw, 42rem);
+  min-height: 30rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(188,167,255,.07), transparent 40%),
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: auto, 28px 28px, 28px 28px;
+  touch-action: none;
+}
+
+.pedagogyViewport svg {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.pedagogyViewport svg:active {
+  cursor: grabbing;
+}
+
+.pedagogyEdge {
+  fill: none;
+  stroke: rgba(255,255,255,.16);
+  stroke-width: 2;
+}
+
+.pedagogyArrow {
+  fill: rgba(255,255,255,.22);
+}
+
+.pedagogyNode {
+  cursor: pointer;
+  outline: none;
+}
+
+.pedagogyNode rect {
+  fill: #171719;
+  stroke: rgba(255,255,255,.12);
+  stroke-width: 1.5;
+  transition: fill .18s ease, stroke .18s ease;
+}
+
+.pedagogyNode[data-tone="root"] rect {
+  fill: rgba(188,167,255,.14);
+  stroke: rgba(188,167,255,.58);
+}
+
+.pedagogyNode[data-tone="primary"] rect {
+  fill: rgba(255,255,255,.055);
+  stroke: rgba(188,167,255,.22);
+}
+
+.pedagogyNode[data-active="true"] rect,
+.pedagogyNode:focus-visible rect {
+  fill: rgba(188,167,255,.16);
+  stroke: rgba(188,167,255,.78);
+  stroke-width: 2;
+}
+
+.pedagogyNodeLabel {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.76);
+  font-family: var(--font-unbounded), sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.pedagogyNode[data-tone="root"] .pedagogyNodeLabel {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pedagogyDetail {
+  min-height: 8.5rem;
+  padding: 1.25rem 1.35rem 1.4rem;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+
+.pedagogyDetail h3 {
+  margin-top: .45rem;
+  color: rgba(255,255,255,.92);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.pedagogyDetail p:last-child {
+  margin-top: .55rem;
+  max-width: 48rem;
+  color: rgba(255,255,255,.5);
+  font-size: .78rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 767px) {
+  .pedagogyToolbar {
+    align-items: flex-start;
+  }
+
+  .pedagogyHint {
+    max-width: 12rem;
+    line-height: 1.5;
+  }
+
+  .pedagogyViewport {
+    height: 32rem;
+    min-height: 32rem;
+  }
+
+  .pedagogyDetail {
+    min-height: 10rem;
+  }
+}
