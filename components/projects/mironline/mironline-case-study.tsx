@@ -286,13 +286,12 @@ function ProductSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="product"
-      className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-900 py-16 md:py-20 xl:py-24"
     >
       <div className={SITE_SECTION_GUTTERS}>
         <div className={styles.productOverview}>
           <Reveal>
             <div className={styles.productCopy}>
-              <p className={styles.microLabel}>02 · PRODUCTO</p>
               <h2 className={styles.sectionTitle}>Producto</h2>
               <div className={styles.caseSectionIntro}>
                 {section.body.slice(1).map((paragraph) => (
@@ -332,7 +331,7 @@ function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="audience"
-      className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-900 py-16 md:py-20 xl:py-24"
     >
       <div className={`${styles.ambient} ${styles.ambientPurple} -left-64 top-20`} />
 
@@ -513,7 +512,7 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="problem"
-      className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-800/30 py-16 md:py-20 xl:py-24"
     >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
@@ -541,6 +540,20 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
               ))}
             </div>
 
+            <div className={styles.problemConstraintsBlock}>
+              <p className={styles.microLabel}>{section.constraintsTitle}</p>
+              <div className={styles.problemConstraintsGrid}>
+                {section.constraints.map((constraint, index) => (
+                  <div key={constraint} className={styles.problemConstraint}>
+                    <span className={styles.problemConstraintIndex}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p>{constraint}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {!hasProblemVisual ? (
               <div className={styles.problemReports}>
                 <p className={styles.microLabel}>{section.reportsTitle}</p>
@@ -554,20 +567,6 @@ function ProblemSection({ copy }: { copy: MironlineCaseCopy }) {
                 </div>
               </div>
             ) : null}
-          </div>
-        </Reveal>
-
-        <Reveal className="mt-16 md:mt-20">
-          <p className={styles.microLabel}>{section.constraintsTitle}</p>
-          <div className="mt-6 grid gap-x-10 gap-y-8 md:grid-cols-2 xl:grid-cols-4">
-            {section.constraints.map((constraint, index) => (
-              <div key={constraint} className={styles.problemConstraint}>
-                <span className={styles.problemConstraintIndex}>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <p>{constraint}</p>
-              </div>
-            ))}
           </div>
         </Reveal>
       </div>
@@ -630,7 +629,7 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="research"
-      className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-900 py-16 md:py-20 xl:py-24"
     >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
@@ -640,21 +639,29 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
           </div>
         </Reveal>
 
-        <Reveal className="mt-12 md:mt-16">
-          <div className={styles.researchQuestions}>
-            <p className={styles.microLabel}>{section.questionsTitle}</p>
+        <Reveal className="mt-12 md:mt-14">
+          <div className={styles.researchIncidence}>
             <div>
-              {section.questions.map((question, index) => (
-                <div key={question} className={styles.researchQuestion}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <p>{question}</p>
-                </div>
-              ))}
+              <p className={styles.microLabel}>{section.incidenceLabel}</p>
+              <p className={styles.researchIncidenceValue}>{section.incidenceValue}</p>
             </div>
+            <p>{section.incidenceNote}</p>
           </div>
         </Reveal>
 
-        <Reveal className="mt-14 md:mt-18">
+        <Reveal className="mt-14 md:mt-16">
+          <p className={styles.microLabel}>{section.questionsTitle}</p>
+          <div className={styles.researchQuestionGrid}>
+            {section.questions.map((question, index) => (
+              <article key={question} className={styles.researchQuestionCard}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{question}</p>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-16">
           <p className={styles.microLabel}>{section.sourcesTitle}</p>
           <div className={styles.researchSources}>
             {section.signals.map((signal) => (
@@ -666,26 +673,7 @@ function ResearchSection({ copy }: { copy: MironlineCaseCopy }) {
           </div>
         </Reveal>
 
-        <Reveal className="mt-14 md:mt-18">
-          <p className={styles.microLabel}>{section.evidenceTitle}</p>
-          <div className={styles.researchEvidence}>
-            <div className={styles.researchEvidenceHead} aria-hidden>
-              <span>Fuente</span>
-              <span>Qué permitía observar</span>
-              <span>Qué no respondía por sí sola</span>
-            </div>
-
-            {section.evidence.map((item) => (
-              <article key={item.source} className={styles.researchEvidenceRow}>
-                <h3>{item.source}</h3>
-                <p>{item.observed}</p>
-                <p>{item.limitation}</p>
-              </article>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal className="mt-14 md:mt-18">
+        <Reveal className="mt-14 md:mt-16">
           <p className={styles.microLabel}>{section.hypothesesTitle}</p>
           <div className={styles.researchHypotheses}>
             {section.hypotheses.map((item, index) => (
@@ -709,7 +697,7 @@ function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="analysis"
-      className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24"
     >
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
@@ -731,6 +719,7 @@ function AnalysisSection({ copy }: { copy: MironlineCaseCopy }) {
         ) : null}
 
         <Reveal className="mt-10 md:mt-12">
+          <p className={styles.microLabel}>Hallazgos clave</p>
           <div className={styles.analysisFindings}>
             {section.findings.map((item, index) => (
               <article key={item.title}>
@@ -754,22 +743,46 @@ function DefinitionSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <SectionShell id="definition">
       <Reveal>
-        <StageHeader title={section.title} />
+        <div className={styles.caseSectionHeader}>
+          <StageHeader title={section.title} />
+          <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+        </div>
       </Reveal>
 
-      <div className="mt-10 grid gap-x-12 md:grid-cols-3 xl:gap-x-20">
+      <Reveal className="mt-12 md:mt-14">
+        <div className={styles.definitionChallenge}>
+          <p className={styles.microLabel}>{section.challengeLabel}</p>
+          <p>{section.challenge}</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="mt-14 md:mt-16">
+        <p className={styles.microLabel}>{section.principlesLabel}</p>
+      </Reveal>
+
+      <div className={styles.definitionPrinciples}>
         {section.items.map((item, index) => (
-          <Reveal key={item.title} delay={index * 90}>
-            <article className={styles.principle}>
-              <span className={styles.principleIndex}>{String(index + 1).padStart(2, "0")}</span>
-              <h3 className={`${styles.cardTitle} max-w-[18rem]`}>{item.title}</h3>
-              <p className="mt-5 max-w-[24rem] text-[13px] leading-relaxed text-neutral-white/55 md:text-[14px]">
-                {item.body}
-              </p>
+          <Reveal key={item.title} delay={index * 70}>
+            <article>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </article>
           </Reveal>
         ))}
       </div>
+
+      <Reveal className="mt-14 md:mt-16">
+        <p className={styles.microLabel}>{section.criteriaTitle}</p>
+        <div className={styles.definitionCriteria}>
+          {section.criteria.map((criterion, index) => (
+            <div key={criterion}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <p>{criterion}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }
@@ -784,7 +797,7 @@ function IdeationSection({ copy }: { copy: MironlineCaseCopy }) {
           <StageHeader title={section.title} />
         </Reveal>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.18fr_.82fr] lg:items-center xl:gap-16">
+        <div className="mt-10 grid gap-10 xl:grid-cols-[1.18fr_.82fr] xl:items-center xl:gap-16">
           <Reveal>
             <MediaAsset asset="player" label={copy.assetLabels.player} />
           </Reveal>
@@ -833,7 +846,7 @@ function IterationSection({ copy }: { copy: MironlineCaseCopy }) {
         />
       </Reveal>
 
-      <div className="mt-16 grid gap-12 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
+      <div className="mt-16 grid gap-12 xl:grid-cols-[.7fr_1.3fr] xl:items-start">
         <Reveal>
           <p className="text-[12px] tracking-[0.22em] text-accent-purple/70 uppercase">
             {section.feedbackTitle}
@@ -876,11 +889,14 @@ function SystemSection({ copy }: { copy: MironlineCaseCopy }) {
   ];
 
   return (
-    <section id="system" className="relative overflow-hidden bg-neutral-black-800/30 py-20 md:py-28 xl:py-32">
+    <section id="system" className="relative overflow-hidden bg-neutral-black-800/30 py-16 md:py-20 xl:py-24">
       <div className={`${styles.ambient} ${styles.ambientCyan} left-1/2 top-1/3 -translate-x-1/2`} />
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} align="center" />
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
         </Reveal>
 
         <Reveal className="mt-10 md:mt-14">
@@ -920,7 +936,7 @@ function ResponsiveSection({ copy }: { copy: MironlineCaseCopy }) {
 
   return (
     <SectionShell id="responsive">
-      <div className="grid gap-10 lg:grid-cols-[minmax(260px,.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-12 xl:gap-16">
+      <div className="grid gap-10 xl:grid-cols-[minmax(280px,.72fr)_minmax(0,1.28fr)] xl:items-start xl:gap-16">
         <Reveal>
           <div className={styles.responsiveSticky}>
             <StageHeader title={section.title} />
@@ -955,19 +971,19 @@ function ProfessionalSection({ copy }: { copy: MironlineCaseCopy }) {
   return (
     <section
       id="professional"
-      className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32"
+      className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24"
     >
       <div className={`${styles.ambient} ${styles.ambientCyan} -left-64 top-1/3`} />
 
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <div className="grid gap-7 lg:grid-cols-[.7fr_1.3fr] lg:items-end lg:gap-14 xl:gap-20">
+          <div className={styles.caseSectionHeader}>
             <StageHeader title={section.title} />
-            <p className={`${styles.bodyCopy} max-w-[820px]`}>{section.intro}</p>
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
           </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[.44fr_1.56fr] lg:items-start xl:gap-16">
+        <div className="mt-14 grid gap-12 xl:grid-cols-[.44fr_1.56fr] xl:items-start xl:gap-16">
           <Reveal>
             <div className="lg:sticky lg:top-28">
               <p className="mb-6 text-[12px] tracking-[0.22em] text-neutral-white/35 uppercase">
@@ -1070,7 +1086,7 @@ function TeacherSection({ copy }: { copy: MironlineCaseCopy }) {
         <StageHeader title={section.title} intro={section.intro} />
       </Reveal>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(230px,.5fr)] lg:items-center xl:gap-14">
+      <div className="mt-12 grid gap-10 xl:grid-cols-[minmax(0,1.5fr)_minmax(260px,.5fr)] xl:items-center xl:gap-14">
         <Reveal>
           <MediaAsset asset="teacher" label={copy.assetLabels.teacher} index="09"  />
         </Reveal>
@@ -1102,7 +1118,10 @@ function ValidationSection({ copy }: { copy: MironlineCaseCopy }) {
     <section id="validation" className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24">
       <div className={SITE_SECTION_GUTTERS}>
         <Reveal>
-          <StageHeader title={section.title} intro={section.intro} />
+          <div className={styles.caseSectionHeader}>
+            <StageHeader title={section.title} />
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
+          </div>
         </Reveal>
 
         {hasAnalyticsVisual ? (
@@ -1141,13 +1160,13 @@ function ResultsSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.impact;
 
   return (
-    <section id="results" className={`${styles.metricSweep} relative overflow-hidden py-20 md:py-28 xl:py-36`}>
+    <section id="results" className={`${styles.metricSweep} relative overflow-hidden py-16 md:py-20 xl:py-24`}>
       <div className={`${styles.ambient} ${styles.ambientPurple} -right-64 top-0`} />
       <div className={`${SITE_SECTION_GUTTERS} relative z-10`}>
         <Reveal>
-          <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+          <div className={styles.caseSectionHeader}>
             <StageHeader title={section.title} />
-            <p className={styles.bodyCopy}>{section.intro}</p>
+            <p className={`${styles.bodyCopy} ${styles.caseSectionLead}`}>{section.intro}</p>
           </div>
         </Reveal>
 
@@ -1198,7 +1217,7 @@ function EvolutionSection({ locale, copy }: Props) {
   const hasBeyondVisual = publicAssetExists(assets.beyond);
 
   return (
-    <section id="beyond" className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32">
+    <section id="beyond" className="relative overflow-hidden bg-neutral-black-800/25 py-16 md:py-20 xl:py-24">
       <div className={`${SITE_SECTION_GUTTERS}`}>
         <Reveal>
           <StageHeader title={section.title} />
@@ -1272,11 +1291,11 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <ProductSection copy={copy} />
       <AudienceSection copy={copy} />
       <ProblemSection copy={copy} />
+      <PedagogySection locale={locale} copy={copy} />
       <ResearchSection copy={copy} />
       <AnalysisSection copy={copy} />
-      <RoleSection copy={copy} />
-      <PedagogySection locale={locale} copy={copy} />
       <DefinitionSection copy={copy} />
+      <RoleSection copy={copy} />
       <IdeationSection copy={copy} />
       <IterationSection copy={copy} />
       <SystemSection copy={copy} />

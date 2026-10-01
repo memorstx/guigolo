@@ -103,19 +103,22 @@ export type MironlineCaseCopy = {
       questions: string[];
       sourcesTitle: string;
       signals: Card[];
-      evidenceTitle: string;
-      evidence: Array<{
-        source: string;
-        observed: string;
-        limitation: string;
-      }>;
+      incidenceLabel: string;
+      incidenceValue: string;
+      incidenceNote: string;
       hypothesesTitle: string;
       hypotheses: Card[];
     };
     principles: {
       kicker: string;
       title: string;
+      intro: string;
+      challengeLabel: string;
+      challenge: string;
+      principlesLabel: string;
       items: Card[];
+      criteriaTitle: string;
+      criteria: string[];
     };
     player: {
       kicker: string;
@@ -245,14 +248,17 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       { id: "product", label: "Producto" },
       { id: "audience", label: "Usuarios" },
       { id: "problem", label: "Problema" },
+      { id: "pedagogy", label: "Contexto pedagógico" },
       { id: "research", label: "Investigación" },
       { id: "analysis", label: "Análisis" },
-      { id: "scope", label: "Alcance" },
-      { id: "pedagogy", label: "Contexto pedagógico" },
       { id: "definition", label: "Definición" },
+      { id: "scope", label: "Alcance" },
       { id: "ideation", label: "Ideación" },
       { id: "iteration", label: "Iteración" },
       { id: "system", label: "Sistema" },
+      { id: "responsive", label: "Responsive" },
+      { id: "professional", label: "Aplicación" },
+      { id: "teacher", label: "Docentes" },
       { id: "validation", label: "Validación" },
       { id: "results", label: "Resultados" },
     ],
@@ -493,8 +499,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "05",
         title: "Investigación",
         intro:
-          "El problema técnico era visible, pero no bastaba con saber que algo fallaba. Había que distinguir dónde se interrumpía la experiencia, qué cambiaba entre dispositivos y qué información necesitaban estudiantes y docentes para completar su tarea.",
-        questionsTitle: "Qué buscábamos entender",
+          "Después de identificar la fricción técnica, la investigación se enfocó en entender dónde se interrumpía la tarea, qué cambiaba entre dispositivos y qué información necesitaban estudiantes y docentes para continuar.",
+        questionsTitle: "Preguntas de investigación",
         questions: [
           "¿En qué punto se interrumpe una actividad y qué impide continuar?",
           "¿Qué cambia entre computadora, tablet y celular?",
@@ -521,40 +527,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           {
             title: "Alumnos y docentes",
             body:
-              "Comentarios posteriores a releases y conversaciones directas dentro del entorno académico.",
+              "Comentarios después de releases, dudas en clase y conversaciones directas con el equipo.",
           },
         ],
-        evidenceTitle: "Qué podía aportar cada fuente",
-        evidence: [
-          {
-            source: "Soporte",
-            observed:
-              "Errores concretos, contexto del fallo y lenguaje usado por quien reportaba el problema.",
-            limitation:
-              "Sin un conteo estructurado, un ticket no indica por sí solo cuántas personas estaban afectadas.",
-          },
-          {
-            source: "Analytics",
-            observed:
-              "Distribución por dispositivo y navegador, tráfico y cambios generales de uso.",
-            limitation:
-              "Muestra qué ocurrió, pero no explica por sí solo por qué una persona tuvo una dificultad.",
-          },
-          {
-            source: "Datos internos",
-            observed:
-              "Avance, finalización, calificaciones y desempeño dentro del curso.",
-            limitation:
-              "Un resultado no explica automáticamente qué parte de la experiencia provocó ese comportamiento.",
-          },
-          {
-            source: "Alumnos y docentes",
-            observed:
-              "Confusiones, necesidad de contexto, problemas al responder y necesidades de seguimiento.",
-            limitation:
-              "Los comentarios directos orientaban el análisis, pero no se trataban como una muestra cuantitativa representativa.",
-          },
-        ],
+        incidenceLabel: "Incidencias durante el periodo",
+        incidenceValue: "≈3 de cada 10 alumnos",
+        incidenceNote:
+          "Estimación recordada durante el proyecto: alrededor de tres de cada diez alumnos reportaban alguna incidencia. A eso se sumaban comentarios informales de estudiantes y feedback recurrente de docentes.",
         hypothesesTitle: "Hipótesis de trabajo",
         hypotheses: [
           {
@@ -575,8 +554,14 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
       },
       principles: {
-        kicker: "05",
+        kicker: "06",
         title: "Definición",
+        intro:
+          "La síntesis no se convirtió en una lista de features. La usamos para definir qué debía mantenerse estable en cualquier actividad y qué podía variar según el objetivo de aprendizaje.",
+        challengeLabel: "Reto de diseño",
+        challenge:
+          "¿Cómo migrar más de 30 tipos de interacción a web responsive sin perder el objetivo académico ni diseñar cada actividad desde cero?",
+        principlesLabel: "Principios de diseño",
         items: [
           {
             title: "Contexto disponible",
@@ -593,6 +578,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
             body:
               "Botones, estados y feedback debían comportarse de forma parecida aunque cambiara el tipo de actividad.",
           },
+        ],
+        criteriaTitle: "Criterios de aceptación",
+        criteria: [
+          "Funcionar en navegadores actuales sin depender de plugins.",
+          "Adaptarse a computadora, tablet y celular.",
+          "Mantener instrucciones, contexto y feedback disponibles durante la tarea.",
+          "Reutilizar controles, estados y reglas entre distintos tipos de ejercicio.",
         ],
       },
       player: {
@@ -869,14 +861,17 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
       { id: "product", label: "Product" },
       { id: "audience", label: "Users" },
       { id: "problem", label: "Problem" },
+      { id: "pedagogy", label: "Learning context" },
       { id: "research", label: "Research" },
       { id: "analysis", label: "Analysis" },
-      { id: "scope", label: "Scope" },
-      { id: "pedagogy", label: "Learning context" },
       { id: "definition", label: "Definition" },
+      { id: "scope", label: "Scope" },
       { id: "ideation", label: "Ideation" },
       { id: "iteration", label: "Iteration" },
       { id: "system", label: "System" },
+      { id: "responsive", label: "Responsive" },
+      { id: "professional", label: "Application" },
+      { id: "teacher", label: "Teachers" },
       { id: "validation", label: "Validation" },
       { id: "results", label: "Results" },
     ],
@@ -1117,8 +1112,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "05",
         title: "Research",
         intro:
-          "The technical problem was visible, but knowing that something failed was not enough. We needed to distinguish where the experience broke, what changed across devices, and what information students and teachers needed to complete their tasks.",
-        questionsTitle: "What we needed to understand",
+          "After identifying the technical friction, research focused on understanding where tasks broke, what changed across devices, and what information students and teachers needed in order to continue.",
+        questionsTitle: "Research questions",
         questions: [
           "At what point does an activity break and what prevents the student from continuing?",
           "What changes across desktop, tablet and mobile?",
@@ -1135,7 +1130,7 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           {
             title: "Google Analytics",
             body:
-              "Devices, browsers, traffic and general usage behavior.",
+              "Devices, browsers, traffic and broad usage behavior.",
           },
           {
             title: "Internal data",
@@ -1145,40 +1140,13 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
           {
             title: "Students and teachers",
             body:
-              "Post-release comments and direct conversations within the academic environment.",
+              "Post-release comments, classroom questions and direct conversations with the team.",
           },
         ],
-        evidenceTitle: "What each source could tell us",
-        evidence: [
-          {
-            source: "Support",
-            observed:
-              "Concrete errors, failure context and the language people used to describe the issue.",
-            limitation:
-              "Without structured counts, a ticket alone does not show how many people were affected.",
-          },
-          {
-            source: "Analytics",
-            observed:
-              "Device and browser distribution, traffic and broad usage changes.",
-            limitation:
-              "It shows what happened, but not by itself why someone experienced a difficulty.",
-          },
-          {
-            source: "Internal data",
-            observed:
-              "Progress, completion, grades and performance within the course.",
-            limitation:
-              "A result does not automatically explain which part of the experience caused that behavior.",
-          },
-          {
-            source: "Students and teachers",
-            observed:
-              "Confusion, context needs, response friction and follow-up needs.",
-            limitation:
-              "Direct comments informed the analysis, but were not treated as a representative quantitative sample.",
-          },
-        ],
+        incidenceLabel: "Incidents during the period",
+        incidenceValue: "≈3 in 10 students",
+        incidenceNote:
+          "Approximate figure remembered from the project: around three in ten students reported some kind of incident. Informal student comments and recurring teacher feedback added further context.",
         hypothesesTitle: "Working hypotheses",
         hypotheses: [
           {
@@ -1199,24 +1167,37 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         ],
       },
       principles: {
-        kicker: "05",
+        kicker: "06",
         title: "Definition",
+        intro:
+          "The synthesis did not become a feature list. We used it to define what needed to remain stable across activities and what could vary according to the learning goal.",
+        challengeLabel: "Design challenge",
+        challenge:
+          "How could we migrate more than 30 interaction types to responsive web without losing the learning goal or designing every activity from scratch?",
+        principlesLabel: "Design principles",
         items: [
           {
-            title: "Available context",
+            title: "Context available",
             body:
-              "Information needed to answer should stay nearby, especially in readings and longer exercises.",
+              "Information needed to answer had to remain close, especially in readings and longer exercises.",
           },
           {
-            title: "Task focus",
+            title: "Focus per task",
             body:
-              "The screen should show what matters for the current step and reduce competing elements.",
+              "The screen should show what is needed for the current step and reduce elements competing for attention.",
           },
           {
             title: "Shared patterns",
             body:
-              "Buttons, states and feedback should behave consistently even when the activity type changes.",
+              "Buttons, states and feedback should behave consistently even when the activity type changed.",
           },
+        ],
+        criteriaTitle: "Acceptance criteria",
+        criteria: [
+          "Work in current browsers without depending on plugins.",
+          "Adapt to desktop, tablet and mobile.",
+          "Keep instructions, context and feedback available during the task.",
+          "Reuse controls, states and rules across different exercise types.",
         ],
       },
       player: {
