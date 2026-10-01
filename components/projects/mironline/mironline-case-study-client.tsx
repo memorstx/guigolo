@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Script from "next/script";
+import { createPortal } from "react-dom";
 import {
   useCallback,
   useEffect,
@@ -418,6 +419,7 @@ export function ExpandableImage({
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const dragRef = useRef<{
@@ -428,12 +430,20 @@ export function ExpandableImage({
     offsetY: number;
   } | null>(null);
 
-  const close = useCallback(() => {
-    setOpen(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const resetView = useCallback(() => {
     setScale(1);
     setOffset({ x: 0, y: 0 });
     dragRef.current = null;
   }, []);
+
+  const close = useCallback(() => {
+    setOpen(false);
+    resetView();
+  }, [resetView]);
 
   useEffect(() => {
     if (!open) return;
@@ -443,6 +453,16 @@ export function ExpandableImage({
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
+      if (event.key === "+" || event.key === "=") {
+        setScale((value) => Math.min(4, value + 0.5));
+      }
+      if (event.key === "-") {
+        setScale((value) => {
+          const next = Math.max(1, value - 0.5);
+          if (next === 1) setOffset({ x: 0, y: 0 });
+          return next;
+        });
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -454,7 +474,7 @@ export function ExpandableImage({
   }, [close, open]);
 
   const setZoom = (next: number) => {
-    const clamped = Math.min(3.5, Math.max(1, next));
+    const clamped = Math.min(4, Math.max(1, next));
     setScale(clamped);
     if (clamped === 1) setOffset({ x: 0, y: 0 });
   };
@@ -485,8 +505,69 @@ export function ExpandableImage({
   const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (dragRef.current?.pointerId !== event.pointerId) return;
     dragRef.current = null;
-    event.currentTarget.releasePointerCapture(event.pointerId);
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
   };
+
+  const viewer = open ? (
+    <div
+      className={styles.imageViewer}
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt}
+    >
+      <div className={styles.imageViewerToolbar}>
+        <span className={styles.imageViewerTitle}>{alt}</span>
+        <div className={styles.imageViewerActions}>
+          <button type="button" onClick={() => setZoom(scale - 0.5)} aria-label="Alejar">
+            −
+          </button>
+          <button type="button" onClick={resetView} aria-label="Restablecer zoom">
+            {Math.round(scale * 100)}%
+          </button>
+          <button type="button" onClick={() => setZoom(scale + 0.5)} aria-label="Acercar">
+            +
+          </button>
+          <button type="button" onClick={close} aria-label="Cerrar imagen">
+            ×
+          </button>
+        </div>
+      </div>
+
+      <div
+        className={styles.imageViewerCanvas}
+        data-zoomed={scale > 1 ? "true" : "false"}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onDoubleClick={() => (scale > 1 ? resetView() : setZoom(2))}
+        onWheel={(event) => {
+          event.preventDefault();
+          setZoom(scale + (event.deltaY < 0 ? 0.25 : -0.25));
+        }}
+      >
+        <div
+          className={styles.imageViewerImage}
+          style={{
+            transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${scale})`,
+          }}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            unoptimized
+            className="object-contain"
+            sizes="100vw"
+            draggable={false}
+          />
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -503,66 +584,14 @@ export function ExpandableImage({
           unoptimized
           className={`relative z-[1] ${className}`}
           sizes={sizes}
+          draggable={false}
         />
         <span className={styles.zoomableAssetHint} aria-hidden>
           ↗
         </span>
       </button>
 
-      {open ? (
-        <div
-          className={styles.imageViewer}
-          role="dialog"
-          aria-modal="true"
-          aria-label={alt}
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) close();
-          }}
-        >
-          <div className={styles.imageViewerToolbar}>
-            <span className={styles.imageViewerTitle}>{alt}</span>
-            <div className={styles.imageViewerActions}>
-              <button type="button" onClick={() => setZoom(scale - 0.5)} aria-label="Alejar">
-                −
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setScale(1);
-                  setOffset({ x: 0, y: 0 });
-                }}
-                aria-label="Restablecer zoom"
-              >
-                {Math.round(scale * 100)}%
-              </button>
-              <button type="button" onClick={() => setZoom(scale + 0.5)} aria-label="Acercar">
-                +
-              </button>
-              <button type="button" onClick={close} aria-label="Cerrar imagen">
-                ×
-              </button>
-            </div>
-          </div>
-
-          <div
-            className={styles.imageViewerCanvas}
-            data-zoomed={scale > 1 ? "true" : "false"}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
-          >
-            <div
-              className={styles.imageViewerImage}
-              style={{
-                transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${scale})`,
-              }}
-            >
-              <Image src={src} alt={alt} fill unoptimized className="object-contain" sizes="100vw" />
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {mounted && viewer ? createPortal(viewer, document.body) : null}
     </>
   );
 }

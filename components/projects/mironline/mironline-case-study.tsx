@@ -290,6 +290,71 @@ function ContextSection({ copy }: { copy: MironlineCaseCopy }) {
   );
 }
 
+
+function ProductHistorySection({ copy }: { copy: MironlineCaseCopy }) {
+  const section = copy.sections.history;
+  const productMilestones = section.milestones.filter((item) => item.phase === "product");
+  const uxMilestones = section.milestones.filter((item) => item.phase === "ux");
+
+  return (
+    <section
+      id="product-evolution"
+      className="relative overflow-hidden bg-neutral-black-900 py-20 md:py-28 xl:py-32"
+    >
+      <div className={SITE_SECTION_GUTTERS}>
+        <Reveal>
+          <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+            <StageHeader title={section.title} />
+            <p className={styles.bodyCopy}>{section.intro}</p>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-14 md:mt-18">
+          <div className={styles.historySection}>
+            <div className={styles.historyBand}>
+              <p className={styles.microLabel}>{section.productLabel}</p>
+              <div className={styles.historyProductTrack}>
+                {productMilestones.map((item) => (
+                  <article key={item.year} className={styles.historyProductItem}>
+                    <span className={styles.historyYear}>{item.year}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.historyBand}>
+              <p className={styles.microLabel}>{section.experienceLabel}</p>
+              <div className={styles.historyUxTrack}>
+                {uxMilestones.map((item) => (
+                  <article key={item.year} className={styles.historyUxItem}>
+                    <div className={styles.historyUxHeader}>
+                      <span className={styles.historyYear}>{item.year}</span>
+                      <div>
+                        <h3>{item.title}</h3>
+                        <p>{item.body}</p>
+                      </div>
+                    </div>
+
+                    {item.activities?.length ? (
+                      <div className={styles.historyActivities}>
+                        {item.activities.map((activity) => (
+                          <span key={activity}>{activity}</span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function AudienceSection({ copy }: { copy: MironlineCaseCopy }) {
   const section = copy.sections.audience;
   return (
@@ -1079,7 +1144,7 @@ function EvolutionSection({ locale, copy }: Props) {
   const hasBeyondVisual = publicAssetExists(assets.beyond);
 
   return (
-    <section id="evolution" className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32">
+    <section id="beyond" className="relative overflow-hidden bg-neutral-black-800/25 py-20 md:py-28 xl:py-32">
       <div className={`${SITE_SECTION_GUTTERS}`}>
         <Reveal>
           <StageHeader title={section.title} />
@@ -1150,8 +1215,9 @@ export default function CaseStudyPage({ locale, copy }: Props) {
       <Hero locale={locale} copy={copy} />
       <Marquee>mironline · ui ux · frontend · edtech · responsive · interaction design</Marquee>
       <ContextSection copy={copy} />
-      <RoleSection copy={copy} />
+      <ProductHistorySection copy={copy} />
       <ProblemSection copy={copy} />
+      <RoleSection copy={copy} />
       <AudienceSection copy={copy} />
       <PedagogySection locale={locale} copy={copy} />
       <ResearchSection copy={copy} />

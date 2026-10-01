@@ -21,6 +21,20 @@ export type MironlineCaseCopy = {
       body: string[];
       ecosystem: Array<{ label: string; value: string }>;
     };
+    history: {
+      kicker: string;
+      title: string;
+      intro: string;
+      productLabel: string;
+      experienceLabel: string;
+      milestones: Array<{
+        year: string;
+        title: string;
+        body: string;
+        activities?: string[];
+        phase?: "product" | "ux";
+      }>;
+    };
     audience: {
       kicker: string;
       title: string;
@@ -175,9 +189,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     back: "Volver a proyectos",
     eyebrow: "CASE STUDY · EDTECH · 2021—2023",
     title: "mironline",
-    headline: "Diseño e implementación de una plataforma educativa en transición a web responsive.",
+    headline: "Evolución de una plataforma de práctica de inglés hacia una experiencia web responsive.",
     intro:
-      "Entre 2021 y 2023 trabajé en mironline como Diseñador UI/UX + Frontend. Convertía contenido pedagógico en interfaces, implementaba gran parte del frontend y revisaba qué pasaba después de publicar para decidir qué ajustar.",
+      "mironline combina práctica de inglés general y profesional con seguimiento académico para estudiantes y docentes de educación superior en Latinoamérica. Entre 2021 y 2023 participé en su etapa de modernización como UI/UX Designer + Frontend.",
     facts: [
       { label: "ROL", value: "UI/UX Designer + Frontend" },
       { label: "PERIODO", value: "Oct 2021 — Oct 2023" },
@@ -207,8 +221,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Contexto" },
-      { id: "scope", label: "Alcance" },
+      { id: "product-evolution", label: "Evolución" },
       { id: "problem", label: "Problema" },
+      { id: "scope", label: "Alcance" },
       { id: "audience", label: "Usuarios" },
       { id: "pedagogy", label: "Contexto pedagógico" },
       { id: "research", label: "Investigación" },
@@ -224,14 +239,91 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "01",
         title: "Contexto",
         body: [
-          "mironline acompañaba cursos de inglés de bachillerato y licenciatura. Los alumnos trabajaban con docentes y libros, y la plataforma servía para practicar, completar actividades y revisar su avance.",
-          "Además de General English, existía Professional English. Las actividades cambiaban según el área de estudio del alumno, así que el producto tenía que soportar formatos muy distintos sin perder consistencia.",
+          "mironline es una plataforma en línea de práctica de inglés para estudiantes y docentes de educación superior en Latinoamérica. Surgió como evolución de Make It Real! Online, el componente digital que complementaba una serie de libros con práctica adicional.",
+          "El producto fue creciendo hasta integrar General English y Professional English: actividades de gramática, vocabulario, lectura y escritura, seguimiento de progreso y contenidos especializados por área profesional. También incorporó audio, video, modelos 3D y experiencias 360°.",
+          "El libro marcaba parte de la secuencia académica; mironline extendía esa práctica en digital y conectaba lo que hacía el estudiante con la información que el docente necesitaba para dar seguimiento.",
         ],
         ecosystem: [
-          { label: "CLASE", value: "Docente + programa" },
-          { label: "LIBRO", value: "Contenido y secuencia" },
-          { label: "MIRONLINE", value: "Práctica digital" },
-          { label: "DATOS", value: "Progreso y desempeño" },
+          { label: "LIBROS", value: "Contenido y secuencia" },
+          { label: "GENERAL ENGLISH", value: "Práctica del idioma" },
+          { label: "PROFESSIONAL ENGLISH", value: "6 áreas profesionales" },
+          { label: "SEGUIMIENTO", value: "Progreso y desempeño" },
+        ],
+      },
+      history: {
+        kicker: "02",
+        title: "Evolución del producto",
+        intro:
+          "La modernización de 2021–2023 no partió de una pantalla en blanco. mironline heredaba varios años de contenido, decisiones técnicas y formas de trabajo que fueron evolucionando junto con el producto.",
+        productLabel: "Producto",
+        experienceLabel: "UX / Producto",
+        milestones: [
+          {
+            year: "2014",
+            title: "Make It Real! Online",
+            body: "Se consolida una plataforma complementaria de práctica digital vinculada a los materiales impresos.",
+            phase: "product",
+          },
+          {
+            year: "2017",
+            title: "Adaptación para Latinoamérica",
+            body: "El concepto se reestructura para un producto orientado a educación superior y contextos latinoamericanos.",
+            phase: "product",
+          },
+          {
+            year: "2017–2018",
+            title: "Nace mironline",
+            body: "Se desarrolla el LMS, General English y Professional English; comienza su adopción fuera del producto original.",
+            phase: "product",
+          },
+          {
+            year: "2021",
+            title: "Investigación y modernización",
+            body: "Comienza la etapa de UX/UI que documento en este caso.",
+            phase: "ux",
+            activities: [
+              "auditoría de actividades heredadas",
+              "soporte y problemas recurrentes",
+              "Analytics y compatibilidad",
+              "revisión de necesidades de estudiantes y docentes",
+              "migración de Flash a web",
+              "responsive y comportamiento cross-browser",
+              "jerarquía, instrucciones, estados y feedback",
+              "validación del objetivo académico",
+            ],
+          },
+          {
+            year: "2022",
+            title: "Sistema e interacción",
+            body: "La experiencia empieza a resolverse como un sistema y no como pantallas aisladas.",
+            phase: "ux",
+            activities: [
+              "patrones para 30+ tipos de interacción",
+              "componentes y variantes en Figma",
+              "botones, inputs, errores y feedback",
+              "reading, matching, fill in the blank y audio",
+              "diseño responsive por tipo de actividad",
+              "integraciones 3D y pruebas con APIs",
+              "flujos de docente y seguimiento",
+              "QA visual y funcional entre dispositivos",
+            ],
+          },
+          {
+            year: "2023",
+            title: "Validación y consolidación",
+            body: "Los releases y el uso real alimentan nuevas iteraciones del producto.",
+            phase: "ux",
+            activities: [
+              "revisión de Analytics y datos internos",
+              "seguimiento de reportes de soporte",
+              "comparación de variantes de actividades",
+              "ajustes para mantener contexto y foco",
+              "refinamiento de navegación y player",
+              "mejoras específicas para mobile",
+              "consolidación de componentes reutilizables",
+              "iteración después de cada release",
+            ],
+          },
         ],
       },
       audience: {
@@ -329,10 +421,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         statement:
           "El contenido académico seguía siendo útil, pero una parte importante de la experiencia dependía de tecnología que ya impedía usarla con normalidad.",
         context: [
-          "Cuando mi rol pasó a UI/UX + frontend en 2021, mironline ya tenía años de cursos y actividades publicadas. Muchas habían sido construidas con Flash y estaban pensadas principalmente para computadora.",
-          "Para un alumno, ese problema no se veía como una decisión tecnológica: veía una pantalla en blanco, un ejercicio que no abría en su celular, un aviso de navegador incompatible o un reproductor que tardaba demasiado.",
-          "Parte de mi trabajo también era revisar los reportes que llegaban a soporte y conversar con el equipo académico sobre lo que estaba fallando. Esas señales, junto con Analytics y los datos internos de uso, ayudaban a decidir qué migrar y qué ajustar primero.",
-          "El reto no era copiar cada pantalla de Flash en HTML. Había que conservar lo que cada ejercicio quería enseñar o evaluar y reconstruir la interacción para web, responsive y navegadores actuales.",
+          "Para 2021, mironline ya acumulaba años de cursos y actividades publicadas. Parte de ese contenido dependía de Flash*, una tecnología utilizada durante años para ejecutar experiencias multimedia e interactivas dentro del navegador.",
+          "Cuando los navegadores dejaron de soportarla, el problema se volvió visible para el usuario: pantallas en blanco, actividades que no abrían en celular, avisos de incompatibilidad o reproductores que tardaban demasiado.",
+          "La modernización no consistía en copiar cada pantalla antigua a HTML. Cada actividad debía conservar lo que buscaba enseñar o evaluar mientras se reconstruía para web responsive y navegadores actuales.",
+          "*Adobe terminó el soporte de Flash Player en 2020 y bloqueó su ejecución en 2021. La plataforma necesitaba sustituir esa dependencia por tecnologías web actuales.",
         ],
         reportsTitle: "Lo que veía el alumno",
         reports: [
@@ -353,8 +445,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "03",
         title: "Alcance y rol",
         body: [
-          "Las actividades normalmente comenzaban en documentos de Word preparados por docentes y diseñadores instruccionales. Yo definía cómo convertir ese contenido en una interacción: jerarquía, instrucciones, controles, estados, feedback y comportamiento responsive.",
-          "Después implementaba la mayor parte del frontend con HTML, CSS y JavaScript. Eso hacía que diseño y desarrollo estuvieran muy cerca y permitía ajustar una solución mientras todavía se estaba construyendo.",
+          "Dentro de esa modernización, mi alcance cubría el recorrido entre contenido pedagógico, diseño de interacción y frontend. Las actividades solían comenzar como documentos preparados por docentes y diseño instruccional; el trabajo de producto consistía en convertirlos en una experiencia usable y consistente.",
+          "Mi responsabilidad incluía definir jerarquía, instrucciones, controles, estados, feedback y comportamiento responsive, además de implementar gran parte de esas decisiones en HTML, CSS y JavaScript. Diseño y desarrollo ocurrían muy cerca, así que una solución podía ajustarse mientras se construía y después de publicarse.",
         ],
         teamTitle: "Equipo",
         team: [
@@ -700,8 +792,9 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
     ],
     nav: [
       { id: "context", label: "Context" },
-      { id: "scope", label: "Scope" },
+      { id: "product-evolution", label: "Evolution" },
       { id: "problem", label: "Problem" },
+      { id: "scope", label: "Scope" },
       { id: "audience", label: "Users" },
       { id: "pedagogy", label: "Learning context" },
       { id: "research", label: "Research" },
@@ -717,14 +810,91 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "01",
         title: "Context",
         body: [
-          "mironline supported English courses for high school and university students. Students worked with teachers and books, while the platform handled practice, activities and progress tracking.",
-          "Alongside General English there was Professional English. Activities changed depending on the student's field of study, so the product needed to support very different formats without losing consistency.",
+          "mironline is an online English-practice platform for higher-education students and teachers in Latin America. It evolved from Make It Real! Online, the digital component that complemented a book series with additional practice.",
+          "The product grew to include General English and Professional English: grammar, vocabulary, reading and writing activities, progress tracking, and specialized content by professional field. It also incorporated audio, video, 3D models and 360° experiences.",
+          "Books provided part of the academic sequence; mironline extended that practice digitally and connected student activity with the information teachers needed for follow-up.",
         ],
         ecosystem: [
-          { label: "CLASS", value: "Teacher + syllabus" },
-          { label: "BOOK", value: "Content + sequence" },
-          { label: "MIRONLINE", value: "Digital practice" },
-          { label: "DATA", value: "Progress + performance" },
+          { label: "BOOKS", value: "Content + sequence" },
+          { label: "GENERAL ENGLISH", value: "Language practice" },
+          { label: "PROFESSIONAL ENGLISH", value: "6 professional fields" },
+          { label: "FOLLOW-UP", value: "Progress + performance" },
+        ],
+      },
+      history: {
+        kicker: "02",
+        title: "Product evolution",
+        intro:
+          "The 2021–2023 modernization did not start from a blank screen. mironline already carried years of content, technical decisions and ways of working that had evolved alongside the product.",
+        productLabel: "Product",
+        experienceLabel: "UX / Product",
+        milestones: [
+          {
+            year: "2014",
+            title: "Make It Real! Online",
+            body: "A complementary digital-practice platform becomes part of the printed learning materials.",
+            phase: "product",
+          },
+          {
+            year: "2017",
+            title: "Adaptation for Latin America",
+            body: "The concept is restructured into a product aimed at higher education and Latin American contexts.",
+            phase: "product",
+          },
+          {
+            year: "2017–2018",
+            title: "mironline emerges",
+            body: "The LMS, General English and Professional English are developed and adoption expands beyond the original product.",
+            phase: "product",
+          },
+          {
+            year: "2021",
+            title: "Research and modernization",
+            body: "The UI/UX stage documented in this case begins.",
+            phase: "ux",
+            activities: [
+              "legacy activity audit",
+              "support issues and recurring failures",
+              "Analytics and compatibility review",
+              "student and teacher needs",
+              "Flash-to-web migration",
+              "responsive and cross-browser behavior",
+              "hierarchy, instructions, states and feedback",
+              "preserving learning goals",
+            ],
+          },
+          {
+            year: "2022",
+            title: "System and interaction",
+            body: "The experience starts being treated as a system rather than a collection of isolated screens.",
+            phase: "ux",
+            activities: [
+              "patterns for 30+ interaction types",
+              "Figma components and variants",
+              "buttons, inputs, errors and feedback",
+              "reading, matching, fill-in-the-blank and audio",
+              "responsive behavior by activity type",
+              "3D integrations and API experiments",
+              "teacher and follow-up flows",
+              "visual and functional cross-device QA",
+            ],
+          },
+          {
+            year: "2023",
+            title: "Validation and consolidation",
+            body: "Releases and real usage feed the next product iterations.",
+            phase: "ux",
+            activities: [
+              "Analytics and internal-data review",
+              "support-report follow-up",
+              "activity-variant comparisons",
+              "context and focus adjustments",
+              "navigation and player refinement",
+              "mobile-specific improvements",
+              "reusable component consolidation",
+              "post-release iteration",
+            ],
+          },
         ],
       },
       audience: {
@@ -822,10 +992,10 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         statement:
           "The academic content was still useful, but an important part of the experience depended on technology that was getting in the way of using it normally.",
         context: [
-          "When my role shifted to UI/UX + frontend in 2021, mironline already had years of published courses and activities. Many had been built with Flash and were designed mainly for desktop use.",
-          "For a student, this did not look like a technical decision: it looked like a blank screen, an exercise that would not open on a phone, an unsupported-browser message or a player that took too long to load.",
-          "Part of my work also included reviewing reports that reached support and talking with the academic team about what was failing. Those signals, together with Analytics and internal usage data, helped decide what needed to be migrated or adjusted first.",
-          "The challenge was not to copy every Flash screen into HTML. Each exercise still had to preserve what it was meant to teach or assess while being rebuilt for the web, responsive layouts and current browsers.",
+          "By 2021, mironline already had years of published courses and activities. Part of that content depended on Flash*, a technology widely used to run multimedia and interactive experiences inside the browser.",
+          "Once browsers stopped supporting it, the problem became visible to users: blank screens, activities that would not open on mobile, compatibility warnings or players that took too long to load.",
+          "Modernization was not about copying every old screen into HTML. Each activity still had to preserve what it was meant to teach or assess while being rebuilt for responsive web and current browsers.",
+          "*Adobe ended support for Flash Player in 2020 and blocked Flash content from running in 2021. The platform needed to replace that dependency with current web technologies.",
         ],
         reportsTitle: "What the student experienced",
         reports: [
@@ -846,8 +1016,8 @@ export const mironlineCase: Record<Locale, MironlineCaseCopy> = {
         kicker: "03",
         title: "Scope and role",
         body: [
-          "Activities usually started as Word documents prepared by teachers and instructional designers. I defined how that content would become an interaction: hierarchy, instructions, controls, states, feedback and responsive behavior.",
-          "I then implemented most of the frontend with HTML, CSS and JavaScript. Design and development stayed close, which made it easier to adjust a solution while it was still being built.",
+          "Within that modernization, my scope covered the path between learning content, interaction design and frontend. Activities often started as documents prepared by teachers and instructional designers; the product work was turning them into a usable and consistent experience.",
+          "My responsibility included hierarchy, instructions, controls, states, feedback and responsive behavior, as well as implementing much of those decisions in HTML, CSS and JavaScript. Design and development stayed close, so a solution could be adjusted while it was being built and again after release.",
         ],
         teamTitle: "Team",
         team: [
