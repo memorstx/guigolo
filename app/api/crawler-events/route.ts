@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import { QUEUE_KEY, queueConfigured, redisCommand, type CrawlerRecord } from "@/lib/crawlerQueue";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -50,6 +51,26 @@ export async function POST(request: Request) {
 
   if (!botName || !category || !path || !method || !userAgent) {
     return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  if (queueConfigured()) {
+    const record: CrawlerRecord = {
+      ingest_id: crypto.randomUUID(),
+      seen_at: new Date().toISOString(),
+      bot_name: botName,
+      category, path,
+      query_string: clean(payload.query, 4000),
+      http_method: method,
+      user_agent: userAgent,
+      referrer: clean(payload.referrer, 2000),
+      vercel_id: clean(payload.vercelId, 300),
+    };
+    try {
+      await redisCommand(["LPUSH", QUEUE_KEY, JSON.stringify(record)]);
+      return new NextResponse(null, {status: 204, headers: {"Cache-Control": "no-store"}});
+    } catch (error) {
+      console.error("Crawler queue unavailable; falling back to Neon", error);
+    }
   }
 
   const sql = neon(databaseUrl);
