@@ -74,30 +74,8 @@ export async function POST(request: Request) {
 
   const sql = neon(databaseUrl);
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS error_events (
-      id BIGSERIAL PRIMARY KEY,
-      seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      path TEXT NOT NULL,
-      error_type TEXT NOT NULL,
-      message TEXT NOT NULL,
-      stack TEXT,
-      source TEXT,
-      line_number INTEGER,
-      column_number INTEGER,
-      user_agent TEXT
-    )
-  `;
 
-  await sql`
-    CREATE INDEX IF NOT EXISTS error_events_seen_at_idx
-    ON error_events (seen_at DESC)
-  `;
 
-  await sql`
-    CREATE INDEX IF NOT EXISTS error_events_path_idx
-    ON error_events (path)
-  `;
 
   await sql`
     INSERT INTO error_events (

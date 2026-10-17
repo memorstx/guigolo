@@ -64,29 +64,8 @@ export async function POST(request: Request) {
   const crawler = detectCrawler(userAgent || "");
   const sql = neon(databaseUrl);
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS not_found_events (
-      id BIGSERIAL PRIMARY KEY,
-      seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      path TEXT NOT NULL,
-      query_string TEXT,
-      referrer TEXT,
-      source_host TEXT,
-      user_agent TEXT,
-      bot_name TEXT,
-      bot_category TEXT
-    )
-  `;
 
-  await sql`
-    CREATE INDEX IF NOT EXISTS not_found_events_seen_at_idx
-    ON not_found_events (seen_at DESC)
-  `;
 
-  await sql`
-    CREATE INDEX IF NOT EXISTS not_found_events_path_idx
-    ON not_found_events (path)
-  `;
 
   await sql`
     INSERT INTO not_found_events (

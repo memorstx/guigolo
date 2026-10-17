@@ -76,33 +76,9 @@ export async function POST(request: Request) {
   const safeRating = rating && RATINGS.has(rating) ? rating : null;
   const sql = neon(databaseUrl);
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS performance_events (
-      id BIGSERIAL PRIMARY KEY,
-      seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      path TEXT NOT NULL,
-      metric_id TEXT NOT NULL,
-      metric_name TEXT NOT NULL,
-      value DOUBLE PRECISION NOT NULL,
-      rating TEXT,
-      navigation_type TEXT
-    )
-  `;
 
-  await sql`
-    CREATE UNIQUE INDEX IF NOT EXISTS performance_events_metric_idx
-    ON performance_events (metric_id, metric_name)
-  `;
 
-  await sql`
-    CREATE INDEX IF NOT EXISTS performance_events_seen_at_idx
-    ON performance_events (seen_at DESC)
-  `;
 
-  await sql`
-    CREATE INDEX IF NOT EXISTS performance_events_path_idx
-    ON performance_events (path, metric_name)
-  `;
 
   await sql`
     INSERT INTO performance_events (
