@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { neon } from "@neondatabase/serverless";
+import { unstable_cache } from "next/cache";
 import LogoutButton from "./logout-button";
 import AdminNav from "../admin-nav";
 import ChartCanvas from "@/components/admin/ChartCanvas";
@@ -47,78 +48,15 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-function param(value: string | string[] | undefined) {
-  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
-}
-
-function formatDate(value: unknown) {
-  if (!value) return "—";
-
-  return new Intl.DateTimeFormat("es-MX", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "America/Mexico_City",
-  }).format(new Date(String(value)));
-}
-
-function formatDay(value: string) {
-  return new Intl.DateTimeFormat("es-MX", {
-    day: "numeric",
-    month: "short",
-    timeZone: "America/Mexico_City",
-  }).format(new Date(`${value}T12:00:00-06:00`));
-}
-
-function isSystemPath(path: unknown) {
-  return SYSTEM_PATHS.includes(String(path));
-}
-
-function buildHref(
-  page: number,
-  filters: { bot: string; category: string; scope: string; q: string }
-) {
-  const params = new URLSearchParams();
-
-  if (page > 1) params.set("page", String(page));
-  if (filters.bot) params.set("bot", filters.bot);
-  if (filters.category) params.set("category", filters.category);
-  if (filters.scope !== "all") params.set("scope", filters.scope);
-  if (filters.q) params.set("q", filters.q);
-
-  const query = params.toString();
-  return query ? `/admin/crawlers?${query}` : "/admin/crawlers";
-}
-
-export default async function CrawlerRadarPage({ searchParams }: Props) {
-  const databaseUrl = process.env.DATABASE_URL;
-
-  if (!databaseUrl) {
-    return (
-      <main className="min-h-screen bg-neutral-950 px-6 py-16 text-neutral-100">
-        <div className="mx-auto max-w-4xl">
-          <h1 className="text-3xl font-semibold">Crawler Radar</h1>
-          <p className="mt-4 text-neutral-400">Falta DATABASE_URL.</p>
-        </div>
-      </main>
-    );
-  }
-
-  const params = await searchParams;
-  const requestedPage = Math.max(1, Number.parseInt(param(params.page), 10) || 1);
-  const botFilter = param(params.bot).slice(0, 120);
-  const categoryFilter = param(params.category).slice(0, 60);
-  const requestedScope = param(params.scope);
-  const scopeFilter = ["content", "system"].includes(requestedScope)
-    ? requestedScope
-    : "all";
-  const pathQuery = param(params.q).trim().slice(0, 120);
-  const filters = {
-    bot: botFilter,
-    category: categoryFilter,
-    scope: scopeFilter,
-    q: pathQuery,
-  };
-
+const getCrawlerData = unstable_cache(
+  async (
+    databaseUrl: string,
+    botFilter: string,
+    categoryFilter: string,
+    scopeFilter: string,
+    pathQuery: string,
+    requestedPage: number
+  ) => {
   const sql = neon(databaseUrl);
   const pathPattern = `%${pathQuery}%`;
 
@@ -231,6 +169,93 @@ export default async function CrawlerRadarPage({ searchParams }: Props) {
     LIMIT ${PAGE_SIZE}
     OFFSET ${offset}
   `;
+
+    return {
+      summaryRows, botRows, categoryRows, topPathRows, dailyRows,
+      filterBotRows, filteredCountRows, filteredCount, totalPages,
+      currentPage, recentRows,
+    };
+  },
+  ["guigolo-crawler-dashboard-v1"],
+  { revalidate: 300 }
+);
+
+function param(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+function formatDate(value: unknown) {
+  if (!value) return "—";
+
+  return new Intl.DateTimeFormat("es-MX", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "America/Mexico_City",
+  }).format(new Date(String(value)));
+}
+
+function formatDay(value: string) {
+  return new Intl.DateTimeFormat("es-MX", {
+    day: "numeric",
+    month: "short",
+    timeZone: "America/Mexico_City",
+  }).format(new Date(`${value}T12:00:00-06:00`));
+}
+
+function isSystemPath(path: unknown) {
+  return SYSTEM_PATHS.includes(String(path));
+}
+
+function buildHref(
+  page: number,
+  filters: { bot: string; category: string; scope: string; q: string }
+) {
+  const params = new URLSearchParams();
+
+  if (page > 1) params.set("page", String(page));
+  if (filters.bot) params.set("bot", filters.bot);
+  if (filters.category) params.set("category", filters.category);
+  if (filters.scope !== "all") params.set("scope", filters.scope);
+  if (filters.q) params.set("q", filters.q);
+
+  const query = params.toString();
+  return query ? `/admin/crawlers?${query}` : "/admin/crawlers";
+}
+
+export default async function CrawlerRadarPage({ searchParams }: Props) {
+  const databaseUrl = process.env.DATABASE_URL;
+
+  if (!databaseUrl) {
+    return (
+      <main className="min-h-screen bg-neutral-950 px-6 py-16 text-neutral-100">
+        <div className="mx-auto max-w-4xl">
+          <h1 className="text-3xl font-semibold">Crawler Radar</h1>
+          <p className="mt-4 text-neutral-400">Falta DATABASE_URL.</p>
+        </div>
+      </main>
+    );
+  }
+
+  const params = await searchParams;
+  const requestedPage = Math.max(1, Number.parseInt(param(params.page), 10) || 1);
+  const botFilter = param(params.bot).slice(0, 120);
+  const categoryFilter = param(params.category).slice(0, 60);
+  const requestedScope = param(params.scope);
+  const scopeFilter = ["content", "system"].includes(requestedScope)
+    ? requestedScope
+    : "all";
+  const pathQuery = param(params.q).trim().slice(0, 120);
+  const filters = {
+    bot: botFilter,
+    category: categoryFilter,
+    scope: scopeFilter,
+    q: pathQuery,
+  };
+
+  const {
+    summaryRows, botRows, categoryRows, topPathRows, dailyRows,
+    filterBotRows, filteredCount, totalPages, currentPage, recentRows,
+  } = await getCrawlerData(databaseUrl, botFilter, categoryFilter, scopeFilter, pathQuery, requestedPage);
 
   const summary = summaryRows[0] ?? {};
   const filtersActive = Boolean(
