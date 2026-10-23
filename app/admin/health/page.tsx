@@ -32,6 +32,13 @@ function formatDate(value: unknown) {
   }).format(new Date(String(value)));
 }
 
+async function measureDatabaseLatency(databaseUrl: string) {
+  const sql = neon(databaseUrl);
+  const startedAt = Date.now();
+  await sql`SELECT 1 AS ok`;
+  return { sql, databaseLatency: Date.now() - startedAt };
+}
+
 export default async function HealthPage() {
   const databaseUrl = process.env.DATABASE_URL;
 
@@ -46,11 +53,7 @@ export default async function HealthPage() {
     );
   }
 
-  const sql = neon(databaseUrl);
-  const startedAt = Date.now();
-
-  await sql`SELECT 1 AS ok`;
-  const databaseLatency = Date.now() - startedAt;
+  const { sql, databaseLatency } = await measureDatabaseLatency(databaseUrl);
 
   await sql`
     CREATE TABLE IF NOT EXISTS error_events (

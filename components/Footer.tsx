@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Section from "./Section";
 
 import AchievementsCounter from "@/components/gamification/AchievementsCounter";
 import MissionsPanel from "@/components/gamification/MissionsPanel";
 
-import { getCompletedMissionsCount } from "@/components/gamification/missionsStore";
+import { useMissionCount } from "@/lib/hooks/useGamificationCounts";
 import { MISSIONS } from "@/components/gamification/missionsCatalog";
-import { onMissionUnlocked } from "@/components/gamification/missionsEvents";
 
 const totalMissions = MISSIONS.length;
 
@@ -40,18 +39,7 @@ type Props = {
 
 export default function Footer({ copy, locale }: Props) {
   const [open, setOpen] = useState(false);
-  const [missionsDone, setMissionsDone] = useState(0);
-
-  useEffect(() => {
-    // Mantiene igual el HTML inicial del servidor y del cliente.
-    setMissionsDone(getCompletedMissionsCount());
-
-    const off = onMissionUnlocked(() => {
-      setMissionsDone(getCompletedMissionsCount());
-    });
-
-    return () => off();
-  }, []);
+  const missionsDone = useMissionCount();
 
   // ✅ Links dentro del home con locale
   const homeHash = (hash: string) => `/${locale}${hash}`;

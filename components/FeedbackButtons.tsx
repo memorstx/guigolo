@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
+import { subscribeNoop } from "@/lib/hooks/useHydrationSnapshot";
 
 export type OptionId = "confused" | "intrigued" | "smiled" | "clear";
 
@@ -34,22 +35,13 @@ export default function FeedbackButtons({
   options,
   thanksText = "Gracias por tu reacción ✨",
 }: Props) {
-  const [selected, setSelected] = useState<Option["id"] | null>(null);
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    const isValid = options.some((option) => option.id === saved);
-
-    if (isValid) {
-      setSelected(saved as Option["id"]);
-    }
-  }, [options]);
-
-  useEffect(() => {
-    if (!selected) return;
-
-    window.localStorage.setItem(STORAGE_KEY, selected);
-  }, [selected]);
+  const [clicked, setClicked] = useState<Option["id"] | null>(null);
+  const saved = useSyncExternalStore(
+    subscribeNoop,
+    () => window.localStorage.getItem(STORAGE_KEY),
+    () => null
+  );
+  const selected = clicked ?? (options.some((option) => option.id === saved) ? saved as Option["id"] : null);
 
   const fireGA = (value: Option["id"]) => {
     const gtag = (window as WindowWithGtag).gtag;
@@ -65,7 +57,8 @@ export default function FeedbackButtons({
   const handleClick = (value: Option["id"]) => {
     if (selected) return;
 
-    setSelected(value);
+    window.localStorage.setItem(STORAGE_KEY, value);
+    setClicked(value);
     fireGA(value);
   };
 
