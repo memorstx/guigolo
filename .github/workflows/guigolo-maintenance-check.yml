@@ -1,0 +1,100 @@
+name: Guigolo maintenance validation
+
+on:
+  push:
+    branches:
+      - fix/guigolo-eslint-and-regression-2026-10
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Install frozen dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript
+        run: pnpm exec tsc --noEmit
+
+      - name: ESLint
+        run: pnpm lint
+
+      - name: Production build
+        run: pnpm build
+
+      - name: Audit production dependencies
+        run: pnpm audit --prod --audit-level high
+
+      - name: Start local production server
+        run: |
+          pnpm start > /tmp/guigolo-next.log 2>&1 &
+          echo $! > /tmp/guigolo-next.pid
+          for i in $(seq 1 35); do
+            if curl --silent --fail http://127.0.0.1:3000/es > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/guigolo-next.log
+          exit 1
+
+      - name: Install temporary browser tester (not committed)
+        run: |
+          pnpm add -D @playwright/test@1.58.2 --ignore-scripts
+          pnpm exec playwright install --with-deps chromium
+
+      - name: Run browser regressions
+        run: |
+          mkdir -p test-temp
+          cat > test-temp/guigolo.smoke.spec.cjs <<'EOF'
+          const { test, expect } = require('@playwright/test');
+          test.use({ baseURL: 'http://127.0.0.1:3000', viewport: { width: 1365, height: 900 } });
+          test.setTimeout(60000);
+
+          test('ES homepage: navigation, hydrated contact form and client rendering', async ({ page }) => {
+            const errors = [];
+            page.on('pageerror', e => errors.push(e.message));
+            await page.goto('/es', { waitUntil: 'domcontentloaded' });
+            await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+            await expect(page.locator('#projects')).toBeAttached();
+            const form = page.locator('#contacto form');
+            await expect(form).toBeVisible();
+            await form.locator('[name=name]').fill('Prueba visual');
+            await form.locator('[name=email]').fill('test@example.com');
+            await form.locator('[name=message]').fill('Formulario de prueba. No enviar.');
+            await expect(form.locator('[name=email]')).toHaveValue('test@example.com');
+            await page.getByRole('button', { name: 'Cambiar idioma a inglés' }).first().click();
+            await expect(page).toHaveURL(/\/en(?:\?|#|$)/);
+            await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+            expect(errors).toEqual([]);
+          });
+
+          test('ES homepage: saved achievements/missions hydrate from browser storage', async ({ page }) => {
+            await page.addInitScript(() => {
+              localStorage.setItem('guigolo_missions_v1', JSON.stringify({
+                version: 1, completed: { mission_route: { at: 1 } }
+              }));
+            });
+            await page.goto('/es', { waitUntil: 'domcontentloaded' });
+            await expect(page.getByRole('button', { name: /Misiones: [1-4]\/4/i })).toBeVisible();
+          });
+
+          test('MIRONLINE case study: interactive image markup and route', async ({ page }) => {
+            await page.goto('/es/projects/mironline/platform', { waitUntil: 'domcontentloaded' });
+            await expect(page.locator('main').first()).toBeAttached();
+            await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+          });
+          EOF
+          pnpm exec playwright test test-temp/guigolo.smoke.spec.cjs --reporter=line --workers=1
