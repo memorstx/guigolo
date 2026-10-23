@@ -24,6 +24,10 @@ type NavbarDict = {
 
 export default function Navbar({ dict }: { dict: NavbarDict }) {
   const pathname = usePathname();
+  return <NavbarForPath key={pathname} dict={dict} pathname={pathname} />;
+}
+
+function NavbarForPath({ dict, pathname }: { dict: NavbarDict; pathname: string }) {
   const locale = pathname.startsWith("/en") ? "en" : "es";
   const toAnchor = (hash: string) => `/${locale}${hash}`;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,10 +50,6 @@ export default function Navbar({ dict }: { dict: NavbarDict }) {
       document.body.style.overflow = prev;
     };
   }, [menuOpen]);
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
 
   const H = 64;
   const LEFT_W = 256;

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { subscribeNoop } from "@/lib/hooks/useHydrationSnapshot";
 import Section from "./Section";
 import {
   readContactOrigin,
@@ -53,8 +54,27 @@ type Props = {
 };
 
 export default function Contact({ copy, locale }: Props) {
-  const [status, setStatus] = useState<Status>("idle");
-  const [origin, setOrigin] = useState<ContactOrigin | null>(null);
+  const [statusOverride, setStatus] = useState<Status | null>(null);
+  const persistedSuccess = useSyncExternalStore(
+    subscribeNoop,
+    () => window.sessionStorage.getItem("contact_sent_v1") === "1",
+    () => false
+  );
+  const status: Status = statusOverride ?? (persistedSuccess ? "success" : "idle");
+
+  const originRaw = useSyncExternalStore(
+    subscribeNoop,
+    () => window.sessionStorage.getItem("contact_origin_v1"),
+    () => null
+  );
+  const origin = useMemo<ContactOrigin | null>(() => {
+    if (!originRaw) return null;
+    try {
+      return JSON.parse(originRaw) as ContactOrigin;
+    } catch {
+      return null;
+    }
+  }, [originRaw]);
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -71,14 +91,6 @@ export default function Contact({ copy, locale }: Props) {
   };
 
   const homeHash = (hash: string) => `/${locale}${hash}`;
-
-  useEffect(() => {
-    // sessionStorage sólo existe en el navegador; leerlo aquí evita hydration mismatch.
-    setStatus(
-      sessionStorage.getItem("contact_sent_v1") === "1" ? "success" : "idle"
-    );
-    setOrigin(readContactOrigin());
-  }, []);
 
   useEffect(() => {
     const el = document.getElementById("contacto");

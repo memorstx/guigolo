@@ -9,10 +9,12 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
 import styles from "./mironline-case-study.module.css";
+import { subscribeNoop } from "@/lib/hooks/useHydrationSnapshot";
 
 type Interaction = { title: string; body: string; meta: string };
 
@@ -41,8 +43,8 @@ export function Reveal({
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setVisible(true);
-      return;
+      const frame = window.requestAnimationFrame(() => setVisible(true));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const observer = new IntersectionObserver(
@@ -419,7 +421,7 @@ export function ExpandableImage({
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(subscribeNoop, () => true, () => false);
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const dragRef = useRef<{
@@ -429,10 +431,6 @@ export function ExpandableImage({
     offsetX: number;
     offsetY: number;
   } | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const resetView = useCallback(() => {
     setScale(1);

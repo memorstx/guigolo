@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import ContactLink from "./ui/ContactLink";
 
 type ProjectsCopy = {
@@ -86,7 +86,17 @@ export default function ProjectsSection({ items, copy, locale }: Props) {
     [autoplay]
   );
 
-  const [selected, setSelected] = useState(0);
+  const subscribeSelection = useCallback((notify: () => void) => {
+    if (!emblaApi) return () => {};
+    emblaApi.on("select", notify);
+    emblaApi.on("reInit", notify);
+    return () => {
+      emblaApi.off("select", notify);
+      emblaApi.off("reInit", notify);
+    };
+  }, [emblaApi]);
+  const readSelection = useCallback(() => emblaApi?.selectedScrollSnap() ?? 0, [emblaApi]);
+  const selected = useSyncExternalStore(subscribeSelection, readSelection, () => 0);
   const [isDragging, setIsDragging] = useState(false);
   const pauseTimerRef = useRef<number | null>(null);
 
@@ -108,14 +118,9 @@ export default function ProjectsSection({ items, copy, locale }: Props) {
     pauseTimerRef.current = window.setTimeout(safePlay, PAUSE_AFTER_ACTION_MS);
   }, [safePlay, safeStop]);
 
-  const onSelect = useCallback(() => {
-    if (emblaApi) setSelected(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
   useEffect(() => {
     if (!emblaApi) return;
 
-    setSelected(emblaApi.selectedScrollSnap());
     const pointerDown = () => {
       setIsDragging(true);
       safeStop();
@@ -125,16 +130,14 @@ export default function ProjectsSection({ items, copy, locale }: Props) {
       pauseAfterUserAction();
     };
 
-    emblaApi.on("select", onSelect);
     emblaApi.on("pointerDown", pointerDown);
     emblaApi.on("pointerUp", pointerUp);
 
     return () => {
-      emblaApi.off("select", onSelect);
       emblaApi.off("pointerDown", pointerDown);
       emblaApi.off("pointerUp", pointerUp);
     };
-  }, [emblaApi, onSelect, pauseAfterUserAction, safeStop]);
+  }, [emblaApi, pauseAfterUserAction, safeStop]);
 
   useEffect(
     () => () => {

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { getUnlockedCount } from "./achievementsStore";
+import { useAchievementCount } from "@/lib/hooks/useGamificationCounts";
 import { onAchievementUnlocked } from "./achievementEvents";
 import { ACHIEVEMENTS } from "./achievementsCatalog";
 
@@ -31,7 +31,7 @@ const UI = {
 export default function AchievementsUI() {
   const total = ACHIEVEMENTS.length;
 
-  const [unlockedCount, setUnlockedCount] = useState<number | null>(null);
+  const unlockedCount = useAchievementCount();
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const hideTimerRef = useRef<number | null>(null);
@@ -49,15 +49,10 @@ export default function AchievementsUI() {
       });
     });
     return m;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale]);
 
   useEffect(() => {
-    setUnlockedCount(getUnlockedCount());
-
     const off = onAchievementUnlocked(({ id }) => {
-      setUnlockedCount(getUnlockedCount());
-
       const meta = byId.get(id);
 
       if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);

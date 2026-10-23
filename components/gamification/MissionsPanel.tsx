@@ -1,13 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MISSIONS } from "./missionsCatalog";
-import {
-  getCompletedMissionsCount,
-  hasMission,
-  type MissionId,
-} from "./missionsStore";
-import { onMissionUnlocked } from "./missionsEvents";
+import { hasMission, type MissionId } from "./missionsStore";
+import { useMissionCount } from "@/lib/hooks/useGamificationCounts";
 import { usePathname } from "next/navigation";
 
 type Props = {
@@ -97,15 +93,9 @@ export default function MissionsPanel({ open, onClose }: Props) {
   const locale = getLocaleFromPath(pathname);
 
   const total = MISSIONS.length;
-  const [done, setDone] = useState(0);
+  const done = useMissionCount();
 
   useEffect(() => {
-    setDone(getCompletedMissionsCount());
-
-    const off = onMissionUnlocked(() => {
-      setDone(getCompletedMissionsCount());
-    });
-
     const onEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -113,7 +103,6 @@ export default function MissionsPanel({ open, onClose }: Props) {
     window.addEventListener("keydown", onEsc);
 
     return () => {
-      off();
       window.removeEventListener("keydown", onEsc);
     };
   }, [onClose]);
