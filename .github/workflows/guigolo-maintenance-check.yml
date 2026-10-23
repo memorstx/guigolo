@@ -84,11 +84,11 @@ jobs:
           test('ES homepage: saved achievements/missions hydrate from browser storage', async ({ page }) => {
             await page.addInitScript(() => {
               localStorage.setItem('guigolo_missions_v1', JSON.stringify({
-                version: 1, completed: { mission_route: { at: 1 } }
+                version: 1, completed: { mission_projects: { at: 1 } }
               }));
             });
             await page.goto('/es', { waitUntil: 'domcontentloaded' });
-            await expect(page.getByRole('button', { name: /Misiones: [1-4]\/4/i })).toBeVisible();
+            await expect(page.getByRole('button', { name: /Misiones: [1-5]\/5/i })).toBeVisible();
           });
 
           test('MIRONLINE case study: interactive image markup and route', async ({ page }) => {
