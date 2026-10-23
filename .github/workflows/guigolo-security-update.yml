@@ -30,6 +30,13 @@ jobs:
       - name: Resolve dependencies and refresh lockfile
         run: pnpm install --no-frozen-lockfile
 
+      - name: Update vulnerable packages within lockfile
+        run: pnpm audit --fix=update
+        continue-on-error: true
+
+      - name: Verify frozen lockfile install
+        run: pnpm install --frozen-lockfile
+
       - name: Commit regenerated lockfile
         run: |
           if ! git diff --quiet -- pnpm-lock.yaml; then
@@ -52,4 +59,8 @@ jobs:
 
       - name: Dependency audit (informational)
         run: pnpm audit --audit-level high
+        continue-on-error: true
+
+      - name: Production dependency audit (informational)
+        run: pnpm audit --prod --audit-level high
         continue-on-error: true
