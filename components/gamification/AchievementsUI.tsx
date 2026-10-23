@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { useAchievementCount } from "@/lib/hooks/useGamificationCounts";
 import { onAchievementUnlocked } from "./achievementEvents";
 import { ACHIEVEMENTS } from "./achievementsCatalog";
@@ -84,9 +85,12 @@ export default function AchievementsUI() {
             <div className="flex items-center gap-3">
               {/* ✅ Ilustración / Icon como tú lo tenías */}
               {toast.icon ? (
-                <img
+                <Image
                   src={toast.icon}
                   alt=""
+                  width={120}
+                  height={120}
+                  unoptimized
                   className="h-[7.5rem] w-[7.5rem] rounded-xl border border-neutral-white/10 object-cover shrink-0"
                   draggable={false}
                 />

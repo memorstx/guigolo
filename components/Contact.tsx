@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
 import { subscribeNoop } from "@/lib/hooks/useHydrationSnapshot";
 import Section from "./Section";
 import {
@@ -54,6 +55,7 @@ type Props = {
 };
 
 export default function Contact({ copy, locale }: Props) {
+  const router = useRouter();
   const [statusOverride, setStatus] = useState<Status | null>(null);
   const persistedSuccess = useSyncExternalStore(
     subscribeNoop,
@@ -205,9 +207,13 @@ export default function Contact({ copy, locale }: Props) {
     const o = readContactOrigin();
     if (!o) return;
 
-    const url = `${o.fromPath}${o.fromHash || ""}`;
+    // El origen se guarda desde la propia URL del sitio.
+    // Valida el destino antes de pasarlo al router de Next.js.
+    const destination = new URL(`${o.fromPath}${o.fromHash || ""}`, window.location.origin);
+    if (destination.origin !== window.location.origin) return;
+
     sessionStorage.setItem("restore_scroll_once_v1", "1");
-    window.location.href = url;
+    router.push(`${destination.pathname}${destination.search}${destination.hash}`);
   };
 
   return (
